@@ -1,13 +1,13 @@
-package at.bumzack.solrwriter.dto;
+package at.bumzack.solrsearch.dto;
 
 import java.io.Serializable;
 import java.util.List;
+
 
 public class B2BArticleChannelInfoData implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
     private String article;
     private String articleUnit;
     private String articleName;
@@ -29,15 +29,7 @@ public class B2BArticleChannelInfoData implements Serializable {
     private String module;
     private String moduleGroup;
     private String ownBrand;
-    private List<String> superCategories;
-    private List<String> allSuperCategories;
 
-    private List<String> imagesContainerQualifiers;
-    private String mainImageContainerQualifier;
-
-//    ; mainImageContainerQualifier ; string    ;                   ;                          ;                           ;                            ;                                     ;                                    ; xinetMainImageContainerQualifiersResolver  ;                             ;                          ;                                  ;                                                         ;
-//                   ; imagesContainerQualifiers
-//
 
     public B2BArticleChannelInfoData() {
     }
@@ -210,43 +202,31 @@ public class B2BArticleChannelInfoData implements Serializable {
         this.ownBrand = ownBrand;
     }
 
-    public List<String> getSuperCategories() {
-        return superCategories;
-    }
 
-    public void setSuperCategories(final List<String> superCategories) {
-        this.superCategories = superCategories;
-    }
-
-    public List<String> getAllSuperCategories() {
-        return allSuperCategories;
-    }
-
-    public void setAllSuperCategories(final List<String> allSuperCategories) {
-        this.allSuperCategories = allSuperCategories;
-    }
-
-    public List<String> getImagesContainerQualifiers() {
-        return imagesContainerQualifiers;
-    }
-
-    public void setImagesContainerQualifiers(final List<String> imagesContainerQualifiers) {
-        this.imagesContainerQualifiers = imagesContainerQualifiers;
-    }
-
-    public String getMainImageContainerQualifier() {
-        return mainImageContainerQualifier;
-    }
-
-    public void setMainImageContainerQualifier(final String mainImageContainerQualifier) {
-        this.mainImageContainerQualifier = mainImageContainerQualifier;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "B2BArticleChannelInfoData{" +
+                "article='" + article + '\'' +
+                ", articleUnit='" + articleUnit + '\'' +
+                ", articleName='" + articleName + '\'' +
+                ", articleDescription='" + articleDescription + '\'' +
+                ", code='" + code + '\'' +
+                ", visible=" + visible +
+                ", orderable=" + orderable +
+                ", sourcing='" + sourcing + '\'' +
+                ", division='" + division + '\'' +
+                ", material='" + material + '\'' +
+                ", codeWhg='" + codeWhg + '\'' +
+                ", supplierName='" + supplierName + '\'' +
+                ", defaultSupplier='" + defaultSupplier + '\'' +
+                ", otns=" + otns +
+                ", eans=" + eans +
+                ", predecessorCodes=" + predecessorCodes +
+                ", predecessorEans=" + predecessorEans +
+                ", predecessorOtns=" + predecessorOtns +
+                ", module='" + module + '\'' +
+                ", moduleGroup='" + moduleGroup + '\'' +
+                ", ownBrand='" + ownBrand + '\'' +
+                '}';
     }
 }

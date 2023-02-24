@@ -1,4 +1,4 @@
-package at.bumzack.solrwriter.dto;
+package at.bumzack.pimdbreader.dto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,10 +34,6 @@ public class B2BArticleChannelInfoData implements Serializable {
 
     private List<String> imagesContainerQualifiers;
     private String mainImageContainerQualifier;
-
-//    ; mainImageContainerQualifier ; string    ;                   ;                          ;                           ;                            ;                                     ;                                    ; xinetMainImageContainerQualifiersResolver  ;                             ;                          ;                                  ;                                                         ;
-//                   ; imagesContainerQualifiers
-//
 
     public B2BArticleChannelInfoData() {
     }
