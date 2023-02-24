@@ -33,7 +33,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class PimProductsDbReaderController {
     private static final Logger LOG = reactor.util.Loggers.getLogger(PimProductsDbReaderController.class);
 
-    // curl http://localhost:8091/solr/articles/0/5/12
+    // curl http://localhost:8091/solr/products/0/5/12
 
     @NonNull
     public Mono<ServerResponse> readProductsFromDbAndSendToSolrWriter(final ServerRequest request) throws WebClientResponseException {

@@ -54,7 +54,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"superCategories",              "type":"string",             "stored":true,"multiValued":true, indexed:"true" },
   "add-field":{       "name":"allSuperCategories",              "type":"string",             "stored":true,"multiValued":true, indexed:"true" },
   "add-field":{       "name":"imagesContainerQualifiers",              "type":"string",             "stored":true,"multiValued":true, indexed:"true" },
-  "add-field":{       "name":"mainImageContainerQualifier",              "type":"string",             "stored":true,"multiValued":true, indexed:"true" }  
+  "add-field":{       "name":"mainImageContainerQualifier",              "type":"string",             "stored":true,"multiValued":false, indexed:"true" }  
 }' http://localhost:8984/solr/products/schema
 
 
