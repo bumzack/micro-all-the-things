@@ -18,7 +18,7 @@ public class SolrService {
                 .addResponseField("id")
                 .addResponseField("code")
                 .addResponseField("mediaContainerQualifier")
-                .addResponseField("URL")
+                .addResponseField("url")
                 .addResponseField("width")
                 .addResponseField("height")
                 .addResponseField("channel")

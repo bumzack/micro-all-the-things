@@ -68,13 +68,14 @@ public class SearchArticleController {
                         final ArticleData article = (ArticleData) o;
                         LOG.error("No image found for {}", article.getArticle().getCode(), e.getMessage());
                     })
-                    .doOnNext(img->{
-                        LOG.info("Found image for  article code  {}, mainImageContainerQualifier {}",a.getCode(), a.getMainImageContainerQualifier());
+                    .doOnNext(img -> {
+                        LOG.info("Found image for  article code  {}, mainImageContainerQualifier {}", a.getCode(), a.getMainImageContainerQualifier());
+                        img.setURL("https://qstatic.rwa-test.at" + img.getURL());
                     })
                     .collectList()
                     .map(img -> convertToArticleData(a, img));
         }
-        LOG.info("No  mainImageContainerQualifier found on article code  {}",a.getCode());
+        LOG.info("No  mainImageContainerQualifier found on article code  {}", a.getCode());
         return Mono.just(convertToArticleData(a, null));
     }
 
