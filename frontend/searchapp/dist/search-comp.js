@@ -7,7 +7,7 @@ class SearchComp extends HTMLElement {
         });
     }
     createSearchApp() {
-        return `<input id="searchtext" class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">`;
+        return `<input id="searchtext"  grg="lala" type="search" class="form-control" placeholder="Search..." aria-label="Search"/>`;
     }
     connectedCallback() {
         this.innerHTML += this.createSearchApp();

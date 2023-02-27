@@ -13,7 +13,7 @@ cd /Users/gsc/stoff/mylogalyzer/solr-10.0.0-SNAPSHOT/bin
 ./solr delete -c products  -p 8984 
 ./solr delete -c categories  -p 8984 
 ./solr delete -c xinet  -p 8984 
-
+./solr delete -c images  -p 8984 
 
 ./solr create_core -c products  -p 8984 
 ./solr config -c products -p 8984 -action set-user-property -property update.autoCreateFields -value false
@@ -21,8 +21,8 @@ cd /Users/gsc/stoff/mylogalyzer/solr-10.0.0-SNAPSHOT/bin
 ./solr create_core -c categories  -p 8984 
 ./solr config -c categories -p 8984 -action set-user-property -property update.autoCreateFields -value false
 
-./solr create_core -c xinet  -p 8984 
-./solr config -c xinet -p 8984 -action set-user-property -property update.autoCreateFields -value false
+./solr create_core -c images  -p 8984 
+./solr config -c images -p 8984 -action set-user-property -property update.autoCreateFields -value false
 
 
 
@@ -82,7 +82,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"mediaFormat",              "type":"string",             "stored":true, indexed:"true" },
   "add-field":{       "name":"mime",              "type":"string",             "stored":true, indexed:"true" }
   
-}' http://localhost:8984/solr/xinet/schema
+}' http://localhost:8984/solr/images/schema
 
  
  
