@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @SolrDocument
 public class Image extends AbstractItem implements Serializable {
-    public static final ParameterizedTypeReference<SolrResponse<Image>> TYPE_REF_IMAGE = new ParameterizedTypeReference<SolrResponse<Image>>() {
+    public static final ParameterizedTypeReference<SolrResponse<Image>> TYPE_REF_IMAGE = new ParameterizedTypeReference<>() {
     };
 
     public static final ParameterizedTypeReference<SearchResult<Image>> TYPE_REF_SEARCH_RESULT_IMAGE= new ParameterizedTypeReference<>() {
@@ -91,5 +91,19 @@ public class Image extends AbstractItem implements Serializable {
 
     public void setMime(final String mime) {
         this.mime = mime;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "mediaContainerQualifier='" + mediaContainerQualifier + '\'' +
+                ", url='" + url + '\'' +
+                ", width='" + width + '\'' +
+                ", height='" + height + '\'' +
+                ", channel='" + channel + '\'' +
+                ", valid=" + valid +
+                ", mediaFormat='" + mediaFormat + '\'' +
+                ", mime='" + mime + '\'' +
+                '}';
     }
 }

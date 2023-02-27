@@ -24,30 +24,35 @@ class SearchResultComp extends HTMLElement {
     }
 
     connectedCallback() {
-        console.log("blalalalal");
+        console.log("search result comp connectedCallback");
         this.innerHTML += this.createSearchResultApp();
-        let doc = document.getElementById("searchapp");
+        let doc = document.getElementById("search-result-app");
 
         let that = this;
+        $("search-result-app").on("doSearch", function (a) {
+            console.log("a " + JSON.stringify(a, null, 4));
+        })
         doc.addEventListener("doSearch", (e: CustomEvent) => {
-            console.log(e.detail.searchText);
+
+            // https://stackoverflow.com/questions/511947/jquerys-ajax-is-causing-a-full-page-refresh-in-firefox
+            e.preventDefault();
+
+            // console.log(e.detail.searchText);
 
             //  ¯\_(ツ)_/¯
             //  https://github.com/microsoft/TypeScript/issues/28357
 
-            let searchText: string = e.detail.searchText;
+            let searchText = e.detail.searchText as string;
             console.log(`searchText: ${searchText}`);
 
             const searchRequest: SearchResult = {
-                code: null,
                 text: searchText,
                 start: 0,
                 pageSize: 50
             };
 
             let url = "http://localhost:8300/solr/search/article/text"
-            console.log(`sending POST to url ${url} with request data ${JSON.stringify(searchRequest)}`);
-
+            console.log(`sending POST to url ${url} with request data ${JSON.stringify(searchRequest, null, 4)}`);
 
             $.ajax({
                 url: url,
@@ -70,8 +75,8 @@ class SearchResultComp extends HTMLElement {
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(`error -   ${textStatus}`);
                     console.log(`error -   ${errorThrown}`);
-                    console.error(textStatus);
-                    console.error(errorThrown);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                 }
             });
         });
@@ -80,12 +85,14 @@ class SearchResultComp extends HTMLElement {
     displayArticles = (articles: Array<Article>): void => {
         $("#searchResultArticleList").empty();
         articles.forEach(article => {
-            console.log(`adding article ${article.article.code}`);
+            console.log(`adding article ${article.product.code}`);
 
             const htmlArticle = $(this.getArticleView());
-            $(htmlArticle).find(".article-name").text(article.article.articleName);
-            $(htmlArticle).find(".article-description").text(article.article.articleDescription.slice(0, 200));
-            $(htmlArticle).find(".article-code").text("Artikelnummer:" + article.article.code);
+            $(htmlArticle).find(".article-name").text(article.product.articleName);
+            if (article.product.articleDescription != null) {
+                $(htmlArticle).find(".article-description").text(article.product.articleDescription.slice(0, 200));
+            }
+            $(htmlArticle).find(".article-code").text("Artikelnummer:" + article.product.code);
 
             if (article.image !== null) {
                 console.log(`setting URL to  ${article.image.url}`);
@@ -102,15 +109,9 @@ class SearchResultComp extends HTMLElement {
                 <div class="card">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <svg class="bd-placeholder-img" width="100%" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                                <rect width="100%" height="100%">
-                                    <div width="100%" height="100%">
-                                        <img class="card-img-top article-image" style="height: 225px; width: 100%; display: block;">                            
-                                    </div>
-                                </rect>
-                            </svg>
-
+                            <div class="bd-placeholder-img" width="100%" height="250"  role="img" aria-label="Placeholder: Image"  focusable="false">
+                                <img class="card-img-top article-image" style="height: 225px; width: 100%; display: block;"/>                               
+                            </div>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
@@ -120,7 +121,7 @@ class SearchResultComp extends HTMLElement {
                             </div>
                         </div>
                     </div>
-                </div>>
+                </div>
             </div>
            `;
     }
@@ -132,11 +133,9 @@ class SearchResultComp extends HTMLElement {
                 <h1 class="h2 searchresult-text">Dashboard</h1> 
             </div>
             <div class="album py-5 bg-light">
-          
                 <div id="searchResult"  class="container">
                     <div id="searchResultArticleList" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    
-                    
+                   
                     </div>
                 </div>
            </div>`;

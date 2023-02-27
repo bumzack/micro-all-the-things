@@ -48,4 +48,13 @@ public class Category extends AbstractItem implements Serializable {
     public void setAllSuperCategories(final List<String> allSuperCategories) {
         this.allSuperCategories = allSuperCategories;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", superCategories=" + superCategories +
+                ", allSuperCategories=" + allSuperCategories +
+                '}';
+    }
 }

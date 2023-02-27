@@ -240,4 +240,33 @@ public class Product extends AbstractItem implements Serializable {
         this.mainImageContainerQualifier = mainImageContainerQualifier;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "article='" + article + '\'' +
+                ", articleUnit='" + articleUnit + '\'' +
+                ", articleName='" + articleName + '\'' +
+                ", articleDescription='" + articleDescription + '\'' +
+                ", visible=" + visible +
+                ", orderable=" + orderable +
+                ", sourcing='" + sourcing + '\'' +
+                ", division='" + division + '\'' +
+                ", material='" + material + '\'' +
+                ", codeWhg='" + codeWhg + '\'' +
+                ", supplierName='" + supplierName + '\'' +
+                ", defaultSupplier='" + defaultSupplier + '\'' +
+                ", otns=" + otns +
+                ", eans=" + eans +
+                ", predecessorCodes=" + predecessorCodes +
+                ", predecessorEans=" + predecessorEans +
+                ", predecessorOtns=" + predecessorOtns +
+                ", module='" + module + '\'' +
+                ", moduleGroup='" + moduleGroup + '\'' +
+                ", ownBrand='" + ownBrand + '\'' +
+                ", superCategories=" + superCategories +
+                ", allSuperCategories=" + allSuperCategories +
+                ", imagesContainerQualifiers=" + imagesContainerQualifiers +
+                ", mainImageContainerQualifier='" + mainImageContainerQualifier + '\'' +
+                '}';
+    }
 }

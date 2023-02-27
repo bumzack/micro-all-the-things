@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.Logger;
 import reactor.util.annotation.NonNull;
@@ -34,16 +35,51 @@ public class ImageSelectorController {
     @NonNull
     public Mono<ServerResponse> selectImageDesktop(final ServerRequest request) throws WebClientResponseException {
         LOG.info("ImageSelectorController got a request ");
-//        final Flux<Image> imageFlux = request.bodyToFlux(Image.class);
-//        final Flux<Image> sort = imageFlux.sort(this::imageSizesComparator);
-//        final Mono<Image> last = sort.last();
-//        //.log("imageSelector")
-////                .doOnNext(i -> {
-////                    LOG.info("found image found code {}, w x h:  {}x{}", i.getCode(), i.getWidth(), i.getHeight());
-////                })
-//        final Mono<ServerResponse> serverResponseMono = last.flatMap(image -> ServerResponse.ok().body(BodyInserters.fromValue(image)));
-//        return serverResponseMono;
+//        request.bodyToMono(String.class)
+//                .subscribe(i -> {
+//                    LOG.info("images list {}", i);
+//                });
 
+//        request.bodyToFlux(Image.class)
+//                .sort(this::imageSizesComparator)
+//                .        last()
+//                .log("imageSelector")
+//                .doOnNext(i -> {
+//                    LOG.info("found image found code {}, w x h:  {}x{}", i.getCode(), i.getWidth(), i.getHeight());
+//                })
+//                .doOnError((e) -> {
+//                    LOG.error("error: {} ", e);
+//                })
+//                .flatMap(image -> ServerResponse.ok().body(BodyInserters.fromValue(image)))
+//                .subscribe(i -> {
+//                    LOG.info("server response with 1 Image hopefully statuscode {},    i.tostring {}", i.statusCode(), i.toString());
+//                });
+
+
+        final Flux<Image> sort = request
+                .bodyToFlux(Image.class)
+                .sort(this::imageSizesComparator);
+        final Mono<Image> last = sort
+                .last()
+                .log("imageSelector")
+                .doOnNext(i -> {
+                    LOG.info("found image found code {}, w x h:  {}x{}", i.getCode(), i.getWidth(), i.getHeight());
+                })
+                .doOnError((e) -> {
+                    LOG.error("error: {} ", e);
+                });
+        final Mono<ServerResponse> serverResponseMono = last
+                .flatMap(image -> {
+                    LOG.info("returning image   {}", image);
+                    return ServerResponse.ok().body(BodyInserters.fromValue(image));
+                })
+                .log("last in controller");
+        return serverResponseMono;
+
+        // return dummyResponse();
+    }
+
+    private static Mono<ServerResponse> dummyResponse() {
         final var img = new Image();
         img.setChannel("bla");
         img.setUrl("bla");
@@ -51,6 +87,8 @@ public class ImageSelectorController {
         img.setHeight("bla");
         img.setMime("bla");
         img.setMediaContainerQualifier("qualifier");
+        img.setCode("code");
+        img.setId("id");
 
         return ServerResponse.ok().body(BodyInserters.fromValue(img));
     }

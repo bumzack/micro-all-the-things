@@ -2,9 +2,6 @@ class SearchComp extends HTMLElement {
     constructor() {
         super();
         console.log("constructor called");
-        this.addEventListener('cartLoaded', e => {
-            this.innerHTML = this.getCartDoc(e.detail);
-        });
     }
     createSearchApp() {
         return `<input id="searchtext"  grg="lala" type="search" class="form-control" placeholder="Search..." aria-label="Search"/>`;
@@ -16,7 +13,7 @@ class SearchComp extends HTMLElement {
             if (event.key === "Enter") {
                 if (txt.value != null) {
                     console.log("sending custom event with  search text: '", txt.value, "'");
-                    document.getElementById("searchapp").dispatchEvent(new CustomEvent('doSearch', {
+                    document.getElementById("search-result-app").dispatchEvent(new CustomEvent('doSearch', {
                         detail: {
                             "searchText": txt.value
                         }

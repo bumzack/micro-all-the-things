@@ -5,11 +5,6 @@ class SearchComp extends HTMLElement {
     constructor() {
         super();
         console.log("constructor called");
-
-        this.addEventListener('cartLoaded', e => {
-            // @ts-ignore
-            this.innerHTML = this.getCartDoc(e.detail);
-        });
     }
 
     createSearchApp() {
@@ -28,7 +23,7 @@ class SearchComp extends HTMLElement {
                     // @ts-ignore
                     console.log("sending custom event with  search text: '", txt.value, "'");
 
-                    document.getElementById("searchapp").dispatchEvent(
+                    document.getElementById("search-result-app").dispatchEvent(
                         new CustomEvent('doSearch', {
                             detail: {
                                 "searchText": txt.value

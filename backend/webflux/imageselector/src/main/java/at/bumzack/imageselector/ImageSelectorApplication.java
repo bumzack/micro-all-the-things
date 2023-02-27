@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 						description = "ATS Client Backend",
 						url = "http://localhost:8100")
 		})
-
 public class ImageSelectorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ImageSelectorApplication.class, args);

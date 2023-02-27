@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 						description = "ATS Client Backend",
 						url = "http://localhost:8300")
 		})
-
 public class SearchArticleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SearchArticleApplication.class, args);

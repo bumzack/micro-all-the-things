@@ -21,7 +21,6 @@ this.addEventListener('doSearch', e => {
     // @ts-ignore
     console.log("main: event 'doSearch' received. searchtext ", JSON.stringify(e.detail, null, 5));
 // @ts-ignore
-    this.innerHTML = this.getCartDoc(e.detail);
 });
 
 console.log("main ");

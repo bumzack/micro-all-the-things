@@ -12,13 +12,13 @@ public class SolrExecutor {
     public static <T> Mono<SolrResponse<T>> executeSolrGet(final ParameterizedTypeReference<SolrResponse<T>> typeRef, final String url) {
         LOG.info("solr GET to URL:   \n{}\n", url);
 
-        getWebClient(url)
-                .get()
-                .retrieve()
-                .bodyToMono(String.class)
-                .subscribe(res -> {
-                    LOG.info("raw string response {}", res);
-                });
+//        getWebClient(url)
+//                .get()
+//                .retrieve()
+//                .bodyToMono(String.class)
+//                .subscribe(res -> {
+//                    LOG.info("raw string response {}", res);
+//                });
 
         return getWebClient(url)
                 .get()

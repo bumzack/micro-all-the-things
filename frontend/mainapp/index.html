@@ -104,9 +104,9 @@
         </div>
 
         <div class="d-flex align-items-center">
-            <form class="w-100 me-3" role="search">
+            <div class="w-100 me-3" role="search">
                 <search-comp id="searchapp"></search-comp>
-            </form>
+            </div>
 
             <div class="flex-shrink-0 dropdown">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -133,28 +133,22 @@
 
 
         <article class="my-3" id="card">
-            <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-                <p>davor</p>
-                <cartegory-comp id="categoryapp"></cartegory-comp>
-                <p>danach</p>
-            </div>
+            <category-comp id="categoryapp"></category-comp>
 
             <div>
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
                         <div class="row  row-cols-1 row-cols-md-2 g-4">
-                            <search-result-comp></search-result-comp>
+                            <search-result-comp id="search-result-app"></search-result-comp>
                         </div>
                     </div>
                 </div>
-
             </div>
         </article>
 
 
     </section>
 </div>
-
 
 
 <script src="http://localhost:3000/dist/main.js"></script>
@@ -167,6 +161,7 @@
 <script type="module" src="http://www.bumzack.at:3012/dist/search-comp.js"></script>
 <script type="module" src="http://www.bumzack.at:3013/dist/search-result-comp.js"></script>
 <script type="module" src="http://www.bumzack.at:3014/dist/category-comp.js"></script>
+
 
 </body>
 </html>

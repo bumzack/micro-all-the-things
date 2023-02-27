@@ -27,4 +27,12 @@ public class ArticleData implements Serializable {
     public void setImage(final Image image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "ArticleData{" +
+                "product=" + product +
+                ", image=" + image +
+                '}';
+    }
 }

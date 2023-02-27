@@ -33,6 +33,7 @@ import reactor.util.annotation.NonNull;
 import java.util.Collection;
 import java.util.List;
 
+import static at.bumzack.dto.Image.TYPE_REF_SEARCH_RESULT_IMAGE;
 import static at.bumzack.dto.Product.TYPE_REF_SEARCH_RESULT_PRODUCT;
 import static java.util.Objects.nonNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -53,7 +54,7 @@ public class SearchArticleController {
     }
 
     private String getImageUrl() {
-        return "http://localhost:8202/solr/search/image/";
+        return "http://localhost:8202/solr/search/image";
     }
 
     private String getImageSelectorUrl() {
@@ -79,13 +80,33 @@ public class SearchArticleController {
                         LOG.error("No image found for {}", article.getProduct().getCode(), e.getMessage());
                     })
                     .doOnNext(img -> {
-                        LOG.info("Found image for  article code  {}, mainImageContainerQualifier {}", a.getCode(), a.getMainImageContainerQualifier());
+                        LOG.info("Found image for  article code  {}, mainImageContainerQualifier {},   image = {}", a.getCode(), a.getMainImageContainerQualifier(), img);
                         img.setUrl("https://qstatic.rwa-test.at" + img.getUrl());
                     })
+                    .switchIfEmpty(Flux.empty())
+                    .log("after switch empty")
+                    .doOnNext(i -> {
+                        LOG.info("doOnNext   after switch empty   image ={} ", i);
+                    })
+                    .doOnError(i -> {
+                        LOG.error("doOnError after switch empty   image ={} ", i);
+                    })
                     .collectList()
-                    .flatMapMany(i -> findDesktopImageFromService(webClient, i))
+                    .doOnNext(l -> {
+                        LOG.info("got a list of images wth size {}", l.size());
+                    })
+                    .doOnError(i -> {
+                        LOG.error("doOnError after collectList ", i);
+                    })
+                    .flatMapMany(images -> findDesktopImageFromService(webClient, images))
+                    .doOnNext(l -> {
+                        LOG.info("got ONE image after calling ImageSelectorService  image = {}", l);
+                    })
                     .next()
-                    .map(i -> convertToArticleData(a, i));
+                    .map(i -> convertToArticleData(a, i))
+                    .doOnNext(l -> {
+                        LOG.info("final ArticleData   = {}", l);
+                    });
         }
         LOG.info("No  mainImageContainerQualifier found on article code  {}", a.getCode());
         return Mono.just(convertToArticleData(a, null));
@@ -103,12 +124,13 @@ public class SearchArticleController {
                     LOG.error("No image found for requestData.code {} / requestData.text {}");
                 })
                 .doOnNext(e -> {
-                    LOG.info("article code found '{}'", e.getCode());
+                    LOG.info("image with code found '{}'     image: {}", e.getCode(), e);
                 });
     }
 
     private ArticleData convertToArticleData(final Product product, final Image img) {
         final var articleData = new ArticleData();
+        LOG.info("convertToArticleData    article with code found '{}'     image with code: {}", product.getCode(), nonNull(img) ? img.getCode() : "no image found");
         articleData.setImage(img);
         articleData.setProduct(product);
         return articleData;
@@ -198,11 +220,38 @@ public class SearchArticleController {
 
     private Flux<Image> fetchImages(final WebClient webClient, final String url, final String imageContainerQualifier) {
         LOG.info("searching for image  imageContainerQualifier {}", imageContainerQualifier);
-        return webClient.get()
+
+        final String uri = url + "/" + imageContainerQualifier;
+        webClient.get()
+                .uri(uri)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribe(s -> {
+                    LOG.info("response from {} -> {}", uri, s);
+                });
+
+        final Flux<Image> objectFlux = webClient.get()
                 .uri(url + "/" + imageContainerQualifier)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(Image.class);
+                .bodyToMono(TYPE_REF_SEARCH_RESULT_IMAGE)
+                .flatMapMany(e -> {
+                    // wtf ?
+                    LOG.info("SolrResponseResponse<Image> {}", e);
+                    if (nonNull(e) && nonNull(e.getItems())) {
+                        return Flux.fromIterable(e.getItems());
+                    }
+                    LOG.info("no images found for imageContainerQualifier {}", imageContainerQualifier);
+                    return Flux.empty();
+                })
+                .onErrorContinue(WebClientResponseException.NotFound.class, (e, o) -> {
+                    LOG.error("ERROR    no image found for imageContainerQualifier {}", imageContainerQualifier);
+                })
+                .doOnNext(e -> {
+                    LOG.info("image found '{}'", e.getCode());
+                });
+        return objectFlux;
     }
 
     @RouterOperations({
