@@ -10,13 +10,22 @@ java/archiv/
 
 archiv_fe/
 
-**/*.zip
-**/.mvn
-**/.idea
-**/.DS_Store
-**/target
-**/node_modules
+*.zip
+.mvn
+.idea
+.DS_Store
+target
+node_modules
 
 **/meilisearch
 
 target
+
+JQuery-TypeScript-Boilerplate
+micro-frontends-examples
+parcel-project-template
+
+.parcel*
+presentation
+archiv
+rust

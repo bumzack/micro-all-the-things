@@ -1,13 +1,10 @@
-
-
 // Custom Event names
-export const doSearchClickEvent = "doSearch";
-export const doCategoryClickEvent = "doCategoryFilter";
+export const DO_SEARCH_EVENT = "doSearch";
+export const DO_CATEGORY_FILTER = "doCategoryFilter";
 
 // App IDs
-export const idSearchResultApp = "search-result-app";
+export const ID_SEARCH_RESULT_APP = "search-result-app";
 
 // custome element tags
-export const tagCategoryCode = "categorycode";
-export const tagCategoryDepth = "depth";
-
+export const TAG_CATEGORY_CODE = "categorycode";
+export const TAG_CATEGORY_DEPTH= "depth";

@@ -1,0 +1,1 @@
+{"mappings":"AAAAA,QAAQC,IAAI","sources":["src/app.ts"],"sourcesContent":["console.log(`hello from single shop`);\n\nexport {};"],"names":["console","log"],"version":3,"file":"index.52e8e946.js.map"}
