@@ -1,0 +1,6 @@
+{
+  "ext": "js, css, html,ts",
+  "execMap": {
+    "ts": "npm run compile"
+  }
+}
