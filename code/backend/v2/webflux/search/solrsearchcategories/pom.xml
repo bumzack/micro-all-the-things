@@ -14,7 +14,7 @@
 	<name>solrsearchcategories</name>
 	<description>SolR search categories</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>19</java.version>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux -->
