@@ -1,5 +1,6 @@
-package at.bumzack.solrsearch;
+package at.bumzack.solrsearch.config;
 
+import at.bumzack.solrsearch.SearchArticleController;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;

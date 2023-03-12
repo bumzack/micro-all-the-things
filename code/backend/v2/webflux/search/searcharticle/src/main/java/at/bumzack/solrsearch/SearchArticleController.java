@@ -5,6 +5,7 @@ import at.bumzack.dto.ArticleData;
 import at.bumzack.dto.Image;
 import at.bumzack.dto.Product;
 import at.bumzack.search.SearchRequestData;
+import at.bumzack.solrsearch.exception.NotificationException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -259,14 +260,14 @@ public class SearchArticleController {
                     method = POST,
                     operation = @Operation(operationId = "searchByArticleCode",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = SearchRequestData.class))),
-                            responses = {@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Collection.class)))),
+                            responses = {@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArticleData.class)))),
                             })
             ),
             @RouterOperation(path = "/solr/search/article/text",
                     method = POST,
                     operation = @Operation(operationId = "searchByText",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = SearchRequestData.class))),
-                            responses = {@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Collection.class)))),
+                            responses = {@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ArticleData.class)))),
                             })
             )
     })
