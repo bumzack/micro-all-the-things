@@ -19,6 +19,10 @@ public class NewBackend {
     @JsonProperty("publish_as_frontend_package")
     private boolean publishAsFrontendPackage;
 
+    @JsonProperty("api_client_package")
+    private String apiClientPackage;
+
+
     public NewBackend() {
     }
 
@@ -80,7 +84,16 @@ public class NewBackend {
                 ", technologyId=" + technologyId +
                 ", apiClientPrefix='" + apiClientPrefix + '\'' +
                 ", publishAsFrontendPackage=" + publishAsFrontendPackage +
+                ", apiClientPackage='" + apiClientPackage + '\'' +
                 '}';
+    }
+
+    public String getApiClientPackage() {
+        return apiClientPackage;
+    }
+
+    public void setApiClientPackage(String apiClientPackage) {
+        this.apiClientPackage = apiClientPackage;
     }
 
     public String getApiClientPrefix() {

@@ -29,6 +29,9 @@ public class Backend {
     private Integer hostId;
 
 
+    @JsonProperty("api_client_package")
+    private String apiClientPackage;
+
     public Backend() {
     }
 
@@ -125,6 +128,16 @@ public class Backend {
                 ", publishAsFrontendPackage=" + publishAsFrontendPackage +
                 ", openApiClient='" + openApiClient + '\'' +
                 ", hostId=" + hostId +
+                ", apiClientPackage='" + apiClientPackage + '\'' +
                 '}';
     }
+
+    public String getApiClientPackage() {
+        return apiClientPackage;
+    }
+
+    public void setApiClientPackage(String apiClientPackage) {
+        this.apiClientPackage = apiClientPackage;
+    }
+
 }

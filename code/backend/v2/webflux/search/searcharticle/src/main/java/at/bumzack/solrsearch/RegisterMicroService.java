@@ -47,6 +47,8 @@ public class RegisterMicroService {
     @Value("${local.repo.path}")
     private String localRepoPath;
 
+    @Value("${apiclient.package}")
+    private String apiClientPackage;
 
     @Bean
     public CommandLineRunner readFromApiServer() {
@@ -123,6 +125,7 @@ public class RegisterMicroService {
                 be.setPublishAsFrontendPackage(publishAsFrontendPackage);
                 be.setTechnologyId(technology.getId());
                 be.setApiClientPrefix(apiClientPrefix);
+                be.setApiClientPackage(apiClientPackage);
                 return be;
             }
         };
