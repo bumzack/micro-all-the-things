@@ -2,7 +2,10 @@ package at.bumzack.microthingisregistry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NewBackend {
+public class Backend {
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("service_url")
     private String serviceUri;
     @JsonProperty("openapi_url")
@@ -19,11 +22,25 @@ public class NewBackend {
     @JsonProperty("publish_as_frontend_package")
     private boolean publishAsFrontendPackage;
 
+    @JsonProperty("openapiclient")
+    private String openApiClient;
+
+    @JsonProperty("host_id")
+    private Integer hostId;
+
+
     @JsonProperty("api_client_package")
     private String apiClientPackage;
 
+    public Backend() {
+    }
 
-    public NewBackend() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getServiceUri() {
@@ -66,6 +83,14 @@ public class NewBackend {
         this.technologyId = technologyId;
     }
 
+    public String getApiClientPrefix() {
+        return apiClientPrefix;
+    }
+
+    public void setApiClientPrefix(String apiClientPrefix) {
+        this.apiClientPrefix = apiClientPrefix;
+    }
+
     public boolean isPublishAsFrontendPackage() {
         return publishAsFrontendPackage;
     }
@@ -74,16 +99,35 @@ public class NewBackend {
         this.publishAsFrontendPackage = publishAsFrontendPackage;
     }
 
+    public String getOpenApiClient() {
+        return openApiClient;
+    }
+
+    public void setOpenApiClient(String openApiClient) {
+        this.openApiClient = openApiClient;
+    }
+
+    public Integer getHostId() {
+        return hostId;
+    }
+
+    public void setHostId(Integer hostId) {
+        this.hostId = hostId;
+    }
+
     @Override
     public String toString() {
-        return "NewBackend{" +
-                "serviceUri='" + serviceUri + '\'' +
+        return "Backend{" +
+                "id=" + id +
+                ", serviceUri='" + serviceUri + '\'' +
                 ", openapiUrl='" + openapiUrl + '\'' +
                 ", localRepoPath='" + localRepoPath + '\'' +
                 ", microserviceId='" + microserviceId + '\'' +
                 ", technologyId=" + technologyId +
                 ", apiClientPrefix='" + apiClientPrefix + '\'' +
                 ", publishAsFrontendPackage=" + publishAsFrontendPackage +
+                ", openApiClient='" + openApiClient + '\'' +
+                ", hostId=" + hostId +
                 ", apiClientPackage='" + apiClientPackage + '\'' +
                 '}';
     }
@@ -96,11 +140,4 @@ public class NewBackend {
         this.apiClientPackage = apiClientPackage;
     }
 
-    public String getApiClientPrefix() {
-        return apiClientPrefix;
-    }
-
-    public void setApiClientPrefix(String apiClientPrefix) {
-        this.apiClientPrefix = apiClientPrefix;
-    }
 }
