@@ -4,6 +4,7 @@ dist/*
 
 solr-10.0.0-SNAPSHOT/
 
+tmp
 
 meilisearch/
 java/archiv/

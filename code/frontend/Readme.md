@@ -17,3 +17,6 @@
 npm config set registry https://registry.npmjs.org/
 ```
 
+extract .d.ts file from .ts file
+
+node_modules/typescript/bin/tsc --declaration ../../common/const.ts
