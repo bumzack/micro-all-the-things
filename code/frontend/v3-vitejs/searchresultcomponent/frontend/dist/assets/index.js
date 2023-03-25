@@ -45,6 +45,8 @@ var __publicField = (obj, key, value) => {
     fetch(link.href, fetchOpts);
   }
 })();
+const DO_SEARCH_EVENT = "doSearch";
+const ID_SEARCH_RESULT_APP = "search-result-component";
 window.$ = window.jQuery = jQuery;
 class SearchResultComp extends HTMLElement {
   constructor() {
@@ -73,6 +75,48 @@ class SearchResultComp extends HTMLElement {
     this.searchButtonClickHandler();
   }
   searchButtonClickHandler() {
+    let that = this;
+    let doc = document.getElementById(ID_SEARCH_RESULT_APP);
+    if (doc !== null) {
+      doc.addEventListener(DO_SEARCH_EVENT, (e) => {
+        e.preventDefault();
+        let st = e.detail;
+        let searchText = st.searchText;
+        console.log(`searchText: ${searchText}`);
+        const searchRequest = {
+          text: searchText,
+          start: 0,
+          pageSize: 50
+        };
+        let url = "http://localhost:8300/solr/search/article/text";
+        console.log(`sending POST to url ${url} with request data ${JSON.stringify(searchRequest, null, 4)}`);
+        $.ajax({
+          url,
+          type: "POST",
+          data: JSON.stringify(searchRequest),
+          contentType: "application/json",
+          success: function(data, textStatus) {
+            console.log(`success - textStatus   ${JSON.stringify(textStatus, null, 4)}`);
+            console.log(`success - found articles ${JSON.stringify(data, null, 4)}`);
+            if (data !== null && data.length > 0) {
+              const articles = data;
+              that.displayArticles(articles);
+              $(".searchresult-text").text(articles.length + " Artikel gefunden");
+            } else {
+              $(".searchresult-text").text(`Suche nach '${searchText}"' hat keine Artikel gefunden.`);
+            }
+            const cnt = data.length;
+            console.log(`success - found articles ${cnt}`);
+          },
+          error: function(_jqXHR, textStatus, errorThrown) {
+            console.log(`error -   ${textStatus}`);
+            console.log(`error -   ${errorThrown}`);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      });
+    }
   }
   getArticleView() {
     return ` 

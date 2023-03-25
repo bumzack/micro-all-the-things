@@ -1,7 +1,10 @@
 /// <reference path ="../node_modules/@types/jquery/JQuery.d.ts"/>
+/// <reference path ="../../../common/const.d.ts"/>
 
 
 // https://isotropic.co/how-to-fix-the-property-does-not-exist-on-type-window-error-in-typescript/
+import KeyDownEvent = JQuery.KeyDownEvent;
+
 declare global {
     interface Window { // ⚠️ notice that "Window" is capitalized here
         $: any;
@@ -11,7 +14,7 @@ declare global {
 
 window.$ = window.jQuery = jQuery;
 
-import {DO_SEARCH_EVENT, ID_SEARCH_RESULT_APP} from "../../../common/const";
+import {SearchText} from "../../../common/dtos";
 
 class SearchComp extends HTMLElement {
 
@@ -30,9 +33,8 @@ class SearchComp extends HTMLElement {
 
         const txt = <HTMLInputElement>document.getElementById("searchtext");
 
-        jQuery("#searchtext").keydown((event) => {
+        jQuery("#searchtext").keydown((event:KeyDownEvent) => {
             if (event.key === "Enter") {
-                // @ts-ignore
                 if (txt.value != null) {
                     // @ts-ignore
                     console.log("sending custom event with  search text: '", txt.value, "'");
@@ -40,7 +42,7 @@ class SearchComp extends HTMLElement {
                     const doc = document.getElementById(ID_SEARCH_RESULT_APP);
                     if (doc !== null ) {
                         doc.dispatchEvent(
-                            new CustomEvent(DO_SEARCH_EVENT, {
+                            new CustomEvent<SearchText>(DO_SEARCH_EVENT, {
                                 detail: {
                                     "searchText": txt.value
                                 }
