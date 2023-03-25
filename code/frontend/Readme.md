@@ -8,3 +8,12 @@
 
 
 "build": "rm dist/* &&  yarn parcel build src/index.html && ./blupp.sh",
+
+
+
+## uninstall verdaccio
+
+```
+npm config set registry https://registry.npmjs.org/
+```
+

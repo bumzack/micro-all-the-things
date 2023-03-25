@@ -1,8 +1,6 @@
 /// <reference path ="../node_modules/@types/jquery/jquery.d.ts"/>
 /// <amd-dependency>
 
-import {Article, SearchResult} from "../../common/dtos";
-import {doCategoryClickEvent, doSearchClickEvent, idSearchResultApp} from "../../common/const";
 
 class SearchResultComp extends HTMLElement {
 
