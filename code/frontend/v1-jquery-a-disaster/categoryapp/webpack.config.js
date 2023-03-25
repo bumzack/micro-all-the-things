@@ -1,4 +1,4 @@
-//webpack.config.js
+//___webpack.config.1js
 const path = require('path');
 
 module.exports = {
