@@ -16,7 +16,7 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
         LOG.info("cors !!!");
         corsRegistry.addMapping("/**")
                 .allowedOrigins("http://www.bumzack.at", "http://www.bumzack.at:3000", "http://localhost:3000", "http://locahost:3001", "http://localhost:3002")
-                .allowedMethods("POST",  "PUT")
+                .allowedMethods("POST", "PUT")
                 .maxAge(3600);
     }
 }

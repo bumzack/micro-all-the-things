@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 
 import java.nio.charset.StandardCharsets;
 
-public class BodyCaptureRequest  extends ServerHttpRequestDecorator {
+public class BodyCaptureRequest extends ServerHttpRequestDecorator {
     private final StringBuilder body = new StringBuilder();
 
     public BodyCaptureRequest(ServerHttpRequest delegate) {
@@ -19,7 +19,7 @@ public class BodyCaptureRequest  extends ServerHttpRequestDecorator {
     }
 
     private void capture(DataBuffer buffer) {
-        this.body.append(StandardCharsets.UTF_8.decode(buffer.asByteBuffer()).toString());
+        this.body.append(StandardCharsets.UTF_8.decode(buffer.asByteBuffer()));
     }
 
     public String getFullBody() {

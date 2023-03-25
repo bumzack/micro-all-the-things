@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -13,14 +12,20 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.config.EnableWebFlux;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 import reactor.core.publisher.Mono;
+import reactor.util.Logger;
+import reactor.util.Loggers;
 
-import java.util.Arrays;
+import java.util.List;
 
 
-@EnableWebFluxSecurity
 @Configuration
-public class SecurityConfig {
+@EnableWebFlux
+public class SecurityConfig implements WebFluxConfigurer {
+
+    private static final Logger LOG = Loggers.getLogger(SecurityConfig.class);
 
     private static final String LOCALHOST = "http://localhost:3000";
 
@@ -36,6 +41,7 @@ public class SecurityConfig {
 
     @Bean
     CorsConfigurationSource corsConfiguration() {
+        LOG.info("corsConfiguration");
         final CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.applyPermitDefaultValues();
         corsConfig.addAllowedMethod(HttpMethod.PUT);
@@ -43,7 +49,7 @@ public class SecurityConfig {
         corsConfig.addAllowedMethod(HttpMethod.OPTIONS);
         corsConfig.addAllowedMethod(HttpMethod.GET);
         corsConfig.addAllowedMethod(HttpMethod.POST);
-        corsConfig.setAllowedOrigins(Arrays.asList(LOCALHOST));
+        corsConfig.setAllowedOrigins(List.of(LOCALHOST));
 
         final UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
@@ -53,7 +59,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springWebFilterChain(final ServerHttpSecurity http) {
-        final String[] patternsPublic = new String[]{"/api/*", "swagger-ui.html"};    // , "/v3/**", "/v3/api-docs/", "swagger-ui.html", "/webjars/swagger-ui/**"
+        LOG.info("springWebFilterChain");
+        final String[] patternsPublic = new String[]{"/api/*", "swagger-ui.html", "/v3/*", "/v3/api-docs/"};    // , "/v3/**", "/v3/api-docs/", "swagger-ui.html", "/webjars/swagger-ui/**"
         //  final String[] patternsSecured = new String[]{SECURED_BASE_PATH + "/**"};
 
         return http.cors()

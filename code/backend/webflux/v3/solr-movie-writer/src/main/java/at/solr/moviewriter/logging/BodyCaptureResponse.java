@@ -13,18 +13,18 @@ public class BodyCaptureResponse extends ServerHttpResponseDecorator {
 
     private final StringBuilder body = new StringBuilder();
 
-    public BodyCaptureResponse(  final  ServerHttpResponse delegate) {
+    public BodyCaptureResponse(final ServerHttpResponse delegate) {
         super(delegate);
     }
 
     @Override
-    public Mono<Void> writeWith(  final Publisher<? extends DataBuffer> body) {
-      final Flux<DataBuffer> buffer = Flux.from(body);
+    public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
+        final Flux<DataBuffer> buffer = Flux.from(body);
         return super.writeWith(buffer.doOnNext(this::capture));
     }
 
-    private void capture(  final DataBuffer buffer) {
-        this.body.append(StandardCharsets.UTF_8.decode(buffer.asByteBuffer()).toString());
+    private void capture(final DataBuffer buffer) {
+        this.body.append(StandardCharsets.UTF_8.decode(buffer.asByteBuffer()));
     }
 
     public String getFullBody() {

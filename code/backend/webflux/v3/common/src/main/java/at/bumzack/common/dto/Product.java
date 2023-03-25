@@ -13,7 +13,7 @@ public class Product extends AbstractItem implements Serializable {
     public static final ParameterizedTypeReference<SolrResponse<Product>> TYPE_REF_PRODUCT = new ParameterizedTypeReference<>() {
     };
 
-    public static final ParameterizedTypeReference<SearchResult<Product>> TYPE_REF_SEARCH_RESULT_PRODUCT= new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SearchResult<Product>> TYPE_REF_SEARCH_RESULT_PRODUCT = new ParameterizedTypeReference<>() {
     };
 
     private static final long serialVersionUID = 3L;

@@ -8,6 +8,10 @@ import static java.util.Objects.isNull;
 public class WebClientFactory {
     private static WebClient client = null;
 
+    private WebClientFactory() {
+        // empty on purpose
+    }
+
     @Deprecated(since = "use singleton stuff")
     public static WebClient getWebClient(final String url) {
         return WebClient.builder()
@@ -18,10 +22,6 @@ public class WebClientFactory {
                         .build())
                 .baseUrl(url)
                 .build();
-    }
-
-    private WebClientFactory() {
-        // empty on purpose
     }
 
     public static final WebClient getClient() {

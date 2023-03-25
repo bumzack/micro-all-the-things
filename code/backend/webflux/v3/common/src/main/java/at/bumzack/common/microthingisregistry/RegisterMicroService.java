@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.Logger;
+import reactor.util.Loggers;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +21,7 @@ import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.*
 
 @Service
 public class RegisterMicroService {
-    private static final Logger LOG = reactor.util.Loggers.getLogger(RegisterMicroService.class);
+    private static final Logger LOG = Loggers.getLogger(RegisterMicroService.class);
 
     @Value("${server.port}")
     private String serverPort;
@@ -51,6 +52,7 @@ public class RegisterMicroService {
 
     @Bean
     public CommandLineRunner readFromApiServer() {
+        LOG.info("readFromApiServer");
         final Path currentRelativePath = Paths.get("");
         final String blupp = currentRelativePath.toAbsolutePath().toString();
         LOG.info("Current absolute path is: " + blupp);

@@ -12,7 +12,7 @@ public class Image extends AbstractItem implements Serializable {
     public static final ParameterizedTypeReference<SolrResponse<Image>> TYPE_REF_IMAGE = new ParameterizedTypeReference<>() {
     };
 
-    public static final ParameterizedTypeReference<SearchResult<Image>> TYPE_REF_SEARCH_RESULT_IMAGE= new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SearchResult<Image>> TYPE_REF_SEARCH_RESULT_IMAGE = new ParameterizedTypeReference<>() {
     };
 
     private static final long serialVersionUID = 2L;

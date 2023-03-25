@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateBackendOpenApi {
 
     @JsonProperty("openapiclient")
-  private String openApiClient;
+    private String openApiClient;
 
     public UpdateBackendOpenApi() {
     }

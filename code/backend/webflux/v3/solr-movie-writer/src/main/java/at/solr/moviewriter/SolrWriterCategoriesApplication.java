@@ -1,6 +1,5 @@
 package at.solr.moviewriter;
 
-import at.bumzack.common.microthingisregistry.RegisterMicroService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.servers.Server;
@@ -19,13 +18,18 @@ import org.springframework.context.annotation.ComponentScan;
         })
 public class SolrWriterCategoriesApplication {
 
-    private final RegisterMicroService registerMicroService;
-
-    public SolrWriterCategoriesApplication(RegisterMicroService registerMicroService) {
-        this.registerMicroService = registerMicroService;
-    }
+//    private final RegisterMicroService registerMicroService;
+//
+//    public SolrWriterCategoriesApplication(final RegisterMicroService registerMicroService) {
+//        this.registerMicroService = registerMicroService;
+//    }
 
     public static void main(String[] args) {
-        SpringApplication.run(SolrWriterCategoriesApplication.class, args);
+        try {
+            SpringApplication.run(SolrWriterCategoriesApplication.class, args);
+        } catch (final Exception e) {
+            System.out.println("exception " + e.getMessage());
+            System.out.println(e);
+        }
     }
 }

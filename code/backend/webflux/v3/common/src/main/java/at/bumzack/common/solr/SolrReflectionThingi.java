@@ -38,7 +38,7 @@ public class SolrReflectionThingi {
 
         res.addAll(names);
         res.addAll(names2);
-        
+
         return res;
     }
 }
