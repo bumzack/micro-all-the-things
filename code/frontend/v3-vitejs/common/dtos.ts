@@ -59,3 +59,9 @@ export interface SearchResult {
     pageSize: number,
     start: number,
 }
+
+
+export interface SearchText{
+        searchText: string
+
+}

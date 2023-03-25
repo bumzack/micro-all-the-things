@@ -1,5 +1,6 @@
-import {Article} from "../../../common/dtos";
-// import { ID_SEARCH_RESULT_APP} from "../../../common/const";
+/// <reference path ="../../../common/const.d.ts"/>
+
+import {Article, SearchResult, SearchText} from "../../../common/dtos";
 
 
 // https://isotropic.co/how-to-fix-the-property-does-not-exist-on-type-window-error-in-typescript/
@@ -39,57 +40,61 @@ class SearchResultComp extends HTMLElement {
     }
 
     private searchButtonClickHandler() {
-        // let that = this;
-        // let doc = document.getElementById(ID_SEARCH_RESULT_APP);
+        let that = this;
+        let doc = document.getElementById(ID_SEARCH_RESULT_APP);
 
-        // doc.addEventListener(DO_SEARCH_EVENT, (e: CustomEvent) => {
-        //
-        //     // https://stackoverflow.com/questions/511947/jquerys-ajax-is-causing-a-full-page-refresh-in-firefox
-        //     e.preventDefault();
-        //
-        //     // console.log(e.detail.searchText);
-        //
-        //     //  ¯\_(ツ)_/¯
-        //     //  https://github.com/microsoft/TypeScript/issues/28357
-        //
-        //     let searchText = e.detail.searchText as string;
-        //     console.log(`searchText: ${searchText}`);
-        //
-        //     const searchRequest: SearchResult = {
-        //         text: searchText,
-        //         start: 0,
-        //         pageSize: 50
-        //     };
-        //
-        //     let url = "http://localhost:8300/solr/search/article/text"
-        //     console.log(`sending POST to url ${url} with request data ${JSON.stringify(searchRequest, null, 4)}`);
-        //
-        //     // $.ajax({
-        //     //     url: url,
-        //     //     type: "POST",
-        //     //     data: JSON.stringify(searchRequest),
-        //     //     contentType: 'application/json',
-        //     //     success: function (data, textStatus, jqXHR) {
-        //     //         console.log(`success - textStatus   ${JSON.stringify(textStatus, null, 4)}`);
-        //     //         console.log(`success - found articles ${JSON.stringify(data, null, 4)}`);
-        //     //         if (data !== null && data.length > 0) {
-        //     //             const articles = data as Array<Article>;
-        //     //             that.displayArticles(articles);
-        //     //             $(".searchresult-text").text(articles.length + " Artikel gefunden");
-        //     //         } else {
-        //     //             $(".searchresult-text").text(`Suche nach '${searchText}"' hat keine Artikel gefunden.`);
-        //     //         }
-        //     //         const cnt = data.length;
-        //     //         console.log(`success - found articles ${cnt}`);
-        //     //     },
-        //     //     error: function (jqXHR, textStatus, errorThrown) {
-        //     //         console.log(`error -   ${textStatus}`);
-        //     //         console.log(`error -   ${errorThrown}`);
-        //     //         console.log(textStatus);
-        //     //         console.log(errorThrown);
-        //     //     }
-        //     // });
-        // });
+        if (doc !== null) {
+
+            doc.addEventListener(DO_SEARCH_EVENT, (e:any ) => {
+
+                // https://stackoverflow.com/questions/511947/jquerys-ajax-is-causing-a-full-page-refresh-in-firefox
+                e.preventDefault();
+
+                // console.log(e.detail.searchText);
+
+                //  ¯\_(ツ)_/¯
+                //  https://github.com/microsoft/TypeScript/issues/28357
+
+                let st = e.detail as SearchText;
+                let searchText =st.searchText ;
+                console.log(`searchText: ${searchText}`);
+
+                const searchRequest: SearchResult = {
+                    text: searchText,
+                    start: 0,
+                    pageSize: 50
+                };
+
+                 let url = "http://localhost:8300/solr/search/article/text"
+                 console.log(`sending POST to url ${url} with request data ${JSON.stringify(searchRequest, null, 4)}`);
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: JSON.stringify(searchRequest),
+                    contentType: 'application/json',
+                    success: function (data, textStatus) {
+                        console.log(`success - textStatus   ${JSON.stringify(textStatus, null, 4)}`);
+                        console.log(`success - found articles ${JSON.stringify(data, null, 4)}`);
+                        if (data !== null && data.length > 0) {
+                            const articles = data as Array<Article>;
+                            that.displayArticles(articles);
+                            $(".searchresult-text").text(articles.length + " Artikel gefunden");
+                        } else {
+                            $(".searchresult-text").text(`Suche nach '${searchText}"' hat keine Artikel gefunden.`);
+                        }
+                        const cnt = data.length;
+                        console.log(`success - found articles ${cnt}`);
+                    },
+                    error: function (_jqXHR, textStatus, errorThrown) {
+                        console.log(`error -   ${textStatus}`);
+                        console.log(`error -   ${errorThrown}`);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
+            });
+        }
     }
 
     displayArticles = (articles: Array<Article>): void => {
