@@ -36,7 +36,6 @@ import reactor.util.annotation.NonNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.stream.Stream;
@@ -67,7 +66,7 @@ public class TsvFileReaderController {
                     final var webClient = WebClientFactory.getClient();
                     final var url = getSolrWriterServiceUrl(type);
                     final var tsvFilename = getTsvFilename(type);
-                    final Path path = Paths.get(tsvFilename);
+                    final var path = Paths.get(tsvFilename);
                     final var start = req.getStart();
                     final var pageSize = req.getPageSize();
                     LOG.info("processing request {}", req);
@@ -81,7 +80,10 @@ public class TsvFileReaderController {
                         final var msg = "TSV reader error " + e.getMessage() + " processing file  " + tsvFilename + ". target URL " + url;
                         return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BodyInserters.fromValue(msg));
                     }
-                    final var count = execRequests(webClient, url, lines, start, pageSize);
+                    final var count = execRequests(webClient, url, lines, start, pageSize)
+                            .doOnError(e -> {
+                                LOG.error("an error occurred while requesting a POST to ratings {}", e);
+                            });
                     return count
                             .flatMap(c -> {
                                 final var msg = "TSV reader processed " + c + " items. items sent to " + url;
@@ -92,7 +94,7 @@ public class TsvFileReaderController {
 
     private Mono<Long> execRequests(final WebClient webClient, final String url, final Stream<String> lines, final int start, final int pageSize) {
         return Flux.fromStream(lines)
-                .skip(start)
+                .skip(start + 1)          // always skip header
                 .take(pageSize)
                 .map(this::mapToTsvLine)
                 .delayElements(Duration.ofMillis(2L))

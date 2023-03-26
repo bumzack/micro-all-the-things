@@ -8,17 +8,17 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"at.bumzack.common.microthingisregistry", "at.bumzack.solr"})
-public class SolrCrewWriterApplication {
+public class SolrRatingWriterApplication {
 
     private final RegisterMicroService registerMicroService;
 
-    public SolrCrewWriterApplication(final RegisterMicroService registerMicroService) {
+    public SolrRatingWriterApplication(final RegisterMicroService registerMicroService) {
         this.registerMicroService = registerMicroService;
     }
 
     public static void main(String[] args) {
         try {
-            SpringApplication.run(SolrCrewWriterApplication.class, args);
+            SpringApplication.run(SolrRatingWriterApplication.class, args);
         } catch (final Exception e) {
             System.out.println("error " + e.getMessage());
             System.out.println(e);

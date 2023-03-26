@@ -1,7 +1,7 @@
 package at.bumzack.solr;
 
 
-import at.bumzack.common.dto.Crew;
+import at.bumzack.common.dto.Rating;
 import at.bumzack.common.dto.TsvLine;
 import at.bumzack.common.solr.SolrUtils;
 import at.bumzack.common.webflux.WebClientFactory;
@@ -31,18 +31,18 @@ import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
-import static at.bumzack.common.tsv.TsvUtils.getList;
+import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
 import static java.util.Objects.isNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-@Controller("SolrCrewWriterController")
+@Controller("SolrRatingWriterController")
 @CrossOrigin
-public class SolrCrewWriterController {
+public class SolrRatingWriterController {
 
     private static final String SCHEMA = "http";
     private static final String COMMAND = "/update?commitWithin=10000&overwrite=true&wt=json";
-    private static final Logger LOG = Loggers.getLogger(SolrCrewWriterController.class);
+    private static final Logger LOG = Loggers.getLogger(SolrRatingWriterController.class);
 
     @Value("${solr.host}")
     private String solrHost;
@@ -63,11 +63,11 @@ public class SolrCrewWriterController {
     }
 
     @NonNull
-    public Mono<ServerResponse> addCrew(final ServerRequest request) throws WebClientResponseException {
+    public Mono<ServerResponse> addRating(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
                 .doOnSuccess(tsv -> {
-                    LOG.info("processing crew {}", tsv);
+                    LOG.info("processing rating {}", tsv);
                 })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
@@ -75,43 +75,43 @@ public class SolrCrewWriterController {
         final var webClient = WebClientFactory.getClient();
 
         return tsvLine
-                .map(this::mapToCrew)
+                .map(this::mapToRating)
                 .flatMap(a -> execSolrPost(webClient, a));
     }
 
-    private Crew mapToCrew(final TsvLine tsvLine) {
-        final Crew crew = new Crew();
+    private Rating mapToRating(final TsvLine tsvLine) {
+        final Rating rating = new Rating();
         final List<String> entries = tsvLine.getEntries();
-        crew.setTconst(entries.get(0));
-        crew.setDirectors(getList(entries.get(1)));
-        crew.setWriters(getList(entries.get(2)));
-        crew.setId(crew.getTconst());
+        rating.setTconst(entries.get(0));
+        rating.setAverageRating(getNullableValue(entries.get(1)));
+        rating.setNumVotes(getNullableValue(entries.get(2)));
+        rating.setId(rating.getTconst());
 
-        return crew;
+        return rating;
     }
 
-    private Mono<ServerResponse> execSolrPost(final WebClient webClient, final Crew crew) {
+    private Mono<ServerResponse> execSolrPost(final WebClient webClient, final Rating rating) {
         final var url = getSolrUrl();
 
         return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept()
-                .body(BodyInserters.fromValue(List.of(crew)))
+                .body(BodyInserters.fromValue(List.of(rating)))
                 .retrieve()
                 .bodyToMono(String.class)
                 //  .doOnNext(e -> LOG.info("movie solr response {}", e))
-                .doOnError(e -> LOG.error("crew  error from Solr '{}'", e.getMessage()))
+                .doOnError(e -> LOG.error("rating  error from Solr '{}'", e.getMessage()))
 //                .doOnSuccess(s -> {
 //                    // LOG.info("movie solr success {}", s);
 //                })
-                .flatMap(e -> ServerResponse.ok().body(BodyInserters.fromValue("crew  SolrWriter says: all good")));
+                .flatMap(e -> ServerResponse.ok().body(BodyInserters.fromValue("rating  SolrWriter says: all good")));
     }
 
     @RouterOperations({
-            @RouterOperation(path = "/api/crew",
+            @RouterOperation(path = "/api/rating",
                     method = POST,
-                    operation = @Operation(operationId = "addCrewToSolr",
+                    operation = @Operation(operationId = "addRatingToSolr",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = TsvLine.class))),
                             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = String.class))),
                             })
@@ -119,11 +119,11 @@ public class SolrCrewWriterController {
     })
 
     @Bean
-    public RouterFunction<ServerResponse> solrCrewRoutes() {
+    public RouterFunction<ServerResponse> solrRatingRoutes() {
         return route()
                 .nest(RequestPredicates.path("/api/"),
                         builder -> builder
-                                .POST("crew", this::addCrew)
+                                .POST("rating", this::addRating)
                                 .build())
                 .build();
     }

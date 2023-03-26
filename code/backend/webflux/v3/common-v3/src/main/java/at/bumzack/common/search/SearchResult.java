@@ -28,7 +28,7 @@ public class SearchResult<ITEM extends AbstractItem> implements Serializable {
     @Override
     public String toString() {
         return "SearchResult{" +
-                "list=" + items.stream().map(AbstractItem::getCode).collect(Collectors.joining(" / ")) +
+                "list=" + items.stream().map(AbstractItem::getId).collect(Collectors.joining(" / ")) +
                 '}';
     }
 }

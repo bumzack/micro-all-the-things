@@ -86,7 +86,7 @@ public class SolrEpisodeWriterController {
         episode.setParentTconst(getNullableValue(entries.get(1)));
         episode.setSeasonNumber(getNullableValue(entries.get(2)));
         episode.setEpisodeNumber(getNullableValue(entries.get(3)));
-        episode.setId(episode.getTconst() + episode.getParentTconst());
+        episode.setId(episode.getTconst() + "_" + episode.getParentTconst());
 
         return episode;
     }
