@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common-v3" />
+        <module name="common (1)" />
+        <module name="solrmoviewriter" />
+        <module name="common (2)" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="19" />
+      <module name="searchstuff" target="19" />
+      <module name="untitled" target="19" />
+      <module name="v1" target="19" />
+      <module name="webflux" target="19" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common" options="-parameters" />
+      <module name="common (1)" options="-parameters" />
+      <module name="common (2)" options="-parameters" />
+      <module name="common-v3" options="-parameters" />
+      <module name="solrmoviewriter" options="-parameters" />
+    </option>
+  </component>
+</project>
