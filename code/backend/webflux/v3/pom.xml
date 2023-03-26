@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>at.bumzack</groupId>
-    <artifactId>webflux</artifactId>
+    <artifactId>v3-webflux</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
