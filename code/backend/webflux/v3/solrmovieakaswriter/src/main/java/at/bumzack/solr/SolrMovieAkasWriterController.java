@@ -1,7 +1,7 @@
 package at.bumzack.solr;
 
 
-import at.bumzack.common.dto.Movie;
+import at.bumzack.common.dto.MovieAkas;
 import at.bumzack.common.dto.TsvLine;
 import at.bumzack.common.solr.SolrUtils;
 import at.bumzack.common.webflux.WebClientFactory;
@@ -38,13 +38,15 @@ import static java.util.Objects.isNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-@Controller("SolrMovieWriterController")
+@Controller("SolrMovieAkasWriterController")
 @CrossOrigin
-public class SolrMovieWriterController {
+public class SolrMovieAkasWriterController {
 
-    public static final String SCHEMA = "http";
-    public static final String COMMAND = "/update?commitWithin=10000&overwrite=true&wt=json";
-    private static final Logger LOG = Loggers.getLogger(SolrMovieWriterController.class);
+    private static final Logger LOG = Loggers.getLogger(SolrMovieAkasWriterController.class);
+
+    private static final String COMMAND = "/update?commitWithin=10000&overwrite=true&wt=json";
+    private static final String SCHEMA = "http";
+
     @Value("${solr.host}")
     private String solrHost;
 
@@ -56,69 +58,65 @@ public class SolrMovieWriterController {
 
     private String solrUrl = null;
 
-    private String getSolrUrl() {
+    private String getSolrUrl(final String solrHost, final String solrPort, final String solrCore, final String command, final String schema) {
         if (isNull(solrUrl)) {
-            solrUrl = SolrUtils.getSolrUrl(solrHost, solrPort, solrCore, COMMAND, SCHEMA);
+            solrUrl = SolrUtils.getSolrUrl(solrHost, solrPort, solrCore, command, schema);
         }
         return solrUrl;
     }
 
     @NonNull
-    public Mono<ServerResponse> addMovie(final ServerRequest request) throws WebClientResponseException {
+    public Mono<ServerResponse> addMovieAka(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
                 .doOnSuccess(tsv -> {
-                    LOG.info("processing movie {}", tsv);
+                    LOG.info("processing movieAka {}", tsv);
                 })
                 .doOnError(e -> {
-                    LOG.error("error    {}", e);
+                    LOG.error("error movieAka   {}", e);
                 });
         final var webClient = WebClientFactory.getClient();
 
         return tsvLine
-                .map(this::mapToMovie)
+                .map(this::mapToMovieAka)
                 .flatMap(a -> execSolrPost(webClient, a));
     }
 
-    private Movie mapToMovie(final TsvLine tsvLine) {
-        final Movie movie = new Movie();
-        final List<String> entries = tsvLine.getEntries();
-        movie.setTconst(entries.get(0));
-        movie.setTitleType(getNullableValue(entries.get(1)));
-        movie.setPrimaryTitle(getNullableValue(entries.get(2)));
-        movie.setOriginalTitle(getNullableValue(entries.get(3)));
-        movie.setAdult(getBoolean(entries.get(4)));
-        movie.setStartYear(getNullableValue(entries.get(5)));
-        movie.setEndYear(getNullableValue(entries.get(6)));
-        movie.setRuntimeMinutes(getNullableValue(entries.get(7)));
-        movie.setGenres(getList(entries.get(8)));
-        movie.setId(movie.getTconst());
-
-        return movie;
+    private MovieAkas mapToMovieAka(final TsvLine t) {
+        final MovieAkas movieAkas = new MovieAkas();
+        final List<String> entries = t.getEntries();
+        movieAkas.setTitleId(entries.get(0));
+        movieAkas.setOrdering(getNullableValue(entries.get(1)));
+        movieAkas.setTitle(getNullableValue(entries.get(2)));
+        movieAkas.setRegion(getNullableValue(entries.get(3)));
+        movieAkas.setLanguage(getNullableValue(entries.get(4)));
+        movieAkas.setTypes(getList(entries.get(5)));
+        movieAkas.setAttributes(getList(entries.get(6)));
+        movieAkas.setOriginalTitle(getBoolean(entries.get(7)));
+        movieAkas.setId(String.join("_", movieAkas.getTitleId(), movieAkas.getOrdering()));
+        return movieAkas;
     }
 
-    private Mono<ServerResponse> execSolrPost(final WebClient webClient, final Movie movie) {
-        final var url = getSolrUrl();
+    private Mono<ServerResponse> execSolrPost(final WebClient webClient, final MovieAkas movieAka) {
+        final String url = getSolrUrl(solrHost, solrPort, solrCore, COMMAND, SCHEMA);
+        LOG.info("processing movieAka {}", movieAka);
 
         return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept()
-                .body(BodyInserters.fromValue(List.of(movie)))
+                .body(BodyInserters.fromValue(List.of(movieAka)))
                 .retrieve()
                 .bodyToMono(String.class)
-                //  .doOnNext(e -> LOG.info("movie solr response {}", e))
-                .doOnError(e -> LOG.error("movie  error from Solr '{}'", e.getMessage()))
-//                .doOnSuccess(s -> {
-//                    // LOG.info("movie solr success {}", s);
-//                })
-                .flatMap(e -> ServerResponse.ok().body(BodyInserters.fromValue("movie  SolrWriter says: all good")));
+                //       .doOnNext(e -> LOG.info("movieaka solr response {}", e))
+                .doOnError(e -> LOG.error("movieaka  error from Solr '{}'", e.getMessage()))
+                .flatMap(e -> ServerResponse.ok().body(BodyInserters.fromValue("movieaka  SolrWriter says: all good")));
     }
 
     @RouterOperations({
-            @RouterOperation(path = "/api/movie",
+            @RouterOperation(path = "/solr/movieaka",
                     method = POST,
-                    operation = @Operation(operationId = "addMovieToSolr",
+                    operation = @Operation(operationId = "addMovieAkaToSolr",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = TsvLine.class))),
                             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = String.class))),
                             })
@@ -126,11 +124,11 @@ public class SolrMovieWriterController {
     })
 
     @Bean
-    public RouterFunction<ServerResponse> solrRoutes() {
+    public RouterFunction<ServerResponse> solrMovieAkaRoutes() {
         return route()
                 .nest(RequestPredicates.path("/api/"),
                         builder -> builder
-                                .POST("movie", this::addMovie)
+                                .POST("movieaka", this::addMovieAka)
                                 .build())
                 .build();
     }
