@@ -8,27 +8,9 @@
     <cargoProject FILE="$PROJECT_DIR$/code/backend/rust/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="fmt &amp; cleanup">
-      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/src/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/datasupply.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/readme_git_checkout_tags.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/readme_rust.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="readmes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/search/SearchResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/search/SearchResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/java/at/bumzack/solr/SolrEpisodeWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/java/at/bumzack/solr/SolrEpisodeWriterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrCrewWriterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrRatingWriterApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrCrewWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrRatingWriterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/start_tsv_reader.md" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start_tsv_reader.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/readme_rust.md" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/readme_rust.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +242,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679816010449</updated>
       <workItem from="1679819692854" duration="150000" />
-      <workItem from="1679829322383" duration="28638000" />
+      <workItem from="1679829322383" duration="29971000" />
     </task>
     <task id="LOCAL-00001" summary="missing services for entities">
       <created>1679859333410</created>
@@ -276,7 +258,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679859365588</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="readmes">
+      <created>1679865772174</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679865772174</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +286,8 @@
     <MESSAGE value="writing movies works" />
     <MESSAGE value="missing services for entities" />
     <MESSAGE value="fmt &amp; cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="fmt &amp; cleanup" />
+    <MESSAGE value="readmes" />
+    <option name="LAST_COMMIT_MESSAGE" value="readmes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
