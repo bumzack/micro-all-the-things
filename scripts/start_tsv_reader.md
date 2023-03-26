@@ -32,7 +32,7 @@ curl -X POST   http://localhost:8984/solr/movieaka/update/json?commitWithin=100&
 ## CREW
 
 ```
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 10000, "pageSize": 2}'
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 0,  "end": 10000, "pageSize": 2}'
 ```
 
 
@@ -49,6 +49,10 @@ curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/j
 
 ```
 curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 10000, "pageSize": 2}'
+```
+
+```
+curl -X POST   http://localhost:8984/solr/rating/update/json?commitWithin=100&overwrite=true&wt=json   -H  "Content-Type: application/json" -d '[{"id" : "tt0000001", "tconst" : "tt0000001" , "averageRating":"5", "numVotes" : "23" }]'
 ```
 
 
