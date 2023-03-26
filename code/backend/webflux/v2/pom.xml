@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
     <groupId>at.bumzack</groupId>
     <artifactId>searchstuff</artifactId>
-    <name>searchstuff</name>
-    <description>searchstuff</description>
+    <name>webflux v2</name>
+    <description>webflux v2</description>
 
     <modules>
         <module>common</module>
