@@ -2,11 +2,9 @@ package at.bumzack.common.dto;
 
 import at.bumzack.common.search.SearchResult;
 import at.bumzack.common.solr.SolrResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 
 import java.io.Serializable;
-import java.util.List;
 
 @SolrDocument
 public class Episode extends AbstractItem implements Serializable {

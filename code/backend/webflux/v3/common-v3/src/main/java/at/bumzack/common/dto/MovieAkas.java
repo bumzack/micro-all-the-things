@@ -14,7 +14,7 @@ public class MovieAkas extends AbstractItem implements Serializable {
     public static final ParameterizedTypeReference<SolrResponse<MovieAkas>> TYPE_REF_MOVIEAKAS = new ParameterizedTypeReference<>() {
     };
 
-    public static final ParameterizedTypeReference<SearchResult<MovieAkas>> TYPE_REF_SEARCH_RESULT_MOVIEAKAS  = new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SearchResult<MovieAkas>> TYPE_REF_SEARCH_RESULT_MOVIEAKAS = new ParameterizedTypeReference<>() {
     };
 
     private static final long serialVersionUID = 3L;
