@@ -7,6 +7,13 @@
         <option value="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" />
         <option value="$PROJECT_DIR$/code/backend/webflux/v2/pom.xml" />
         <option value="$PROJECT_DIR$/code/backend/webflux/v1/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrcrewwriter/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/pom.xml" />
+        <option value="$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/pom.xml" />
       </list>
     </option>
   </component>

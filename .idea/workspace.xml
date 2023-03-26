@@ -3,26 +3,34 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/code/backend/rust/datasupply/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/code/backend/rust/Cargo.toml" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v1/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v1/webflux-v1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/common/common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/common/webflux-v2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v2/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/webflux-v2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/react-vite.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/scripts.iml" beforeDir="false" />
+    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="readmes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/readme_rust.md" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/readme_rust.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="package.json" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MacroExpansionManager">
@@ -37,41 +45,91 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
-    </option>
   </component>
   <component name="ProjectId" id="2NXgnuGOdvWEYN5Y71JkBWiYZ8n" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;zulu-19&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "zulu-19",
+    "last_opened_file_path": "/Users/gsc/stoff/micro-all-the-things/code/backend/rust/datasupply",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
+    "spring.configuration.checksum": "59e071adbfd8fa2c4145ca740cb2992b"
   }
-}</component>
-  <component name="RunManager">
-    <configuration name="SolrMovieWriterApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="at.bumzack.solr.SolrMovieWriterApplication" />
-      <module name="solrmoviewriter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="at.bumzack.solr.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply" />
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader" />
+      <recent name="$PROJECT_DIR$/code/backend/webflux/v3" />
+      <recent name="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff" />
+      <recent name="$PROJECT_DIR$/scripts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="at.bumzack.solr.SolrMovieAkasWriterController" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="at.bumzack.common.dto" />
+      <recent name="at.bumzack.common.tsv" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.TsvFileReaderApplication">
+    <configuration name="Run rust_tsvfilereader" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package rust_tsvfilereader --bin rust_tsvfilereader" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/code/backend/rust" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
       <method v="2">
-        <option name="Make" enabled="true" />
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package micro-all-the-things --bin micro-all-the-things" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
@@ -87,11 +145,93 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SolrCrewWriterApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solprincipalwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrPrincipalWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrratingwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrRatingWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication (3)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrpersonwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrPersonWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrepisodewriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrEpisodeWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrMovieAkasWriterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="solrmoviewriter (1)" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrMovieAkasWriterApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="at.bumzack.solr.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrMovieWriterApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrcrewwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrCrewWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrMovieWriterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="solrmoviewriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrMovieWriterApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="at.bumzack.solr.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TsvFileReaderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="tsvfilereader" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.tsvfilereader.TsvFileReaderApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="at.bumzack.tsvfilereader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SolrMovieWriterApplication" />
+        <item itemvalue="Spring Boot.TsvFileReaderApplication" />
+        <item itemvalue="Cargo.Run rust_tsvfilereader" />
+        <item itemvalue="Spring Boot.SolrMovieAkasWriterApplication" />
+        <item itemvalue="Spring Boot.SolrMovieWriterApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="externalLinter" value="Clippy" />
+    <option name="runExternalLinterOnTheFly" value="true" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -101,7 +241,87 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1679816010449</updated>
+      <workItem from="1679819692854" duration="150000" />
+      <workItem from="1679829322383" duration="29971000" />
     </task>
+    <task id="LOCAL-00001" summary="missing services for entities">
+      <created>1679859333410</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679859333410</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fmt &amp; cleanup">
+      <created>1679859365588</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679859365588</updated>
+    </task>
+    <task id="LOCAL-00003" summary="readmes">
+      <created>1679865772174</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679865772174</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="writing movies works" />
+    <MESSAGE value="missing services for entities" />
+    <MESSAGE value="fmt &amp; cleanup" />
+    <MESSAGE value="readmes" />
+    <option name="LAST_COMMIT_MESSAGE" value="readmes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/SolrMovieAkasWriterController.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/SolrMovieAkasWriterController.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

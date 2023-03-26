@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/solrmoviewriter.iml" filepath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/solrmoviewriter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/datasupply.iml" filepath="$PROJECT_DIR$/datasupply.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imdb_data/imdb_data.iml" filepath="$PROJECT_DIR$/imdb_data/imdb_data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/code/backend/rust/rust.iml" filepath="$PROJECT_DIR$/code/backend/rust/rust.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scripts/scripts.iml" filepath="$PROJECT_DIR$/scripts/scripts.iml" />
     </modules>
   </component>
 </project>

@@ -7,9 +7,16 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common-v3" />
+        <module name="tsvfilereader" />
+        <module name="solrmoviewriter (1)" />
+        <module name="solrcrewwriter" />
+        <module name="solrratingwriter" />
         <module name="common (1)" />
-        <module name="solrmoviewriter" />
+        <module name="solprincipalwriter" />
         <module name="common (2)" />
+        <module name="solrmoviewriter" />
+        <module name="solrepisodewriter" />
+        <module name="solrpersonwriter" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,7 +33,14 @@
       <module name="common (1)" options="-parameters" />
       <module name="common (2)" options="-parameters" />
       <module name="common-v3" options="-parameters" />
+      <module name="solprincipalwriter" options="-parameters" />
+      <module name="solrcrewwriter" options="-parameters" />
+      <module name="solrepisodewriter" options="-parameters" />
       <module name="solrmoviewriter" options="-parameters" />
+      <module name="solrmoviewriter (1)" options="-parameters" />
+      <module name="solrpersonwriter" options="-parameters" />
+      <module name="solrratingwriter" options="-parameters" />
+      <module name="tsvfilereader" options="-parameters" />
     </option>
   </component>
 </project>
