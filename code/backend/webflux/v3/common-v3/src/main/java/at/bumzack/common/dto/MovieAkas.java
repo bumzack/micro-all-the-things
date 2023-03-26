@@ -11,15 +11,14 @@ import java.util.List;
 @SolrDocument
 public class MovieAkas extends AbstractItem implements Serializable {
 
-    public static final ParameterizedTypeReference<SolrResponse<MovieAkas>> TYPE_REF_PERSON = new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SolrResponse<MovieAkas>> TYPE_REF_MOVIEAKAS = new ParameterizedTypeReference<>() {
     };
 
-    public static final ParameterizedTypeReference<SearchResult<MovieAkas>> TYPE_REF_SEARCH_RESULT_PERSON = new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SearchResult<MovieAkas>> TYPE_REF_SEARCH_RESULT_MOVIEAKAS  = new ParameterizedTypeReference<>() {
     };
 
     private static final long serialVersionUID = 3L;
 
-    private String id;
     private String titleId;
     private String ordering;
     private String title;
@@ -29,19 +28,9 @@ public class MovieAkas extends AbstractItem implements Serializable {
     private List<String> attributes;
     private boolean originalTitle;
 
-
     public MovieAkas() {
     }
 
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(final String id) {
-        this.id = id;
-    }
 
     public String getTitleId() {
         return titleId;
@@ -112,7 +101,7 @@ public class MovieAkas extends AbstractItem implements Serializable {
         final var typesStr = StringUtils.joinWith(" // ", types);
         final var attributesStr = StringUtils.joinWith(" // ", attributes);
         return "MovieAkas{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 "titleId='" + titleId + '\'' +
                 ", ordering=" + ordering +
                 ", title='" + title + '\'' +

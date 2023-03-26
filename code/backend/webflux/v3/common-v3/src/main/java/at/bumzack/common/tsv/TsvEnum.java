@@ -5,8 +5,8 @@ public enum TsvEnum {
     MOVIE,
     PERSON,
     CREW,
-    RATINGS,
-    EPISODES,
+    RATING,
+    EPISODE,
     PRINCIPAL,
     MOVIEAKA
 

@@ -126,7 +126,7 @@ public class SolrMovieWriterController {
     })
 
     @Bean
-    public RouterFunction<ServerResponse> solrRoutes() {
+    public RouterFunction<ServerResponse> solrMovieRoutes() {
         return route()
                 .nest(RequestPredicates.path("/api/"),
                         builder -> builder

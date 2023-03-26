@@ -10,9 +10,19 @@
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v2/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrcrewwriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrcrewwriter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java" charset="UTF-8" />

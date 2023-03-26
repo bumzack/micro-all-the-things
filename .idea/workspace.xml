@@ -5,87 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="writing movies works">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/consolestorage/flexible_search_region.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/consolestorage/solr_region.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/ts_external_references.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/micro-all-the-things.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Movie.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/MovieAkas.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/TsvLine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/solr/SolrUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvFileImportRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/SolrMovieAkasWriterApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/SolrMovieAkasWriterController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/config/ControllerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/config/CorsGlobalConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/stuff/AuthenticationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/java/at/bumzack/solr/stuff/SecurityContextRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff/BodyCaptureExchange.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff/BodyCaptureRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff/BodyCaptureResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff/CustomWebFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff/RequestLoggingFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/config/ControllerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/config/CorsGlobalConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/stuff/AuthenticationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/stuff/SecurityContextRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/consolestorage/flexible_search_region.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/consolestorage/solr_region.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/imdb_data.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/name.basics.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.akas.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.basics.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.crew.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.episode.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.principals.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imdb_data/title.ratings.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/start_tsv_reader.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Crew.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/common-v3.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/ArticleData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Category.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Company.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Image.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/microthingisregistry/RegisterMicroService.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/microthingisregistry/RegisterMicroService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/AbstractItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/AbstractItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Movie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/MovieAkas.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/MovieAkas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Rating.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Rating.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/solrmoviewriter.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/solr_schema.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/solr_schema.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/start_tsv_reader.md" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start_tsv_reader.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +73,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "zulu-19",
-    "last_opened_file_path": "/Users/gsc/stoff/micro-all-the-things/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff",
+    "last_opened_file_path": "/Users/gsc/stoff/micro-all-the-things/code/backend/webflux/v3",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -152,9 +87,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/backend/webflux/v3" />
       <recent name="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff" />
       <recent name="$PROJECT_DIR$/scripts" />
-      <recent name="$PROJECT_DIR$/code/backend/webflux/v3" />
     </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="at.bumzack.solr.SolrMovieAkasWriterController" />
@@ -164,7 +99,7 @@
       <recent name="at.bumzack.common.tsv" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SolrMovieAkasWriterApplication">
+  <component name="RunManager" selected="Spring Boot.SolrMovieWriterApplication (1)">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="common" />
       <method v="2">
@@ -178,6 +113,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SolrCrewWriterApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solprincipalwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrPrincipalWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrratingwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrCrewWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication (3)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrpersonwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrPersonWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrCrewWriterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrepisodewriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrEpisodeWriterApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SolrMovieAkasWriterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="solrmoviewriter (1)" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrMovieAkasWriterApplication" />
@@ -187,6 +150,13 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolrMovieWriterApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="solrcrewwriter" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrCrewWriterApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -220,7 +190,7 @@
       <option name="presentableId" value="Default" />
       <updated>1679816010449</updated>
       <workItem from="1679819692854" duration="150000" />
-      <workItem from="1679829322383" duration="19514000" />
+      <workItem from="1679829322383" duration="23044000" />
     </task>
     <servers />
   </component>

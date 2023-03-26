@@ -83,6 +83,7 @@ public class Person extends AbstractItem implements Serializable {
         final var knownForTitlesStr = StringUtils.joinWith(" // ", knownForTitles);
         return "Person{" +
                 "nconst='" + nconst + '\'' +
+                ", id='" + getId() + '\'' +
                 ", primaryName='" + primaryName + '\'' +
                 ", birthYear='" + birthYear + '\'' +
                 ", deathYear='" + deathYear + '\'' +

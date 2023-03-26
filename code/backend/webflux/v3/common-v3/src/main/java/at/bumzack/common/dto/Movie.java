@@ -11,15 +11,14 @@ import java.util.List;
 @SolrDocument
 public class Movie extends AbstractItem implements Serializable {
 
-    public static final ParameterizedTypeReference<SolrResponse<Movie>> TYPE_REF_PERSON = new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SolrResponse<Movie>> TYPE_REF_MOVIE = new ParameterizedTypeReference<>() {
     };
 
-    public static final ParameterizedTypeReference<SearchResult<Movie>> TYPE_REF_SEARCH_RESULT_PERSON = new ParameterizedTypeReference<>() {
+    public static final ParameterizedTypeReference<SearchResult<Movie>> TYPE_REF_SEARCH_RESULT_MOVIE = new ParameterizedTypeReference<>() {
     };
 
     private static final long serialVersionUID = 3L;
 
-    private String id;
     private String tconst;
     private String titleType;
     private String primaryTitle;
@@ -37,7 +36,7 @@ public class Movie extends AbstractItem implements Serializable {
     public String toString() {
         final var genreStr = StringUtils.joinWith(" // ", genres);
         return "Movie{" +
-                "id='" + id + '\'' +
+                "id='" + getId() + '\'' +
                 ", tconst='" + tconst + '\'' +
                 ", titleType='" + titleType + '\'' +
                 ", primaryTitle='" + primaryTitle + '\'' +
@@ -48,16 +47,6 @@ public class Movie extends AbstractItem implements Serializable {
                 ", runtimeMinutes=" + runtimeMinutes +
                 ", genres=" + genreStr +
                 '}';
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(final String id) {
-        this.id = id;
     }
 
     public String getTconst() {

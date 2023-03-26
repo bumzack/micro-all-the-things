@@ -17,7 +17,7 @@ curl -X POST   http://localhost:8984/solr/movie/update/json?commitWithin=100&ove
 ## MOVIEAKAS
 
 ```
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA ",  "start": 1,  "end": 10000, "pageSize": 35403199}'
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 10000, "pageSize": 35403199}'
 ```
 
 ```
@@ -29,3 +29,38 @@ curl -X POST   http://localhost:8984/solr/movieaka/update/json?commitWithin=100&
 ```
 
 
+## CREW
+
+```
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 10000, "pageSize": 2}'
+```
+
+
+
+## PERSON
+
+```
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 10000, "pageSize": 2}'
+```
+
+
+
+## RATING
+
+```
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 10000, "pageSize": 2}'
+```
+
+
+## EPISODE
+
+```
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 10000, "pageSize": 2}'
+```
+
+
+## PRINCIPAL
+
+```
+curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 10000, "pageSize": 2}'
+```

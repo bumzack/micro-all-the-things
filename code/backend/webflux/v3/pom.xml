@@ -15,10 +15,15 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>solrmoviewriter</module>
         <module>common-v3</module>
         <module>tsvfilereader</module>
+        <module>solrmoviewriter</module>
         <module>solrmovieakaswriter</module>
+        <module>solrcrewwriter</module>
+        <module>solrratingwriter</module>
+        <module>solrepisodewriter</module>
+        <module>solrprincipalwriter</module>
+        <module>solrpersonwriter</module>
     </modules>
 
     <properties>
