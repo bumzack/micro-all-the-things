@@ -3,22 +3,30 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/code/backend/rust/datasupply/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/code/backend/rust/Cargo.toml" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="writing movies works">
-      <change afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Crew.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="fmt &amp; cleanup">
+      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_principalwriter/src/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/datasupply.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/readme_git_checkout_tags.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/readme_rust.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/AbstractItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/AbstractItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Movie.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Movie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/MovieAkas.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/MovieAkas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Rating.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/dto/Rating.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/tsv/TsvEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmovieakaswriter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/SolrMovieWriterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/search/SearchResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/src/main/java/at/bumzack/common/search/SearchResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/java/at/bumzack/solr/SolrEpisodeWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/java/at/bumzack/solr/SolrEpisodeWriterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrepisodewriter/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrpersonwriter/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrprincipalwriter/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrCrewWriterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrRatingWriterApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrCrewWriterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/java/at/bumzack/solr/SolrRatingWriterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrratingwriter/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/start_tsv_reader.md" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/start_tsv_reader.md" afterDir="false" />
     </list>
@@ -31,6 +39,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="package.json" />
       </list>
     </option>
   </component>
@@ -56,6 +65,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2NXgnuGOdvWEYN5Y71JkBWiYZ8n" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -73,12 +83,13 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "zulu-19",
-    "last_opened_file_path": "/Users/gsc/stoff/micro-all-the-things/code/backend/webflux/v3",
+    "last_opened_file_path": "/Users/gsc/stoff/micro-all-the-things/code/backend/rust/datasupply",
     "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "language.rust.cargo.check",
     "spring.configuration.checksum": "59e071adbfd8fa2c4145ca740cb2992b"
   }
 }]]></component>
@@ -87,9 +98,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply" />
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader" />
       <recent name="$PROJECT_DIR$/code/backend/webflux/v3" />
       <recent name="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/src/main/java/at/bumzack/solr/debugstuff" />
       <recent name="$PROJECT_DIR$/scripts" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/code/backend/rust/datasupply/rust_tsvfilereader" />
     </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="at.bumzack.solr.SolrMovieAkasWriterController" />
@@ -99,7 +115,41 @@
       <recent name="at.bumzack.common.tsv" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SolrMovieWriterApplication (1)">
+  <component name="RunManager" selected="Spring Boot.TsvFileReaderApplication">
+    <configuration name="Run rust_tsvfilereader" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package rust_tsvfilereader --bin rust_tsvfilereader" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/code/backend/rust" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+      <option name="command" value="run --package micro-all-the-things --bin micro-all-the-things" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="common" />
       <method v="2">
@@ -122,7 +172,7 @@
     </configuration>
     <configuration name="SolrCrewWriterApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="solrratingwriter" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrCrewWriterApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.solr.SolrRatingWriterApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -174,12 +224,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TsvFileReaderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="tsvfilereader" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="at.bumzack.tsvfilereader.TsvFileReaderApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="at.bumzack.tsvfilereader.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.TsvFileReaderApplication" />
+        <item itemvalue="Cargo.Run rust_tsvfilereader" />
         <item itemvalue="Spring Boot.SolrMovieAkasWriterApplication" />
         <item itemvalue="Spring Boot.SolrMovieWriterApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="externalLinter" value="Clippy" />
+    <option name="runExternalLinterOnTheFly" value="true" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -190,8 +260,23 @@
       <option name="presentableId" value="Default" />
       <updated>1679816010449</updated>
       <workItem from="1679819692854" duration="150000" />
-      <workItem from="1679829322383" duration="23044000" />
+      <workItem from="1679829322383" duration="28638000" />
     </task>
+    <task id="LOCAL-00001" summary="missing services for entities">
+      <created>1679859333410</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679859333410</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fmt &amp; cleanup">
+      <created>1679859365588</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679859365588</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,7 +295,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="writing movies works" />
-    <option name="LAST_COMMIT_MESSAGE" value="writing movies works" />
+    <MESSAGE value="missing services for entities" />
+    <MESSAGE value="fmt &amp; cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="fmt &amp; cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -227,7 +314,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/code/backend/webflux/v3/tsvfilereader/src/main/java/at/bumzack/tsvfilereader/TsvFileReaderController.java</url>
-          <line>65</line>
+          <line>64</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -242,5 +329,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
