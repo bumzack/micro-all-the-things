@@ -52,7 +52,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"titleType",           "type":"string",             "stored":true, indexed:"true" },
   "add-field":{       "name":"primaryTitle",        "type":"string",             "stored":true, indexed:"true" },
   "add-field":{       "name":"originalTitle",       "type":"string",             "stored":true, indexed:"true" },
-  "add-field":{       "name":"isAdult",             "type":"boolean",            "stored":true, indexed:"true" },
+  "add-field":{       "name":"adult",               "type":"boolean",            "stored":true, indexed:"true" },
   "add-field":{       "name":"startYear",           "type":"string",            "stored":true, indexed:"true" },
   "add-field":{       "name":"endYear",             "type":"string",            "stored":true, indexed:"true" },
   "add-field":{       "name":"runtimeMinutes",      "type":"string",            "stored":true, indexed:"true" },
@@ -69,7 +69,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"language",            "type":"string",     "stored":true, indexed:"true" },
   "add-field":{       "name":"types",               "type":"string",     "stored":true,"multiValued":true, indexed:"true" },
   "add-field":{       "name":"attributes",          "type":"string",     "stored":true,"multiValued":true, indexed:"true" },
-  "add-field":{       "name":"isOriginalTitle",     "type":"boolean",    "stored":true, indexed:"true" }
+  "add-field":{       "name":"originalTitle",       "type":"boolean",    "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/movieaka/schema
 
  
