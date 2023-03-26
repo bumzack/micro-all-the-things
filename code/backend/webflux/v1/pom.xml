@@ -11,16 +11,7 @@
 
     <modules>
         <module>common</module>
-        <module>pimcategorydbreader</module>
-        <module>pimimagedbreader</module>
-        <module>pimproductdbreader</module>
-        <module>searcharticle</module>
-        <module>solrsearchcategories</module>
-        <module>solrsearchimages</module>
-        <module>solrsearchproducts</module>
-        <module>solrwritercategories</module>
-        <module>solrwriterimages</module>
-        <module>solrwriterproducts</module>
+
     </modules>
 
     <version>1.0-SNAPSHOT</version>
