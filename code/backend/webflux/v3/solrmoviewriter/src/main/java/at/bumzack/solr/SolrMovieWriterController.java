@@ -28,6 +28,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.Logger;
+import reactor.util.Loggers;
 import reactor.util.annotation.NonNull;
 import at.bumzack.common.exception.NotificationException;
 import java.util.List;
@@ -42,7 +43,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @CrossOrigin
 public class SolrMovieWriterController {
 
-    private static final Logger LOG = reactor.util.Loggers.getLogger(SolrMovieWriterController.class);
+    private static final Logger LOG = Loggers.getLogger(SolrMovieWriterController.class);
 
     private String getProductSearchCodeUrl() {
         return "http://localhost:8201/solr/search/product/code";
