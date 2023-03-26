@@ -4,25 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v1/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v1/webflux-v1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/common/common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/common/webflux-v2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v2/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v2/webflux-v2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/common-v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/code/backend/webflux/v3/solrmoviewriter/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/frontend/v4-vite-module-federation-nearly-there/react-vite.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/scripts.iml" beforeDir="false" />
-    </list>
+    <list default="true" id="25e4a4b6-f999-4b2d-b6dc-58ba269df367" name="Changes" comment="rust thingis" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/solr_writer" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MacroExpansionManager">
@@ -37,13 +30,9 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
-    </option>
   </component>
   <component name="ProjectId" id="2NXgnuGOdvWEYN5Y71JkBWiYZ8n" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -93,6 +82,12 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="RustProjectSettings">
+    <option name="externalLinter" value="Clippy" />
+    <option name="runExternalLinterOnTheFly" value="true" />
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="version" value="2" />
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -103,5 +98,20 @@
       <updated>1679816010449</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
