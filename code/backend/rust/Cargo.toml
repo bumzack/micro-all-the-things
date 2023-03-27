@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "datasupply/rust_tsvfilereader",
+    "datasupply/common"
+]
