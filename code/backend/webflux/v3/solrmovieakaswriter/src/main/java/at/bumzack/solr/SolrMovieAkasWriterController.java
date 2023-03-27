@@ -44,7 +44,7 @@ public class SolrMovieAkasWriterController {
 
     private static final Logger LOG = Loggers.getLogger(SolrMovieAkasWriterController.class);
 
-    private static final String COMMAND = "/update?commitWithin=10000&overwrite=true&wt=json";
+    private static final String COMMAND = "/update?commitWithin=1000&overwrite=true&wt=json";
     private static final String SCHEMA = "http";
 
     @Value("${solr.host}")

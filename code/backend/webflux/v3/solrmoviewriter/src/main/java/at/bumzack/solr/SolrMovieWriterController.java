@@ -43,7 +43,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class SolrMovieWriterController {
 
     public static final String SCHEMA = "http";
-    public static final String COMMAND = "/update?commitWithin=10000&overwrite=true&wt=json";
+    public static final String COMMAND = "/update?commitWithin=1000&overwrite=true&wt=json";
     private static final Logger LOG = Loggers.getLogger(SolrMovieWriterController.class);
     @Value("${solr.host}")
     private String solrHost;
