@@ -110,7 +110,7 @@ public class TsvFileReaderController {
                 .body(BodyInserters.fromValue(tsvLine))
                 .retrieve()
                 .bodyToMono(String.class)
-                .doOnNext(res -> LOG.info("tsv reader POST  to {} returned success  {}", url, res))
+          //      .doOnNext(res -> LOG.info("tsv reader POST  to {} returned success  {}", url, res))
                 .doOnError(e -> LOG.error("tsv reader POST to {} returned an error  '{}'", url, e.getMessage()));
     }
 

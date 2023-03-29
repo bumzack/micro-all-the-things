@@ -66,9 +66,9 @@ public class SolrRatingWriterController {
     public Mono<ServerResponse> addRating(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing rating {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing rating {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });
