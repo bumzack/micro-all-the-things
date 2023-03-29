@@ -67,9 +67,9 @@ public class SolrPrincipalWriterController {
     public Mono<ServerResponse> addPrincipal(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing principal {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing principal {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });

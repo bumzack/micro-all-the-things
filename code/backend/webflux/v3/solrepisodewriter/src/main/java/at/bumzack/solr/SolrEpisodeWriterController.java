@@ -66,9 +66,9 @@ public class SolrEpisodeWriterController {
     public Mono<ServerResponse> addEpisode(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing episode {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing episode {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });

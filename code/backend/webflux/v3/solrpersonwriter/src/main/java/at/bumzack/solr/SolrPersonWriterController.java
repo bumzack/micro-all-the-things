@@ -67,9 +67,9 @@ public class SolrPersonWriterController {
     public Mono<ServerResponse> addPerson(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing person {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing person {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });

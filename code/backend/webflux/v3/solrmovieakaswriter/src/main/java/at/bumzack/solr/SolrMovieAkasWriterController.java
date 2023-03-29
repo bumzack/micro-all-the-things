@@ -69,9 +69,9 @@ public class SolrMovieAkasWriterController {
     public Mono<ServerResponse> addMovieAka(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing movieAka {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing movieAka {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error movieAka   {}", e);
                 });

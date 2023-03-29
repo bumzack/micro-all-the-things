@@ -66,9 +66,9 @@ public class SolrCrewWriterController {
     public Mono<ServerResponse> addCrew(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing crew {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing crew {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });

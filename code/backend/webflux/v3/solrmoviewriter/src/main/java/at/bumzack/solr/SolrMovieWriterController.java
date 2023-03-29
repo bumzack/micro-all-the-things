@@ -67,9 +67,9 @@ public class SolrMovieWriterController {
     public Mono<ServerResponse> addMovie(final ServerRequest request) throws WebClientResponseException {
         final var tsvLine = request
                 .bodyToMono(TsvLine.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing movie {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing movie {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 });
