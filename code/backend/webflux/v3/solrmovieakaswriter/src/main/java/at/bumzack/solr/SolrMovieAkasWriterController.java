@@ -44,7 +44,7 @@ public class SolrMovieAkasWriterController {
 
     private static final Logger LOG = Loggers.getLogger(SolrMovieAkasWriterController.class);
 
-    private static final String COMMAND = "/update?commitWithin=1000&overwrite=true&wt=json";
+    private static final String COMMAND = "/update?commitWithin=100&overwrite=true&wt=json";
     private static final String SCHEMA = "http";
 
     @Value("${solr.host}")
@@ -99,7 +99,6 @@ public class SolrMovieAkasWriterController {
 
     private Mono<ServerResponse> execSolrPost(final WebClient webClient, final MovieAkas movieAka) {
         final String url = getSolrUrl(solrHost, solrPort, solrCore, COMMAND, SCHEMA);
-        LOG.info("processing movieAka {}", movieAka);
 
         return webClient.post()
                 .uri(url)
