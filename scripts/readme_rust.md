@@ -6,7 +6,7 @@
 Start command: 
 
 ```
-../target/release/meilisearch --no-analytics --http-addr 'localhost:8984' --db-path ../../data/meilifile  --master-key="1234567890123456"
+../target/release/meilisearch --no-analytics --http-addr 'localhost:18984' --db-path ../../data/meilifile  --master-key="1234567890123456"
 ```
 
 ### deactivate telemetrics 

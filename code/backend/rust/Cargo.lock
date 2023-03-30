@@ -854,6 +854,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_principalwriter"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "dotenvy",
+ "futures",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
 name = "rust_tsvfilereader"
 version = "0.1.0"
 dependencies = [
@@ -861,6 +877,10 @@ dependencies = [
  "dotenvy",
  "futures",
  "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
  "tokio",
  "warp",
 ]
@@ -949,6 +969,9 @@ name = "serde"
 version = "1.0.158"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "771d4d9c4163ee138805e12c710dd365e4f44be8be0503cb1bb9eb989425d9c9"
+dependencies = [
+ "serde_derive",
+]
 
 [[package]]
 name = "serde_derive"
