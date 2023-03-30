@@ -1,7 +1,9 @@
 pub mod filters_tsv {
-    use super::handlers_tsv;
-    use common::TsvFileImportRequest;
     use warp::Filter;
+
+    use common::TsvFileImportRequest;
+
+    use super::handlers_tsv;
 
     pub fn tsv_request_route(
     ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
@@ -23,12 +25,16 @@ pub mod filters_tsv {
 }
 
 mod handlers_tsv {
-    use crate::CONFIG;
-    use common::{TsvFileImportRequest, TsvLine};
-    use serde_json::json;
     use std::convert::Infallible;
+
+    use serde_json::json;
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
+    use tokio::task;
+
+    use common::{TsvFileImportRequest, TsvLine};
+
+    use crate::{CLIENT, CONFIG};
 
     pub async fn post_tsv_request(
         tsv_request: TsvFileImportRequest,
@@ -119,28 +125,36 @@ mod handlers_tsv {
         while let Ok(l) = lines.next_line().await {
             i += 1;
             let line = l.unwrap();
-            let entries = line.clone().split("\t").map(|s| s.to_string()).collect();
 
-            let tsv = TsvLine {
-                entries,
-                original: line,
-            };
+            let request_url = request_url.clone();
+            task::spawn(async move {
+                let entries = line.clone().split("\t").map(|s| s.to_string()).collect();
 
-            // println!("tsv {:?}", &tsv);
+                let tsv = TsvLine {
+                    entries,
+                    original: line,
+                };
 
-            let json = json!(&tsv).to_string();
+                // println!("tsv {:?}", &tsv);
 
-            let client = reqwest::Client::new();
-            let res = client.post(&request_url).body(json).send().await;
+                let json = json!(&tsv).to_string();
 
-            match res {
-                Ok(_res) => {
-                    // println!("request ok. response  {:?}", &res)
+                //  let client = reqwest::Client::new();
+                let res = CLIENT.post(&request_url).body(json).send().await;
+
+                match res {
+                    Ok(_res) => {
+                        // println!("request ok. response  {:?}", &res)
+                    }
+                    Err(e) => println!("error request {:?}", e),
                 }
-                Err(e) => println!("error request {:?}", e),
-            }
+            });
+
             if i > page_size as usize {
                 break;
+            }
+            if (i % 10000) == 0  {
+                println!("processed {} lines for type {:?}", i, &t);
             }
         }
 

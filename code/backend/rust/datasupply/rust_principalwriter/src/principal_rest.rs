@@ -26,8 +26,9 @@ mod handlers_principal {
 
     use serde_json::json;
 
-    use common::{Principal, TsvLine};
     use crate::CLIENT;
+    use common::{Principal, TsvLine};
+
     pub async fn post_principal(tsv_line: TsvLine) -> Result<impl warp::Reply, Infallible> {
         let ordering = match tsv_line.entries.get(1) {
             Some(ordering) => ordering.parse::<u32>().unwrap(),
@@ -64,6 +65,7 @@ mod handlers_principal {
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
+
         match response {
             Ok(_res) => {
                 // let code = res.status().clone();

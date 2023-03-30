@@ -17,6 +17,9 @@ lazy_static! {
         .unwrap();
 }
 
+lazy_static::lazy_static! {
+    static ref CLIENT: reqwest::Client = reqwest::Client::new();
+}
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
