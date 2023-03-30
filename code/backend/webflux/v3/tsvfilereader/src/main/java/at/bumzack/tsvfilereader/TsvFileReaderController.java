@@ -97,7 +97,7 @@ public class TsvFileReaderController {
                 .skip(start)
                 .take(pageSize)
                 .map(this::mapToTsvLine)
-                .delayElements(Duration.ofNanos(50000L))
+                .delayElements(Duration.ofNanos(100000L))
                 .flatMap(l -> execRequest(webClient, url, l))
                 .count();
     }
