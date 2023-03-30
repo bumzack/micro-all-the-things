@@ -4,7 +4,7 @@ for f in solr*; do
     if [ -d "$f" ]; then
         cd $f
         echo "folder $f"
-        mvn spring-boot:run &
+        mvn spring-boot:run  > log.log &
         cd ..
     fi
 done
