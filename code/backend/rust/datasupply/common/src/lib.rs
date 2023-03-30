@@ -15,9 +15,11 @@ pub enum Entity {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TsvFileImportRequest {
+    #[serde(rename = "tsvType")]
     pub tsv_type: Entity,
     pub start: i32,
     pub end: i32,
+    #[serde(rename = "pageSize")]
     pub page_size: i32,
 }
 

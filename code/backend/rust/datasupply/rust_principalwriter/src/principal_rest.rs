@@ -1,23 +1,22 @@
 pub mod filters_principal {
+    use super::handlers_principal;
+    use common::TsvLine;
     use warp::Filter;
 
-    use common::TsvLine;
-
-    use super::handlers_principal;
-
-    pub fn principal_route() -> impl Filter<Extract=impl warp::Reply, Error=warp::Rejection> + Clone {
-        warp::path("api")
-            .and(principal_post())
+    pub fn principal_route(
+    ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+        warp::path("api").and(principal_post())
     }
 
-    pub fn principal_post() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn principal_post(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         warp::path!("principal")
             .and(warp::post())
             .and(json_body_tsv_line())
             .and_then(handlers_principal::post_principal)
     }
 
-    fn json_body_tsv_line() -> impl Filter<Extract=(TsvLine, ), Error=warp::Rejection> + Clone {
+    fn json_body_tsv_line() -> impl Filter<Extract = (TsvLine,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }
@@ -55,8 +54,7 @@ mod handlers_principal {
 
         let json = json!(&principal).to_string();
 
-        println!("json \n {}\n", &json);
-
+        // println!("json \n {}\n", &json);
 
         let client = reqwest::Client::new();
         let response = client
@@ -67,7 +65,7 @@ mod handlers_principal {
             .send()
             .await;
         match response {
-            Ok(res) => {
+            Ok(_res) => {
                 // let code = res.status().clone();
                 // let x = res.headers().clone();
                 // let b = res.text().await.unwrap();
