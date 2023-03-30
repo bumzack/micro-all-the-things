@@ -6,6 +6,10 @@ use crate::principal_rest::filters_principal;
 
 mod principal_rest;
 
+lazy_static::lazy_static! {
+    static ref CLIENT: reqwest::Client = reqwest::Client::new();
+}
+
 #[tokio::main]
 async fn main() -> io::Result<()> {
     let root = warp::path::end().map(|| "Welcome to my warp server!");

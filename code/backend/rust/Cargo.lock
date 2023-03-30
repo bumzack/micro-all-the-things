@@ -1024,6 +1024,7 @@ dependencies = [
  "common",
  "dotenvy",
  "futures",
+ "lazy_static",
  "reqwest",
  "serde",
  "serde_derive",
