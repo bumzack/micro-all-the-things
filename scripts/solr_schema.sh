@@ -120,12 +120,3 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"seasonNumber",    "type":"string", "stored":true, indexed:"true" },
   "add-field":{   "name":"episodeNumber",   "type":"string", "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/episode/schema
-
-
- 
- 
- 
- 
- 
- 
- 

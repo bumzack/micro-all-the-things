@@ -93,6 +93,22 @@ GRANT PRIVILEGE ON *.* TO 'bumzack'@'host';
 
 ##  v4
 
+```
+ curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 100, "pageSize": 10 }'
+```
+
+```
+{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "director", "N", "N" ], "original" :"tt0000026	5	nm0525910	director	\N	\N"}]}
+
+```
+
+```
+curl -vv -X POST  http://localhost:8104/v2/api/principal   -H  "Content-Type: application/json" -d '{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "grg", "N", "N" ], "original" :"tt0000026   5   nm0525910   grg    N   N"}]}'
+```
+
+
+##  v4
+
 
 PRINCIPAL
 
