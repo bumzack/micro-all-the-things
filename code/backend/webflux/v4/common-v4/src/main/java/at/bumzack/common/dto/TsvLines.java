@@ -8,7 +8,6 @@ public class TsvLines implements Serializable {
     private List<TsvLine> lines;
 
 
-
     public TsvLines() {
     }
 
