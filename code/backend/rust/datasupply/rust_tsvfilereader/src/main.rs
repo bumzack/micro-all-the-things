@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io;
 use std::net::SocketAddr;
 
@@ -23,13 +22,13 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    println!(
-        "{:?}",
-        CONFIG
-            .clone()
-            .try_deserialize::<HashMap<String, String>>()
-            .unwrap()
-    );
+    // println!(
+    //     "{:?}",
+    //     CONFIG
+    //         .clone()
+    //         .try_deserialize::<HashMap<String, String>>()
+    //         .unwrap()
+    // );
 
     let root = warp::path::end().map(|| "Welcome to the rust TSV reader!");
 
