@@ -1,0 +1,50 @@
+server_port = "18900"
+server_host = "127.0.0.1"
+server_openapipath = "v3/api-docs"
+technology = "webflux"
+micrsoservice_id = "tsvfilereader"
+publish_as_frontend_package = "false"
+apiclient_prefix = "TsvFileReaderClient"
+apiclient_package = "at.bumzack.clients.tsvfilereader"
+local_repo_path = "/code/backend/webflux/v3/tsvfilereader"
+
+datasource_folder = "/home/bumzack/micro-all-the-things/imdb_data"
+
+datasource_MOVIE_filename = "title.basics.tsv"
+datasource_MOVIEAKA_filename = "title.akas.tsv"
+datasource_PERSON_filename = "name.basics.tsv"
+datasource_CREW_filename = "title.crew.tsv"
+datasource_EPISODE_filename = "title.episode.tsv"
+datasource_PRINCIPAL_filename = "title.principals.tsv"
+datasource_RATING_filename = "title.ratings.tsv"
+
+
+microservice_MOVIE_host = "http://localhost"
+microservice_MOVIE_port = "18100"
+microservice_MOVIE_url = "/api/movie"
+
+
+microservice_MOVIEAKA_host = "http://localhost"
+microservice_MOVIEAKA_port = "18101"
+microservice_MOVIEAKA_url = "/api/movieaka"
+
+
+microservice_PERSON_host = "http://localhost"
+microservice_PERSON_port = "18103"
+microservice_PERSON_url = "/api/person"
+
+microservice_CREW_host = "http://localhost"
+microservice_CREW_port = "18102"
+microservice_CREW_url = "/api/crew"
+
+microservice_PRINCIPAL_host = "http://localhost"
+microservice_PRINCIPAL_port = "18104"
+microservice_PRINCIPAL_url = "/api/principal"
+
+microservice_EPISODE_host = "http://localhost"
+microservice_EPISODE_port = "18106"
+microservice_EPISODE_url = "/api/episode"
+
+microservice_RATING_host = "http://localhost"
+microservice_RATING_port = "18105"
+microservice_RATING_url = "/api/rating"

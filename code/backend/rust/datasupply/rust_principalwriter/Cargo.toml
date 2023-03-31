@@ -1,5 +1,5 @@
 [package]
-name = "rust_tsvfilereader"
+name = "rust_principalwriter"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,6 +11,11 @@ dotenvy = "0.15"
 tokio = { version = "1.26.0", features = ["full"] }
 reqwest = { version = "0.11.15" }
 common = { path = "../common" }
+serde = { version = "1.0.158", features = ["derive"] }
+serde_json = "1.0.94"
+serde_urlencoded = "0.7.1"
+serde_derive = "1.0.155"
+lazy_static = "1.4.0"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }

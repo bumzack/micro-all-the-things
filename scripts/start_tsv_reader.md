@@ -70,17 +70,17 @@ curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/j
 ```
 
 
+    
+    
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 3861610,  "end": 10000, "pageSize": 35403199}'                     
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 24109960,  "end": 10000, "pageSize": 35403199}'       
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 14576420,  "end": 10000, "pageSize": 35403199}'      
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 2764060,  "end": 10000, "pageSize": 35403199}'       
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 382410,  "end": 10000, "pageSize": 35403199}' 
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 9728240,  "end": 10000, "pageSize": 35403199 }'
 
 
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 10000, "pageSize": 35403199}'           & 
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 10000, "pageSize": 35403199}' &
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 10000, "pageSize": 35403199}' &
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 10000, "pageSize": 35403199}' & 
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 10000, "pageSize": 35403199}' & 
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 10000, "pageSize": 35403199}' & 
-curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 10000, "pageSize": 35403199 }' & 
-
-
+    curl -X POST  http://localhost:8900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1294530,  "end": 10000, "pageSize": 35403199}'       
 
 CREATE USER 'bumzack'@'localhost' IDENTIFIED BY 'bumzack';
 
@@ -89,3 +89,19 @@ CREATE USER 'bumzack'@'host' IDENTIFIED   BY 'bumzack';
 
 GRANT PRIVILEGE ON *.* TO 'bumzack'@'host';
 
+
+
+##  v4
+
+```
+ curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 100, "pageSize": 10 }'
+```
+
+```
+{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "director", "N", "N" ], "original" :"tt0000026	5	nm0525910	director	\N	\N"}]}
+
+```
+
+```
+curl -vv -X POST  http://localhost:8104/v2/api/principal   -H  "Content-Type: application/json" -d '{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "grg", "N", "N" ], "original" :"tt0000026   5   nm0525910   grg    N   N"}]}'
+```
