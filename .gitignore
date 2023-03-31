@@ -12,7 +12,6 @@ java/archiv/
 archiv_fe/
 
 *.zip
-.mvn
 .DS_Store
 target
 node_modules
