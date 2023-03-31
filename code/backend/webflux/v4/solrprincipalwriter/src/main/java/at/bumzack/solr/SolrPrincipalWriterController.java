@@ -3,9 +3,7 @@ package at.bumzack.solr;
 
 import at.bumzack.common.dto.Principal;
 import at.bumzack.common.dto.TsvLine;
-import at.bumzack.common.dto.TsvLines;
-import at.bumzack.common.solr.SolrUtils;
-import at.bumzack.common.webflux.WebClientFactory;
+import at.bumzack.common.entitywriter.SolrEntityWriter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,13 +11,9 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springdoc.core.annotations.RouterOperations;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -31,63 +25,25 @@ import reactor.util.Loggers;
 import reactor.util.annotation.NonNull;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static at.bumzack.common.tsv.TsvUtils.getList;
 import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
-import static java.util.Objects.isNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Controller("SolrPrincipalWriterController")
 @CrossOrigin
-public class SolrPrincipalWriterController {
-
-    private static final String SCHEMA = "http";
-    private static final String COMMAND = "/update?commitWithin=100&overwrite=true&wt=json";
+public class SolrPrincipalWriterController extends SolrEntityWriter<Principal> {
     private static final Logger LOG = Loggers.getLogger(SolrPrincipalWriterController.class);
-
-    @Value("${solr.host}")
-    private String solrHost;
-
-    @Value("${solr.port}")
-    private String solrPort;
-
-    @Value("${solr.core}")
-    private String solrCore;
-
-    private String solrUrl = null;
-
-    private String getSolrUrl() {
-        if (isNull(solrUrl)) {
-            solrUrl = SolrUtils.getSolrUrl(solrHost, solrPort, solrCore, COMMAND, SCHEMA);
-        }
-        return solrUrl;
-    }
 
     @NonNull
     public Mono<ServerResponse> addPrincipal(final ServerRequest request) throws WebClientResponseException {
         LOG.info("got a request");
-        final var webClient = WebClientFactory.getClient();
-        return request
-                .bodyToMono(TsvLines.class)
-//                .doOnSuccess(tsv -> {
-//                    LOG.info("processing principal lines {}", tsv);
-//                })
-                .doOnError(e -> {
-                    LOG.error("error    {}", e);
-                })
-                .map(this::mapToPrincipalList)
-                .flatMap(a -> execSolrPost(webClient, a));
+        return processTsvLinesRequest(request, "Principal");
     }
 
-    private List<Principal> mapToPrincipalList(final TsvLines tsvLines) {
-        return tsvLines.getLines().stream()
-                .map(this::mapToPrincipal)
-                .collect(Collectors.toList());
-    }
-
-    private Principal mapToPrincipal(final TsvLine tsvLine) {
+    @Override
+    public Principal mapToEntity(final TsvLine tsvLine) {
         final Principal principal = new Principal();
         final List<String> entries = tsvLine.getEntries();
         principal.setTconst(entries.get(0));
@@ -98,24 +54,6 @@ public class SolrPrincipalWriterController {
         principal.setId(principal.getTconst() + "_" + principal.getOrdering() + "_" + principal.getNconst());
         // LOG.info("processing principal {}", principal);
         return principal;
-    }
-
-    private Mono<ServerResponse> execSolrPost(final WebClient webClient, final List<Principal> principal) {
-        final var url = getSolrUrl();
-
-        return webClient.post()
-                .uri(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept()
-                .body(BodyInserters.fromValue(principal))
-                .retrieve()
-                .bodyToMono(String.class)
-                .doOnNext(e -> LOG.info("movie solr response {}", e))
-                .doOnError(e -> LOG.error("principal  error from Solr '{}'", e.getMessage()))
-                .doOnSuccess(s -> {
-                    LOG.info("principal solr success {}", s);
-                })
-                .flatMap(e -> ServerResponse.ok().body(BodyInserters.fromValue("principal  SolrWriter says: all good")));
     }
 
     @RouterOperations({
