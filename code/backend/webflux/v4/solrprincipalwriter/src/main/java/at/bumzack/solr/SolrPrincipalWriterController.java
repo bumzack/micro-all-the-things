@@ -71,9 +71,9 @@ public class SolrPrincipalWriterController {
         final var webClient = WebClientFactory.getClient();
         return request
                 .bodyToMono(TsvLines.class)
-                .doOnSuccess(tsv -> {
-                    LOG.info("processing principal lines {}", tsv);
-                })
+//                .doOnSuccess(tsv -> {
+//                    LOG.info("processing principal lines {}", tsv);
+//                })
                 .doOnError(e -> {
                     LOG.error("error    {}", e);
                 })
@@ -96,7 +96,7 @@ public class SolrPrincipalWriterController {
         principal.setCategory(getNullableValue(entries.get(3)));
         principal.setCharacters(getList(entries.get(4)));
         principal.setId(principal.getTconst() + "_" + principal.getOrdering() + "_" + principal.getNconst());
-        LOG.info("processing principal {}", principal);
+        // LOG.info("processing principal {}", principal);
         return principal;
     }
 

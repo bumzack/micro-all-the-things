@@ -73,6 +73,7 @@ public class TsvFileReaderController {
                     final var path = Paths.get(tsvFilename);
                     final var start = req.getStart();
                     final var pageSize = req.getPageSize();
+                    final var end = req.getEnd();
                     LOG.info("processing request {}", req);
 
                     final Stream<String> lines;
@@ -85,12 +86,12 @@ public class TsvFileReaderController {
                         return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BodyInserters.fromValue(msg));
                     }
 
-                    return getServerResponseMono(webClient, url, start, pageSize, lines);
+                    return getServerResponseMono(webClient, url, start, pageSize, lines, end);
                 });
     }
 
-    private Mono<ServerResponse> getServerResponseMono(WebClient webClient, String url, int start, int pageSize, Stream<String> lines) {
-        return execRequests(webClient, url, lines, start, pageSize)
+    private Mono<ServerResponse> getServerResponseMono(WebClient webClient, String url, int start, int pageSize, Stream<String> lines, final int end) {
+        return execRequests(webClient, url, lines, start, pageSize, end)
                 .doOnError(e -> {
                     LOG.error("an error occurred while requesting a POST to ratings {}", e);
                 })
@@ -100,13 +101,16 @@ public class TsvFileReaderController {
                 });
     }
 
-    private Mono<Long> execRequests(final WebClient webClient, final String url, final Stream<String> lines, final int start, final int pageSize) {
+    private Mono<Long> execRequests(final WebClient webClient, final String url, final Stream<String> lines, final int start, final int pageSize, final int end) {
+        final var totalElements = end - start;
+        LOG.info("start: {}, end: {}, pageSize {}, totalElements {}", start, end, pageSize, totalElements);
         return Flux.fromStream(lines)
                 .skip(start)
+                .take(totalElements)
                 .buffer(pageSize)
                 .delayElements(Duration.ofMillis(5000))
                 .flatMapSequential(l -> {
-                    LOG.info("got a stream of List<String> thingis");
+                    // LOG.info("got a stream of List<String> thingis");
                     final List<TsvLine> list = l.stream()
                             .map(this::mapToTsvLine)
                             .toList();
@@ -120,7 +124,7 @@ public class TsvFileReaderController {
                 })
                 .doOnNext(e -> LOG.info("processing next batch "))
                 .doOnComplete(() -> {
-                    LOG.info("completed batches");
+                    LOG.info("completed all batches");
                 })
                 .count();
     }
