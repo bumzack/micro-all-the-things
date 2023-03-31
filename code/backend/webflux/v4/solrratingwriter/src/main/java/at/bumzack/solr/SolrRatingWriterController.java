@@ -27,7 +27,7 @@ import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
-import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
+import static at.bumzack.common.tsv.TsvUtils.*;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -48,8 +48,8 @@ public class SolrRatingWriterController extends SolrEntityWriter<Rating> {
         final Rating rating = new Rating();
         final List<String> entries = tsvLine.getEntries();
         rating.setTconst(entries.get(0));
-        rating.setAverageRating(getNullableValue(entries.get(1)));
-        rating.setNumVotes(getNullableValue(entries.get(2)));
+        rating.setAverageRating(getDouble(entries.get(1)));
+        rating.setNumVotes(getInteger(entries.get(2)));
         rating.setId(rating.getTconst());
 
         return rating;

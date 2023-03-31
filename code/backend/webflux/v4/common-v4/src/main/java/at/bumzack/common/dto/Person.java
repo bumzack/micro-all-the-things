@@ -21,8 +21,8 @@ public class Person extends AbstractItem implements Serializable {
 
     private String nconst;
     private String primaryName;
-    private String birthYear;
-    private String deathYear;
+    private Integer birthYear;
+    private Integer deathYear;
     private List<String> primaryProfession;
     private List<String> knownForTitles;
 
@@ -45,19 +45,19 @@ public class Person extends AbstractItem implements Serializable {
         this.primaryName = primaryName;
     }
 
-    public String getBirthYear() {
+    public Integer getBirthYear() {
         return birthYear;
     }
 
-    public void setBirthYear(final String birthYear) {
+    public void setBirthYear(final Integer birthYear) {
         this.birthYear = birthYear;
     }
 
-    public String getDeathYear() {
+    public Integer getDeathYear() {
         return deathYear;
     }
 
-    public void setDeathYear(final String deathYear) {
+    public void setDeathYear(final Integer deathYear) {
         this.deathYear = deathYear;
     }
 

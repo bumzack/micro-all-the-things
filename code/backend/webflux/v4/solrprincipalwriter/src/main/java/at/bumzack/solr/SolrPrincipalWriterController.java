@@ -26,8 +26,7 @@ import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
-import static at.bumzack.common.tsv.TsvUtils.getList;
-import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
+import static at.bumzack.common.tsv.TsvUtils.*;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -47,7 +46,7 @@ public class SolrPrincipalWriterController extends SolrEntityWriter<Principal> {
         final Principal principal = new Principal();
         final List<String> entries = tsvLine.getEntries();
         principal.setTconst(entries.get(0));
-        principal.setOrdering(getNullableValue(entries.get(1)));
+        principal.setOrdering(getInteger(entries.get(1)));
         principal.setNconst(getNullableValue(entries.get(2)));
         principal.setCategory(getNullableValue(entries.get(3)));
         principal.setCharacters(getList(entries.get(4)));
