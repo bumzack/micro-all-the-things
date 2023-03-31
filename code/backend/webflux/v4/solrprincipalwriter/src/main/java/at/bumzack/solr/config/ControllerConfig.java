@@ -12,5 +12,6 @@ class ControllerConfig implements WebFluxConfigurer {
     @Override
     public void configureHttpMessageCodecs(final ServerCodecConfigurer configurer) {
         configurer.defaultCodecs().enableLoggingRequestDetails(true);
+        configurer.defaultCodecs().maxInMemorySize(1000 * 1024 * 1024);
     }
 }

@@ -16,9 +16,7 @@ import reactor.util.Loggers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_FIND_BY_NAME;
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_POST;
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_TECHNOLOGY_BY_NAME;
+import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.*;
 
 
 @Service
