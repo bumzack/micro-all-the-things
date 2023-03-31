@@ -67,11 +67,11 @@ mod handlers_principal {
             .await;
 
         match response {
-            Ok(_res) => {
-                // let code = res.status().clone();
+            Ok(res) => {
+                let code = res.status().clone();
                 // let x = res.headers().clone();
                 // let b = res.text().await.unwrap();
-                // println!("request ok. status {:?}", code);
+                println!("request ok. status {:?}", code);
                 // println!("request ok. headers {:?}", x);
                 // println!("request ok. response body {:?}", &b);
             }

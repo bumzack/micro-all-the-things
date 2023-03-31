@@ -31,6 +31,7 @@ mod handlers_tsv {
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
     use tokio::task;
+    use tokio::time::{sleep, Duration};
 
     use common::{TsvFileImportRequest, TsvLine};
 
@@ -143,8 +144,8 @@ mod handlers_tsv {
                 let res = CLIENT.post(&request_url).body(json).send().await;
 
                 match res {
-                    Ok(_res) => {
-                        // println!("request ok. response  {:?}", &res)
+                    Ok(res) => {
+                        println!("request ok. response  {:?}", &res.status());
                     }
                     Err(e) => println!("error request {:?}", e),
                 }
@@ -156,6 +157,7 @@ mod handlers_tsv {
             if (i % 10000) == 0  {
                 println!("processed {} lines for type {:?}", i, &t);
             }
+            sleep(Duration::from_micros(500)).await;
         }
 
         let res = "hahaha  dont know".to_string();
