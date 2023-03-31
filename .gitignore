@@ -35,3 +35,7 @@ imdb_data/
 data/
 
 client.json
+
+
+.idea
+*.iml

@@ -1,31 +1,25 @@
-use std::fs::File;
 use std::io;
-use std::io::{BufRead, BufReader};
 
-use common::TsvLine;
+use warp::Filter;
 
-fn main() -> io::Result<()> {
-    read_file()?;
-    Ok(())
+use crate::principal_rest::filters_principal;
+
+mod principal_rest;
+
+lazy_static::lazy_static! {
+    static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
 
-fn read_file() -> io::Result<()> {
-    let filename = "/Users/gsc/stoff/micro-all-the-things/imdb_data/title.principals.tsv".to_string();
-    let file = File::open(filename)?;
-    let reader = BufReader::new(file);
+#[tokio::main]
+async fn main() -> io::Result<()> {
+    let root = warp::path::end().map(|| "Welcome to my warp server!");
 
-    for line in reader.lines().take(10) {
-        let original = line.unwrap();
-        let entries = original.clone()
-            .split("\t")
-            .map(|s|s.to_string())
-            .collect();
-        let tsv = TsvLine {
-            entries,
-            original,
-        };
-        println!("tsv {:?}", &tsv);
-    }
-    println!("DONE");
+    let root = root.or(filters_principal::principal_route());
+
+    // View access logs by setting `RUST_LOG=todos`.
+    let routes = root.with(warp::log("principalwriter"));
+    // Start up the server...
+    warp::serve(routes).run(([127, 0, 0, 1], 18104)).await;
+
     Ok(())
 }
