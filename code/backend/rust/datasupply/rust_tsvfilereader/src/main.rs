@@ -12,7 +12,7 @@ mod tsv_rest;
 
 lazy_static! {
     static ref CONFIG :Config = Config::builder()
-        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/datasupply/rust_tsvfilereader/config.toml"))
+        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/datasupply/rust_tsvfilereader/config.toml"))
         .build()
         .unwrap();
 }
