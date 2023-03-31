@@ -24,9 +24,9 @@ public class Movie extends AbstractItem implements Serializable {
     private String primaryTitle;
     private String originalTitle;
     private boolean isAdult;
-    private String startYear;
-    private String endYear;
-    private String runtimeMinutes;
+    private Integer startYear;
+    private Integer endYear;
+    private Integer runtimeMinutes;
     private List<String> genres;
 
     public Movie() {
@@ -89,27 +89,27 @@ public class Movie extends AbstractItem implements Serializable {
         isAdult = adult;
     }
 
-    public String getStartYear() {
+    public Integer getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(final String startYear) {
+    public void setStartYear(final Integer startYear) {
         this.startYear = startYear;
     }
 
-    public String getEndYear() {
+    public Integer getEndYear() {
         return endYear;
     }
 
-    public void setEndYear(final String endYear) {
+    public void setEndYear(final Integer endYear) {
         this.endYear = endYear;
     }
 
-    public String getRuntimeMinutes() {
+    public Integer getRuntimeMinutes() {
         return runtimeMinutes;
     }
 
-    public void setRuntimeMinutes(final String runtimeMinutes) {
+    public void setRuntimeMinutes(final Integer runtimeMinutes) {
         this.runtimeMinutes = runtimeMinutes;
     }
 

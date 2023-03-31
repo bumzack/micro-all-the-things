@@ -17,8 +17,8 @@ public class Episode extends AbstractItem implements Serializable {
 
     private String tconst;
     private String parentTconst;
-    private String seasonNumber;
-    private String episodeNumber;
+    private Integer seasonNumber;
+    private Integer episodeNumber;
 
     public Episode() {
     }
@@ -40,19 +40,19 @@ public class Episode extends AbstractItem implements Serializable {
         this.parentTconst = parentTconst;
     }
 
-    public String getSeasonNumber() {
+    public Integer getSeasonNumber() {
         return seasonNumber;
     }
 
-    public void setSeasonNumber(final String seasonNumber) {
+    public void setSeasonNumber(final Integer seasonNumber) {
         this.seasonNumber = seasonNumber;
     }
 
-    public String getEpisodeNumber() {
+    public Integer getEpisodeNumber() {
         return episodeNumber;
     }
 
-    public void setEpisodeNumber(final String episodeNumber) {
+    public void setEpisodeNumber(final Integer episodeNumber) {
         this.episodeNumber = episodeNumber;
     }
 

@@ -52,9 +52,9 @@ public class SolrMovieWriterController extends SolrEntityWriter<Movie> {
         movie.setPrimaryTitle(getNullableValue(entries.get(2)));
         movie.setOriginalTitle(getNullableValue(entries.get(3)));
         movie.setAdult(getBoolean(entries.get(4)));
-        movie.setStartYear(getNullableValue(entries.get(5)));
-        movie.setEndYear(getNullableValue(entries.get(6)));
-        movie.setRuntimeMinutes(getNullableValue(entries.get(7)));
+        movie.setStartYear(getInteger(entries.get(5)));
+        movie.setEndYear(getInteger(entries.get(6)));
+        movie.setRuntimeMinutes(getInteger(entries.get(7)));
         movie.setGenres(getList(entries.get(8)));
         movie.setId(movie.getTconst());
 
