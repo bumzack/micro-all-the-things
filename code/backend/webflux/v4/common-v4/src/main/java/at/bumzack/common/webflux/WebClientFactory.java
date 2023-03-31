@@ -24,14 +24,9 @@ public class WebClientFactory {
                 .build();
     }
 
-    public static final WebClient getClient() {
+    public static WebClient getClient() {
         if (isNull(client)) {
             client = WebClient.builder()
-                    .exchangeStrategies(ExchangeStrategies.builder()
-                            .codecs(codecs -> codecs
-                                    .defaultCodecs()
-                                    .maxInMemorySize(1000 * 1024 * 1024))
-                            .build())
                     .build();
         }
         return client;
