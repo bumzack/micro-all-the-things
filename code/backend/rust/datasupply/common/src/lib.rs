@@ -29,6 +29,12 @@ pub struct TsvLine {
     pub entries: Vec<String>,
 }
 
+#[derive(Deserialize, Serialize)]
+pub struct TsvLines {
+    pub lines: Vec<TsvLine>,
+}
+
+
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Rating {
     pub tconst: String,
@@ -76,7 +82,7 @@ pub struct Principal {
     pub ordering: u32,
     pub nconst: String,
     pub category: String,
-    pub characters: Vec<String>,
+    pub characters: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

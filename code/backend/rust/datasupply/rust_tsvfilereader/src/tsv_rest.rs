@@ -30,10 +30,8 @@ mod handlers_tsv {
     use serde_json::json;
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
-    use tokio::task;
-    use tokio::time::{sleep, Duration};
 
-    use common::{TsvFileImportRequest, TsvLine};
+    use common::{TsvFileImportRequest, TsvLine, TsvLines};
 
     use crate::{CLIENT, CONFIG};
 
@@ -61,6 +59,7 @@ mod handlers_tsv {
 
         let start = tsv_request.start as usize;
         let page_size = tsv_request.page_size as u64;
+        let end = tsv_request.end as u64;
         let t = tsv_request.tsv_type;
 
         let filename_property = format!("datasource_{:?}_filename", t);
@@ -112,55 +111,87 @@ mod handlers_tsv {
         //  while let Ok(l) = reader.lines().next_line().await {
 
         let mut lines = reader.lines();
-
-        let mut i = 0;
+        let mut batches = 0;
+        // skip to start
+        let mut current_line = 0;
         if start > 0 {
             while let Ok(_l) = lines.next_line().await {
-                i += 1;
-                if i == start {
+                current_line += 1;
+                if current_line == start {
                     break;
                 }
             }
         }
-        i = 0;
-        while let Ok(l) = lines.next_line().await {
-            i += 1;
-            let line = l.unwrap();
 
-            let request_url = request_url.clone();
-            task::spawn(async move {
+        current_line = start;
+
+        while current_line <= end as usize {
+            let mut tsv_lines = vec![];
+            let mut idx = 0;
+            while let Ok(l) = lines.next_line().await {
+                idx += 1;
+                current_line += 1;
+
+                if l.is_none() {
+                    println!("we are done here ");
+                    break;
+                }
+
+                let line = l.unwrap();
+                println!("line in batch  {} / {}.   line {} ", idx, page_size, &line);
+                if line.is_empty() {
+                    println!("line is empty -> skipping ");
+                    break;
+                }
+
                 let entries = line.clone().split("\t").map(|s| s.to_string()).collect();
-
                 let tsv = TsvLine {
                     entries,
                     original: line,
                 };
+                tsv_lines.push(tsv);
 
-                // println!("tsv {:?}", &tsv);
-
-                let json = json!(&tsv).to_string();
-
-                //  let client = reqwest::Client::new();
-                let res = CLIENT.post(&request_url).body(json).send().await;
-
-                match res {
-                    Ok(res) => {
-                        println!("request ok. response  {:?}", &res.status());
-                    }
-                    Err(e) => println!("error request {:?}", e),
+                if idx > page_size - 1 || (current_line > end as usize) {
+                    break;
                 }
-            });
+            }
+            batches += 1;
 
-            if i > page_size as usize {
-                break;
+            let request_url = request_url.clone();
+
+            let tsv_lines = TsvLines { lines: tsv_lines };
+
+            // println!("tsv {:?}", &tsv);
+
+            let json = json!(&tsv_lines).to_string();
+
+            println!("request url  '{}'", &request_url);
+            //  let client = reqwest::Client::new();
+            let res = CLIENT
+                .post(&request_url)
+                .header("Content-Type", "application/json".to_owned())
+                .body(json)
+                .send()
+                .await;
+
+            match res {
+                Ok(res) => {
+                    let code = res.status().clone();
+                    let x = res.headers().clone();
+                    let b = res.text().await.unwrap();
+                    println!("request ok. status {:?}", code);
+                    println!("request ok. headers {:?}", x);
+                    println!("request ok. response body {:?}", &b);
+                }
+                Err(e) => println!("error in request {:?}", e),
             }
-            if (i % 10000) == 0  {
-                println!("processed {} lines for type {:?}", i, &t);
-            }
-            sleep(Duration::from_micros(500)).await;
+
+            println!("processed batch {} for type {:?}", batches, &t);
+            tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
         }
+        println!("processed lines {}", current_line);
 
-        let res = "hahaha  dont know".to_string();
+        let res = format!("all good. processed {} batches", batches);
         Ok(warp::reply::json(&res))
     }
 }

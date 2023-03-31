@@ -69,7 +69,7 @@ public class SolrPrincipalWriterController extends SolrEntityWriter<Principal> {
     @Bean
     public RouterFunction<ServerResponse> solrPrincipalRoutes() {
         return route()
-                .nest(RequestPredicates.path("v2/api/"),
+                .nest(RequestPredicates.path("/v2/api/"),
                         builder -> builder
                                 .POST("principal", this::addPrincipal)
                                 .build())
