@@ -8,7 +8,7 @@ apiclient_prefix = "TsvFileReaderClient"
 apiclient_package = "at.bumzack.clients.tsvfilereader"
 local_repo_path = "/code/backend/webflux/v3/tsvfilereader"
 
-datasource_folder = "/home/bumzack/micro-all-the-things/imdb_data"
+datasource_folder = "/Users/bumzack/stoff/micro-all-the-things/imdb_data"
 
 datasource_MOVIE_filename = "title.basics.tsv"
 datasource_MOVIEAKA_filename = "title.akas.tsv"

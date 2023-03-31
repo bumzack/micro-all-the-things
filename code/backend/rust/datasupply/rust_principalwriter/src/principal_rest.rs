@@ -1,7 +1,9 @@
 pub mod filters_principal {
-    use super::handlers_principal;
-    use common::TsvLine;
     use warp::Filter;
+
+    use common::TsvLines;
+
+    use super::handlers_principal;
 
     pub fn principal_route(
     ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
@@ -13,11 +15,11 @@ pub mod filters_principal {
         warp::path!("principal")
             .and(warp::post())
             .and(json_body_tsv_line())
-            .and_then(handlers_principal::post_principal)
+            .and_then(handlers_principal::post_principals)
     }
 
-    fn json_body_tsv_line() -> impl Filter<Extract = (TsvLine,), Error = warp::Rejection> + Clone {
-        warp::body::content_length_limit(1024 * 16).and(warp::body::json())
+    fn json_body_tsv_line() -> impl Filter<Extract = (TsvLines,), Error = warp::Rejection> + Clone {
+        warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }
 
@@ -26,36 +28,19 @@ mod handlers_principal {
 
     use serde_json::json;
 
+    use common::{Principal, TsvLine, TsvLines};
+
     use crate::CLIENT;
-    use common::{Principal, TsvLine};
 
-    pub async fn post_principal(tsv_line: TsvLine) -> Result<impl warp::Reply, Infallible> {
-        let ordering = match tsv_line.entries.get(1) {
-            Some(ordering) => ordering.parse::<u32>().unwrap(),
-            None => panic!("should not happen"),
-        };
+    pub async fn post_principals(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
+        println!("processing request with {} lines", tsv_lines.lines.len());
+        let principals: Vec<Principal> = tsv_lines
+            .lines
+            .into_iter()
+            .map(|t| map_to_principal(&t))
+            .collect();
 
-        let characters = match tsv_line.entries.get(4) {
-            Some(characters) => characters.split(",").map(|s| s.to_string()).collect(),
-            None => panic!("should not happen"),
-        };
-        let tconst = tsv_line.entries.get(0).unwrap().to_string();
-        let nconst = tsv_line.entries.get(2).unwrap().to_string();
-        let id = format!("{}_{}_{}", tconst, ordering, nconst);
-        let category = tsv_line.entries.get(3).unwrap().to_string();
-
-        let principal = Principal {
-            id,
-            tconst,
-            ordering,
-            nconst,
-            category,
-            characters,
-        };
-
-        let json = json!(&principal).to_string();
-
-        // println!("json \n {}\n", &json);
+        let json = json!(&principals).to_string();
 
         // let client = reqwest::Client::new();
         let response = CLIENT
@@ -77,7 +62,71 @@ mod handlers_principal {
             }
             Err(e) => println!("error in request {:?}", e),
         }
-        let res = "dont know".to_string();
+        let res = "all good".to_string();
         Ok(warp::reply::json(&res))
+    }
+
+    fn map_to_principal(tsv_line: &TsvLine) -> Principal {
+        println!("mapping tsv_line {:?}", &tsv_line);
+
+        let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");
+
+        let characters = get_nullable_string_list(&tsv_line.entries, 4);
+        let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
+        let nconst = get_nullable_string(&tsv_line.entries, 2).unwrap();
+        let id = format!("{}_{}_{}", tconst, ordering, nconst);
+        let category = get_nullable_string(&tsv_line.entries, 3).unwrap();
+
+        Principal {
+            id,
+            tconst,
+            ordering,
+            nconst,
+            category,
+            characters,
+        }
+    }
+
+    fn get_nullable_string(input: &Vec<String>, idx: usize) -> Option<String> {
+        match input.get(idx) {
+            Some(s) => {
+                if s.eq("\\N") {
+                    return None;
+                }
+                Some(s.to_string())
+            }
+            None => {
+                panic!("should not happen, that a field is empty")
+            }
+        }
+    }
+
+    fn get_nullable_u32(input: &Vec<String>, idx: usize) -> Option<u32> {
+        match input.get(idx) {
+            Some(s) => {
+                if s.eq("\\N") {
+                    return None;
+                }
+                Some(s.parse::<u32>().unwrap())
+            }
+            None => {
+                panic!("should not happen, that a field is empty")
+            }
+        }
+    }
+
+    fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
+        match input.get(idx) {
+            Some(s) => {
+                if s.eq("\\N") {
+                    return None;
+                }
+                let characters = s.split(",").map(|s| s.to_string()).collect();
+                Some(characters)
+            }
+            None => {
+                panic!("should not happen, that a field is empty")
+            }
+        }
     }
 }

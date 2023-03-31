@@ -35,3 +35,18 @@ curl  -vvvv  -X POST -H 'Authorization: Bearer 1234567890123456'  -H 'Content-Ty
  curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 10000, "pageSize": 35403199}'
  
  ```
+
+
+## List indices
+
+
+curl  -X GET   -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes'
+
+
+## Delete index
+
+curl  -X DELETE   -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/principal'
+
+ 
+
+ 
