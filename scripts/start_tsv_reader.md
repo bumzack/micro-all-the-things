@@ -89,3 +89,39 @@ CREATE USER 'bumzack'@'host' IDENTIFIED   BY 'bumzack';
 
 GRANT PRIVILEGE ON *.* TO 'bumzack'@'host';
 
+
+
+##  v4
+
+
+PRINCIPAL
+
+```
+ curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 100, "pageSize": 10 }'
+```
+
+
+MOVIEAKA
+
+```
+ curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 9999999, "pageSize": 50000 }'
+```
+
+Test tt4089182_3_nm6748260
+tt4089182	3	nm6748260	actor	\N	["Legolas","Gimli","Radagast"]
+
+
+tt0622100_10_nm0108613
+
+tt0622100	10	nm0108613	writer	written by: Woody Allen's material	\N
+
+
+
+```
+{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "director", "N", "N" ], "original" :"tt0000026	5	nm0525910	director	\N	\N"}]}
+
+```
+
+```
+curl -vv -X POST  http://localhost:8104/v2/api/principal   -H  "Content-Type: application/json" -d '{ "lines" : [ {"entries" : ["tt0000026", "5", "nm0525910", "grg", "N", "N" ], "original" :"tt0000026   5   nm0525910   grg    N   N"}]}'
+```
