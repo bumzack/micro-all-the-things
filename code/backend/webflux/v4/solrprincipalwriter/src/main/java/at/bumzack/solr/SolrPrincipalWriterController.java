@@ -67,6 +67,7 @@ public class SolrPrincipalWriterController {
 
     @NonNull
     public Mono<ServerResponse> addPrincipal(final ServerRequest request) throws WebClientResponseException {
+        LOG.info("got a request");
         final var webClient = WebClientFactory.getClient();
         return request
                 .bodyToMono(TsvLines.class)

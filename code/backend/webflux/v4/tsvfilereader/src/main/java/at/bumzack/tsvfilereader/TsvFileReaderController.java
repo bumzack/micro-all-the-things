@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static at.bumzack.common.tsv.TsvUtils.SPLITTER_TSV;
@@ -94,7 +95,7 @@ public class TsvFileReaderController {
                     LOG.error("an error occurred while requesting a POST to ratings {}", e);
                 })
                 .flatMap(c -> {
-                    final var msg = "TSV reader processed " + c + " items. items sent to " + url;
+                    final var msg = "TSV reader processed " + c + " batches. items sent to " + url;
                     return ServerResponse.ok().body(BodyInserters.fromValue(msg));
                 });
     }
@@ -103,25 +104,29 @@ public class TsvFileReaderController {
         return Flux.fromStream(lines)
                 .skip(start)
                 .buffer(pageSize)
-                .delayElements(Duration.ofMillis(10000))
-                .collectList()
-                .flatMapMany(l -> {
-                    final Stream<Mono<String>> monoStream = l.stream().map(list -> {
-                        final var tmp = list.stream()
-                                .map(this::mapToTsvLine)
-                                .toList();
-                        final var tsvLines = new TsvLines();
-                        tsvLines.setLines(tmp);
-                        return execRequest(webClient, url, tsvLines);
-                    });
-                    return Flux.fromStream(monoStream);
+                .delayElements(Duration.ofMillis(5000))
+                .flatMapSequential(l -> {
+                    LOG.info("got a stream of List<String> thingis");
+                    final List<TsvLine> list = l.stream()
+                            .map(this::mapToTsvLine)
+                            .toList();
+                    final var tsvLines = new TsvLines();
+                    tsvLines.setLines(list);
+                    // LOG.info("sending request for  tsvLines {}", tsvLines);
+                    return execRequest(webClient, url, tsvLines)
+                            .doOnError(e -> {
+                                LOG.error("error from writer app {}", e.getMessage());
+                            });
                 })
-                .delayElements(Duration.ofMillis(1000L))
                 .doOnNext(e -> LOG.info("processing next batch "))
+                .doOnComplete(() -> {
+                    LOG.info("completed batches");
+                })
                 .count();
     }
 
     private Mono<String> execRequest(final WebClient webClient, final String url, final TsvLines tsvLine) {
+        LOG.info("send request with {} lines to webClient {}", tsvLine.getLines().size(), url);
         return webClient.post()
                 .uri(url)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -129,7 +134,7 @@ public class TsvFileReaderController {
                 .body(BodyInserters.fromValue(tsvLine))
                 .retrieve()
                 .bodyToMono(String.class)
-                //      .doOnNext(res -> LOG.info("tsv reader POST  to {} returned success  {}", url, res))
+                .doOnNext(res -> LOG.info("tsv reader POST  to {} returned success  {}", url, res))
                 .doOnError(e -> LOG.error("tsv reader POST to {} returned an error  '{}'", url, e.getMessage()));
     }
 
@@ -138,6 +143,9 @@ public class TsvFileReaderController {
         final TsvLine tsvLine = new TsvLine();
         tsvLine.setOriginal(l);
         tsvLine.setEntries(entries);
+
+        // LOG.info("populated a TsvLine object  {}", tsvLine);
+
         return tsvLine;
     }
 
