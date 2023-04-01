@@ -116,7 +116,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             if !s.is_empty() {
                 let _ = s.remove(0);
             } else {
-                println!("2 s is empty");
+                println!("1 s is empty. original line           '{}'",& s_orig);
             }
 
             println!("original '{}'  -> first and last char removed '{}' ", &s_orig, &s);
@@ -142,7 +142,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                     if !s.is_empty() {
                         let _ = s.remove(0);
                     } else {
-                        println!("2 s is empty");
+                        println!("2 s is empty. original line           '{}'",& s_orig);
                     }
                     s
                 })
