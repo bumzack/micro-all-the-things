@@ -6,7 +6,7 @@ pub mod filters_tsv {
     use super::handlers_tsv;
 
     pub fn tsv_request_route(
-    ) -> impl Filter<Extract = impl warp::Reply, Error = warp::Rejection> + Clone {
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         warp::path("tsv").and(tsv_post())
     }
 
@@ -138,7 +138,7 @@ mod handlers_tsv {
                 }
 
                 let line = l.unwrap();
-                println!("line in batch  {} / {}.   line {} ", idx, page_size, &line);
+                // println!("line in batch  {} / {}.   line {} ", idx, page_size, &line);
                 if line.is_empty() {
                     println!("line is empty -> skipping ");
                     break;
@@ -161,6 +161,10 @@ mod handlers_tsv {
 
             let tsv_lines = TsvLines { lines: tsv_lines };
 
+            if tsv_lines.lines.is_empty() {
+                println!("no tsv_lines available -> breaking in while");
+            }
+
             // println!("tsv {:?}", &tsv);
 
             let json = json!(&tsv_lines).to_string();
@@ -177,11 +181,11 @@ mod handlers_tsv {
             match res {
                 Ok(res) => {
                     let code = res.status().clone();
-                    let x = res.headers().clone();
-                    let b = res.text().await.unwrap();
+                    //let x = res.headers().clone();
+                    // let b = res.text().await.unwrap();
                     println!("request ok. status {:?}", code);
-                    println!("request ok. headers {:?}", x);
-                    println!("request ok. response body {:?}", &b);
+                    //  println!("request ok. headers {:?}", x);
+                    // println!("request ok. response body {:?}", &b);
                 }
                 Err(e) => println!("error in request {:?}", e),
             }

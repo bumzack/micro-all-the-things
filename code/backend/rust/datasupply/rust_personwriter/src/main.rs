@@ -2,7 +2,7 @@ use std::io;
 
 use warp::Filter;
 
-use crate::person_rest  ::filters_person;
+use crate::person_rest::filters_person;
 
 mod person_rest;
 
