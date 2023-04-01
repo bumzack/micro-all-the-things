@@ -9,5 +9,8 @@ members = [
     "datasupply/rust_principalwriter",
     "datasupply/rust_ratingwriter",
     "datasupply/rust_tsvfilereader",
-    "datasupply/common"
+    "search/rust_moviesearch",
+    "search/rust_create_search_index",
+    "search/rust_personsearch",
+    "common"
 ]
