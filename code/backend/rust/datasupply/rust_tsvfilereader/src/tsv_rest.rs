@@ -125,7 +125,8 @@ mod handlers_tsv {
 
         current_line = start;
 
-        while current_line <= end as usize {
+        let mut stuff_available=true;
+        while current_line <= end as usize && stuff_available {
             let mut tsv_lines = vec![];
             let mut idx = 0;
             while let Ok(l) = lines.next_line().await {
@@ -163,6 +164,7 @@ mod handlers_tsv {
 
             if tsv_lines.lines.is_empty() {
                 println!("no tsv_lines available -> breaking in while");
+                stuff_available=false;
             }
 
             // println!("tsv {:?}", &tsv);
