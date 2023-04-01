@@ -132,14 +132,17 @@ pub fn get_nullable_string(input: &Vec<String>, idx: usize) -> Option<String> {
     }
 }
 
-
 pub fn get_nullable_bool(input: &Vec<String>, idx: usize) -> Option<bool> {
     match input.get(idx) {
         Some(s) => {
             if s.eq("\\N") {
                 return None;
             }
-            Some(s.parse().unwrap())
+            let b = match s.as_str() {
+                "1" => true,
+                _ => false,
+            };
+            Some(b)
         }
         None => {
             panic!("should not happen, that a field is empty")

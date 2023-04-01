@@ -30,6 +30,6 @@ mod handlers_entity {
     use crate::CLIENT;
 
     pub async fn post_episode(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
-        post_entity::<Episode>(tsv_lines, "principal".to_string(), &CLIENT).await
+        post_entity::<Episode>(tsv_lines, "episode".to_string(), &CLIENT).await
     }
 }
