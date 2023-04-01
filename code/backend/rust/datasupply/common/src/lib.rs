@@ -59,7 +59,7 @@ pub struct Movie {
     pub title_type: Option<String>,
     pub primary_title: Option<String>,
     pub original_title: Option<String>,
-    pub is_adult: bool,
+    pub is_adult: Option<bool>,
     pub start_year: Option<u32>,
     pub end_year: Option<u32>,
     pub runtime_minutes: Option<u32>,
@@ -76,7 +76,7 @@ pub struct MovieAkas {
     pub language: Option<String>,
     pub types: Option<Vec<String>>,
     pub attributes: Option<Vec<String>>,
-    pub original_title: bool,
+    pub original_title: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -85,7 +85,7 @@ pub struct Principal {
     pub tconst: String,
     pub ordering: u32,
     pub nconst: String,
-    pub category: String,
+    pub category: Option<String>,
     pub characters: Option<Vec<String>>,
 }
 
@@ -209,8 +209,8 @@ pub mod handlers_entity {
         entity_name: String,
         client: &reqwest::Client,
     ) -> Result<impl warp::Reply, Infallible>
-    where
-        TsvLines: EntityConvert<T>,
+        where
+            TsvLines: EntityConvert<T>,
     {
         println!(
             "processing request with {} lines. {}",
@@ -258,7 +258,7 @@ fn map_to_principal(tsv_line: &TsvLine) -> Principal {
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let nconst = get_nullable_string(&tsv_line.entries, 2).unwrap();
     let id = format!("{}_{}_{}", tconst, ordering, nconst);
-    let category = get_nullable_string(&tsv_line.entries, 3).unwrap();
+    let category = get_nullable_string(&tsv_line.entries, 3);
 
     Principal {
         id,
@@ -318,7 +318,7 @@ fn map_to_movie(tsv_line: &TsvLine) -> Movie {
     let title_type = get_nullable_string(&tsv_line.entries, 1);
     let primary_title = get_nullable_string(&tsv_line.entries, 2);
     let original_title = get_nullable_string(&tsv_line.entries, 3);
-    let is_adult = get_nullable_bool(&tsv_line.entries, 4).unwrap();
+    let is_adult = get_nullable_bool(&tsv_line.entries, 4);
     let start_year = get_nullable_u32(&tsv_line.entries, 5);
     let end_year = get_nullable_u32(&tsv_line.entries, 6);
     let runtime_minutes = get_nullable_u32(&tsv_line.entries, 7);
@@ -365,7 +365,7 @@ fn map_to_movieaka(tsv_line: &TsvLine) -> MovieAkas {
     let language = get_nullable_string(&tsv_line.entries, 4);
     let types = get_nullable_string_list(&tsv_line.entries, 5);
     let attributes = get_nullable_string_list(&tsv_line.entries, 6);
-    let original_title = get_nullable_bool(&tsv_line.entries, 7).unwrap();
+    let original_title = get_nullable_bool(&tsv_line.entries, 7);
     let id = format!("{}_{}", title_id, ordering);
 
     MovieAkas {
