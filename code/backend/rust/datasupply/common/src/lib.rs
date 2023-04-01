@@ -35,7 +35,6 @@ pub struct TsvLines {
     pub lines: Vec<TsvLine>,
 }
 
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Rating {
     pub id: String,
@@ -164,7 +163,6 @@ pub fn get_nullable_u32(input: &Vec<String>, idx: usize) -> Option<u32> {
     }
 }
 
-
 pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     match input.get(idx) {
         Some(s) => {
@@ -206,16 +204,27 @@ pub mod handlers_entity {
 
     use crate::{EntityConvert, TsvLines};
 
-    pub async fn post_entity<'a, T: Serialize + Deserialize<'a> + Send>(tsv_lines: TsvLines, entity_name: String, client: &reqwest::Client) -> Result<impl warp::Reply, Infallible>
-        where TsvLines: EntityConvert<T>
+    pub async fn post_entity<'a, T: Serialize + Deserialize<'a> + Send>(
+        tsv_lines: TsvLines,
+        entity_name: String,
+        client: &reqwest::Client,
+    ) -> Result<impl warp::Reply, Infallible>
+    where
+        TsvLines: EntityConvert<T>,
     {
-        println!("processing request with {} lines. {}", tsv_lines.lines.len(), &entity_name);
+        println!(
+            "processing request with {} lines. {}",
+            tsv_lines.lines.len(),
+            &entity_name
+        );
         let entities: Vec<T> = tsv_lines.convert();
 
         let json = json!(&entities).to_string();
 
-        // let client = reqwest::Client::new();
-        let index = format!("http://meilisearch01.bumzack.at/indexes/{}/documents?primaryKey=id", &entity_name);
+        let index = format!(
+            "http://meilisearch01.bumzack.at/indexes/{}/documents?primaryKey=id",
+            &entity_name
+        );
         let response = client
             .post(&index)
             .body(json)
@@ -241,7 +250,7 @@ pub mod handlers_entity {
 }
 
 fn map_to_principal(tsv_line: &TsvLine) -> Principal {
-    println!("mapping tsv_line {:?} to principal", &tsv_line);
+    // println!("mapping tsv_line {:?} to principal", &tsv_line);
 
     let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");
 
@@ -261,9 +270,8 @@ fn map_to_principal(tsv_line: &TsvLine) -> Principal {
     }
 }
 
-
 fn map_to_person(tsv_line: &TsvLine) -> Person {
-    println!("mapping tsv_line {:?} to person  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to person  ", &tsv_line);
 
     let nconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let primary_name = get_nullable_string(&tsv_line.entries, 1);
@@ -285,9 +293,8 @@ fn map_to_person(tsv_line: &TsvLine) -> Person {
     }
 }
 
-
 fn map_to_episode(tsv_line: &TsvLine) -> Episode {
-    println!("mapping tsv_line {:?} to Episode  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to Episode  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let parent_tconst = get_nullable_string(&tsv_line.entries, 1).unwrap();
@@ -304,9 +311,8 @@ fn map_to_episode(tsv_line: &TsvLine) -> Episode {
     }
 }
 
-
 fn map_to_movie(tsv_line: &TsvLine) -> Movie {
-    println!("mapping tsv_line {:?} to Movie  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to Movie  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let title_type = get_nullable_string(&tsv_line.entries, 1);
@@ -333,9 +339,8 @@ fn map_to_movie(tsv_line: &TsvLine) -> Movie {
     }
 }
 
-
 fn map_to_crew(tsv_line: &TsvLine) -> Crew {
-    println!("mapping tsv_line {:?} to crew  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to crew  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let directors = get_nullable_string_list(&tsv_line.entries, 1);
@@ -350,9 +355,8 @@ fn map_to_crew(tsv_line: &TsvLine) -> Crew {
     }
 }
 
-
 fn map_to_movieaka(tsv_line: &TsvLine) -> MovieAkas {
-    println!("mapping tsv_line {:?} to MovieAkas  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to MovieAkas  ", &tsv_line);
 
     let title_id = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");
@@ -377,9 +381,8 @@ fn map_to_movieaka(tsv_line: &TsvLine) -> MovieAkas {
     }
 }
 
-
 fn map_to_rating(tsv_line: &TsvLine) -> Rating {
-    println!("mapping tsv_line {:?} to Rating  ", &tsv_line);
+    // println!("mapping tsv_line {:?} to Rating  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let average_rating = get_nullable_f32(&tsv_line.entries, 1).unwrap();
@@ -394,81 +397,51 @@ fn map_to_rating(tsv_line: &TsvLine) -> Rating {
     }
 }
 
-
 impl EntityConvert<Principal> for TsvLines {
     fn convert(&self) -> Vec<Principal> {
-        let v: Vec<Principal> = self.lines
-            .iter()
-            .map(|t| map_to_principal(&t))
-            .collect();
+        let v: Vec<Principal> = self.lines.iter().map(|t| map_to_principal(&t)).collect();
         v
     }
 }
-
 
 impl EntityConvert<Person> for TsvLines {
     fn convert(&self) -> Vec<Person> {
-        let v: Vec<Person> = self.lines
-            .iter()
-            .map(|t| map_to_person(&t))
-            .collect();
+        let v: Vec<Person> = self.lines.iter().map(|t| map_to_person(&t)).collect();
         v
     }
 }
-
 
 impl EntityConvert<Crew> for TsvLines {
     fn convert(&self) -> Vec<Crew> {
-        let v: Vec<Crew> = self.lines
-            .iter()
-            .map(|t| map_to_crew(&t))
-            .collect();
+        let v: Vec<Crew> = self.lines.iter().map(|t| map_to_crew(&t)).collect();
         v
     }
 }
-
 
 impl EntityConvert<Episode> for TsvLines {
     fn convert(&self) -> Vec<Episode> {
-        let v: Vec<Episode> = self.lines
-            .iter()
-            .map(|t| map_to_episode(&t))
-            .collect();
+        let v: Vec<Episode> = self.lines.iter().map(|t| map_to_episode(&t)).collect();
         v
     }
 }
-
 
 impl EntityConvert<Movie> for TsvLines {
     fn convert(&self) -> Vec<Movie> {
-        let v: Vec<Movie> = self.lines
-            .iter()
-            .map(|t| map_to_movie(&t))
-            .collect();
+        let v: Vec<Movie> = self.lines.iter().map(|t| map_to_movie(&t)).collect();
         v
     }
 }
 
-
 impl EntityConvert<MovieAkas> for TsvLines {
     fn convert(&self) -> Vec<MovieAkas> {
-        let v: Vec<MovieAkas> = self.lines
-            .iter()
-            .map(|t| map_to_movieaka(&t))
-            .collect();
+        let v: Vec<MovieAkas> = self.lines.iter().map(|t| map_to_movieaka(&t)).collect();
         v
     }
 }
 
 impl EntityConvert<Rating> for TsvLines {
     fn convert(&self) -> Vec<Rating> {
-        let v: Vec<Rating> = self.lines
-            .iter()
-            .map(|t| map_to_rating(&t))
-            .collect();
+        let v: Vec<Rating> = self.lines.iter().map(|t| map_to_rating(&t)).collect();
         v
     }
 }
-
-
-
