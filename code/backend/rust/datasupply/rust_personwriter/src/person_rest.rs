@@ -1,7 +1,6 @@
 pub mod filters_person {
     use warp::Filter;
-
-    use common::TsvLines;
+    use common::tsv::TsvLines;
 
     use super::handlers_entity;
 
@@ -25,9 +24,10 @@ pub mod filters_person {
 
 mod handlers_entity {
     use std::convert::Infallible;
+    use common::entity::handlers_entity::post_entity;
+    use common::person::Person;
+    use common::tsv::TsvLines;
 
-    use common::handlers_entity::post_entity;
-    use common::{Person, TsvLines};
 
     use crate::CLIENT;
 

@@ -1,7 +1,7 @@
 pub mod filters_crew {
     use warp::Filter;
+    use common::tsv::TsvLines;
 
-    use common::TsvLines;
 
     use super::handlers_entity;
 
@@ -25,9 +25,10 @@ pub mod filters_crew {
 
 mod handlers_entity {
     use std::convert::Infallible;
+    use common::crew::Crew;
+    use common::entity::handlers_entity::post_entity;
+    use common::tsv::TsvLines;
 
-    use common::handlers_entity::post_entity;
-    use common::{Crew, TsvLines};
 
     use crate::CLIENT;
 
