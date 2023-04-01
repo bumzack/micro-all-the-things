@@ -13,7 +13,7 @@ pub mod filters_rating {
         warp::path!("rating")
             .and(warp::post())
             .and(json_body_tsv_line())
-            .and_then(handlers_entity::post_person)
+            .and_then(handlers_entity::post_rating)
     }
 
     fn json_body_tsv_line() -> impl Filter<Extract=(TsvLines, ), Error=warp::Rejection> + Clone {
@@ -29,7 +29,7 @@ mod handlers_entity {
 
     use crate::CLIENT;
 
-    pub async fn post_person(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
+    pub async fn post_rating(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
         post_entity::<Rating>(tsv_lines, "rating".to_string(), &CLIENT).await
     }
 }

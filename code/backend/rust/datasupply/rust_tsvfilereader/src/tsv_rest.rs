@@ -161,6 +161,10 @@ mod handlers_tsv {
 
             let tsv_lines = TsvLines { lines: tsv_lines };
 
+            if tsv_lines.lines.is_empty() {
+                println!("no tsv_lines available -> breaking in while");
+            }
+
             // println!("tsv {:?}", &tsv);
 
             let json = json!(&tsv_lines).to_string();

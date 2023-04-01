@@ -2,9 +2,9 @@ use std::io;
 
 use warp::Filter;
 
-use crate::moviei_rest::filters_movie;
+use crate::movie_rest::filters_movie;
 
-mod moviei_rest;
+mod movie_rest;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::new();
