@@ -112,6 +112,7 @@ public class TsvFileReaderController {
                 .flatMapSequential(l -> {
                     // LOG.info("got a stream of List<String> thingis");
                     final List<TsvLine> list = l.stream()
+                            .filter(StringUtils::isNotBlank)
                             .map(this::mapToTsvLine)
                             .toList();
                     final var tsvLines = new TsvLines();
