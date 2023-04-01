@@ -1,5 +1,5 @@
 [package]
-name = "rust_tsvfilereader"
+name = "rust_movieakaswriter"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 warp = "0.3.3"
-dotenvy = "0.15.7"
+dotenvy = "0.15"
 tokio = { version = "1.26.0", features = ["full"] }
 reqwest = { version = "0.11.16" }
 common = { path = "../common" }
@@ -15,10 +15,8 @@ serde = { version = "1.0.158", features = ["derive"] }
 serde_json = "1.0.94"
 serde_urlencoded = "0.7.1"
 serde_derive = "1.0.155"
-toml = "0.7.3"
-config = "0.13.3"
 lazy_static = "1.4.0"
-futures = "0.3.27"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+futures = "0.3.27"
