@@ -227,7 +227,6 @@ pub mod handlers_entity {
     use std::convert::Infallible;
 
     use reqwest::{Client, StatusCode};
-    use reqwest::Client;
     use serde::{Deserialize, Serialize};
     use serde_json::json;
 
@@ -273,7 +272,7 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                if &code == StatusCode::OK || code == StatusCode::CREATED {
+                if code == StatusCode::OK || code == StatusCode::CREATED {
                     println!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
@@ -304,7 +303,7 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                if &code == StatusCode::OK || code == StatusCode::CREATED {
+                if code == StatusCode::OK || code == StatusCode::CREATED {
                     println!("solr request success");
                 } else {
                     let x = res.headers().clone();
