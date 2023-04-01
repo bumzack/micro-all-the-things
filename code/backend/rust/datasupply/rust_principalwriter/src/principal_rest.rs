@@ -1,8 +1,6 @@
 pub mod filters_principal {
     use warp::Filter;
-
-    use common::TsvLines;
-
+    use common::tsv::TsvLines;
     use super::handlers_entity;
 
     pub fn principal_route(
@@ -25,9 +23,10 @@ pub mod filters_principal {
 
 mod handlers_entity {
     use std::convert::Infallible;
+    use common::entity::handlers_entity::post_entity;
 
-    use common::handlers_entity::post_entity;
-    use common::{Principal, TsvLines};
+    use common::principal::Principal;
+    use common::tsv::TsvLines;
 
     use crate::CLIENT;
 

@@ -1,7 +1,7 @@
 pub mod filters_episode {
     use warp::Filter;
+    use common::tsv::TsvLines;
 
-    use common::TsvLines;
 
     use super::handlers_entity;
 
@@ -25,9 +25,10 @@ pub mod filters_episode {
 
 mod handlers_entity {
     use std::convert::Infallible;
+    use common::entity::handlers_entity::post_entity;
+    use common::episode::Episode;
+    use common::tsv::TsvLines;
 
-    use common::handlers_entity::post_entity;
-    use common::{Episode, TsvLines};
 
     use crate::CLIENT;
 
