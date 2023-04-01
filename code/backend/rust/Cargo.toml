@@ -1,7 +1,13 @@
 [workspace]
 
 members = [
+    "datasupply/rust_crewwriter",
+    "datasupply/rust_episodewriter",
+    "datasupply/rust_movieakaswriter",
+    "datasupply/rust_moviewriter",
+    "datasupply/rust_personwriter",
     "datasupply/rust_principalwriter",
+    "datasupply/rust_ratingwriter",
     "datasupply/rust_tsvfilereader",
     "datasupply/common"
 ]
