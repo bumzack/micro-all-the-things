@@ -106,9 +106,17 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             }
             let mut s = s.clone();
 
+            let s_orig = s.clone();
             // remove surrounding [ and ]
-            let _ = s.pop().unwrap();
+            match s.pop() {
+                Some(_) => {},
+                None=> {
+                    println!("could not remove first char from line '{}'", &s);
+                }
+            }
             let _ = s.remove(0);
+
+            println!("original '{}'  -> dirst and last char removed '{}' ", &s_orig, &s);
 
             let characters = if s.contains(",") {
                 s
