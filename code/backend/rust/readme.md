@@ -32,22 +32,22 @@ curl  -vvvv  -X POST -H 'Authorization: Bearer 1234567890123456'  -H 'Content-Ty
 ## TSV REader POST request
 
 ```
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 9928301, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 7579300, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 9928301, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 35461900, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 12508003, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 1494595, "pageSize": 50000}'&& 
- curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 60000000, "pageSize": 50000}'
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 9728320, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 7379220, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 60000000, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 35461880, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 12408005, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 60000000, "pageSize": 50000}'     && 
+ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 55347240, "pageSize": 50000}'
 
  ```
 
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 2001, "pageSize": 500}'
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 2001, "pageSize": 500}'
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 2001, "pageSize": 500}'
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 2001, "pageSize": 500}'
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 2001, "pageSize": 500}'
-curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 2001, "pageSize": 500}'
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
+curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 2001, "pageSize": 500}'    && 
 curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 2001, "pageSize": 500}'
 
 
