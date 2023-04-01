@@ -35,7 +35,6 @@ pub struct TsvLines {
     pub lines: Vec<TsvLine>,
 }
 
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Rating {
     pub id: String,
