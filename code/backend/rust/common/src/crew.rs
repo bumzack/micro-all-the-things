@@ -2,7 +2,7 @@ use std::fmt::{Debug};
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::entity::{EntityConvert, get_nullable_string, get_nullable_string_list};
+use crate::entity::{EntityConverter, get_nullable_string, get_nullable_string_list};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -29,7 +29,7 @@ fn map_to_crew(tsv_line: &TsvLine) -> Crew {
     }
 }
 
-impl EntityConvert<Crew> for TsvLines {
+impl EntityConverter<Crew> for TsvLines {
     fn convert(&self) -> Vec<Crew> {
         self.lines.iter().map(|t| map_to_crew(&t)).collect()
     }

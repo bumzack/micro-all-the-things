@@ -10,19 +10,19 @@ pub mod filters_search_person {
 
     pub fn search_person_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
     {
-        let server1 = warp::path!( "api" / "person" / String);
+        let server1 = warp::path!( "api" / "person" / "name" / String);
         let search_name = server1
             .and(warp::get())
             .and_then(|name: String| {
-                println!("/api/person/:name matched");
+                println!("/api/person/name/:name matched");
                 handlers_search_entity::meili_search("person".to_string(), name, &CLIENT)
             });
 
-        let server2 = warp::path!( "api" / "personbynconst" / String);
+        let server2 = warp::path!( "api" / "person" / "nconst" / String);
         let search_nconst = server2
             .and(warp::get())
             .and_then(|name: String| {
-                println!("/api/person/bynconst/:-name matched");
+                println!("/api/person/nconst/:nconst matched");
                 filter_entity(name)
             });
 

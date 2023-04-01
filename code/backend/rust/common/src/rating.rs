@@ -2,7 +2,7 @@ use std::fmt::{Debug};
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::entity::{EntityConvert, get_nullable_f32, get_nullable_string, get_nullable_u32};
+use crate::entity::{EntityConverter, get_nullable_f32, get_nullable_string, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
 
 
@@ -32,7 +32,7 @@ fn map_to_rating(tsv_line: &TsvLine) -> Rating {
 }
 
 
-impl EntityConvert<Rating> for TsvLines {
+impl EntityConverter<Rating> for TsvLines {
     fn convert(&self) -> Vec<Rating> {
         self.lines.iter().map(|t| map_to_rating(&t)).collect()
     }

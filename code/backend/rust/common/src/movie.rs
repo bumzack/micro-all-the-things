@@ -2,7 +2,7 @@ use std::fmt::{Debug};
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::entity::{EntityConvert, get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32};
+use crate::entity::{EntityConverter, get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -55,7 +55,7 @@ fn map_to_movie(tsv_line: &TsvLine) -> Movie {
     }
 }
 
-impl EntityConvert<Movie> for TsvLines {
+impl EntityConverter<Movie> for TsvLines {
     fn convert(&self) -> Vec<Movie> {
         self.lines.iter().map(|t| map_to_movie(&t)).collect()
     }

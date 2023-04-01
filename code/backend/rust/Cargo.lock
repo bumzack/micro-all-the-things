@@ -1019,6 +1019,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_crewsearch"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "dotenvy",
+ "futures",
+ "lazy_static",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
 name = "rust_crewwriter"
 version = "0.1.0"
 dependencies = [
@@ -1138,7 +1155,41 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_principalsearch"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "dotenvy",
+ "futures",
+ "lazy_static",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
 name = "rust_principalwriter"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "dotenvy",
+ "futures",
+ "lazy_static",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
+name = "rust_ratingsearch"
 version = "0.1.0"
 dependencies = [
  "common",

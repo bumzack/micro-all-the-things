@@ -1,9 +1,9 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::N_A;
 
+use crate::N_A;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub enum Entity {
@@ -96,7 +96,54 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
     }
 }
 
-pub trait EntityConvert<T> {
+
+pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
+    println!("input {:?}", input);
+    match input.get(idx) {
+        Some(s) => {
+            if s.eq(N_A) {
+                return None;
+            }
+            let mut s = s.clone();
+
+            // remove surrounding [ and ]
+            let _ = s.pop().unwrap();
+            let _ = s.remove(0);
+
+            let characters = if s.contains(",") {
+                s
+                    .split(",")
+                    .map(|s| s.to_string())
+                    .filter(|s| !s.is_empty())
+                    .collect::<Vec<String>>()
+            } else {
+                vec![s]
+            };
+
+            println!("v1");
+            characters.iter().for_each(|s| println!("s = {}", &s));
+            let characters = characters.into_iter()
+                .map(|mut s| {
+                    let _ = s.pop().unwrap();
+                    let _ = s.remove(0);
+                    s
+                })
+                .filter(|s| !s.is_empty())
+                .collect::<Vec<String>>();
+
+            println!("v2");
+            characters.iter().for_each(|s| println!("s = {}", &s));
+
+            Some(characters)
+        }
+        None => {
+            panic!("should not happen, that a field is empty")
+        }
+    }
+}
+
+
+pub trait EntityConverter<T> {
     fn convert(&self) -> Vec<T>;
 }
 
@@ -106,8 +153,8 @@ pub mod handlers_entity {
     use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
     use serde_json::json;
-    use crate::entity::EntityConvert;
 
+    use crate::entity::EntityConverter;
     use crate::tsv::TsvLines;
 
     pub async fn post_entity<'a, T: Serialize + Deserialize<'a> + Send>(
@@ -116,7 +163,7 @@ pub mod handlers_entity {
         client: &Client,
     ) -> Result<impl warp::Reply, Infallible>
         where
-            TsvLines: EntityConvert<T>,
+            TsvLines: EntityConverter<T>,
     {
         println!(
             "processing request with {} lines. {}",

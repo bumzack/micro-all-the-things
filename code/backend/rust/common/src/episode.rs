@@ -2,7 +2,7 @@ use std::fmt::{Debug};
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::entity::{EntityConvert, get_nullable_string, get_nullable_u32};
+use crate::entity::{EntityConverter, get_nullable_string, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
 
 
@@ -36,7 +36,7 @@ fn map_to_episode(tsv_line: &TsvLine) -> Episode {
     }
 }
 
-impl EntityConvert<Episode> for TsvLines {
+impl EntityConverter<Episode> for TsvLines {
     fn convert(&self) -> Vec<Episode> {
         self.lines.iter().map(|t| map_to_episode(&t)).collect()
     }

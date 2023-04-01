@@ -2,7 +2,7 @@ use std::fmt::{Debug};
 
 use serde::Deserialize;
 use serde::Serialize;
-use crate::entity::{EntityConvert, get_nullable_string, get_nullable_string_list, get_nullable_u32};
+use crate::entity::{EntityConverter, get_nullable_string, get_nullable_string_list, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
 
 
@@ -45,7 +45,7 @@ fn map_to_person(tsv_line: &TsvLine) -> Person {
     }
 }
 
-impl EntityConvert<Person> for TsvLines {
+impl EntityConverter<Person> for TsvLines {
     fn convert(&self) -> Vec<Person> {
         self.lines.iter().map(|t| map_to_person(&t)).collect()
     }

@@ -12,5 +12,8 @@ members = [
     "search/rust_moviesearch",
     "search/rust_create_search_index",
     "search/rust_personsearch",
+    "search/rust_principalsearch",
+    "search/rust_ratingsearch",
+    "search/rust_crewsearch",
     "common"
 ]

@@ -13,6 +13,11 @@ tt0088247
 
 ## API
 
+https://askubuntu.com/questions/162229/how-do-i-increase-the-open-files-limit-for-a-non-root-user
+
+in /etc/security eintragen und pam dingsdi auch
+
+
 ## get tasks
 
 ```
@@ -35,32 +40,17 @@ tt0088247
 
 ## set filterable attributes
 ```
-  curl  -vv -X PUT -d '[ "tconst", "titleType" ]'  http://meilisearch01.bumzack.at/indexes/movie/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+
+  curl  -X PUT -d '[ "tconst" ]'                    http://meilisearch01.bumzack.at/indexes/movie/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "titleId" ]'                   http://meilisearch01.bumzack.at/indexes/movieaka/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "nconst" ]'                    http://meilisearch01.bumzack.at/indexes/person/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "parentTconst", "tconst" ]'    http://meilisearch01.bumzack.at/indexes/episode/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[  "tconst"  ]'                  http://meilisearch01.bumzack.at/indexes/crew/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "tconst", "nconst" ]'          http://meilisearch01.bumzack.at/indexes/principal/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "tconst"]'                     http://meilisearch01.bumzack.at/indexes/rating/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  
 ```
 
-```
-  curl  -vv -X PUT -d '[ "titleId", "types" ]'  http://meilisearch01.bumzack.at/indexes/movieaka/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
-
-```
-  curl  -vv -X PUT -d '[ "nconst", "knownForTitles", "primaryProfession" ]'  http://meilisearch01.bumzack.at/indexes/person/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
-
-```
-  curl  -vv -X PUT -d '[ "parentTconst", "tconst" ]'  http://meilisearch01.bumzack.at/indexes/episode/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
-
-```
-  curl  -vv -X PUT -d '[ "directors", "tconst", "writers" ]'  http://meilisearch01.bumzack.at/indexes/crew/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
-
-```
-  curl  -vv -X PUT -d '[ "tconst", "nconst", "category", "characters"]'  http://meilisearch01.bumzack.at/indexes/principal/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
-
-```
-  curl  -vv -X PUT -d '[ "tconst"]'  http://meilisearch01.bumzack.at/indexes/rating/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-```
 
 ### movie all 
 ```
@@ -68,15 +58,41 @@ tt0088247
 ```
 
 
-### person all 
+### person all attributes
 
 ```
- curl  -vv   http://localhost:18203/api/person/Schwarzeneger        
+ curl  -vv   http://localhost:18203/api/person/name/Schwarzeneger           |  jq  
 ```
 
 ### person by nconst
 
-bynconst
+
 ```
- curl  -vv   http://localhost:18203/api/personbynconst/nm0000216        
+ curl  -vv   http://localhost:18203/api/person/nconst/nm0000216        |  jq     
 ```
+
+### Principal by Person Name (nconst)
+
+```
+ curl  -vv   http://localhost:18204/api/principal/name/nm1122026      |  jq  
+```
+
+### Principal by Movie ID (tconst) 
+
+```
+ curl  -vv   http://localhost:18204/api/principal/title/tt0666268         |  jq    
+```
+
+
+### Rating by Movie (tconst)
+
+```
+ curl  -vv   http://localhost:18205/api/rating/tt0666268         |  jq    
+```
+
+### Crew for Movie (tconst)
+
+```
+ curl  -vv   http://localhost:18205/api/rating/tt0666268         |  jq    
+```
+
