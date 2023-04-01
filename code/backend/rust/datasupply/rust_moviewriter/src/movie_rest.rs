@@ -27,7 +27,7 @@ mod handlers_entity {
     use std::convert::Infallible;
 
     use common::handlers_entity::post_entity;
-    use common::{Movie, Principal, TsvLines};
+    use common::{Movie, TsvLines};
 
     use crate::CLIENT;
 
