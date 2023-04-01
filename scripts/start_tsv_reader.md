@@ -94,7 +94,7 @@ GRANT PRIVILEGE ON *.* TO 'bumzack'@'host';
 ##  v4
 
 ```
- curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 100, "pageSize": 10 }'
+ curl -vv -X POST  http://localhost:8900/v2/api/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 99999999, "pageSize": 50000 }'
 ```
 
 ```
