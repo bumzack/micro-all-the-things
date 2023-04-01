@@ -50,25 +50,25 @@ cd $DIR
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"tconst",              "type":"string",             "stored":true, indexed:"true" },
   "add-field":{       "name":"titleType",           "type":"string",             "stored":true, indexed:"true" },
-  "add-field":{       "name":"primaryTitle",        "type":"string",             "stored":true, indexed:"true" },
-  "add-field":{       "name":"originalTitle",       "type":"string",             "stored":true, indexed:"true" },
+  "add-field":{       "name":"primaryTitle",        "type":"text_general",             "stored":true, indexed:"true" },
+  "add-field":{       "name":"originalTitle",       "type":"text_general",             "stored":true, indexed:"true" },
   "add-field":{       "name":"adult",               "type":"boolean",            "stored":true, indexed:"true" },
-  "add-field":{       "name":"startYear",           "type":"string",            "stored":true, indexed:"true" },
-  "add-field":{       "name":"endYear",             "type":"string",            "stored":true, indexed:"true" },
-  "add-field":{       "name":"runtimeMinutes",      "type":"string",            "stored":true, indexed:"true" },
-  "add-field":{       "name":"genres",              "type":"string",             "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"startYear",           "type":"pint",            "stored":true, indexed:"true" },
+  "add-field":{       "name":"endYear",             "type":"pint",            "stored":true, indexed:"true" },
+  "add-field":{       "name":"runtimeMinutes",      "type":"pint",            "stored":true, indexed:"true" },
+  "add-field":{       "name":"genres",              "type":"text_general",             "stored":true, indexed:"true", "multiValued":true }
 }' http://localhost:8984/solr/movie/schema
 
 
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"titleId",             "type":"string",     "stored":true, indexed:"true" },
-  "add-field":{       "name":"ordering",            "type":"string",    "stored":true, indexed:"true" },
-  "add-field":{       "name":"title",               "type":"string",     "stored":true, indexed:"true" },
-  "add-field":{       "name":"region",              "type":"string",     "stored":true, indexed:"true" },
-  "add-field":{       "name":"language",            "type":"string",     "stored":true, indexed:"true" },
-  "add-field":{       "name":"types",               "type":"string",     "stored":true,"multiValued":true, indexed:"true" },
-  "add-field":{       "name":"attributes",          "type":"string",     "stored":true,"multiValued":true, indexed:"true" },
+  "add-field":{       "name":"ordering",            "type":"pint",    "stored":true, indexed:"true" },
+  "add-field":{       "name":"title",               "type":"text_general",     "stored":true, indexed:"true" },
+  "add-field":{       "name":"region",              "type":"text_general",     "stored":true, indexed:"true" },
+  "add-field":{       "name":"language",            "type":"text_general",     "stored":true, indexed:"true" },
+  "add-field":{       "name":"types",               "type":"text_general",     "stored":true,"multiValued":true, indexed:"true" },
+  "add-field":{       "name":"attributes",          "type":"text_general",     "stored":true,"multiValued":true, indexed:"true" },
   "add-field":{       "name":"originalTitle",       "type":"boolean",    "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/movieaka/schema
 
@@ -78,9 +78,9 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"nconst",              "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"primaryName",         "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"birthYear",           "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"deathYear",           "type":"string",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"primaryName",         "type":"text_general",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"birthYear",           "type":"pint",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"deathYear",           "type":"pint",  "stored":true, indexed:"true" },
   "add-field":{       "name":"primaryProfession",   "type":"string",  "stored":true,"multiValued":true, indexed:"true" },
   "add-field":{       "name":"knownForTitles",      "type":"string",  "stored":true,"multiValued":true, indexed:"true" }
 }' http://localhost:8984/solr/person/schema
@@ -90,19 +90,19 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"tconst",             "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"averageRating",      "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"numVotes",           "type":"string", "stored":true, indexed:"true" }
+  "add-field":{       "name":"averageRating",      "type":"pfloat",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"numVotes",           "type":"pint", "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/rating/schema
 
 
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"tconst",          "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"ordering",        "type":"string",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"ordering",        "type":"pint",  "stored":true, indexed:"true" },
   "add-field":{       "name":"nconst",          "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"category",        "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{       "name":"job",             "type":"string",  "stored":true,  indexed:"true" },
-  "add-field":{       "name":"characters",      "type":"string",  "stored":true, "multiValued":true, indexed:"true" }
+  "add-field":{       "name":"category",        "type":"text_general",  "stored":true, indexed:"true" },
+  "add-field":{       "name":"job",             "type":"text_general",  "stored":true,  indexed:"true" },
+  "add-field":{       "name":"characters",      "type":"text_general",  "stored":true, "multiValued":true, indexed:"true" }
 }' http://localhost:8984/solr/principal/schema
 
 
@@ -117,6 +117,6 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"tconst",          "type":"string",  "stored":true, indexed:"true" },
   "add-field":{   "name":"parentTconst",    "type":"string",  "stored":true, indexed:"true" },
-  "add-field":{   "name":"seasonNumber",    "type":"string", "stored":true, indexed:"true" },
-  "add-field":{   "name":"episodeNumber",   "type":"string", "stored":true, indexed:"true" }
+  "add-field":{   "name":"seasonNumber",    "type":"pint", "stored":true, indexed:"true" },
+  "add-field":{   "name":"episodeNumber",   "type":"pint", "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/episode/schema

@@ -27,8 +27,7 @@ import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
-import static at.bumzack.common.tsv.TsvUtils.getList;
-import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
+import static at.bumzack.common.tsv.TsvUtils.*;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -50,8 +49,8 @@ public class SolrPersonWriterController extends SolrEntityWriter<Person> {
         final List<String> entries = tsvLine.getEntries();
         person.setNconst(entries.get(0));
         person.setPrimaryName(getNullableValue(entries.get(1)));
-        person.setBirthYear(getNullableValue(entries.get(2)));
-        person.setDeathYear(getNullableValue(entries.get(3)));
+        person.setBirthYear(getInteger(entries.get(2)));
+        person.setDeathYear(getInteger(entries.get(3)));
         person.setPrimaryProfession(getList(entries.get(4)));
         person.setKnownForTitles(getList(entries.get(5)));
         person.setId(person.getNconst());

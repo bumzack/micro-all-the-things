@@ -16,8 +16,8 @@ public class Rating extends AbstractItem implements Serializable {
     };
 
     private String tconst;
-    private String averageRating;
-    private String numVotes;
+    private Double averageRating;
+    private Integer numVotes;
 
     public Rating() {
     }
@@ -30,19 +30,19 @@ public class Rating extends AbstractItem implements Serializable {
         this.tconst = tconst;
     }
 
-    public String getAverageRating() {
+    public Double getAverageRating() {
         return averageRating;
     }
 
-    public void setAverageRating(final String averageRating) {
+    public void setAverageRating(final Double averageRating) {
         this.averageRating = averageRating;
     }
 
-    public String getNumVotes() {
+    public Integer getNumVotes() {
         return numVotes;
     }
 
-    public void setNumVotes(final String numVotes) {
+    public void setNumVotes(final Integer numVotes) {
         this.numVotes = numVotes;
     }
 }

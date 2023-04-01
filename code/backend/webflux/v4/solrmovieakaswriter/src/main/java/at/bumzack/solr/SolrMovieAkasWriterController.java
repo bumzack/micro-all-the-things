@@ -48,14 +48,14 @@ public class SolrMovieAkasWriterController extends SolrEntityWriter<MovieAkas> {
         final MovieAkas movieAkas = new MovieAkas();
         final List<String> entries = tsvLine.getEntries();
         movieAkas.setTitleId(entries.get(0));
-        movieAkas.setOrdering(getNullableValue(entries.get(1)));
+        movieAkas.setOrdering(getInteger(entries.get(1)));
         movieAkas.setTitle(getNullableValue(entries.get(2)));
         movieAkas.setRegion(getNullableValue(entries.get(3)));
         movieAkas.setLanguage(getNullableValue(entries.get(4)));
         movieAkas.setTypes(getList(entries.get(5)));
         movieAkas.setAttributes(getList(entries.get(6)));
         movieAkas.setOriginalTitle(getBoolean(entries.get(7)));
-        movieAkas.setId(String.join("_", movieAkas.getTitleId(), movieAkas.getOrdering()));
+        movieAkas.setId(String.join("_", movieAkas.getTitleId(), movieAkas.getOrdering().toString()));
         return movieAkas;
     }
 

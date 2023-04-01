@@ -20,7 +20,7 @@ public class MovieAkas extends AbstractItem implements Serializable {
     private static final long serialVersionUID = 3L;
 
     private String titleId;
-    private String ordering;
+    private Integer ordering;
     private String title;
     private String region;
     private String language;
@@ -40,11 +40,11 @@ public class MovieAkas extends AbstractItem implements Serializable {
         this.titleId = titleId;
     }
 
-    public String getOrdering() {
+    public Integer getOrdering() {
         return ordering;
     }
 
-    public void setOrdering(final String ordering) {
+    public void setOrdering(final Integer ordering) {
         this.ordering = ordering;
     }
 

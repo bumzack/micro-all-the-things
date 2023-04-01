@@ -28,6 +28,7 @@ import reactor.util.annotation.NonNull;
 
 import java.util.List;
 
+import static at.bumzack.common.tsv.TsvUtils.getInteger;
 import static at.bumzack.common.tsv.TsvUtils.getNullableValue;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -50,8 +51,8 @@ public class SolrEpisodeWriterController extends SolrEntityWriter<Episode> {
         final List<String> entries = tsvLine.getEntries();
         episode.setTconst(entries.get(0));
         episode.setParentTconst(getNullableValue(entries.get(1)));
-        episode.setSeasonNumber(getNullableValue(entries.get(2)));
-        episode.setEpisodeNumber(getNullableValue(entries.get(3)));
+        episode.setSeasonNumber(getInteger(entries.get(2)));
+        episode.setEpisodeNumber(getInteger(entries.get(3)));
         episode.setId(episode.getTconst() + "_" + episode.getParentTconst());
 
         return episode;

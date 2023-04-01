@@ -24,6 +24,10 @@ public class TsvUtils {
         return val.equals("\\N") ? null : Integer.parseInt(val);
     }
 
+    public static Double getDouble(final String val) {
+        return val.equals("\\N") ? null : Double.parseDouble(val);
+    }
+
     public static List<String> getList(final String val) {
         //  LOG.info("list values {}, original value {}", StringUtils.join(" // ", strings), val);
         return val.equals("\\N") ? null : SPLITTER_ARRAY.splitToList(val);

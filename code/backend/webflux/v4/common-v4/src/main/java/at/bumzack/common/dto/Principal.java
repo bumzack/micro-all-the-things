@@ -18,7 +18,7 @@ public class Principal extends AbstractItem implements Serializable {
     };
 
     private String tconst;
-    private String ordering;
+    private Integer ordering;
     private String nconst;
     private String category;
     private List<String> characters;
@@ -34,11 +34,11 @@ public class Principal extends AbstractItem implements Serializable {
         this.tconst = tconst;
     }
 
-    public String getOrdering() {
+    public Integer getOrdering() {
         return ordering;
     }
 
-    public void setOrdering(final String ordering) {
+    public void setOrdering(final Integer ordering) {
         this.ordering = ordering;
     }
 
