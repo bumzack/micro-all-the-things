@@ -3,6 +3,8 @@ use std::fmt::{Debug, Formatter};
 use serde::Deserialize;
 use serde::Serialize;
 
+const N_A: &'static str = "\\N";
+
 #[derive(Debug, Deserialize, Serialize)]
 pub enum Entity {
     MOVIE,
@@ -120,7 +122,7 @@ impl Debug for TsvLine {
 pub fn get_nullable_string(input: &Vec<String>, idx: usize) -> Option<String> {
     match input.get(idx) {
         Some(s) => {
-            if s.eq("\\N") {
+            if s.eq(N_A) {
                 return None;
             }
             Some(s.to_string())
@@ -134,7 +136,7 @@ pub fn get_nullable_string(input: &Vec<String>, idx: usize) -> Option<String> {
 pub fn get_nullable_bool(input: &Vec<String>, idx: usize) -> Option<bool> {
     match input.get(idx) {
         Some(s) => {
-            if s.eq("\\N") {
+            if s.eq(N_A) {
                 return None;
             }
             let b = match s.as_str() {
@@ -152,7 +154,7 @@ pub fn get_nullable_bool(input: &Vec<String>, idx: usize) -> Option<bool> {
 pub fn get_nullable_u32(input: &Vec<String>, idx: usize) -> Option<u32> {
     match input.get(idx) {
         Some(s) => {
-            if s.eq("\\N") {
+            if s.eq(N_A) {
                 return None;
             }
             Some(s.parse::<u32>().unwrap())
@@ -166,7 +168,7 @@ pub fn get_nullable_u32(input: &Vec<String>, idx: usize) -> Option<u32> {
 pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     match input.get(idx) {
         Some(s) => {
-            if s.eq("\\N") {
+            if s.eq(N_A) {
                 return None;
             }
             Some(s.parse::<f32>().unwrap())
@@ -177,13 +179,17 @@ pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     }
 }
 
+
 pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
-            if s.eq("\\N") {
+            if s.eq(N_A) {
                 return None;
             }
-            let characters = s.split(",").map(|s| s.to_string()).collect();
+            let characters = s.split(",")
+                .map(|s| s.to_string())
+                .filter(|s| !s.is_empty())
+                .collect();
             Some(characters)
         }
         None => {
