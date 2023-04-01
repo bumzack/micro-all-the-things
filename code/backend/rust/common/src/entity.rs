@@ -110,12 +110,12 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             match s.pop() {
                 Some(_) => {},
                 None=> {
-                    println!("could not remove first char from line '{}'", &s);
+                    println!("1 could not remove first char from line '{}'", &s);
                 }
             }
             let _ = s.remove(0);
 
-            println!("original '{}'  -> dirst and last char removed '{}' ", &s_orig, &s);
+            println!("original '{}'  -> first and last char removed '{}' ", &s_orig, &s);
 
             let characters = if s.contains(",") {
                 s
@@ -124,12 +124,17 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                     .filter(|s| !s.is_empty())
                     .collect::<Vec<String>>()
             } else {
-                vec![s]
+                vec![s.clone()]
             };
 
             let characters = characters.into_iter()
                 .map(|mut s| {
-                    let _ = s.pop().unwrap();
+                    match s.pop() {
+                        Some(_) => {},
+                        None=> {
+                            println!("2 could not remove first char from line '{}'", &s);
+                        }
+                    }
                     let _ = s.remove(0);
                     s
                 })
@@ -145,6 +150,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
     }
 }
 
+            println!("original:   '{}'     -> first and last char removed and \" removed: array   '{:?}'   ", &s_orig, &characters);
 
 pub trait EntityConverter<T> {
     fn convert(&self) -> Vec<T>;
