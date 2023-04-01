@@ -272,7 +272,7 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                if code == StatusCode::OK || code == StatusCode::CREATED {
+                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
                     println!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
@@ -303,7 +303,7 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                if code == StatusCode::OK || code == StatusCode::CREATED {
+                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
                     println!("solr request success");
                 } else {
                     let x = res.headers().clone();
