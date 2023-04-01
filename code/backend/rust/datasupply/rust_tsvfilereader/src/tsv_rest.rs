@@ -193,7 +193,7 @@ mod handlers_tsv {
             }
 
             println!("processed batch {} for type {:?}", batches, &t);
-            tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
+            tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
         }
         println!("processed lines {}", current_line);
 
