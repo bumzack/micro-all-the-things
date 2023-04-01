@@ -98,7 +98,6 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
 
 
 pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
-    println!("input {:?}", input);
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
@@ -109,18 +108,22 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             let s_orig = s.clone();
             // remove surrounding [ and ]
             match s.pop() {
-                Some(_) => {},
-                None=> {
+                Some(_) => {}
+                None => {
                     println!("1 could not remove first char from line '{}'", &s);
                 }
             }
-            let _ = s.remove(0);
+            if !s.is_empty() {
+                let _ = s.remove(0);
+            } else {
+                println!("2 s is empty");
+            }
 
             println!("original '{}'  -> first and last char removed '{}' ", &s_orig, &s);
 
-            let characters = if s.contains(",") {
+            let characters = if s.contains(',') {
                 s
-                    .split(",")
+                    .split(',')
                     .map(|s| s.to_string())
                     .filter(|s| !s.is_empty())
                     .collect::<Vec<String>>()
@@ -131,12 +134,16 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             let characters = characters.into_iter()
                 .map(|mut s| {
                     match s.pop() {
-                        Some(_) => {},
-                        None=> {
+                        Some(_) => {}
+                        None => {
                             println!("2 could not remove first char from line '{}'", &s);
                         }
                     }
-                    let _ = s.remove(0);
+                    if !s.is_empty() {
+                        let _ = s.remove(0);
+                    } else {
+                        println!("2 s is empty");
+                    }
                     s
                 })
                 .filter(|s| !s.is_empty())
@@ -185,7 +192,7 @@ pub mod handlers_entity {
         let json = json!(&entities).to_string();
 
         exec_meilisearch_update(&entity_name, client, json.clone()).await;
-        exec_solr_update(&entity_name, client, json).await;
+        //exec_solr_update(&entity_name, client, json).await;
 
         let res = "all good".to_string();
         Ok(warp::reply::json(&res))
