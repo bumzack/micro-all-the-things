@@ -141,6 +141,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                 .filter(|s| !s.is_empty())
                 .collect::<Vec<String>>();
 
+            println!("original:   '{}'     -> first and last char removed and \" removed: array   '{:?}'   ", &s_orig, &characters);
 
             Some(characters)
         }
@@ -150,7 +151,6 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
     }
 }
 
-            println!("original:   '{}'     -> first and last char removed and \" removed: array   '{:?}'   ", &s_orig, &characters);
 
 pub trait EntityConverter<T> {
     fn convert(&self) -> Vec<T>;
