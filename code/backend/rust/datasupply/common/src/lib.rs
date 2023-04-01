@@ -179,14 +179,14 @@ pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     }
 }
 
-
 pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
                 return None;
             }
-            let characters = s.split(",")
+            let characters = s
+                .split(",")
                 .map(|s| s.to_string())
                 .filter(|s| !s.is_empty())
                 .collect();
@@ -215,8 +215,8 @@ pub mod handlers_entity {
         entity_name: String,
         client: &reqwest::Client,
     ) -> Result<impl warp::Reply, Infallible>
-        where
-            TsvLines: EntityConvert<T>,
+    where
+        TsvLines: EntityConvert<T>,
     {
         println!(
             "processing request with {} lines. {}",
@@ -405,49 +405,42 @@ fn map_to_rating(tsv_line: &TsvLine) -> Rating {
 
 impl EntityConvert<Principal> for TsvLines {
     fn convert(&self) -> Vec<Principal> {
-        let v: Vec<Principal> = self.lines.iter().map(|t| map_to_principal(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_principal(&t)).collect()
     }
 }
 
 impl EntityConvert<Person> for TsvLines {
     fn convert(&self) -> Vec<Person> {
-        let v: Vec<Person> = self.lines.iter().map(|t| map_to_person(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_person(&t)).collect()
     }
 }
 
 impl EntityConvert<Crew> for TsvLines {
     fn convert(&self) -> Vec<Crew> {
-        let v: Vec<Crew> = self.lines.iter().map(|t| map_to_crew(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_crew(&t)).collect()
     }
 }
 
 impl EntityConvert<Episode> for TsvLines {
     fn convert(&self) -> Vec<Episode> {
-        let v: Vec<Episode> = self.lines.iter().map(|t| map_to_episode(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_episode(&t)).collect()
     }
 }
 
 impl EntityConvert<Movie> for TsvLines {
     fn convert(&self) -> Vec<Movie> {
-        let v: Vec<Movie> = self.lines.iter().map(|t| map_to_movie(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_movie(&t)).collect()
     }
 }
 
 impl EntityConvert<MovieAkas> for TsvLines {
     fn convert(&self) -> Vec<MovieAkas> {
-        let v: Vec<MovieAkas> = self.lines.iter().map(|t| map_to_movieaka(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_movieaka(&t)).collect()
     }
 }
 
 impl EntityConvert<Rating> for TsvLines {
     fn convert(&self) -> Vec<Rating> {
-        let v: Vec<Rating> = self.lines.iter().map(|t| map_to_rating(&t)).collect();
-        v
+        self.lines.iter().map(|t| map_to_rating(&t)).collect()
     }
 }
