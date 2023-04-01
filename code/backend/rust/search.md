@@ -25,7 +25,7 @@ in /etc/security eintragen und pam dingsdi auch
 ```
 
 ```
- curl  -vv   http://meilisearch01.bumzack.at/tasks/1131251    -H 'Authorization: Bearer 1234567890123456'    | jq
+ curl   -H 'Authorization: Bearer 1234567890123456'     http://meilisearch01.bumzack.at/tasks/57
 ```
 
 
