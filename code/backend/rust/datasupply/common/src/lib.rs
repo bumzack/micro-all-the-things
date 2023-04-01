@@ -227,6 +227,7 @@ pub mod handlers_entity {
     use std::convert::Infallible;
 
     use reqwest::{Client, StatusCode};
+    use reqwest::Client;
     use serde::{Deserialize, Serialize};
     use serde_json::json;
 
