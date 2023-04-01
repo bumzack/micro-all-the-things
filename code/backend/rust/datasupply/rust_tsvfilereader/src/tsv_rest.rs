@@ -40,22 +40,22 @@ mod handlers_tsv {
     ) -> Result<impl warp::Reply, Infallible> {
         println!("tsv_file_import_request {:?}", &tsv_request);
 
-        println!(
-            "tsv_file_import_request.tsv_type          {:?}",
-            &tsv_request.tsv_type
-        );
-        println!(
-            "tsv_file_import_request.start             {:?}",
-            &tsv_request.start
-        );
-        println!(
-            "tsv_file_import_request.page_size         {:?}",
-            &tsv_request.page_size
-        );
-        println!(
-            "tsv_file_import_request.end               {:?}",
-            &tsv_request.end
-        );
+        // println!(
+        //     "tsv_file_import_request.tsv_type          {:?}",
+        //     &tsv_request.tsv_type
+        // );
+        // println!(
+        //     "tsv_file_import_request.start             {:?}",
+        //     &tsv_request.start
+        // );
+        // println!(
+        //     "tsv_file_import_request.page_size         {:?}",
+        //     &tsv_request.page_size
+        // );
+        // println!(
+        //     "tsv_file_import_request.end               {:?}",
+        //     &tsv_request.end
+        // );
 
         let start = tsv_request.start as usize;
         let page_size = tsv_request.page_size as u64;
@@ -63,7 +63,7 @@ mod handlers_tsv {
         let t = tsv_request.tsv_type;
 
         let filename_property = format!("datasource_{:?}_filename", t);
-        println!("filename_property {}", &filename_property);
+        // println!("filename_property {}", &filename_property);
         let filename: String = CONFIG
             .get(&filename_property)
             .expect("filename_property must exist");
@@ -72,7 +72,7 @@ mod handlers_tsv {
             .expect("datasource_folder must exist");
 
         let filename = format!("{}/{}", datasource_folder, filename);
-        println!("filename {}", &filename);
+        // println!("filename {}", &filename);
         let file = File::open(&filename).await;
         let file = match file {
             Ok(f) => f,
@@ -85,27 +85,27 @@ mod handlers_tsv {
         let reader = BufReader::new(file);
 
         let target_host_property = format!("microservice_{:?}_host", t);
-        println!("target_host_property {}", &target_host_property);
+        // println!("target_host_property {}", &target_host_property);
         let host: String = CONFIG
             .get(&target_host_property)
             .expect("target_host_property must exist");
         let target_port_property = format!("microservice_{:?}_port", t);
-        println!("target_port_property {}", &target_port_property);
+        //  println!("target_port_property {}", &target_port_property);
         let port: String = CONFIG
             .get(&target_port_property)
             .expect("target_port_property must exist");
         let target_url_property = format!("microservice_{:?}_url", t);
-        println!("target_url_property {}", &target_url_property);
+        //  println!("target_url_property {}", &target_url_property);
         let url: String = CONFIG
             .get(&target_url_property)
             .expect("target_host_property must exist");
 
-        println!("host {}", host);
-        println!("port {}", port);
-        println!("url  {}", url);
+        // println!("host {}", host);
+        // println!("port {}", port);
+        // println!("url  {}", url);
 
         let request_url = format!("{}:{}{}", host, port, url);
-        println!("request_url {}", &request_url);
+        // println!("request_url {}", &request_url);
 
         // FUNNY NICE DEMO BUG
         //  while let Ok(l) = reader.lines().next_line().await {
@@ -125,7 +125,7 @@ mod handlers_tsv {
 
         current_line = start;
 
-        let mut stuff_available=true;
+        let mut stuff_available = true;
         while current_line <= end as usize && stuff_available {
             let mut tsv_lines = vec![];
             let mut idx = 0;
@@ -139,9 +139,8 @@ mod handlers_tsv {
                 }
 
                 let line = l.unwrap();
-                // println!("line in batch  {} / {}.   line {} ", idx, page_size, &line);
                 if line.is_empty() {
-                    println!("line is empty -> skipping ");
+                    println!("line is empty -> skipping");
                     break;
                 }
 
@@ -164,7 +163,7 @@ mod handlers_tsv {
 
             if tsv_lines.lines.is_empty() {
                 println!("no tsv_lines available -> breaking in while");
-                stuff_available=false;
+                stuff_available = false;
             }
 
             // println!("tsv {:?}", &tsv);
