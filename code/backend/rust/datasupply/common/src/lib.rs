@@ -41,7 +41,9 @@ pub struct TsvLines {
 pub struct Rating {
     pub id: String,
     pub tconst: String,
+    #[serde(rename = "averageRating")]
     pub average_rating: f32,
+    #[serde(rename = "numVotes")]
     pub num_votes: u32,
 }
 
@@ -49,8 +51,11 @@ pub struct Rating {
 pub struct Episode {
     pub id: String,
     pub tconst: String,
+    #[serde(rename = "parentTconst")]
     pub parent_tconst: String,
+    #[serde(rename = "seasonNumber")]
     pub season_number: Option<u32>,
+    #[serde(rename = "episodeNumber")]
     pub episode_number: Option<u32>,
 }
 
@@ -58,19 +63,28 @@ pub struct Episode {
 pub struct Movie {
     pub id: String,
     pub tconst: String,
+    #[serde(rename = "titleType")]
     pub title_type: Option<String>,
+    #[serde(rename = "primaryTitle")]
     pub primary_title: Option<String>,
+    #[serde(rename = "originalTitle")]
     pub original_title: Option<String>,
+    #[serde(rename = "adult")]
     pub is_adult: Option<bool>,
+    #[serde(rename = "startYear")]
     pub start_year: Option<u32>,
+    #[serde(rename = "endYear")]
     pub end_year: Option<u32>,
+    #[serde(rename = "runtimeMinutes")]
     pub runtime_minutes: Option<u32>,
+    #[serde(rename = "genres")]
     pub genres: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct MovieAkas {
     pub id: String,
+    #[serde(rename = "titleId")]
     pub title_id: String,
     pub ordering: u32,
     pub title: Option<String>,
@@ -78,6 +92,7 @@ pub struct MovieAkas {
     pub language: Option<String>,
     pub types: Option<Vec<String>>,
     pub attributes: Option<Vec<String>>,
+    #[serde(rename = "originalTitle")]
     pub original_title: Option<bool>,
 }
 
@@ -95,10 +110,15 @@ pub struct Principal {
 pub struct Person {
     pub id: String,
     pub nconst: String,
+    #[serde(rename = "primaryName")]
     pub primary_name: Option<String>,
+    #[serde(rename = "birthYear")]
     pub birth_year: Option<u32>,
+    #[serde(rename = "deathYear")]
     pub death_year: Option<u32>,
+    #[serde(rename = "primaryProfession")]
     pub primary_profession: Option<Vec<String>>,
+    #[serde(rename = "knownForTitles")]
     pub known_for_titles: Option<Vec<String>>,
 }
 
@@ -205,6 +225,7 @@ pub trait EntityConvert<T> {
 
 pub mod handlers_entity {
     use std::convert::Infallible;
+    use reqwest::Client;
 
     use serde::{Deserialize, Serialize};
     use serde_json::json;
@@ -228,6 +249,14 @@ pub mod handlers_entity {
 
         let json = json!(&entities).to_string();
 
+        exec_meilisearch_update(&entity_name, client, json.clone()).await;
+        exec_solr_update(&entity_name, client, json).await;
+
+        let res = "all good".to_string();
+        Ok(warp::reply::json(&res))
+    }
+
+    async fn exec_meilisearch_update(entity_name: &String, client: &Client, json: String) {
         let index = format!(
             "http://meilisearch01.bumzack.at/indexes/{}/documents?primaryKey=id",
             &entity_name
@@ -249,10 +278,36 @@ pub mod handlers_entity {
                 // println!("request ok. headers {:?}", x);
                 // println!("request ok. response body {:?}", &b);
             }
-            Err(e) => println!("error in request {:?}", e),
+            Err(e) => println!("error in request to meilisearch {:?}", e),
         }
-        let res = "all good".to_string();
-        Ok(warp::reply::json(&res))
+    }
+
+    async fn exec_solr_update(entity_name: &String, client: &Client, json: String) {
+        let cmd = "/update?commitWithin=1000&overwrite=true&wt=json".to_string();
+        let index = format!(
+            "http://solr01.bumzack.at/solr/{}/{}",
+            &entity_name, &cmd
+        );
+
+        let response = client
+            .post(&index)
+            .body(json)
+            .header("Authorization", "Bearer 1234567890123456".to_owned())
+            .header("Content-Type", "application/json".to_owned())
+            .send()
+            .await;
+
+        match response {
+            Ok(res) => {
+                let code = res.status().clone();
+                // let x = res.headers().clone();
+                // let b = res.text().await.unwrap();
+                println!("request ok. status {:?}", code);
+                // println!("request ok. headers {:?}", x);
+                // println!("request ok. response body {:?}", &b);
+            }
+            Err(e) => println!("error in request to meilisearch {:?}", e),
+        }
     }
 }
 
