@@ -98,7 +98,6 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
 
 
 pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
-    println!("input {:?}", input);
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
@@ -120,8 +119,6 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                 vec![s]
             };
 
-            println!("v1");
-            characters.iter().for_each(|s| println!("s = {}", &s));
             let characters = characters.into_iter()
                 .map(|mut s| {
                     let _ = s.pop().unwrap();
@@ -131,8 +128,6 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                 .filter(|s| !s.is_empty())
                 .collect::<Vec<String>>();
 
-            println!("v2");
-            characters.iter().for_each(|s| println!("s = {}", &s));
 
             Some(characters)
         }
@@ -175,7 +170,7 @@ pub mod handlers_entity {
         let json = json!(&entities).to_string();
 
         exec_meilisearch_update(&entity_name, client, json.clone()).await;
-        exec_solr_update(&entity_name, client, json).await;
+         //exec_solr_update(&entity_name, client, json).await;
 
         let res = "all good".to_string();
         Ok(warp::reply::json(&res))
