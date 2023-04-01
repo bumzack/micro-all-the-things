@@ -225,8 +225,8 @@ pub trait EntityConvert<T> {
 
 pub mod handlers_entity {
     use std::convert::Infallible;
-    use reqwest::Client;
 
+    use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
     use serde_json::json;
 
@@ -272,11 +272,15 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                // let x = res.headers().clone();
-                // let b = res.text().await.unwrap();
-                println!("request ok. status {:?}", code);
-                // println!("request ok. headers {:?}", x);
-                // println!("request ok. response body {:?}", &b);
+                if &code == StatusCode::OK || code == StatusCode::CREATED {
+                    println!("meilisearch request success");
+                } else {
+                    let x = res.headers().clone();
+                    let b = res.text().await.unwrap();
+                    println!("meilisearch request != OK AND != CREATED. status {:?}", code);
+                    println!("meilisearch request != OK AND != CREATED. headers {:?}", x);
+                    println!("meilisearch request != OK AND != CREATED. response body {:?}", &b);
+                }
             }
             Err(e) => println!("error in request to meilisearch {:?}", e),
         }
@@ -292,7 +296,6 @@ pub mod handlers_entity {
         let response = client
             .post(&index)
             .body(json)
-            .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
@@ -300,13 +303,17 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status().clone();
-                // let x = res.headers().clone();
-                // let b = res.text().await.unwrap();
-                println!("request ok. status {:?}", code);
-                // println!("request ok. headers {:?}", x);
-                // println!("request ok. response body {:?}", &b);
+                if &code == StatusCode::OK || code == StatusCode::CREATED {
+                    println!("solr request success");
+                } else {
+                    let x = res.headers().clone();
+                    let b = res.text().await.unwrap();
+                    println!("solr request != OK AND != CREATED. status {:?}", code);
+                    println!("solr request != OK AND != CREATED. headers {:?}", x);
+                    println!("solr request != OK AND != CREATED. response body {:?}", &b);
+                }
             }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
+            Err(e) => println!("solr request error in request to solr {:?}", e),
         }
     }
 }
