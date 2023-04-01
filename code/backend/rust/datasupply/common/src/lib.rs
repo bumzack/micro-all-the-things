@@ -179,6 +179,7 @@ pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     }
 }
 
+
 pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
@@ -215,8 +216,8 @@ pub mod handlers_entity {
         entity_name: String,
         client: &reqwest::Client,
     ) -> Result<impl warp::Reply, Infallible>
-    where
-        TsvLines: EntityConvert<T>,
+        where
+            TsvLines: EntityConvert<T>,
     {
         println!(
             "processing request with {} lines. {}",
