@@ -131,7 +131,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                 vec![s.clone()]
             };
 
-            let  mut empty=false;
+            let mut empty = false;
             let characters = characters.into_iter()
                 .map(|mut s| {
                     if s.get(0..1).unwrap() == "\"" {
@@ -146,7 +146,7 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                         let _ = s.remove(0);
                     } else {
                         println!("2 s is empty. original line           '{}'", &s_orig);
-                        empty=true;
+                        empty = true;
                     }
                     s
                 })
