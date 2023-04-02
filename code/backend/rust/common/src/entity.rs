@@ -98,7 +98,6 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
 
 
 pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
-    println!("input {:?}", input);
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
@@ -106,35 +105,66 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             }
             let mut s = s.clone();
 
+            let s_orig = s.clone();
             // remove surrounding [ and ]
-            let _ = s.pop().unwrap();
-            let _ = s.remove(0);
+            match s.pop() {
+                Some(_) => {}
+                None => {
+                    println!("1 could not remove first char from line '{}'", &s);
+                }
+            }
+            if !s.is_empty() {
+                let _ = s.remove(0);
+            } else {
+                println!("1 s is empty. original line           '{}'", &s_orig);
+            }
 
-            let characters = if s.contains(",") {
+            println!("original '{}'  -> first and last char removed '{}' ", &s_orig, &s);
+
+            let characters = if s.contains("\",\"") {
                 s
-                    .split(",")
+                    .split("\",\"")
                     .map(|s| s.to_string())
                     .filter(|s| !s.is_empty())
                     .collect::<Vec<String>>()
             } else {
-                vec![s]
+                vec![s.clone()]
             };
 
-            println!("v1");
-            characters.iter().for_each(|s| println!("s = {}", &s));
+            let mut empty = false;
             let characters = characters.into_iter()
                 .map(|mut s| {
-                    let _ = s.pop().unwrap();
-                    let _ = s.remove(0);
+                    if s.get(0..1).unwrap() == "\"" {
+                        match s.pop() {
+                            Some(_) => {}
+                            None => {
+                                println!("2 could not remove first char from line '{}'", &s);
+                            }
+                        }
+                    }
+                    if !s.is_empty() && s.ends_with('\"') {
+                        let _ = s.remove(0);
+                    } else {
+                        println!("2 s is empty. original line           '{}'", &s_orig);
+                        empty = true;
+                    }
                     s
                 })
                 .filter(|s| !s.is_empty())
                 .collect::<Vec<String>>();
 
-            println!("v2");
-            characters.iter().for_each(|s| println!("s = {}", &s));
+            let result = serde_json::from_str::<Vec<String>>(&s_orig);
+            if result.is_err() {
+                println!("serializing the line did not work:  '{}'     input:   '{:?}'    ", &s_orig, &input);
+            }
 
-            Some(characters)
+            let res = result.unwrap();
+
+            if empty {
+                println!("compare empty.   original: '{}'  -> first, last, \" char removed: '{:?}'   ", &s_orig, &characters);
+                println!("compare empty.   original: '{}'  -> serialized to JSON array:     '{:?}'   ", &s_orig, &res);
+            }
+            Some(res)
         }
         None => {
             panic!("should not happen, that a field is empty")
@@ -175,7 +205,7 @@ pub mod handlers_entity {
         let json = json!(&entities).to_string();
 
         exec_meilisearch_update(&entity_name, client, json.clone()).await;
-        exec_solr_update(&entity_name, client, json).await;
+        //exec_solr_update(&entity_name, client, json).await;
 
         let res = "all good".to_string();
         Ok(warp::reply::json(&res))
