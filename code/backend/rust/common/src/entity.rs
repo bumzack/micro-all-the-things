@@ -84,7 +84,7 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
                 return None;
             }
             let characters = s
-                .split(",")
+                .split(',')
                 .map(|s| s.to_string())
                 .filter(|s| !s.is_empty())
                 .collect();
@@ -96,74 +96,17 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
     }
 }
 
-
 pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
                 return None;
             }
-            let mut s = s.clone();
-
-            let s_orig = s.clone();
-            // remove surrounding [ and ]
-            match s.pop() {
-                Some(_) => {}
-                None => {
-                    println!("1 could not remove first char from line '{}'", &s);
-                }
-            }
-            if !s.is_empty() {
-                let _ = s.remove(0);
-            } else {
-                println!("1 s is empty. original line           '{}'", &s_orig);
-            }
-
-            println!("original '{}'  -> first and last char removed '{}' ", &s_orig, &s);
-
-            let characters = if s.contains("\",\"") {
-                s
-                    .split("\",\"")
-                    .map(|s| s.to_string())
-                    .filter(|s| !s.is_empty())
-                    .collect::<Vec<String>>()
-            } else {
-                vec![s.clone()]
-            };
-
-            let mut empty = false;
-            let characters = characters.into_iter()
-                .map(|mut s| {
-                    if s.get(0..1).unwrap() == "\"" {
-                        match s.pop() {
-                            Some(_) => {}
-                            None => {
-                                println!("2 could not remove first char from line '{}'", &s);
-                            }
-                        }
-                    }
-                    if !s.is_empty() && s.ends_with('\"') {
-                        let _ = s.remove(0);
-                    } else {
-                        println!("2 s is empty. original line           '{}'", &s_orig);
-                        empty = true;
-                    }
-                    s
-                })
-                .filter(|s| !s.is_empty())
-                .collect::<Vec<String>>();
-
-            let result = serde_json::from_str::<Vec<String>>(&s_orig);
+            let result = serde_json::from_str::<Vec<String>>(s);
             if result.is_err() {
-                println!("serializing the line did not work:  '{}'     input:   '{:?}'    ", &s_orig, &input);
+                println!("serializing the line did not work:  '{}'     input:   '{:?}'    ", &s, &input);
             }
-
             let res = result.unwrap();
-
-            if empty {
-                println!("compare empty.   original: '{}'  -> first, last, \" char removed: '{:?}'   ", &s_orig, &characters);
-                println!("compare empty.   original: '{}'  -> serialized to JSON array:     '{:?}'   ", &s_orig, &res);
-            }
             Some(res)
         }
         None => {
@@ -205,7 +148,7 @@ pub mod handlers_entity {
         let json = json!(&entities).to_string();
 
         exec_meilisearch_update(&entity_name, client, json.clone()).await;
-        //exec_solr_update(&entity_name, client, json).await;
+        exec_solr_update(&entity_name, client, json).await;
 
         let res = "all good".to_string();
         Ok(warp::reply::json(&res))
@@ -226,8 +169,8 @@ pub mod handlers_entity {
 
         match response {
             Ok(res) => {
-                let code = res.status().clone();
-                if code == StatusCode::OK || code == StatusCode::CREATED {
+                let code = res.status();
+                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED  {
                     println!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
@@ -257,8 +200,8 @@ pub mod handlers_entity {
 
         match response {
             Ok(res) => {
-                let code = res.status().clone();
-                if code == StatusCode::OK || code == StatusCode::CREATED {
+                let code = res.status();
+                if code == StatusCode::OK || code == StatusCode::CREATED  || code == StatusCode::ACCEPTED  {
                     println!("solr request success");
                 } else {
                     let x = res.headers().clone();
