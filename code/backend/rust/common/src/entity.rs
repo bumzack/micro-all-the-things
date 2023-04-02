@@ -158,12 +158,13 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
                 println!("serializing the line did not work:  '{}'     input:   '{:?}'    ", &s_orig, &input);
             }
 
+            let res = result.unwrap();
 
             if empty {
                 println!("compare empty.   original: '{}'  -> first, last, \" char removed: '{:?}'   ", &s_orig, &characters);
-                println!("compare empty.   original: '{}'  -> serialized to JSON array:     '{:?}'   ", &s_orig, &result.unwrap());
+                println!("compare empty.   original: '{}'  -> serialized to JSON array:     '{:?}'   ", &s_orig, &res);
             }
-            Some(characters)
+            Some(res)
         }
         None => {
             panic!("should not happen, that a field is empty")
