@@ -1,10 +1,10 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 
 use serde::Deserialize;
 use serde::Serialize;
+
 use crate::entity::{EntityConverter, get_nullable_f32, get_nullable_string, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
-
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Rating {
@@ -15,6 +15,7 @@ pub struct Rating {
     #[serde(rename = "numVotes")]
     pub num_votes: u32,
 }
+
 fn map_to_rating(tsv_line: &TsvLine) -> Rating {
     // println!("mapping tsv_line {:?} to Rating  ", &tsv_line);
 

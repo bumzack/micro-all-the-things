@@ -3,7 +3,10 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_string, get_nullable_string_list_of_string_array, get_nullable_u32};
+use crate::entity::{
+    get_nullable_string, get_nullable_string_list_of_string_array, get_nullable_u32,
+    EntityConverter,
+};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -19,7 +22,6 @@ pub struct Principal {
 
 fn map_to_principal(tsv_line: &TsvLine) -> Principal {
     // println!("mapping tsv_line {:?} to principal", &tsv_line);
-
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");

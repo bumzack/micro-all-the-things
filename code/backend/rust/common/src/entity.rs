@@ -154,7 +154,7 @@ pub mod handlers_entity {
         Ok(warp::reply::json(&res))
     }
 
-    async fn exec_meilisearch_update(entity_name: &String, client: &Client, json: String) {
+    pub async fn exec_meilisearch_update(entity_name: &String, client: &Client, json: String) {
         let index = format!(
             "http://meilisearch01.bumzack.at/indexes/{}/documents?primaryKey=id",
             &entity_name
@@ -170,14 +170,14 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status();
-                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED  {
+                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
                     println!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!("meilisearch request != OK AND != CREATED. status {:?}", code);
-                    println!("meilisearch request != OK AND != CREATED. headers {:?}", x);
-                    println!("meilisearch request != OK AND != CREATED. response body {:?}", &b);
+                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. status {:?}", code);
+                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. headers {:?}", x);
+                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
                 }
             }
             Err(e) => println!("error in request to meilisearch {:?}", e),
@@ -201,14 +201,14 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status();
-                if code == StatusCode::OK || code == StatusCode::CREATED  || code == StatusCode::ACCEPTED  {
+                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
                     println!("solr request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!("solr request != OK AND != CREATED. status {:?}", code);
-                    println!("solr request != OK AND != CREATED. headers {:?}", x);
-                    println!("solr request != OK AND != CREATED. response body {:?}", &b);
+                    println!("solr request != OK AND != CREATED  != ACCEPTED. status {:?}", code);
+                    println!("solr request != OK AND != CREATED  != ACCEPTED. headers {:?}", x);
+                    println!("solr request != OK AND != CREATED  != ACCEPTED. response body {:?}", &b);
                 }
             }
             Err(e) => println!("solr request error in request to solr {:?}", e),
