@@ -1,4 +1,3 @@
-use std::io;
 use std::collections::HashMap;
 use std::io;
 
@@ -10,7 +9,6 @@ mod build_search_index;
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
-
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
