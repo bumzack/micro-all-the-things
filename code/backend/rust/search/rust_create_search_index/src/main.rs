@@ -1,5 +1,5 @@
-use std::io;
 use std::collections::HashMap;
+use std::io;
 
 use config::Config;
 use warp::Filter;
@@ -10,10 +10,9 @@ lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
 
-
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
-        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
+        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/search/rust_create_search_index/config.toml"))
         .build()
         .unwrap();
 }
