@@ -17,8 +17,7 @@ pub mod filters_search_movie {
 
     use crate::{CLIENT, CONFIG};
 
-    pub fn build_index_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn build_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         warp::path!("api" / "searchindex" / "build")
             .and(warp::get())
             .and_then(|| {
@@ -43,7 +42,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             msg,
         )
-        .await;
+            .await;
 
         while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
@@ -216,7 +215,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             res.clone(),
         )
-        .await;
+            .await;
         println!("done {}", &res);
         Ok(warp::reply::json(&res))
     }
