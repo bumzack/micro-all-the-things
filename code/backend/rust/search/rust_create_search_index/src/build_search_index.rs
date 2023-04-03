@@ -6,6 +6,7 @@ pub mod filters_search_movie {
     use serde_json::json;
     use warp::Filter;
 
+    use common::crew::Crew;
     use common::entity::handlers_entity::exec_meilisearch_update;
     use common::logging_service_client::logging_service;
     use common::meili_search::handlers_search_entity::dump_response_status;
@@ -29,10 +30,9 @@ pub mod filters_search_movie {
 
     pub async fn build_index() -> Result<impl warp::Reply, Infallible> {
         let mut offset = 0;
-        let limit = 3;
+        let limit = 1000;
 
-        //  let total_cnt_movies = 9_728_300;
-        let total_cnt_movies = 10;
+        let total_cnt_movies = 9_728_300;
         let mut cnt_movies = 0;
 
         let msg = format!(
@@ -210,6 +210,7 @@ pub mod filters_search_movie {
         }
 
         let res = format!("finished build_index(). processed {} movies ", cnt_movies);
+
         println!("res {}", &res);
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
