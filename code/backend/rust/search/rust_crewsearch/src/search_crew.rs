@@ -4,7 +4,7 @@ pub mod filters_search_crew {
 
     use warp::{Filter, Reply};
 
-    use common::meilisearch::handlers_search_entity;
+    use common::meili_filter::handlers_search_entity::meili_filter_crew;
 
     use crate::CLIENT;
 
@@ -23,7 +23,7 @@ pub mod filters_search_crew {
         println!("filter_entity  {attribute} =  {value}");
         let f = format!("\"{}\"  = \"{}\"", attribute, value);
         let filter: Vec<String> = vec![f];
-        handlers_search_entity::meili_filter(entity, filter, &CLIENT)
+        meili_filter_crew(entity, filter, &CLIENT)
     }
 }
 

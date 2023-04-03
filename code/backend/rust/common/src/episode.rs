@@ -1,10 +1,10 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 
 use serde::Deserialize;
 use serde::Serialize;
+
 use crate::entity::{EntityConverter, get_nullable_string, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
-
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Episode {

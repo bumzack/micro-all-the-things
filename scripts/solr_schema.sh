@@ -18,6 +18,7 @@ cd /Users/gsc/stoff/micro-all-the-things/solr-10.0.0-SNAPSHOT/bin
 ./solr delete -c principal  -p 8984
 ./solr delete -c crew  -p 8984
 ./solr delete -c episode  -p 8984
+./solr delete -c searchindex  -p 8984
 
 ./solr create_core -c movie  -p 8984
 ./solr config -c movie -p 8984 -action set-user-property -property update.autoCreateFields -value false
@@ -41,6 +42,9 @@ cd /Users/gsc/stoff/micro-all-the-things/solr-10.0.0-SNAPSHOT/bin
 ./solr create_core -c episode  -p 8984
 ./solr config -c episode -p 8984 -action set-user-property -property update.autoCreateFields -value false
 
+
+./solr create_core -c searchindex  -p 8984
+./solr config -c searchindex -p 8984 -action set-user-property -property update.autoCreateFields -value false
 
 
 
@@ -120,3 +124,40 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"seasonNumber",    "type":"pint", "stored":true, indexed:"true" },
   "add-field":{   "name":"episodeNumber",   "type":"pint", "stored":true, indexed:"true" }
 }' http://localhost:8984/solr/episode/schema
+
+
+
+pub struct SearchIndexDoc {
+    pub id: String,
+    pub tconst: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub titles: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub actors: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub directors:  Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub writers:  Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename = "runtimeMinutes")]
+    pub runtime_minutes: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub adult: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub genres:  Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub characters:  Option<Vec<String>>,
+}
+
+
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field":{       "name":"tconst",              "type":"string",             "stored":true, indexed:"true" },
+  "add-field":{       "name":"titles",              "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"actors",              "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"directors",           "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"writers",             "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"genres",              "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"characters",          "type":"text_general",       "stored":true, indexed:"true", "multiValued":true }
+  "add-field":{       "name":"runtimeMinutes",      "type":"pint",               "stored":true, indexed:"true" },
+  "add-field":{       "name":"adult",               "type":"boolean",            "stored":true, indexed:"true" }
+}' http://localhost:8984/solr/searchindex/schema
