@@ -10,9 +10,9 @@ import java.util.List;
 public class TsvUtils {
     public static final Splitter SPLITTER_TSV = Splitter.on(CharMatcher.anyOf("\t"));
     public static final Splitter SPLITTER_ARRAY = Splitter.on(CharMatcher.anyOf(","));
-    private static final Logger LOG = Loggers.getLogger(TsvUtils.class);
     public static final String N_A = "\\N";
     public static final String TRUE = "1";
+    private static final Logger LOG = Loggers.getLogger(TsvUtils.class);
 
     public static String getNullableValue(final String val) {
         return val.equals(N_A) ? null : val;

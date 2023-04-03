@@ -3,11 +3,11 @@ use warp::Rejection;
 pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_logging {
+    use common::logging::MyError::DBQueryError;
+    use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
     use deadpool_postgres::Pool;
 
     use crate::db::db::TABLE_LOG_ENTRY;
-    use crate::log_mod::models::MyError::DBQueryError;
-    use crate::log_mod::models::{AddLogEntry, LogEntry, ReadLogEntry};
 
     pub async fn list_entries(pool: Pool, req: ReadLogEntry) -> super::Result<Vec<LogEntry>> {
         let client = pool.get().await.unwrap();

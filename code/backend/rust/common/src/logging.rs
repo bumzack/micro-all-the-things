@@ -7,10 +7,10 @@ use warp::reject;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddLogEntry {
-    pub  service_id: String,
-    pub  log_type: String,
-    pub  message: String,
-    pub  logtime: DateTime<Utc>,
+    pub service_id: String,
+    pub log_type: String,
+    pub message: String,
+    pub logtime: DateTime<Utc>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

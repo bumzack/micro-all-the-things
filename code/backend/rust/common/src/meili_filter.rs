@@ -11,7 +11,11 @@ pub mod handlers_search_entity {
     use crate::rating::Rating;
     use crate::search::{MeiliSearchRequest, MeiliSearchResult};
 
-    pub async fn meili_filter_person(entity: String, filter: Vec<String>, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_filter_person(
+        entity: String,
+        filter: Vec<String>,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
@@ -22,13 +26,17 @@ pub mod handlers_search_entity {
 
         let persons = result.hits;
 
-        let p = serde_json::to_string_pretty(&persons).expect("expected a list of persons");
+        // let p = serde_json::to_string_pretty(&persons).expect("expected a list of persons");
         // println!("filter_personse returned {}", p);
 
         Ok(warp::reply::json(&persons))
     }
 
-    pub async fn meili_filter_principal(entity: String, filter: Vec<String>, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_filter_principal(
+        entity: String,
+        filter: Vec<String>,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
@@ -42,7 +50,11 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-    pub async fn meili_filter_rating(entity: String, filter: Vec<String>, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_filter_rating(
+        entity: String,
+        filter: Vec<String>,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
@@ -56,7 +68,11 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&ratings))
     }
 
-    pub async fn meili_filter_crew(entity: String, filter: Vec<String>, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_filter_crew(
+        entity: String,
+        filter: Vec<String>,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
@@ -70,8 +86,11 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-
-    async fn meili_filter(entity: String, filter: Vec<String>, client: &Client) -> Result<Response, Error> {
+    async fn meili_filter(
+        entity: String,
+        filter: Vec<String>,
+        client: &Client,
+    ) -> Result<Response, Error> {
         // println!(
         //     "filter entity {}.  filters  '{:?}'", &entity, &filter
         // );
@@ -97,10 +116,7 @@ pub mod handlers_search_entity {
         };
 
         let json = json!(&search_request).to_string();
-        let index = format!(
-            "http://meilisearch01.bumzack.at/indexes/{}/search",
-            &entity
-        );
+        let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
 
         let response = client
             .post(&index)
@@ -115,4 +131,3 @@ pub mod handlers_search_entity {
         response
     }
 }
-

@@ -1,19 +1,62 @@
 pub mod logging_service {
+    use config::Config;
 
-    pub async fn log_entry(service_id: String, logtype: String, msg: String) -> Result<STRING> {
-        // let response = meili_filter(entity, filter, client);
-        //
-        // let response2 = response.await.unwrap();
-        // let result = response2
-        //     .json::<MeiliSearchResult<Person>>()
-        //     .await
-        //     .expect("expected a MeiliSearchResult<Person>");
-        //
-        // let persons = result.hits;
-        //
-        // let p = serde_json::to_string_pretty(&persons).expect("expected a list of persons");
-        // // println!("filter_personse returned {}", p);
-        //
-        // Ok(warp::reply::json(&persons))
+    use crate::logging::AddLogEntry;
+
+    lazy_static::lazy_static! {
+        static ref CLIENT_LOG: reqwest::Client = reqwest::Client::new();
+    }
+
+    lazy_static::lazy_static! {
+        static ref CONFIG_LOG :Config = Config::builder()
+            .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
+            .build()
+            .unwrap();
+    }
+
+    lazy_static::lazy_static! {
+        static ref LOG_SERVICE_URL: String ={
+            println!("stuff");
+            let host: String = CONFIG_LOG
+                .get("loggingservice_service_host")
+                .expect("expected loggingservice_service_host variable");
+
+            let port: u16 = CONFIG_LOG
+                .get("loggingservice_service_port")
+                .expect("expected loggingservice_service_port variable");
+
+            let host = format!("http://{host}:{port}/api/log/entry");
+
+            info!("host {}", host);
+            println!("end of stuff");
+            host
+        };
+    }
+
+    pub async fn log_entry(service_id: String, log_type: String, message: String) {
+        let add_log_entry = AddLogEntry {
+            service_id: service_id.clone(),
+            log_type: log_type.clone(),
+            message: message.clone(),
+            logtime: chrono::offset::Utc::now(),
+        };
+
+        println!(
+            "LOGGING_entry service_id {}, log_type {}, message {}",
+            &service_id, &log_type, &message
+        );
+        let url: &String = &LOG_SERVICE_URL;
+
+        println!("url  {}", &url);
+        let response = CLIENT_LOG.post(url).json(&add_log_entry).send().await;
+
+        // dump_response_status(&response);
+
+        match response {
+            Ok(_) => {}
+            Err(e) => {
+                println!("error sending add log entry request {}", e);
+            }
+        };
     }
 }

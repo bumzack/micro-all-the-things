@@ -6,8 +6,8 @@ pub mod filters_search_movie {
     use serde_json::json;
     use warp::Filter;
 
-    use common::crew::Crew;
     use common::entity::handlers_entity::exec_meilisearch_update;
+    use common::logging_service_client::logging_service;
     use common::meili_search::handlers_search_entity::dump_response_status;
     use common::movie::Movie;
     use common::person::Person;
@@ -29,10 +29,22 @@ pub mod filters_search_movie {
 
     pub async fn build_index() -> Result<impl warp::Reply, Infallible> {
         let mut offset = 0;
-        let limit = 1000;
+        let limit = 3;
 
-        let total_cnt_movies = 9_728_300;
+        //  let total_cnt_movies = 9_728_300;
+        let total_cnt_movies = 10;
         let mut cnt_movies = 0;
+
+        let msg = format!(
+            "start build_index(). offset {}, limit {}, total_cnt_movies {}",
+            offset, limit, total_cnt_movies
+        );
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            msg,
+        )
+        .await;
 
         while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
@@ -197,7 +209,15 @@ pub mod filters_search_movie {
             );
         }
 
-        let res = format!("all good. processed {} movies ", cnt_movies);
+        let res = format!("finished build_index(). processed {} movies ", cnt_movies);
+        println!("res {}", &res);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            res.clone(),
+        )
+        .await;
+        println!("done {}", &res);
         Ok(warp::reply::json(&res))
     }
 
@@ -244,7 +264,7 @@ pub mod filters_search_movie {
             .await
             .expect("expected a list of Movies");
 
-        let movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
+        // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
         // println!("got a list of movies {}", movies_as_pretty_json);
         movies
     }
@@ -284,7 +304,7 @@ pub mod filters_search_movie {
             .await
             .expect("expected a list of principals");
 
-        let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
+        // let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
         //   println!("got a list of principals {}", &principals_as_pretty_json);
 
         principals
@@ -333,7 +353,7 @@ pub mod filters_search_movie {
                     .await
                     .expect("expected a list of Persons");
 
-                let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
+                //  let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
                 //  println!("got a list of persons {}", persons_as_pretty_json);
 
                 persons
@@ -341,27 +361,27 @@ pub mod filters_search_movie {
         }
     }
 
-    async fn search_crew(tconst: &String) -> Vec<Crew> {
-        let search_crew_url: String = CONFIG
-            .get("search_crew_by_tconst")
-            .expect("expected search_crew_by_tconst  URL");
-
-        let url = format!("{search_crew_url}{tconst}");
-        //   println!("searching crew for movie tconst {tconst}. search url {url}");
-
-        let response = CLIENT.get(search_crew_url).send().await;
-
-        dump_response_status(&response);
-
-        let response2 = response.unwrap();
-        let crew = response2
-            .json::<Vec<Crew>>()
-            .await
-            .expect("expected a list of Crew");
-
-        let crew_as_pretty_json = serde_json::to_string_pretty(&crew).unwrap();
-        //     println!("got a list of crew {}", crew_as_pretty_json);
-
-        crew
-    }
+    // async fn search_crew(tconst: &String) -> Vec<Crew> {
+    //     let search_crew_url: String = CONFIG
+    //         .get("search_crew_by_tconst")
+    //         .expect("expected search_crew_by_tconst  URL");
+    //
+    //     let url = format!("{search_crew_url}{tconst}");
+    //     //   println!("searching crew for movie tconst {tconst}. search url {url}");
+    //
+    //     let response = CLIENT.get(url).send().await;
+    //
+    //     dump_response_status(&response);
+    //
+    //     let response2 = response.unwrap();
+    //     let crew = response2
+    //         .json::<Vec<Crew>>()
+    //         .await
+    //         .expect("expected a list of Crew");
+    //
+    //    //  let crew_as_pretty_json = serde_json::to_string_pretty(&crew).unwrap();
+    //     //     println!("got a list of crew {}", crew_as_pretty_json);
+    //
+    //     crew
+    // }
 }
