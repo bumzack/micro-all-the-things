@@ -1006,6 +1006,7 @@ name = "rust_create_search_index"
 version = "0.1.0"
 dependencies = [
  "common",
+ "config",
  "dotenvy",
  "futures",
  "lazy_static",

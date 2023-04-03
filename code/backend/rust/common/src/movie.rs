@@ -1,7 +1,8 @@
-use std::fmt::{Debug};
+use std::fmt::Debug;
 
 use serde::Deserialize;
 use serde::Serialize;
+
 use crate::entity::{EntityConverter, get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32};
 use crate::tsv::{TsvLine, TsvLines};
 
@@ -16,7 +17,7 @@ pub struct Movie {
     #[serde(rename = "originalTitle")]
     pub original_title: Option<String>,
     #[serde(rename = "adult")]
-    pub is_adult: Option<bool>,
+    pub adult: Option<bool>,
     #[serde(rename = "startYear")]
     pub start_year: Option<u32>,
     #[serde(rename = "endYear")]
@@ -34,7 +35,7 @@ fn map_to_movie(tsv_line: &TsvLine) -> Movie {
     let title_type = get_nullable_string(&tsv_line.entries, 1);
     let primary_title = get_nullable_string(&tsv_line.entries, 2);
     let original_title = get_nullable_string(&tsv_line.entries, 3);
-    let is_adult = get_nullable_bool(&tsv_line.entries, 4);
+    let adult = get_nullable_bool(&tsv_line.entries, 4);
     let start_year = get_nullable_u32(&tsv_line.entries, 5);
     let end_year = get_nullable_u32(&tsv_line.entries, 6);
     let runtime_minutes = get_nullable_u32(&tsv_line.entries, 7);
@@ -47,7 +48,7 @@ fn map_to_movie(tsv_line: &TsvLine) -> Movie {
         title_type,
         primary_title,
         original_title,
-        is_adult,
+        adult,
         start_year,
         end_year,
         runtime_minutes,
