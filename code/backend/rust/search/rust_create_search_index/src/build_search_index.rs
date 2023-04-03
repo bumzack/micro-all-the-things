@@ -258,7 +258,7 @@ pub mod filters_search_movie {
             Ok(res) => {
                 let code = res.status().clone();
                 if code == StatusCode::OK {
-                    println!("search for principal   search request success");
+           //           println!("search for principal   search request success");
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
