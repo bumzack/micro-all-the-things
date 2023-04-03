@@ -1,5 +1,5 @@
 [package]
-name = "logservice"
+name = "micro_swagger"
 version = "0.1.0"
 edition = "2021"
 
@@ -20,8 +20,6 @@ thiserror = "1.0.39"
 chrono = { version = "0.4.24", features = ["serde"] }
 pretty_env_logger = "0.4"
 log = "0.4"
-common = { path = "../../common" }
-
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }

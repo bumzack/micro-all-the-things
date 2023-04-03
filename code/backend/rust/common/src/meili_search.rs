@@ -7,12 +7,17 @@ pub mod handlers_search_entity {
 
     use crate::crew::Crew;
     use crate::episode::Episode;
+    use crate::logging_service_client::logging_service;
     use crate::movie::Movie;
     use crate::movieaka::MovieAkas;
     use crate::person::Person;
     use crate::search::{MeiliSearchRequest, MeiliSearchResult, SearchPaginatedRequest};
 
-    pub async fn meili_search_person(entity: String, search_text: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_search_person(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
         let response2 = response.await.unwrap();
@@ -26,8 +31,12 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-    pub async fn meili_search_movie(entity: String, search_text: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
-        let response = meili_search(entity, search_text, client);
+    pub async fn meili_search_movie(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
+        let response = meili_search(entity, search_text.clone(), client);
 
         let response2 = response.await.unwrap();
         let result = response2
@@ -35,12 +44,28 @@ pub mod handlers_search_entity {
             .await
             .expect("expected a MeiliSearchResult");
 
-        let persons = result.hits;
+        let movies = result.hits;
 
-        Ok(warp::reply::json(&persons))
+        let msg = format!(
+            "finished meili_search_movie(). search_text '{}' returned {} movies ",
+            search_text,
+            movies.len()
+        );
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            msg,
+        )
+        .await;
+
+        Ok(warp::reply::json(&movies))
     }
 
-    pub async fn meili_search_movieaka(entity: String, search_text: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_search_movieaka(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
         let response2 = response.await.unwrap();
@@ -54,7 +79,11 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-    pub async fn meili_search_crew(entity: String, search_text: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_search_crew(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
         let response2 = response.await.unwrap();
@@ -68,7 +97,11 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-    pub async fn meili_search_episode(entity: String, search_text: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_search_episode(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
         let response2 = response.await.unwrap();
@@ -82,10 +115,14 @@ pub mod handlers_search_entity {
         Ok(warp::reply::json(&persons))
     }
 
-
-    async fn meili_search(entity: String, search_text: String, client: &Client) -> Result<Response, Error> {
+    async fn meili_search(
+        entity: String,
+        search_text: String,
+        client: &Client,
+    ) -> Result<Response, Error> {
         println!(
-            "searching for entity {} and search_term '{}'", &entity, &search_text
+            "searching for entity {} and search_term '{}'",
+            &entity, &search_text
         );
 
         let search_request = MeiliSearchRequest {
@@ -109,10 +146,7 @@ pub mod handlers_search_entity {
         };
 
         let json = json!(&search_request).to_string();
-        let index = format!(
-            "http://meilisearch01.bumzack.at/indexes/{}/search",
-            &entity
-        );
+        let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
 
         let response = client
             .post(&index)
@@ -127,10 +161,15 @@ pub mod handlers_search_entity {
         response
     }
 
-
-    pub async fn meili_search_movie_paginated(entity: String, s: SearchPaginatedRequest, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn meili_search_movie_paginated(
+        entity: String,
+        s: SearchPaginatedRequest,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         println!(
-            "searching for entity {} and paginated request '{:?}'", &entity, s.clone()
+            "searching for entity {} and paginated request '{:?}'",
+            &entity,
+            s.clone()
         );
 
         let search_request = MeiliSearchRequest {
@@ -157,10 +196,7 @@ pub mod handlers_search_entity {
             "search request for entity {} and paginated request '{:?}'   ->  \n{:?}\n    \n json: \n {} \n   ", &entity, &s, &search_request.clone(), &json
         );
 
-        let index = format!(
-            "http://meilisearch01.bumzack.at/indexes/{}/search",
-            &entity
-        );
+        let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
 
         let response = client
             .post(&index)
@@ -180,17 +216,21 @@ pub mod handlers_search_entity {
 
         let movies = result.hits;
 
-
         println!(
-            "searching for entity {} and paginated request '{:?}'   ->  {} results ", &entity, &s, movies.len()
+            "searching for entity {} and paginated request '{:?}'   ->  {} results ",
+            &entity,
+            &s,
+            movies.len()
         );
-
 
         Ok(warp::reply::json(&movies))
     }
 
-
-    pub async fn exec_meilisearch_search(entity_name: &String, json: String, client: &Client) -> Result<impl warp::Reply, Infallible> {
+    pub async fn exec_meilisearch_search(
+        entity_name: &String,
+        json: String,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
         let index = format!(
             "http://meilisearch01.bumzack.at/indexes/{}/search",
             &entity_name
@@ -216,7 +256,10 @@ pub mod handlers_search_entity {
         match &response {
             Ok(res) => {
                 let code = res.status().clone();
-                if code == StatusCode::OK || code == StatusCode::ACCEPTED || code == StatusCode::CREATED {
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
                     println!("request success");
                 } else {
                     let x = res.headers().clone();
@@ -230,4 +273,3 @@ pub mod handlers_search_entity {
         };
     }
 }
-

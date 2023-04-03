@@ -5,11 +5,12 @@ pub mod filters_tsv {
 
     use super::handlers_tsv;
 
-    pub fn tsv_request_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn tsv_request_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         warp::path("tsv").and(tsv_post())
     }
 
-    pub fn tsv_post() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
+    pub fn tsv_post() -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone
     {
         warp::path!("read")
             .and(warp::post())
@@ -17,7 +18,8 @@ pub mod filters_tsv {
             .and_then(handlers_tsv::post_tsv_request)
     }
 
-    fn json_body_tsv_request() -> impl Filter<Extract=(TsvFileImportRequest, ), Error=warp::Rejection> + Clone {
+    fn json_body_tsv_request(
+    ) -> impl Filter<Extract = (TsvFileImportRequest,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }
@@ -29,6 +31,7 @@ mod handlers_tsv {
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
 
+    use common::logging_service_client::logging_service;
     use common::tsv::{TsvFileImportRequest, TsvLine, TsvLines};
 
     use crate::{CLIENT, CONFIG};
@@ -36,6 +39,12 @@ mod handlers_tsv {
     pub async fn post_tsv_request(
         tsv_request: TsvFileImportRequest,
     ) -> Result<impl warp::Reply, Infallible> {
+        let msg = format!(
+            "start post_tsv_request. tsvFileImportRequest. entity {:?}, start {}, end {}, page_size {}",
+            &tsv_request.tsv_type.clone() ,tsv_request.start ,tsv_request.end ,tsv_request.page_size
+        );
+        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg).await;
+
         println!("tsv_file_import_request {:?}", &tsv_request);
 
         let start = tsv_request.start as usize;
@@ -58,6 +67,17 @@ mod handlers_tsv {
         let file = match file {
             Ok(f) => f,
             Err(err) => {
+                let msg = format!(
+                    "error in post_tsv_request. can't open file  {:?}. error  {:?}",
+                    &filename, err
+                );
+                logging_service::log_entry(
+                    "rust_tsvfilereader".to_string(),
+                    "INFO".to_string(),
+                    msg,
+                )
+                .await;
+
                 println!("error opening file {}. err {}", &filename, err);
                 let ret = format!("error opening file {}", &filename);
                 return Ok(warp::reply::json(&ret));
@@ -77,7 +97,6 @@ mod handlers_tsv {
         let url: String = CONFIG
             .get(&target_url_property)
             .expect("target_host_property must exist");
-
 
         let request_url = format!("{}:{}{}", host, port, url);
         // println!("request_url {}", &request_url);
@@ -161,13 +180,39 @@ mod handlers_tsv {
                     println!("request ok. headers {:?}", header);
                     // println!("request ok. response body {:?}", &b);
                 }
-                Err(e) => println!("error in request {:?}", e),
+                Err(e) => {
+                    println!("error in request {:?}", e);
+                    let msg = format!(
+                        "error in post_tsv_request. calling URL {:?} resulted in error  {:?}",
+                        &request_url, e
+                    );
+                    logging_service::log_entry(
+                        "rust_tsvfilereader".to_string(),
+                        "INFO".to_string(),
+                        msg,
+                    )
+                    .await;
+                }
             }
 
             println!("processed batch {} for type {:?}", batches, &t);
+
+            let msg = format!(
+                "start post_tsv_request. processed {} batches for entity {:?}",
+                batches, &t
+            );
+            logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg)
+                .await;
+
             tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
         }
         println!("processed lines {}", current_line);
+
+        let msg = format!(
+            "end post_tsv_request. processed {:?} batches of entity {:?}",
+            batches, &t
+        );
+        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg).await;
 
         let res = format!("all good. processed {} batches", batches);
         Ok(warp::reply::json(&res))

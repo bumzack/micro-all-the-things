@@ -1,4 +1,5 @@
 pub mod filters_logging {
+    use common::logging::{AddLogEntry, ReadLogEntry};
     use deadpool_postgres::Pool;
     use warp::{Filter, Rejection, Reply};
 
@@ -6,7 +7,6 @@ pub mod filters_logging {
     use crate::log_mod::log_handler::filters_logging::{
         insert_log_entry_handler, read_log_entries,
     };
-    use crate::log_mod::models::{AddLogEntry, ReadLogEntry};
 
     pub fn logging_route(
         pool: Pool,
@@ -16,7 +16,7 @@ pub mod filters_logging {
             .and(with_db(pool.clone()))
             .and(warp::post())
             .and(json_body_read_log_entry())
-            .and_then(|pool: Pool, req: crate::log_mod::models::ReadLogEntry| {
+            .and_then(|pool: Pool, req: ReadLogEntry| {
                 info!("POST /api/log_mod/entries");
                 read_log_entries(pool, req)
             });
