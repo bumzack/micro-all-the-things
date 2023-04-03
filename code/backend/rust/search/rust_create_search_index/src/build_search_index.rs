@@ -31,9 +31,10 @@ pub mod filters_search_movie {
         let mut offset = 0;
         let limit = 1000;
 
+        let total_cnt_movies = 9_728_300;
         let mut cnt_movies = 0;
 
-        for _i in 0..10100 {
+        while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
             offset += limit;
             cnt_movies += movies.len();
@@ -175,13 +176,20 @@ pub mod filters_search_movie {
 
             let docs_json = json!(&docs).to_string();
             println!(
-                "sending a list of docs to the search index.  {} docs",
-                docs.len()
+                "sending a list of docs to the search index.  {} docs. movies processed {} / {}",
+                docs.len(),
+                cnt_movies,
+                total_cnt_movies
             );
 
             println!("starting update request for  {} docs", docs.len());
             exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
-            println!("finished update request for  {} docs", docs.len());
+            println!(
+                "finished update request for  {} docs.  . movies processed {} / {} ",
+                docs.len(),
+                cnt_movies,
+                total_cnt_movies
+            );
         }
 
         let res = format!("all good. processed {} movies ", cnt_movies);
