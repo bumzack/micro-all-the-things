@@ -1,9 +1,11 @@
 pub mod filters_logging {
-    use crate::log_mod::db::db_logging::{insert_log_entry, list_entries};
-    use common::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
     use deadpool_postgres::Pool;
-    use warp::reply::json;
     use warp::{reject, Rejection, Reply};
+    use warp::reply::json;
+
+    use common::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
+
+    use crate::log_mod::db::db_logging::{insert_log_entry, list_entries};
 
     pub async fn insert_log_entry_handler(
         pool: Pool,

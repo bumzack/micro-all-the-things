@@ -33,7 +33,7 @@ pub mod logging_service {
         };
     }
 
-    pub async fn log_entry(service_id: String, log_type: String, message: String) {
+    pub async fn log_entry(service_id: String, log_type: String, message: &String) {
         let add_log_entry = AddLogEntry {
             service_id: service_id.clone(),
             log_type: log_type.clone(),

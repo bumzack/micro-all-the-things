@@ -54,7 +54,7 @@ pub mod handlers_search_entity {
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
             "INFO".to_string(),
-            msg,
+            &msg,
         )
         .await;
 

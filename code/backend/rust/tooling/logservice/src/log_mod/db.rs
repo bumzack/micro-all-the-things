@@ -3,9 +3,10 @@ use warp::Rejection;
 pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_logging {
-    use common::logging::MyError::DBQueryError;
-    use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
     use deadpool_postgres::Pool;
+
+    use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
+    use common::logging::MyError::DBQueryError;
 
     use crate::db::db::TABLE_LOG_ENTRY;
 

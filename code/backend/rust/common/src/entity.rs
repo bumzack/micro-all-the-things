@@ -5,7 +5,7 @@ use serde::Serialize;
 
 use crate::N_A;
 
-#[derive(Debug, Deserialize, Serialize,Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub enum Entity {
     MOVIE,
     PERSON,

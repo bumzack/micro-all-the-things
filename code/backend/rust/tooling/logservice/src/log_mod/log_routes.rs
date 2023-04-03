@@ -1,7 +1,8 @@
 pub mod filters_logging {
-    use common::logging::{AddLogEntry, ReadLogEntry};
     use deadpool_postgres::Pool;
     use warp::{Filter, Rejection, Reply};
+
+    use common::logging::{AddLogEntry, ReadLogEntry};
 
     use crate::db::server::with_db;
     use crate::log_mod::log_handler::filters_logging::{
@@ -10,7 +11,7 @@ pub mod filters_logging {
 
     pub fn logging_route(
         pool: Pool,
-    ) -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
+    ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
         let server1 = warp::path!("api" / "log" / "entries");
         let search_name = server1
             .and(with_db(pool.clone()))
@@ -66,13 +67,11 @@ pub mod filters_logging {
         info!("log entry {:?}", &req);
     }
 
-    fn json_body_add_log_entry(
-    ) -> impl Filter<Extract = (AddLogEntry,), Error = warp::Rejection> + Clone {
+    fn json_body_add_log_entry() -> impl Filter<Extract=(AddLogEntry, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
-    fn json_body_read_log_entry(
-    ) -> impl Filter<Extract = (ReadLogEntry,), Error = warp::Rejection> + Clone {
+    fn json_body_read_log_entry() -> impl Filter<Extract=(ReadLogEntry, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }
