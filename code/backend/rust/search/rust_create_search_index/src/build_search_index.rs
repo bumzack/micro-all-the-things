@@ -17,7 +17,8 @@ pub mod filters_search_movie {
 
     use crate::{CLIENT, CONFIG};
 
-    pub fn build_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn build_index_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         warp::path!("api" / "searchindex" / "build")
             .and(warp::get())
             .and_then(|| {
@@ -42,7 +43,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
 
         while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
@@ -66,7 +67,7 @@ pub mod filters_search_movie {
                 "INFO".to_string(),
                 &message,
             )
-                .await;
+            .await;
 
             println!("starting update request for  {} docs", docs.len());
             exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
@@ -85,7 +86,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         println!("done {}", &message);
         Ok(warp::reply::json(&message))
     }
@@ -279,7 +280,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         let json = json!(&search_request);
         let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -312,7 +313,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
         // println!("got a list of movies {}", movies_as_pretty_json);
@@ -342,7 +343,7 @@ pub mod filters_search_movie {
                         "ERROR".to_string(),
                         message,
                     )
-                        .await;
+                    .await;
                 }
             }
             Err(e) => println!("error in request to meilisearch {:?}", e),
@@ -364,7 +365,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         let response = CLIENT.get(&url).send().await;
 
@@ -395,7 +396,7 @@ pub mod filters_search_movie {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         principals
     }
