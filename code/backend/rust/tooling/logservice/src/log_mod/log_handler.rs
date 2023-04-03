@@ -1,0 +1,38 @@
+pub mod filters_logging {
+    use crate::log_mod::db::db_logging::{insert_log_entry, list_entries};
+    use crate::log_mod::models::{AddLogEntry, DivideByZero, ReadLogEntry};
+    use deadpool_postgres::Pool;
+    use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
+
+    pub async fn insert_log_entry_handler(
+        pool: Pool,
+        req: AddLogEntry,
+    ) -> Result<impl Reply, Rejection> {
+        println!("adding log_mod entry {:?}", req);
+
+        let x = &insert_log_entry(pool.clone(), req)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                println!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
+
+        Ok(json(&x))
+    }
+
+    pub async fn read_log_entries(pool: Pool, req: ReadLogEntry) -> Result<impl Reply, Rejection> {
+        println!("reading log_mod entries {:?}", &req);
+
+        let data = list_entries(pool, req)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                println!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
+
+        Ok(json(&data))
+    }
+}

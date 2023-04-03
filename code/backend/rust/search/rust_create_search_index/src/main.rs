@@ -13,7 +13,7 @@ lazy_static::lazy_static! {
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
-        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/search/rust_create_search_index/config.toml"))
+        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
         .build()
         .unwrap();
 }
