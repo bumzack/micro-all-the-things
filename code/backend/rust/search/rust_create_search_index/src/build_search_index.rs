@@ -29,7 +29,7 @@ pub mod filters_search_movie {
 
     pub async fn build_index() -> Result<impl warp::Reply, Infallible> {
         let mut offset = 0;
-        let limit = 1000;
+        let limit = 100;
 
         let total_cnt_movies = 9_728_300;
         let mut cnt_movies = 0;
