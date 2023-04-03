@@ -15,6 +15,7 @@ members = [
     "search/rust_principalsearch",
     "search/rust_ratingsearch",
     "search/rust_crewsearch",
+    "search/rust_search_search_index",
     "common",
     "tooling/logservice",
     "tooling/micro_swagger"
