@@ -172,6 +172,11 @@ pub mod filters_search_movie {
                     characters,
                 };
                 docs.push(doc);
+
+                println!(
+                    "processing movie tconst: {}.    movie {} / {}  ",
+                    m.tconst, cnt_movies, total_cnt_movies
+                );
             }
 
             let docs_json = json!(&docs).to_string();
