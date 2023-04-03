@@ -6,7 +6,6 @@ pub mod filters_search_movie {
     use serde_json::json;
     use warp::Filter;
 
-    use common::crew::Crew;
     use common::entity::handlers_entity::exec_meilisearch_update;
     use common::logging_service_client::logging_service;
     use common::meili_search::handlers_search_entity::dump_response_status;
