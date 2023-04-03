@@ -1,9 +1,10 @@
-mod index_html;
+use serde_json::json;
+use warp::Filter;
+use warp::ws::WebSocket;
 
 use crate::index_html::INDEX_HTML;
-use serde_json::json;
-use warp::ws::WebSocket;
-use warp::Filter;
+
+mod index_html;
 
 #[tokio::main]
 async fn main() {

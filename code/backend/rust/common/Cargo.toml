@@ -17,4 +17,4 @@ tokio-postgres = { version = "0.7.7", features = ["with-serde_json-1", "with-chr
 chrono = { version = "0.4.24", features = ["serde", "clock"] }
 lazy_static = "1.4.0"
 config = "0.13.3"
-log="0.4.17"
+log = "0.4.17"
