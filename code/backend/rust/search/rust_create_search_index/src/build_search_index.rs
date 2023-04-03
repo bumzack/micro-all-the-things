@@ -17,8 +17,9 @@ pub mod filters_search_movie {
 
     use crate::{CLIENT, CONFIG};
 
-    pub fn build_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
-        warp::path!("api" / "searchindex" / "build" )
+    pub fn build_index_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+        warp::path!("api" / "searchindex" / "build")
             .and(warp::get())
             .and_then(|| {
                 println!("GET /api/searchindex/build matched");
@@ -28,12 +29,12 @@ pub mod filters_search_movie {
 
     pub async fn build_index() -> Result<impl warp::Reply, Infallible> {
         let mut offset = 0;
-        let limit = 5000;
+        let limit = 1000;
 
+        let total_cnt_movies = 9_728_300;
         let mut cnt_movies = 0;
 
-        // 26000
-        for _i in 0..21 {
+        while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
             offset += limit;
             cnt_movies += movies.len();
@@ -66,9 +67,7 @@ pub mod filters_search_movie {
                 //         None => {}
                 //     }
                 // });
-                let vec1 = person_nconsts.iter()
-                    .cloned()
-                    .collect::<Vec<String>>();
+                let vec1 = person_nconsts.iter().cloned().collect::<Vec<String>>();
 
                 let mut persons_vec = search_person(vec1).await;
                 let mut persons = HashMap::new();
@@ -84,36 +83,33 @@ pub mod filters_search_movie {
 
                 principals.iter().for_each(|p| {
                     match &p.category {
-                        Some(typ) => {
-                            match typ.as_str() {
-                                "actor" | "actress" => {
-                                    let a = persons.get(&p.nconst).unwrap();
-                                    match &a.primary_name {
-                                        Some(name) => actors.push(name.clone()),
-                                        None => {}
-                                    }
+                        Some(typ) => match typ.as_str() {
+                            "actor" | "actress" => {
+                                let a = persons.get(&p.nconst).unwrap();
+                                match &a.primary_name {
+                                    Some(name) => actors.push(name.clone()),
+                                    None => {}
                                 }
-                                "writer" => {
-                                    let a = persons.get(&p.nconst).unwrap();
-                                    match &a.primary_name {
-                                        Some(name) => writers.push(name.clone()),
-                                        None => {}
-                                    }
-                                }
-                                "director" => {
-                                    match persons.get(&p.nconst) {
-                                        Some(per) => {
-                                            match &per.primary_name {
-                                                Some(name) => directors.push(name.clone()),
-                                                None => {}
-                                            }
-                                        }
-                                        None => println!("hm - why is there no person?, principal {} and director", p.id),
-                                    }
-                                }
-                                _ => {}
                             }
-                        }
+                            "writer" => {
+                                let a = persons.get(&p.nconst).unwrap();
+                                match &a.primary_name {
+                                    Some(name) => writers.push(name.clone()),
+                                    None => {}
+                                }
+                            }
+                            "director" => match persons.get(&p.nconst) {
+                                Some(per) => match &per.primary_name {
+                                    Some(name) => directors.push(name.clone()),
+                                    None => {}
+                                },
+                                None => println!(
+                                    "hm - why is there no person?, principal {} and director",
+                                    p.id
+                                ),
+                            },
+                            _ => {}
+                        },
                         None => {}
                     };
                     match &p.characters {
@@ -179,11 +175,21 @@ pub mod filters_search_movie {
             }
 
             let docs_json = json!(&docs).to_string();
-            println!("sending a list of docs to the search index.  {} docs", docs.len());
+            println!(
+                "sending a list of docs to the search index.  {} docs. movies processed {} / {}",
+                docs.len(),
+                cnt_movies,
+                total_cnt_movies
+            );
 
             println!("starting update request for  {} docs", docs.len());
             exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
-            println!("finished update request for  {} docs", docs.len());
+            println!(
+                "finished update request for  {} docs.  . movies processed {} / {} ",
+                docs.len(),
+                cnt_movies,
+                total_cnt_movies
+            );
         }
 
         let res = format!("all good. processed {} movies ", cnt_movies);
@@ -191,7 +197,9 @@ pub mod filters_search_movie {
     }
 
     async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
-        let search_movie: String = CONFIG.get("search_movie").expect("expected search_movie URL");
+        let search_movie: String = CONFIG
+            .get("search_movie")
+            .expect("expected search_movie URL");
 
         let search_request = SearchPaginatedRequest {
             q: "*".to_string(),
@@ -201,12 +209,7 @@ pub mod filters_search_movie {
         };
 
         let json = json!(&search_request);
-        let response = CLIENT
-            .post(search_movie)
-            .json(&json)
-            .send()
-            .await;
-
+        let response = CLIENT.post(search_movie).json(&json).send().await;
 
         match &response {
             Ok(res) => {
@@ -216,8 +219,14 @@ pub mod filters_search_movie {
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!("search for movies paginated search request != OK. status {:?}", code);
-                    println!("search for movies paginated search request != OK. headers {:?}", x);
+                    println!(
+                        "search for movies paginated search request != OK. status {:?}",
+                        code
+                    );
+                    println!(
+                        "search for movies paginated search request != OK. headers {:?}",
+                        x
+                    );
                     // println!("meilisearch search request != OK. response body {:?}", &b);
                 }
             }
@@ -236,15 +245,14 @@ pub mod filters_search_movie {
     }
 
     async fn search_principal(tconst: &String) -> Vec<Principal> {
-        let search_principal: String = CONFIG.get("search_principal_by_movie_tconst").expect("expected search_principal_by_movie_tconst URL");
+        let search_principal: String = CONFIG
+            .get("search_principal_by_movie_tconst")
+            .expect("expected search_principal_by_movie_tconst URL");
 
         let url = format!("{search_principal}{tconst}");
         //   println!("searching principals for movie tconst {tconst}. search url {url}");
 
-        let response = CLIENT
-            .get(url)
-            .send()
-            .await;
+        let response = CLIENT.get(url).send().await;
 
         match &response {
             Ok(res) => {
@@ -254,7 +262,10 @@ pub mod filters_search_movie {
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!("search for principal search request != OK. status {:?}", code);
+                    println!(
+                        "search for principal search request != OK. status {:?}",
+                        code
+                    );
                     println!("search for principal search request != OK. headers {:?}", x);
                     // println!("meilisearch search request != OK. response body {:?}", &b);
                 }
@@ -275,11 +286,11 @@ pub mod filters_search_movie {
     }
 
     async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
-        let search_person_url: String = CONFIG.get("search_person_by_nconst").expect("expected search_person_by_nconst URL");
+        let search_person_url: String = CONFIG
+            .get("search_person_by_nconst")
+            .expect("expected search_person_by_nconst URL");
 
-        let search_person_req = SearchPersonList {
-            nconsts,
-        };
+        let search_person_req = SearchPersonList { nconsts };
 
         let search_persons = json!(&search_person_req);
 
@@ -325,17 +336,15 @@ pub mod filters_search_movie {
         }
     }
 
-
     async fn search_crew(tconst: &String) -> Vec<Crew> {
-        let search_crew_url: String = CONFIG.get("search_crew_by_tconst").expect("expected search_crew_by_tconst  URL");
+        let search_crew_url: String = CONFIG
+            .get("search_crew_by_tconst")
+            .expect("expected search_crew_by_tconst  URL");
 
         let url = format!("{search_crew_url}{tconst}");
         //   println!("searching crew for movie tconst {tconst}. search url {url}");
 
-        let response = CLIENT
-            .get(search_crew_url)
-            .send()
-            .await;
+        let response = CLIENT.get(search_crew_url).send().await;
 
         dump_response_status(&response);
 
@@ -351,4 +360,3 @@ pub mod filters_search_movie {
         crew
     }
 }
-

@@ -15,5 +15,6 @@ members = [
     "search/rust_principalsearch",
     "search/rust_ratingsearch",
     "search/rust_crewsearch",
-    "common"
+    "common",
+    "tooling/logservice"
 ]
