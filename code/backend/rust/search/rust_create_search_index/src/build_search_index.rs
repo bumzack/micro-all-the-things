@@ -106,24 +106,6 @@ pub mod filters_search_movie {
             principals.iter().for_each(|p| {
                 let _ = person_nconsts.insert(p.nconst.clone());
             });
-            // crew.iter().for_each(|c| {
-            //     match &c.directors {
-            //         Some(dirs) => {
-            //             dirs.iter().for_each(|d| {
-            //                 let _ = person_nconsts.insert(d.clone());
-            //             });
-            //         }
-            //         None => {}
-            //     }
-            //     match &c.writers {
-            //         Some(writ) => {
-            //             writ.iter().for_each(|d| {
-            //                 let _ = person_nconsts.insert(d.clone());
-            //             });
-            //         }
-            //         None => {}
-            //     }
-            // });
             let vec1 = person_nconsts.iter().cloned().collect::<Vec<String>>();
 
             let mut persons_vec = search_person(vec1).await;
