@@ -2,7 +2,7 @@ pub mod filters_search_movie {
     use std::collections::{HashMap, HashSet};
     use std::convert::Infallible;
 
-    use reqwest::StatusCode;
+    use reqwest::{Error, Response, StatusCode};
     use serde_json::json;
     use warp::Filter;
 
@@ -47,7 +47,6 @@ pub mod filters_search_movie {
         while cnt_movies < total_cnt_movies {
             let movies = search_movies(limit, offset).await;
             offset += limit;
-            cnt_movies += movies.len();
 
             let mut docs = vec![];
             for m in movies {
@@ -187,15 +186,25 @@ pub mod filters_search_movie {
                     "processing movie tconst: {}.    movie {} / {}  ",
                     m.tconst, cnt_movies, total_cnt_movies
                 );
+                cnt_movies += 1;
             }
 
             let docs_json = json!(&docs).to_string();
-            println!(
+
+            let message = format!(
                 "sending a list of docs to the search index.  {} docs. movies processed {} / {}",
                 docs.len(),
                 cnt_movies,
                 total_cnt_movies
             );
+            println!("{}", &message);
+
+            logging_service::log_entry(
+                "rust_create_search_index".to_string(),
+                "INFO".to_string(),
+                &message,
+            )
+                .await;
 
             println!("starting update request for  {} docs", docs.len());
             exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
@@ -207,17 +216,16 @@ pub mod filters_search_movie {
             );
         }
 
-        let res = format!("finished build_index(). processed {} movies ", cnt_movies);
-
-        println!("res {}", &res);
+        let message = format!("finished build_index(). processed {} movies ", cnt_movies);
+        println!("res {}", &message);
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
             "INFO".to_string(),
-            res.clone(),
+            &message,
         )
             .await;
-        println!("done {}", &res);
-        Ok(warp::reply::json(&res))
+        println!("done {}", &message);
+        Ok(warp::reply::json(&message))
     }
 
     async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
@@ -232,30 +240,32 @@ pub mod filters_search_movie {
             sort: vec!["tconst:asc".to_string()],
         };
 
+        let message = format!(
+            "start search_movies().  offset {}, limit {}, sort {:?} ",
+            offset,
+            limit,
+            &search_request.sort.clone()
+        );
+        println!("message {}", &message);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
+
         let json = json!(&search_request);
         let response = CLIENT.post(search_movie).json(&json).send().await;
 
-        match &response {
-            Ok(res) => {
-                let code = res.status().clone();
-                if code == StatusCode::OK {
-                    println!("search for movies paginated search request success");
-                } else {
-                    let x = res.headers().clone();
-                    // let b = res.text().await.unwrap();
-                    println!(
-                        "search for movies paginated search request != OK. status {:?}",
-                        code
-                    );
-                    println!(
-                        "search for movies paginated search request != OK. headers {:?}",
-                        x
-                    );
-                    // println!("meilisearch search request != OK. response body {:?}", &b);
-                }
-            }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
-        };
+        let message = format!(
+            "error search_movies(). offset {}, limit {}, sort {:?}. returned HTTP code {}",
+            offset,
+            limit,
+            &search_request.sort.clone(),
+            code,
+        );
+        let msg = "search for movies paginated search request".to_string();
+        log_external_service_error(&msg, &message, &response).await;
 
         let response2 = response.unwrap();
         let movies = response2
@@ -263,9 +273,55 @@ pub mod filters_search_movie {
             .await
             .expect("expected a list of Movies");
 
+        let message = format!(
+            "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found ",
+            offset,
+            limit,
+            &search_request.sort.clone(),
+            movies.len()
+        );
+        println!("message {}", &message);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
+
         // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
         // println!("got a list of movies {}", movies_as_pretty_json);
         movies
+    }
+
+    async fn log_external_service_error(
+        msg1: &String,
+        message: &String,
+        response: &Result<Response, Error>,
+    ) {
+        match &response {
+            Ok(res) => {
+                let code = res.status();
+                if code != StatusCode::OK {
+                    let x = res.headers().clone();
+                    // let b = res.text().await.unwrap();
+                    println!("{} != OK. status {:?}", msg1, code);
+                    println!(
+                        "{} != OK. headers {:?}",
+                        msg1
+                        x
+                    );
+
+                    println!("message {}", &message);
+                    logging_service::log_entry(
+                        "rust_create_search_index".to_string(),
+                        "ERROR".to_string(),
+                        message,
+                    )
+                        .await;
+                }
+            }
+            Err(e) => println!("error in request to meilisearch {:?}", e),
+        };
     }
 
     async fn search_principal(tconst: &String) -> Vec<Principal> {
@@ -276,26 +332,24 @@ pub mod filters_search_movie {
         let url = format!("{search_principal}{tconst}");
         //   println!("searching principals for movie tconst {tconst}. search url {url}");
 
-        let response = CLIENT.get(url).send().await;
+        let message = format!("start search_principal().  url {}", url);
+        println!("message {}", &message);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
 
-        match &response {
-            Ok(res) => {
-                let code = res.status().clone();
-                if code == StatusCode::OK {
-                    println!("search for principal   search request success");
-                } else {
-                    let x = res.headers().clone();
-                    // let b = res.text().await.unwrap();
-                    println!(
-                        "search for principal search request != OK. status {:?}",
-                        code
-                    );
-                    println!("search for principal search request != OK. headers {:?}", x);
-                    // println!("meilisearch search request != OK. response body {:?}", &b);
-                }
-            }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
-        };
+        let response = CLIENT.get(&url).send().await;
+
+        let message = format!(
+            "error search_principal(). an error occurred in requesting a list of principals. url {}. HTTP code {}  ",
+            &url,
+            code,
+        );
+        let msg = "search for principal search request".to_string();
+        log_external_service_error(&msg, &message, &response).await;
 
         let response2 = response.unwrap();
         let principals = response2
@@ -305,6 +359,19 @@ pub mod filters_search_movie {
 
         // let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
         //   println!("got a list of principals {}", &principals_as_pretty_json);
+
+        let message = format!(
+            "end search_principal().  url {}. found {} prinicpals",
+            &url,
+            principals.len()
+        );
+        println!("message {}", &message);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
 
         principals
     }
