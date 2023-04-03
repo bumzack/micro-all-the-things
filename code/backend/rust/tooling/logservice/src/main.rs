@@ -42,12 +42,12 @@ async fn main() {
     let routes = logging_route(pool);
 
     let host: String = CONFIG
-        .get("loggingservice.serivce.host")
-        .expect("expected loggingservice.serivce.host variable");
+        .get("loggingservice_service_host")
+        .expect("expected loggingservice_service_host variable");
 
     let port: u16 = CONFIG
-        .get("loggingservice.serivce.port")
-        .expect("expected loggingservice.serivce.port variable");
+        .get("loggingservice_service_port")
+        .expect("expected loggingservice_service_port variable");
 
     let host = format!("{host}:{port}");
 

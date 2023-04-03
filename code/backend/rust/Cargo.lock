@@ -146,11 +146,17 @@ dependencies = [
 name = "common"
 version = "0.1.0"
 dependencies = [
+ "chrono",
+ "config",
+ "lazy_static",
+ "log",
  "reqwest",
  "serde",
  "serde_derive",
  "serde_json",
  "serde_urlencoded",
+ "thiserror",
+ "tokio-postgres",
  "warp",
 ]
 
@@ -826,6 +832,7 @@ name = "logservice"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "common",
  "config",
  "deadpool-postgres",
  "futures",
@@ -856,6 +863,27 @@ name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+
+[[package]]
+name = "micro_swagger"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "config",
+ "deadpool-postgres",
+ "futures",
+ "lazy_static",
+ "log",
+ "pretty_env_logger",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "thiserror",
+ "tokio",
+ "tokio-postgres",
+ "warp",
+]
 
 [[package]]
 name = "mime"

@@ -9,12 +9,12 @@ search_crew_by_tconst = "http://localhost:18205/api/crew/"
 
 
 # logging service
-loggingservice.db.user = "bumzack"
-loggingservice.db.password = "bumzack"
-loggingservice.db.host = "localhost"
-loggingservice.db.name = "bumzack"
-loggingservice.serivce.host = "localhost"
-loggingservice.serivce.port = "18700"
+loggingservice_db_user = "bumzack"
+loggingservice_db_password = "bumzack"
+loggingservice_db_host = "localhost"
+loggingservice_db_name = "bumzack"
+loggingservice_service_host = "localhost"
+loggingservice_service_port = "18700"
 
 
 

@@ -9,17 +9,17 @@ pub fn create_pool() -> Pool {
     let mut pg_config = tokio_postgres::Config::new();
 
     let user: String = CONFIG
-        .get("loggingservice.db.user")
-        .expect("expected loggingservice.db.user variable");
+        .get("loggingservice_db_user")
+        .expect("expected loggingservice_db_user variable");
     let password: String = CONFIG
-        .get("loggingservice.db.password")
-        .expect("expected loggingservice.db.password variable");
+        .get("loggingservice_db_password")
+        .expect("expected loggingservice_db_password variable");
     let host: String = CONFIG
-        .get("loggingservice.db.host")
-        .expect("expected loggingservice.db.host variable");
+        .get("loggingservice_db_host")
+        .expect("expected loggingservice_db_host variable");
     let dbname: String = CONFIG
-        .get("loggingservice.db.name")
-        .expect("expected loggingservice.db.name variable");
+        .get("loggingservice_db_name")
+        .expect("expected loggingservice_db_name variable");
 
     println!("user {user}, password {password}, host {host}, dbname {dbname}");
     pg_config.user(&user);
