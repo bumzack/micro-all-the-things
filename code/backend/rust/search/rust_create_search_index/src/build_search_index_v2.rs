@@ -5,13 +5,13 @@ use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
 
-use common::entity::handlers_entity::exec_meilisearch_update;
+use common::entity::handlers_entity::{exec_meilisearch_update, exec_solr_update};
 use common::logging_service_client::logging_service;
 
 use crate::build_search_common::{convert_to_meilisearch_doc, search_movies};
-use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
-use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
 use crate::CLIENT;
+use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData};
+use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
 
 pub async fn build_index_v2(multiplier: u32) -> Result<impl warp::Reply, Infallible> {
     let offset = 0;
@@ -78,7 +78,8 @@ async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
     log_docs_processed(docs.len()).await;
 
     info!("starting update request for  {} docs", docs.len());
-    exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
+    exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json.clone()).await;
+    exec_solr_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
     info!("finished update request for  {} docs.  ", docs.len(),);
 
     cnt
@@ -96,7 +97,7 @@ async fn log_docs_processed(num_docs: usize) {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 }
 
 fn start_tasks(
@@ -160,7 +161,7 @@ async fn log_end(total_movies_processed: usize) -> String {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     message
 }
 
@@ -174,7 +175,7 @@ async fn log_start(offset: u32, limit: u32) {
         "INFO".to_string(),
         &msg,
     )
-    .await;
+        .await;
 }
 
 async fn log_build_stats(num_cpus: usize, multiplier: u32, num_tasks: usize) {
@@ -188,7 +189,7 @@ async fn log_build_stats(num_cpus: usize, multiplier: u32, num_tasks: usize) {
         "INFO".to_string(),
         &msg,
     )
-    .await;
+        .await;
 }
 
 async fn log_task_error(name: String, e: String) {
@@ -202,7 +203,7 @@ async fn log_task_error(name: String, e: String) {
         "ERROR".to_string(),
         &msg,
     )
-    .await;
+        .await;
 }
 
 async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
@@ -216,6 +217,6 @@ async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     message
 }

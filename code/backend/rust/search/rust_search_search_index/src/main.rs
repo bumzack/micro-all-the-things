@@ -22,7 +22,9 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    println!(
+    pretty_env_logger::init();
+
+    info!(
         "{:?}",
         CONFIG
             .clone()

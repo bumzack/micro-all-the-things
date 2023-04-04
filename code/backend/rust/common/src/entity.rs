@@ -76,7 +76,6 @@ pub fn get_nullable_f32(input: &Vec<String>, idx: usize) -> Option<f32> {
     }
 }
 
-
 pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
@@ -96,7 +95,10 @@ pub fn get_nullable_string_list(input: &Vec<String>, idx: usize) -> Option<Vec<S
     }
 }
 
-pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize) -> Option<Vec<String>> {
+pub fn get_nullable_string_list_of_string_array(
+    input: &Vec<String>,
+    idx: usize,
+) -> Option<Vec<String>> {
     match input.get(idx) {
         Some(s) => {
             if s.eq(N_A) {
@@ -104,7 +106,10 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
             }
             let result = serde_json::from_str::<Vec<String>>(s);
             if result.is_err() {
-                println!("serializing the line did not work:  '{}'     input:   '{:?}'    ", &s, &input);
+                println!(
+                    "serializing the line did not work:  '{}'     input:   '{:?}'    ",
+                    &s, &input
+                );
             }
             let res = result.unwrap();
             Some(res)
@@ -114,7 +119,6 @@ pub fn get_nullable_string_list_of_string_array(input: &Vec<String>, idx: usize)
         }
     }
 }
-
 
 pub trait EntityConverter<T> {
     fn convert(&self) -> Vec<T>;
@@ -170,13 +174,22 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status();
-                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
+                if code == StatusCode::OK
+                    || code == StatusCode::CREATED
+                    || code == StatusCode::ACCEPTED
+                {
                     println!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. status {:?}", code);
-                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. headers {:?}", x);
+                    println!(
+                        "meilisearch request != OK AND != CREATED AND != ACCEPTED. status {:?}",
+                        code
+                    );
+                    println!(
+                        "meilisearch request != OK AND != CREATED AND != ACCEPTED. headers {:?}",
+                        x
+                    );
                     println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
                 }
             }
@@ -184,12 +197,9 @@ pub mod handlers_entity {
         }
     }
 
-    async fn exec_solr_update(entity_name: &String, client: &Client, json: String) {
+    pub async fn exec_solr_update(entity_name: &String, client: &Client, json: String) {
         let cmd = "/update?commitWithin=1000&overwrite=true&wt=json".to_string();
-        let index = format!(
-            "http://solr01.bumzack.at/solr/{}/{}",
-            &entity_name, &cmd
-        );
+        let index = format!("http://solr01.bumzack.at/solr/{}/{}", &entity_name, &cmd);
 
         let response = client
             .post(&index)
@@ -201,18 +211,29 @@ pub mod handlers_entity {
         match response {
             Ok(res) => {
                 let code = res.status();
-                if code == StatusCode::OK || code == StatusCode::CREATED || code == StatusCode::ACCEPTED {
+                if code == StatusCode::OK
+                    || code == StatusCode::CREATED
+                    || code == StatusCode::ACCEPTED
+                {
                     println!("solr request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!("solr request != OK AND != CREATED  != ACCEPTED. status {:?}", code);
-                    println!("solr request != OK AND != CREATED  != ACCEPTED. headers {:?}", x);
-                    println!("solr request != OK AND != CREATED  != ACCEPTED. response body {:?}", &b);
+                    println!(
+                        "solr request != OK AND != CREATED  != ACCEPTED. status {:?}",
+                        code
+                    );
+                    println!(
+                        "solr request != OK AND != CREATED  != ACCEPTED. headers {:?}",
+                        x
+                    );
+                    println!(
+                        "solr request != OK AND != CREATED  != ACCEPTED. response body {:?}",
+                        &b
+                    );
                 }
             }
             Err(e) => println!("solr request error in request to solr {:?}", e),
         }
     }
 }
-
