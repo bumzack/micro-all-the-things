@@ -16,8 +16,7 @@ pub mod logging_service {
 
     lazy_static::lazy_static! {
         static ref LOG_SERVICE_URL: String ={
-            println!("stuff");
-            let host: String = CONFIG_LOG
+             let host: String = CONFIG_LOG
                 .get("loggingservice_service_host")
                 .expect("expected loggingservice_service_host variable");
 
@@ -27,9 +26,7 @@ pub mod logging_service {
 
             let host = format!("http://{host}:{port}/api/log/entry");
 
-            info!("host {}", host);
-            println!("end of stuff");
-            host
+             host
         };
     }
 
@@ -41,13 +38,11 @@ pub mod logging_service {
             logtime: chrono::offset::Utc::now(),
         };
 
-        println!(
+        info!(
             "LOGGING_entry service_id {}, log_type {}, message {}",
             &service_id, &log_type, &message
         );
         let url: &String = &LOG_SERVICE_URL;
-
-        println!("url  {}", &url);
         let response = CLIENT_LOG.post(url).json(&add_log_entry).send().await;
 
         // dump_response_status(&response);
@@ -55,7 +50,7 @@ pub mod logging_service {
         match response {
             Ok(_) => {}
             Err(e) => {
-                println!("error sending add log entry request {}", e);
+                error!("error sending add log entry request {}", e);
             }
         };
     }

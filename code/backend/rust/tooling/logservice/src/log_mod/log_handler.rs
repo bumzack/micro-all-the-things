@@ -1,7 +1,7 @@
 pub mod filters_logging {
     use deadpool_postgres::Pool;
-    use warp::{reject, Rejection, Reply};
     use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
 
     use common::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
 
@@ -11,13 +11,13 @@ pub mod filters_logging {
         pool: Pool,
         req: AddLogEntry,
     ) -> Result<impl Reply, Rejection> {
-        println!("adding log_mod entry {:?}", req);
+        info!("adding log_mod entry {:?}", req);
 
         let x = &insert_log_entry(pool.clone(), req)
             .await
             // TODO fix CustomError
             .map_err(|e| {
-                println!("error rejection {:?}", e);
+                error!("error rejection {:?}", e);
                 reject::custom(DivideByZero)
             })?;
 
@@ -25,13 +25,13 @@ pub mod filters_logging {
     }
 
     pub async fn read_log_entries(pool: Pool, req: ReadLogEntry) -> Result<impl Reply, Rejection> {
-        println!("reading log_mod entries {:?}", &req);
+        info!("reading log_mod entries {:?}", &req);
 
         let data = list_entries(pool, req)
             .await
             // TODO fix CustomError
             .map_err(|e| {
-                println!("error rejection {:?}", e);
+                error!("error rejection {:?}", e);
                 reject::custom(DivideByZero)
             })?;
 
