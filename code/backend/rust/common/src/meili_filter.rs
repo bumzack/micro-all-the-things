@@ -19,15 +19,15 @@ pub mod handlers_search_entity {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Person>>()
-            .await
-            .expect("expected a MeiliSearchResult<Person>");
+        let res = response2.json::<MeiliSearchResult<Person>>().await;
 
-        let persons = result.hits;
-
-        // let p = serde_json::to_string_pretty(&persons).expect("expected a list of persons");
-        // println!("filter_personse returned {}", p);
+        let persons = match res {
+            Ok(res) => res.hits,
+            Err(e) => {
+                error!("error in request for persons {}", e);
+                vec![]
+            }
+        };
 
         Ok(warp::reply::json(&persons))
     }
@@ -40,14 +40,17 @@ pub mod handlers_search_entity {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Principal>>()
-            .await
-            .expect("expected a MeiliSearchResult<Principal>");
+        let result = response2.json::<MeiliSearchResult<Principal>>().await;
 
-        let persons = result.hits;
+        let principals = match result {
+            Ok(res) => res.hits,
+            Err(e) => {
+                error!("error in request for principals {}", e);
+                vec![]
+            }
+        };
 
-        Ok(warp::reply::json(&persons))
+        Ok(warp::reply::json(&principals))
     }
 
     pub async fn meili_filter_rating(
@@ -58,12 +61,15 @@ pub mod handlers_search_entity {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Rating>>()
-            .await
-            .expect("expected a MeiliSearchResult<Principal>");
+        let result = response2.json::<MeiliSearchResult<Rating>>().await;
 
-        let ratings = result.hits;
+        let ratings = match result {
+            Ok(res) => res.hits,
+            Err(e) => {
+                error!("error in request for ratings {}", e);
+                vec![]
+            }
+        };
 
         Ok(warp::reply::json(&ratings))
     }
@@ -76,14 +82,17 @@ pub mod handlers_search_entity {
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Crew>>()
-            .await
-            .expect("expected a MeiliSearchResult<Crew>");
+        let result = response2.json::<MeiliSearchResult<Crew>>().await;
 
-        let persons = result.hits;
+        let crew = match result {
+            Ok(res) => res.hits,
+            Err(e) => {
+                error!("error in request for crew {}", e);
+                vec![]
+            }
+        };
 
-        Ok(warp::reply::json(&persons))
+        Ok(warp::reply::json(&crew))
     }
 
     async fn meili_filter(
@@ -91,10 +100,6 @@ pub mod handlers_search_entity {
         filter: Vec<String>,
         client: &Client,
     ) -> Result<Response, Error> {
-        // println!(
-        //     "filter entity {}.  filters  '{:?}'", &entity, &filter
-        // );
-
         let search_request = MeiliSearchRequest {
             q: "*".to_string(),
             offset: None,

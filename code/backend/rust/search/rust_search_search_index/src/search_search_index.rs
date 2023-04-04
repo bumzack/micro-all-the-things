@@ -18,15 +18,15 @@ pub mod filters_search_search_index {
     use crate::{CLIENT, CONFIG};
 
     pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
-        warp::path!("api" / "searchindex" / "build")
-            .and(warp::get())
+        warp::path!("api" / "searchindex" / "search")
+            .and(warp::post())
             .and_then(|| {
-                println!("GET /api/searchindex/build matched");
-                build_index()
+                info!("POST /api/searchindex/search matched");
+                search_index()
             })
     }
 
-    pub async fn build_index() -> Result<impl warp::Reply, Infallible> {
+    pub async fn search_index() -> Result<impl warp::Reply, Infallible> {
         let mut offset = 0;
         let limit = 1000;
 
@@ -113,7 +113,7 @@ pub mod filters_search_search_index {
                                     Some(name) => directors.push(name.clone()),
                                     None => {}
                                 },
-                                None => println!(
+                                None => error!(
                                     "hm - why is there no person?, principal {} and director",
                                     p.id
                                 ),
@@ -183,23 +183,23 @@ pub mod filters_search_search_index {
                 };
                 docs.push(doc);
 
-                println!(
+                info!(
                     "processing movie tconst: {}.    movie {} / {}  ",
                     m.tconst, cnt_movies, total_cnt_movies
                 );
             }
 
             let docs_json = json!(&docs).to_string();
-            println!(
+            info!(
                 "sending a list of docs to the search index.  {} docs. movies processed {} / {}",
                 docs.len(),
                 cnt_movies,
                 total_cnt_movies
             );
 
-            println!("starting update request for  {} docs", docs.len());
+            info!("starting update request for  {} docs", docs.len());
             exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
-            println!(
+            info!(
                 "finished update request for  {} docs.  . movies processed {} / {} ",
                 docs.len(),
                 cnt_movies,
@@ -209,14 +209,14 @@ pub mod filters_search_search_index {
 
         let res = format!("finished build_index(). processed {} movies ", cnt_movies);
 
-        println!("res {}", &res);
+        info!("res {}", &res);
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
             "INFO".to_string(),
             res.clone(),
         )
             .await;
-        println!("done {}", &res);
+        info!("done {}", &res);
         Ok(warp::reply::json(&res))
     }
 
@@ -239,22 +239,22 @@ pub mod filters_search_search_index {
             Ok(res) => {
                 let code = res.status().clone();
                 if code == StatusCode::OK {
-                    println!("search for movies paginated search request success");
+                    info!("search for movies paginated search request success");
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!(
+                    error!(
                         "search for movies paginated search request != OK. status {:?}",
                         code
                     );
-                    println!(
+                    error!(
                         "search for movies paginated search request != OK. headers {:?}",
                         x
                     );
-                    // println!("meilisearch search request != OK. response body {:?}", &b);
+                    // error!("meilisearch search request != OK. response body {:?}", &b);
                 }
             }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
+            Err(e) => error!("error in request to meilisearch {:?}", e),
         };
 
         let response2 = response.unwrap();
@@ -264,7 +264,7 @@ pub mod filters_search_search_index {
             .expect("expected a list of Movies");
 
         // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
-        // println!("got a list of movies {}", movies_as_pretty_json);
+        // info!("got a list of movies {}", movies_as_pretty_json);
         movies
     }
 
@@ -274,7 +274,7 @@ pub mod filters_search_search_index {
             .expect("expected search_principal_by_movie_tconst URL");
 
         let url = format!("{search_principal}{tconst}");
-        //   println!("searching principals for movie tconst {tconst}. search url {url}");
+        //   info!("searching principals for movie tconst {tconst}. search url {url}");
 
         let response = CLIENT.get(url).send().await;
 
@@ -282,19 +282,19 @@ pub mod filters_search_search_index {
             Ok(res) => {
                 let code = res.status().clone();
                 if code == StatusCode::OK {
-                    println!("search for principal   search request success");
+                    info!("search for principal   search request success");
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!(
+                    error!(
                         "search for principal search request != OK. status {:?}",
                         code
                     );
-                    println!("search for principal search request != OK. headers {:?}", x);
-                    // println!("meilisearch search request != OK. response body {:?}", &b);
+                    error!("search for principal search request != OK. headers {:?}", x);
+                    // info!("meilisearch search request != OK. response body {:?}", &b);
                 }
             }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
+            Err(e) => error!("error in request to meilisearch {:?}", e),
         };
 
         let response2 = response.unwrap();
@@ -304,7 +304,7 @@ pub mod filters_search_search_index {
             .expect("expected a list of principals");
 
         // let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
-        //   println!("got a list of principals {}", &principals_as_pretty_json);
+        //   info!("got a list of principals {}", &principals_as_pretty_json);
 
         principals
     }
@@ -318,7 +318,7 @@ pub mod filters_search_search_index {
 
         let search_persons = json!(&search_person_req);
 
-        //   println!("sending request to url {},   payload {}", search_person_url, search_persons);
+        //   info!("sending request to url {},   payload {}", search_person_url, search_persons);
 
         let response = CLIENT
             .post(search_person_url)
@@ -333,7 +333,7 @@ pub mod filters_search_search_index {
         match response2.status().as_u16() > 300 {
             true => {
                 let body = response2.text().await;
-                println!("body if not status 200 {}", body.unwrap());
+                error!("body if not status 200 {}", body.unwrap());
                 //
                 // let persons = response2
                 //     .json::<Vec<Person>>()
@@ -341,7 +341,7 @@ pub mod filters_search_search_index {
                 //     .expect("expected a list of Persons");
                 //
                 // let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
-                // println!("got a list of persons {}", persons_as_pretty_json);
+                // info!("got a list of persons {}", persons_as_pretty_json);
 
                 // persons
                 vec![]
@@ -353,34 +353,10 @@ pub mod filters_search_search_index {
                     .expect("expected a list of Persons");
 
                 //  let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
-                //  println!("got a list of persons {}", persons_as_pretty_json);
+                //  info!("got a list of persons {}", persons_as_pretty_json);
 
                 persons
             }
         }
     }
-
-    // async fn search_crew(tconst: &String) -> Vec<Crew> {
-    //     let search_crew_url: String = CONFIG
-    //         .get("search_crew_by_tconst")
-    //         .expect("expected search_crew_by_tconst  URL");
-    //
-    //     let url = format!("{search_crew_url}{tconst}");
-    //     //   println!("searching crew for movie tconst {tconst}. search url {url}");
-    //
-    //     let response = CLIENT.get(url).send().await;
-    //
-    //     dump_response_status(&response);
-    //
-    //     let response2 = response.unwrap();
-    //     let crew = response2
-    //         .json::<Vec<Crew>>()
-    //         .await
-    //         .expect("expected a list of Crew");
-    //
-    //    //  let crew_as_pretty_json = serde_json::to_string_pretty(&crew).unwrap();
-    //     //     println!("got a list of crew {}", crew_as_pretty_json);
-    //
-    //     crew
-    // }
 }
