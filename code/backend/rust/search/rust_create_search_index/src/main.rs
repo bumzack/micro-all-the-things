@@ -28,7 +28,7 @@ lazy_static::lazy_static! {
 async fn main() -> io::Result<()> {
     pretty_env_logger::init();
 
-    println!(
+    info!(
         "{:?}",
         CONFIG
             .clone()

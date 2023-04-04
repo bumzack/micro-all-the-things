@@ -1,14 +1,17 @@
 use std::convert::Infallible;
-use std::time::Duration;
 
+use serde_json::json;
 use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
 
+use common::entity::handlers_entity::exec_meilisearch_update;
 use common::logging_service_client::logging_service;
 
+use crate::build_search_common::{convert_to_meilisearch_doc, search_movies};
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
 use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
+use crate::CLIENT;
 
 pub async fn build_index_v2(multiplier: u32) -> Result<impl warp::Reply, Infallible> {
     let offset = 0;
@@ -25,40 +28,6 @@ pub async fn build_index_v2(multiplier: u32) -> Result<impl warp::Reply, Infalli
     let tasks = start_tasks(num_tasks, manager_sender);
 
     log_start(offset, limit).await;
-
-    // while cnt_movies < total_cnt_movies {
-    //     let movies = search_movies(limit, offset).await;
-    //     offset += limit;
-    //
-    //     let mut docs = vec![];
-    //     convert_to_meilisearch_doc(total_cnt_movies, &mut cnt_movies, movies, &mut docs).await;
-    //
-    //     let docs_json = json!(&docs).to_string();
-    //
-    //     let message = format!(
-    //         "sending a list of docs to the search index.  {} docs. movies processed {} / {}",
-    //         docs.len(),
-    //         cnt_movies,
-    //         total_cnt_movies
-    //     );
-    //     println!("{}", &message);
-    //
-    //     logging_service::log_entry(
-    //         "rust_create_search_index".to_string(),
-    //         "INFO".to_string(),
-    //         &message,
-    //     )
-    //     .await;
-    //
-    //     println!("starting update request for  {} docs", docs.len());
-    //     exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
-    //     println!(
-    //         "finished update request for  {} docs.  . movies processed {} / {} ",
-    //         docs.len(),
-    //         cnt_movies,
-    //         total_cnt_movies
-    //     );
-    // }
 
     let mut total_movies_processed = 0;
     for t in tasks {
@@ -94,6 +63,42 @@ pub async fn build_index_v2(multiplier: u32) -> Result<impl warp::Reply, Infalli
     Ok(warp::reply::json(&message))
 }
 
+async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
+    let movies = search_movies(limit, offset).await;
+
+    if movies.is_empty() {
+        return 0;
+    }
+    let cnt = movies.len();
+    let mut docs = vec![];
+    convert_to_meilisearch_doc(movies, &mut docs).await;
+
+    let docs_json = json!(&docs).to_string();
+
+    log_docs_processed(docs.len()).await;
+
+    info!("starting update request for  {} docs", docs.len());
+    exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
+    info!("finished update request for  {} docs.  ", docs.len(),);
+
+    cnt
+}
+
+async fn log_docs_processed(num_docs: usize) {
+    let message = format!(
+        "sending a list of docs to the search index.  {} docs.",
+        num_docs,
+    );
+    info!("{}", &message);
+
+    logging_service::log_entry(
+        "rust_create_search_index".to_string(),
+        "INFO".to_string(),
+        &message,
+    )
+    .await;
+}
+
 fn start_tasks(
     tasks: usize,
     manager_sender: UnboundedSender<ManagerCommand>,
@@ -104,7 +109,7 @@ fn start_tasks(
         let id = i;
         let t1 = tokio::spawn(async move {
             let (tx, mut rx) = mpsc::unbounded_channel();
-            let wd = WorkerData { sender: tx, id: id };
+            let wd = WorkerData { sender: tx, id };
             let mc = ManagerCommand::RegisterWorker(wd);
 
             let mut cnt = 0;
@@ -117,23 +122,22 @@ fn start_tasks(
                     "  TASK: worker {} got new pagination data {:?}.  limit {}, offset {}",
                     id, pg, pg.limit, pg.offset
                 );
+                let limit = pg.limit;
+                let offset = pg.offset;
 
                 // do stuff
-                tokio::time::sleep(Duration::from_millis(100 * id as u64)).await;
-
-                cnt += 1;
-                let wd = WorkerReady(id);
-                sender
-                    .send(wd)
-                    .expect("    TASK: send manager a 'ready' message");
-                cnt += 1;
-
-                // random abort criteria
-                if cnt > id {
+                let cnt_movies = search_and_write_to_index(offset, limit).await;
+                cnt += cnt_movies;
+                if cnt_movies == 0 {
                     let wd = WorkerNoMoreItemsFound(id);
                     sender
                         .send(wd)
                         .expect("    TASK: send manager a 'finished' message");
+                } else {
+                    let wd = WorkerReady(id);
+                    sender
+                        .send(wd)
+                        .expect("    TASK: send manager a 'ready' message");
                 }
             }
             info!("worker {} closing business", id);
