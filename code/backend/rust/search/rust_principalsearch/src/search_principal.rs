@@ -8,8 +8,7 @@ pub mod filters_search_movie {
 
     use crate::CLIENT;
 
-    pub fn search_principal_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_principal_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server1 = warp::path!("api" / "principal" / "name" / String);
         let search_name = server1.and(warp::get()).and_then(|nconst: String| {
             info!("/api/principal/name/:nconst     matched");
@@ -28,7 +27,7 @@ pub mod filters_search_movie {
         entity: String,
         attribute: String,
         value: String,
-    ) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
+    ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
         //  println!("filter_entity  {attribute} =  {value}");
         let f = format!("\"{}\"  = \"{}\"", attribute, value);
         let filter: Vec<String> = vec![f];

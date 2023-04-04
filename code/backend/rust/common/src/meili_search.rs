@@ -120,7 +120,7 @@ pub mod handlers_search_entity {
         search_text: String,
         client: &Client,
     ) -> Result<Response, Error> {
-        println!(
+        info!(
             "searching for entity {} and search_term '{}'",
             &entity, &search_text
         );
@@ -166,7 +166,7 @@ pub mod handlers_search_entity {
         s: SearchPaginatedRequest,
         client: &Client,
     ) -> Result<impl warp::Reply, Infallible> {
-        println!(
+        info!(
             "searching for entity {} and paginated request '{:?}'",
             &entity,
             s.clone()
@@ -192,7 +192,7 @@ pub mod handlers_search_entity {
             matching_strategy: None,
         };
         let json = json!(&search_request).to_string();
-        println!(
+        info!(
             "search request for entity {} and paginated request '{:?}'   ->  \n{:?}\n    \n json: \n {} \n   ", &entity, &s, &search_request.clone(), &json
         );
 
@@ -209,14 +209,16 @@ pub mod handlers_search_entity {
         dump_response_status(&response);
 
         let response2 = response.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Movie>>()
-            .await
-            .expect("expected a MeiliSearchResult");
+        let result = response2.json::<MeiliSearchResult<Movie>>().await;
+        let movies = match result {
+            Ok(r) => r.hits,
+            Err(e) => {
+                error!("an error occurred sending a paginated search request to the meilisearch server {} ",e);
+                vec![]
+            }
+        };
 
-        let movies = result.hits;
-
-        println!(
+        info!(
             "searching for entity {} and paginated request '{:?}'   ->  {} results ",
             &entity,
             &s,
@@ -260,16 +262,16 @@ pub mod handlers_search_entity {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    println!("request success");
+                    info!("request success");
                 } else {
                     let x = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!("request != OK. status {:?}", code);
-                    println!("request != OK. headers {:?}", x);
-                    // println!("meilisearch search request != OK. response body {:?}", &b);
+                    error!("request != OK. status {:?}", code);
+                    error!("request != OK. headers {:?}", x);
+                    // info!("meilisearch search request != OK. response body {:?}", &b);
                 }
             }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
+            Err(e) => error!("error in request to meilisearch {:?}", e),
         };
     }
 }
