@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate log;
+
 use std::io;
 
 use warp::Filter;

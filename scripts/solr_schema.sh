@@ -49,7 +49,12 @@ cd /Users/gsc/stoff/micro-all-the-things/solr-10.0.0-SNAPSHOT/bin
 
 
 
+
 cd $DIR
+
+
+
+
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{       "name":"tconst",              "type":"string",             "stored":true, indexed:"true" },
@@ -126,28 +131,6 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
 }' http://localhost:8984/solr/episode/schema
 
 
-
-pub struct SearchIndexDoc {
-    pub id: String,
-    pub tconst: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub titles: Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub actors: Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub directors:  Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub writers:  Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "runtimeMinutes")]
-    pub runtime_minutes: Option<u32>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub adult: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub genres:  Option<Vec<String>>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub characters:  Option<Vec<String>>,
-}
 
 
 curl -X POST -H 'Content-type:application/json' --data-binary '{

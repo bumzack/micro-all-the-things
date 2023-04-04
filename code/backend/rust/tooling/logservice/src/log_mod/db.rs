@@ -5,8 +5,8 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 pub mod db_logging {
     use deadpool_postgres::Pool;
 
-    use common::logging::MyError::DBQueryError;
     use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
+    use common::logging::MyError::DBQueryError;
 
     use crate::db::db::TABLE_LOG_ENTRY;
 
@@ -14,7 +14,7 @@ pub mod db_logging {
         let client = pool.get().await.unwrap();
 
         let query_items = format!("SELECT * FROM {}   ", TABLE_LOG_ENTRY);
-        let order_by = " ORDER BY created ".to_string();
+        let order_by = " ORDER BY created DESC ".to_string();
         let limit = format!(" LIMIT  {} ", req.last_n);
 
         let filter_log_type = match req.filter_log_type {

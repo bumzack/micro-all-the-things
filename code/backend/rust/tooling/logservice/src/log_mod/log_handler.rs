@@ -1,7 +1,7 @@
 pub mod filters_logging {
     use deadpool_postgres::Pool;
-    use warp::reply::json;
     use warp::{reject, Rejection, Reply};
+    use warp::reply::json;
 
     use common::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
 

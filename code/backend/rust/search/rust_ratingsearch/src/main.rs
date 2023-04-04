@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate log;
+
 use std::io;
 
 use warp::Filter;
@@ -10,6 +13,8 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
+    pretty_env_logger::init();
+
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 
     let root = root.or(search_rating::filters_search_rating::search_rating_route());

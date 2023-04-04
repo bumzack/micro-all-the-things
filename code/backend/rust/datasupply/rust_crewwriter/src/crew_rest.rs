@@ -5,12 +5,12 @@ pub mod filters_crew {
 
     use super::handlers_entity;
 
-    pub fn crew_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
-    {
+    pub fn crew_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         warp::path("api").and(crew_post())
     }
 
-    pub fn crew_post() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
+    pub fn crew_post() -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone
     {
         warp::path!("crew")
             .and(warp::post())
@@ -18,7 +18,7 @@ pub mod filters_crew {
             .and_then(handlers_entity::post_crew)
     }
 
-    fn json_body_tsv_line() -> impl Filter<Extract=(TsvLines, ), Error=warp::Rejection> + Clone {
+    fn json_body_tsv_line() -> impl Filter<Extract = (TsvLines,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }

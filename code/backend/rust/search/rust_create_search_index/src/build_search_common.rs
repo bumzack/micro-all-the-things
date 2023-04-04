@@ -13,12 +13,7 @@ use common::search_doc::SearchIndexDoc;
 
 use crate::{CLIENT, CONFIG};
 
-pub async fn convert_to_meilisearch_doc(
-    total_cnt_movies: i32,
-    cnt_movies: &mut i32,
-    movies: Vec<Movie>,
-    docs: &mut Vec<SearchIndexDoc>,
-) {
+pub async fn convert_to_meilisearch_doc(movies: Vec<Movie>, docs: &mut Vec<SearchIndexDoc>) {
     for m in movies {
         let principals = search_principal(&m.tconst.clone()).await;
         // let crew = search_crew(&m.tconst).await;
@@ -68,11 +63,7 @@ pub async fn convert_to_meilisearch_doc(
         };
         docs.push(doc);
 
-        println!(
-            "processing movie tconst: {}.    movie {} / {}  ",
-            m.tconst, cnt_movies, total_cnt_movies
-        );
-        *cnt_movies += 1;
+        info!("processing movie tconst: {}.", m.tconst);
     }
 }
 
@@ -158,7 +149,7 @@ pub fn collect_data(
                         Some(name) => directors.push(name.clone()),
                         None => {}
                     },
-                    None => println!(
+                    None => info!(
                         "hm - why is there no person?, principal {} and director",
                         p.id
                     ),
@@ -196,13 +187,13 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         limit,
         &search_request.sort.clone()
     );
-    println!("message {}", &message);
+    info!("message {}", &message);
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -229,16 +220,16 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         &search_request.sort.clone(),
         movies.len()
     );
-    println!("message {}", &message);
+    info!("message {}", &message);
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
-    // println!("got a list of movies {}", movies_as_pretty_json);
+    // info!("got a list of movies {}", movies_as_pretty_json);
     movies
 }
 
@@ -253,22 +244,22 @@ async fn log_external_service_error(
             if code != StatusCode::OK {
                 let x = res.headers().clone();
                 // let b = res.text().await.unwrap();
-                println!("{} != OK.  returned HTTP code {} ", msg1, code);
-                println!(
+                info!("{} != OK.  returned HTTP code {} ", msg1, code);
+                info!(
                     "{} != OK.  returned HTTP code {} headers {:?}",
                     msg1, code, x
                 );
 
-                println!("message {}", &message);
+                info!("message {}", &message);
                 logging_service::log_entry(
                     "rust_create_search_index".to_string(),
                     "ERROR".to_string(),
                     message,
                 )
-                .await;
+                    .await;
             }
         }
-        Err(e) => println!("error in request to meilisearch {:?}", e),
+        Err(e) => error!("error in request to meilisearch {:?}", e),
     };
 }
 
@@ -278,16 +269,16 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         .expect("expected search_principal_by_movie_tconst URL");
 
     let url = format!("{search_principal}{tconst}");
-    //   println!("searching principals for movie tconst {tconst}. search url {url}");
+    //   info!("searching principals for movie tconst {tconst}. search url {url}");
 
     let message = format!("start search_principal().  url {}", url);
-    println!("message {}", &message);
+    info!("message {}", &message);
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -305,20 +296,20 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         .expect("expected a list of principals");
 
     // let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
-    //   println!("got a list of principals {}", &principals_as_pretty_json);
+    //   info!("got a list of principals {}", &principals_as_pretty_json);
 
     let message = format!(
         "end search_principal().  url {}. found {} prinicpals",
         &url,
         principals.len()
     );
-    println!("message {}", &message);
+    info!("message {}", &message);
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     principals
 }
@@ -332,7 +323,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
 
     let search_persons = json!(&search_person_req);
 
-    //   println!("sending request to url {},   payload {}", search_person_url, search_persons);
+    //   info!("sending request to url {},   payload {}", search_person_url, search_persons);
 
     let response = CLIENT
         .post(search_person_url)
@@ -347,7 +338,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
     match response2.status().as_u16() > 300 {
         true => {
             let body = response2.text().await;
-            println!("body if not status 200 {}", body.unwrap());
+            info!("body if not status 200 {}", body.unwrap());
             vec![]
         }
         false => {
@@ -357,7 +348,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
                 .expect("expected a list of Persons");
 
             //  let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
-            //  println!("got a list of persons {}", persons_as_pretty_json);
+            //  info!("got a list of persons {}", persons_as_pretty_json);
 
             persons
         }
