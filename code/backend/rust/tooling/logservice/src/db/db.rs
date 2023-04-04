@@ -21,7 +21,7 @@ pub fn create_pool() -> Pool {
         .get("loggingservice_db_name")
         .expect("expected loggingservice_db_name variable");
 
-    println!("user {user}, password {password}, host {host}, dbname {dbname}");
+    info!("user {user}, password {password}, host {host}, dbname {dbname}");
     pg_config.user(&user);
     pg_config.password(&password);
     pg_config.host(&host);

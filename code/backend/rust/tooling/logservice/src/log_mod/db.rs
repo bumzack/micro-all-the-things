@@ -5,8 +5,8 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 pub mod db_logging {
     use deadpool_postgres::Pool;
 
-    use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
     use common::logging::MyError::DBQueryError;
+    use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
 
     use crate::db::db::TABLE_LOG_ENTRY;
 
@@ -39,7 +39,7 @@ pub mod db_logging {
 
         let query = format!("{query_items} {filter} {order_by} {limit}");
 
-        println!("SELECT query  {}", &query);
+        info!("SELECT query  {}", &query);
 
         let data = client.query(&query, &[]).await.unwrap();
         let log_entries = data.iter().map(|r| LogEntry::from(r)).collect();
