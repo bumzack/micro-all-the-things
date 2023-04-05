@@ -39,7 +39,7 @@ async fn main() -> io::Result<()> {
     // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("search_search_index"));
     // Start up the server...
-    warp::serve(routes).run(([127, 0, 0, 1], 18300)).await;
+    warp::serve(routes).run(([127, 0, 0, 1], 18320)).await;
 
     Ok(())
 }

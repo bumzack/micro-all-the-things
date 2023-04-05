@@ -40,7 +40,7 @@ pub mod filters_search_search_index {
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
             "INFO".to_string(),
-            msg,
+            &msg,
         )
             .await;
 
@@ -213,7 +213,7 @@ pub mod filters_search_search_index {
         logging_service::log_entry(
             "rust_create_search_index".to_string(),
             "INFO".to_string(),
-            res.clone(),
+            &res,
         )
             .await;
         info!("done {}", &res);

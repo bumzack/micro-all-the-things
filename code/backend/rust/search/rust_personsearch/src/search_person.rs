@@ -18,7 +18,7 @@ pub mod filters_search_person {
         });
 
         let server2 = warp::path!("api" / "person" / "nconst" / String);
-        let search_nconst = server2.and(warp::get()).and_then(|name: String| {
+        let _search_nconst = server2.and(warp::get()).and_then(|name: String| {
             info!("GET /api/person/nconst/:nconst matched");
             filter_entity(name)
         });
