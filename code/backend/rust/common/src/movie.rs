@@ -3,28 +3,24 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32};
+use crate::entity::{
+    get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32,
+    EntityConverter,
+};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Movie {
     pub id: String,
     pub tconst: String,
-    #[serde(rename = "titleType")]
     pub title_type: Option<String>,
-    #[serde(rename = "primaryTitle")]
     pub primary_title: Option<String>,
-    #[serde(rename = "originalTitle")]
     pub original_title: Option<String>,
-    #[serde(rename = "adult")]
     pub adult: Option<bool>,
-    #[serde(rename = "startYear")]
     pub start_year: Option<u32>,
-    #[serde(rename = "endYear")]
     pub end_year: Option<u32>,
-    #[serde(rename = "runtimeMinutes")]
     pub runtime_minutes: Option<u32>,
-    #[serde(rename = "genres")]
     pub genres: Option<Vec<String>>,
 }
 

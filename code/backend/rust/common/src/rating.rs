@@ -3,16 +3,15 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_f32, get_nullable_string, get_nullable_u32};
+use crate::entity::{get_nullable_f32, get_nullable_string, get_nullable_u32, EntityConverter};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Rating {
     pub id: String,
     pub tconst: String,
-    #[serde(rename = "averageRating")]
     pub average_rating: f32,
-    #[serde(rename = "numVotes")]
     pub num_votes: u32,
 }
 

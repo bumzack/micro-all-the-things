@@ -5,7 +5,11 @@ use std::collections::HashMap;
 use std::io;
 
 use config::Config;
+use serde_json::json;
 use warp::Filter;
+
+use common::search::{IndexDocFacetDistribution, MeiliSearchResult};
+use common::search_doc::SearchIndexDoc;
 
 mod search_search_index;
 
@@ -33,7 +37,6 @@ async fn main() -> io::Result<()> {
     );
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
-
     let root = root.or(search_search_index::filters_search_search_index::search_index_route());
 
     // View access logs by setting `RUST_LOG=todos`.
