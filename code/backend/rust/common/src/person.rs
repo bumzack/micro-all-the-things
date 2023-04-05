@@ -3,22 +3,20 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_string, get_nullable_string_list, get_nullable_u32};
+use crate::entity::{
+    get_nullable_string, get_nullable_string_list, get_nullable_u32, EntityConverter,
+};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Person {
     pub id: String,
     pub nconst: String,
-    #[serde(rename = "primaryName")]
     pub primary_name: Option<String>,
-    #[serde(rename = "birthYear")]
     pub birth_year: Option<u32>,
-    #[serde(rename = "deathYear")]
     pub death_year: Option<u32>,
-    #[serde(rename = "primaryProfession")]
     pub primary_profession: Option<Vec<String>>,
-    #[serde(rename = "knownForTitles")]
     pub known_for_titles: Option<Vec<String>>,
 }
 

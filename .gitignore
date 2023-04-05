@@ -38,3 +38,5 @@ client.json
 
 .idea
 *.iml
+
+*.pages 

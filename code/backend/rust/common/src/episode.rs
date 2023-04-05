@@ -3,18 +3,16 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_string, get_nullable_u32};
+use crate::entity::{get_nullable_string, get_nullable_u32, EntityConverter};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Episode {
     pub id: String,
     pub tconst: String,
-    #[serde(rename = "parentTconst")]
     pub parent_tconst: String,
-    #[serde(rename = "seasonNumber")]
     pub season_number: Option<u32>,
-    #[serde(rename = "episodeNumber")]
     pub episode_number: Option<u32>,
 }
 
