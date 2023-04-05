@@ -7,6 +7,7 @@ pub mod episode;
 pub mod logging;
 pub mod logging_service_client;
 pub mod meili_filter;
+pub mod meili_read_docs;
 pub mod meili_search;
 pub mod movie;
 pub mod movieaka;

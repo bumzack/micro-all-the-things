@@ -49,7 +49,6 @@ pub struct MeiliSearchRequest {
     pub matching_strategy: Option<String>,
 }
 
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct MeiliSearchResult<T> {
     pub hits: Vec<T>,
@@ -71,6 +70,13 @@ pub struct MeiliSearchResult<T> {
     pub query: String,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+pub struct MeiliDocReadResult<T> {
+    pub results: Vec<T>,
+    pub offset: u32,
+    pub limit: u32,
+    pub total: u32,
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct MeiliSearchRequestMovie {
@@ -89,5 +95,3 @@ pub struct SearchPaginatedRequest {
 pub struct SearchPersonList {
     pub nconsts: Vec<String>,
 }
-
-
