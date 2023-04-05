@@ -35,6 +35,12 @@ in /etc/security eintragen und pam dingsdi auch
   curl  -vv   http://meilisearch01.bumzack.at/indexes/person/settings/filterable-attributes    -H 'Authorization: Bearer 1234567890123456' | jq
 ```
 
+## read settings
+
+```
+  curl  -vv   http://meilisearch01.bumzack.at/indexes/movie/settings/    -H 'Authorization: Bearer 1234567890123456' | jq
+```
+
 ## set filterable attributes
 
 ```
@@ -53,7 +59,6 @@ in /etc/security eintragen und pam dingsdi auch
 
 ```
 curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at/indexes/movie/settings/sortable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-  
 ```
 
 ### movie all
@@ -63,7 +68,7 @@ curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at
 ```
 
 ```
-curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 0, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 500000, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
      
 ```
 
@@ -107,7 +112,7 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
  curl  -vv   http://localhost:18205/api/rating/tt0666268         |  jq    
 ```
 
-## Search Index
+## Build Index
 
 ```
  curl  -vv   http://localhost:18300/api/searchindex/build         |  jq    
@@ -116,5 +121,19 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
 ## Movie max Hits
 
 curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'
---data-binary '{ "maxTotalHits": 30000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+--data-binary '{ "maxTotalHits": 3000 }' -H 'Authorization: Bearer 1234567890123456' | jq
 
+curl -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json' -d '{ "q" : "*", "offset" :
+351000, "limit" : 500, "page" : 0 , "sort" : [ "tconst:asc" ] }' | jq
+
+curl   'http://meilisearch01.bumzack.at/indexes/movie/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+curl   'http://meilisearch01.bumzack.at/indexes/person/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+curl   'http://meilisearch01.bumzack.at/indexes/principal/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+
+curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'
+--data-binary '{ "maxTotalHits": 100000000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+
+## Read documents sorted & paginated
+
+curl   'http://meilisearch01.bumzack.at/indexes/movie/documents?limit=3&offset=1000000'     -H 'Authorization: Bearer
+1234567890123456' | jq

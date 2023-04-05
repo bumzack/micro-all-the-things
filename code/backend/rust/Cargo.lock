@@ -1409,6 +1409,8 @@ dependencies = [
  "dotenvy",
  "futures",
  "lazy_static",
+ "log",
+ "pretty_env_logger",
  "reqwest",
  "serde",
  "serde_derive",

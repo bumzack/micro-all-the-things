@@ -22,7 +22,7 @@ async fn main() -> io::Result<()> {
     // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("meilisearchrating"));
     // Start up the server...
-    warp::serve(routes).run(([127, 0, 0, 1], 18205)).await;
+    warp::serve(routes).run(([127, 0, 0, 1], 18202)).await;
 
     Ok(())
 }

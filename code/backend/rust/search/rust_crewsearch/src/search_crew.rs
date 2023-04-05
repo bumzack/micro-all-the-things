@@ -11,7 +11,7 @@ pub mod filters_search_crew {
     pub fn search_crew_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "crew" / String);
         server.and(warp::get()).and_then(|tconst: String| {
-            println!("/api/crew/:tconst matched");
+            info!("/api/crew/:tconst matched");
             filter_entity("crew".to_string(), "tconst".to_string(), tconst)
         })
     }
@@ -21,7 +21,7 @@ pub mod filters_search_crew {
         attribute: String,
         value: String,
     ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
-        println!("filter_entity  {attribute} =  {value}");
+        info!("filter_entity  {attribute} =  {value}");
         let f = format!("\"{}\"  = \"{}\"", attribute, value);
         let filter: Vec<String> = vec![f];
         meili_filter_crew(entity, filter, &CLIENT)

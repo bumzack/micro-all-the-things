@@ -1,9 +1,8 @@
 pub mod filters_search_movie {
     use warp::{Filter, Reply};
 
-    use common::meili_search::handlers_search_entity::{
-        meili_search_movie, meili_search_movie_paginated,
-    };
+    use common::meili_read_docs::meilisearch_read_doc::meili_search_read_doc_movie;
+    use common::meili_search::handlers_search_entity::meili_search_movie;
     use common::search::SearchPaginatedRequest;
 
     use crate::CLIENT;
@@ -20,8 +19,8 @@ pub mod filters_search_movie {
             .and(warp::post())
             .and(search_movies_request())
             .and_then(|req: SearchPaginatedRequest| {
-                //  info!("POST /api/movie/  matched");
-                meili_search_movie_paginated("movie".to_string(), req, &CLIENT)
+                info!("POST /api/movie/  matched");
+                meili_search_read_doc_movie(req.offset, req.limit, &CLIENT)
             });
 
         search_name.or(search)
