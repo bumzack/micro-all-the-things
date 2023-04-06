@@ -5,11 +5,7 @@ use std::collections::HashMap;
 use std::io;
 
 use config::Config;
-use serde_json::json;
 use warp::Filter;
-
-use common::search::{IndexDocFacetDistribution, MeiliSearchResult};
-use common::search_doc::SearchIndexDoc;
 
 mod search_search_index;
 

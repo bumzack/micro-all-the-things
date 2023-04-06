@@ -9,8 +9,7 @@ pub mod filters_search_search_index {
 
     use crate::CLIENT;
 
-    pub fn search_index_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         warp::path!("api" / "searchindex" / "search")
             .and(warp::post())
             .and(search_index_request())
@@ -20,8 +19,7 @@ pub mod filters_search_search_index {
             })
     }
 
-    fn search_index_request(
-    ) -> impl Filter<Extract = (SearchIndexRequest,), Error = warp::Rejection> + Clone {
+    fn search_index_request() -> impl Filter<Extract=(SearchIndexRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
@@ -36,7 +34,7 @@ pub mod filters_search_search_index {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
 
         let facets = vec![
             "genres".to_string(),
@@ -54,6 +52,6 @@ pub mod filters_search_search_index {
             facets,
             &CLIENT,
         )
-        .await
+            .await
     }
 }
