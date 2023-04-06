@@ -4,7 +4,8 @@ pub mod filters_build_index {
     use crate::build_search_index_v1::build_index_v1;
     use crate::build_search_index_v2::build_index_v2;
 
-    pub fn build_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn build_index_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         let v1 = warp::path!("api" / "v1" / "searchindex" / "build")
             .and(warp::get())
             .and_then(|| {
