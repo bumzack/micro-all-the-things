@@ -162,7 +162,7 @@ pub mod handlers_search_entity {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
 
         Ok(warp::reply::json(&movies))
     }
