@@ -17,8 +17,6 @@ pub struct Episode {
 }
 
 fn map_to_episode(tsv_line: &TsvLine) -> Episode {
-    // println!("mapping tsv_line {:?} to Episode  ", &tsv_line);
-
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let parent_tconst = get_nullable_string(&tsv_line.entries, 1).unwrap();
     let season_number = get_nullable_u32(&tsv_line.entries, 2);

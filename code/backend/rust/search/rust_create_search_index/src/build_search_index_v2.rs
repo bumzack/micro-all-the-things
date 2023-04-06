@@ -76,20 +76,30 @@ async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
 
     let docs_json = json!(&docs).to_string();
 
-    log_docs_processed(docs.len()).await;
+    log_docs_processed(docs.len(), offset, limit).await;
 
-    info!("starting update request for  {} docs", docs.len());
+    info!(
+        "starting update request for  {} docs. offset {}, limit {}",
+        docs.len(),
+        offset,
+        limit
+    );
     exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json.clone()).await;
     exec_solr_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
-    info!("finished update request for  {} docs.  ", docs.len(),);
+    info!(
+        "finished update request for  {} docs.  offset {}, limit {}",
+        docs.len(),
+        offset,
+        limit
+    );
 
     cnt
 }
 
-async fn log_docs_processed(num_docs: usize) {
+async fn log_docs_processed(num_docs: usize, offset: u32, limit: u32) {
     let message = format!(
-        "sending a list of docs to the search index.  {} docs.",
-        num_docs,
+        "sending a list of docs to the search index.  {} docs. offset {}, limit {}",
+        num_docs, offset, limit
     );
     info!("{}", &message);
 

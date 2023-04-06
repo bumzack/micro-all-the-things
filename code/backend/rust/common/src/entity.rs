@@ -132,6 +132,7 @@ pub mod handlers_entity {
     use serde_json::json;
 
     use crate::entity::EntityConverter;
+    use crate::logging_service_client::logging_service;
     use crate::tsv::TsvLines;
 
     pub async fn post_entity<'a, T: Serialize + Deserialize<'a> + Send>(
@@ -191,10 +192,39 @@ pub mod handlers_entity {
                         x
                     );
                     println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
+
+                    let msg = format!(
+                        "exec_meilisearch_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
+                        &entity_name,
+                        &index,
+                        &b
+                    );
+                    log_error(msg).await;
                 }
             }
-            Err(e) => println!("error in request to meilisearch {:?}", e),
+            Err(e) => {
+                println!("error in request to meilisearch {:?}", e);
+                let msg = format!(
+                    "exec_meilisearch_update returned an error. inserting entity {}. error: {}",
+                    &entity_name, e
+                );
+                log_error(msg).await;
+            }
         }
+    }
+
+    async fn log_error(msg: String) {
+        let msg = format!(
+            "build_index_v2.exec_meilisearch_update. request not successful {}",
+            msg,
+        );
+        error!("{}", msg);
+        logging_service::log_entry(
+            "rust_create_search_index".to_string(),
+            "ERROR".to_string(),
+            &msg,
+        )
+            .await;
     }
 
     pub async fn exec_solr_update(entity_name: &String, client: &Client, json: String) {
@@ -231,9 +261,23 @@ pub mod handlers_entity {
                         "solr request != OK AND != CREATED  != ACCEPTED. response body {:?}",
                         &b
                     );
+                    let msg = format!(
+                        "exec_solr_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
+                        &entity_name,
+                        &index,
+                        &b
+                    );
+                    log_error(msg).await;
                 }
             }
-            Err(e) => println!("solr request error in request to solr {:?}", e),
+            Err(e) => {
+                println!("solr request error in request to solr {:?}", e);
+                let msg = format!(
+                    "exec_solr_update returned an error. inserting entity {}. error: {}",
+                    &entity_name, e
+                );
+                log_error(msg).await;
+            }
         }
     }
 }

@@ -41,7 +41,8 @@ mod handlers_tsv {
             "start post_tsv_request. tsvFileImportRequest. entity {:?}, start {}, end {}, page_size {}",
             &tsv_request.tsv_type.clone(), tsv_request.start, tsv_request.end, tsv_request.page_size
         );
-        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg).await;
+        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), &msg)
+            .await;
 
         println!("tsv_file_import_request {:?}", &tsv_request);
 
@@ -72,7 +73,7 @@ mod handlers_tsv {
                 logging_service::log_entry(
                     "rust_tsvfilereader".to_string(),
                     "INFO".to_string(),
-                    msg,
+                    &msg,
                 )
                     .await;
 
@@ -187,7 +188,7 @@ mod handlers_tsv {
                     logging_service::log_entry(
                         "rust_tsvfilereader".to_string(),
                         "INFO".to_string(),
-                        msg,
+                        &msg,
                     )
                         .await;
                 }
@@ -199,7 +200,7 @@ mod handlers_tsv {
                 "start post_tsv_request. processed {} batches for entity {:?}",
                 batches, &t
             );
-            logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg)
+            logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), &msg)
                 .await;
 
             tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
@@ -210,7 +211,8 @@ mod handlers_tsv {
             "end post_tsv_request. processed {:?} batches of entity {:?}",
             batches, &t
         );
-        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), msg).await;
+        logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), &msg)
+            .await;
 
         let res = format!("all good. processed {} batches", batches);
         Ok(warp::reply::json(&res))
