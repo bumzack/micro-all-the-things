@@ -4,6 +4,7 @@ use serde::Deserialize;
 use serde::Serialize;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchIndexDoc {
     pub id: String,
     pub tconst: String,
@@ -16,7 +17,6 @@ pub struct SearchIndexDoc {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub writers: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    #[serde(rename = "runtimeMinutes")]
     pub runtime_minutes: Option<u32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub adult: Option<bool>,

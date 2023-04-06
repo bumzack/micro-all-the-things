@@ -6,12 +6,11 @@ use serde::Serialize;
 use crate::entity::Entity;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct TsvFileImportRequest {
-    #[serde(rename = "tsvType")]
     pub tsv_type: Entity,
     pub start: i32,
     pub end: i32,
-    #[serde(rename = "pageSize")]
     pub page_size: i32,
 }
 

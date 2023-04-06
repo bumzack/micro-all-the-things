@@ -3,13 +3,16 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32};
+use crate::entity::{
+    get_nullable_bool, get_nullable_string, get_nullable_string_list, get_nullable_u32,
+    EntityConverter,
+};
 use crate::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct MovieAkas {
     pub id: String,
-    #[serde(rename = "titleId")]
     pub title_id: String,
     pub ordering: u32,
     pub title: Option<String>,
@@ -17,10 +20,8 @@ pub struct MovieAkas {
     pub language: Option<String>,
     pub types: Option<Vec<String>>,
     pub attributes: Option<Vec<String>>,
-    #[serde(rename = "originalTitle")]
     pub original_title: Option<bool>,
 }
-
 
 fn map_to_movieaka(tsv_line: &TsvLine) -> MovieAkas {
     // println!("mapping tsv_line {:?} to MovieAkas  ", &tsv_line);

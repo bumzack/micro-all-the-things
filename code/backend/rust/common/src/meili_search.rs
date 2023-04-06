@@ -12,6 +12,112 @@ pub mod handlers_search_entity {
     use crate::movieaka::MovieAkas;
     use crate::person::Person;
     use crate::search::{MeiliSearchRequest, MeiliSearchResult, SearchPaginatedRequest};
+    use crate::search_doc::SearchIndexDoc;
+
+    async fn meili_search_paginated(
+        entity: String,
+        search_text: String,
+        limit: u32,
+        offset: u32,
+        facets: Vec<String>,
+        client: &Client,
+    ) -> Result<Response, Error> {
+        info!(
+            "searching for entity {} and search_term '{}'",
+            &entity, &search_text
+        );
+
+        let search_request = MeiliSearchRequest {
+            q: search_text,
+            offset: Some(offset),
+            limit: Some(limit),
+            page: None,
+            hits_per_page: Some(limit),
+            filter: None,
+            facets: Some(facets),
+            attributes_to_retrieve: None,
+            attributes_to_crop: None,
+            crop_marker: None,
+            crop_length: None,
+            attributes_to_highlight: None,
+            highlight_pre_tag: None,
+            highlight_post_tag: None,
+            show_matches_position: None,
+            sort: None,
+            matching_strategy: None,
+        };
+
+        let json = json!(&search_request).to_string();
+        info!("request body {}", &json);
+        let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
+
+        let response = client
+            .post(&index)
+            .body(json)
+            .header("Authorization", "Bearer 1234567890123456".to_owned())
+            .header("Content-Type", "application/json".to_owned())
+            .send()
+            .await;
+
+        dump_response_status(&response);
+
+        response
+    }
+
+    pub async fn meili_search_searchindex(
+        entity: String,
+        search_text: String,
+        limit: u32,
+        offset: u32,
+        facets: Vec<String>,
+        client: &Client,
+    ) -> Result<impl warp::Reply, Infallible> {
+        let response = meili_search_paginated(
+            entity,
+            search_text.clone(),
+            limit,
+            offset,
+            facets.clone(),
+            client,
+        );
+
+        let response2 = response.await.unwrap();
+
+        let result = response2.json::<MeiliSearchResult<SearchIndexDoc>>().await;
+
+        let doc = match result {
+            Ok(doc) => {
+                let msg = format!(
+                    "finished meili_search_searchindex(). search_text '{}'. limit {}, offset {}, facets {:?}.  returned {} index_documents ",
+                    search_text,
+                    limit, offset, facets,
+                    doc.hits.len()
+                );
+                logging_service::log_entry("meili_search".to_string(), "INFO".to_string(), &msg)
+                    .await;
+
+                Ok(warp::reply::with_status(
+                    json!(&doc).to_string(),
+                    StatusCode::OK,
+                ))
+            }
+            Err(e) => {
+                let msg = format!(
+                    "finished meili_search_searchindex(). search_text '{}'. limit {}, offset {}, facets {:?}.  returned an error {} ",
+                    search_text,
+                    limit, offset, facets,
+                    e
+                );
+                logging_service::log_entry("meili_search".to_string(), "ERROR".to_string(), &msg)
+                    .await;
+                Ok(warp::reply::with_status(
+                    e.to_string(),
+                    StatusCode::NOT_FOUND,
+                ))
+            }
+        };
+        doc
+    }
 
     pub async fn meili_search_person(
         entity: String,

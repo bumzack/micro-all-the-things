@@ -17,6 +17,23 @@ loggingservice_service_host = "localhost"
 loggingservice_service_port = "18700"
 
 
+# price service
+priceservice_db_user = "bumzack"
+priceservice_db_password = "bumzack"
+priceservice_db_host = "localhost"
+priceservice_db_name = "bumzack"
+priceservice_service_host = "localhost"
+priceservice_service_port = "18800"
+
+
+# customer service
+customerservice_db_user = "bumzack"
+customerservice_db_password = "bumzack"
+customerservice_db_host = "localhost"
+customerservice_db_name = "bumzack"
+customerservice_service_host = "localhost"
+customerservice_service_port = "18900"
+
 
 server_port = "18900"
 server_host = "127.0.0.1"

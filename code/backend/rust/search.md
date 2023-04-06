@@ -137,3 +137,15 @@ curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination
 
 curl   'http://meilisearch01.bumzack.at/indexes/movie/documents?limit=3&offset=1000000'     -H 'Authorization: Bearer
 1234567890123456' | jq
+
+## Search index
+
+```
+curl  -X POST   http://localhost:18320/api/searchindex/search    -H 'Content-Type: application/json'  -d '{ "q" : "Terminator", "offset" : 0, "limit" : 2  }'  | jq
+```
+
+```
+curl  -X POST -d '{"facets":["genres","actors","directors"],"hitsPerPage":2,"limit":2,"offset":0,"q":"Terminator","sort":null}'          http://meilisearch01.bumzack.at/indexes/searchindex/search     -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+```
+
+
