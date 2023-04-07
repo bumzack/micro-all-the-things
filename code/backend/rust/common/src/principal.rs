@@ -21,7 +21,7 @@ pub struct Principal {
 }
 
 fn map_to_principal(tsv_line: &TsvLine) -> Principal {
-    // println!("mapping tsv_line {:?} to principal", &tsv_line);
+    // info!("mapping tsv_line {:?} to principal", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");

@@ -13,6 +13,10 @@ pub mod meili_filter_person {
         filter: Vec<String>,
         client: &Client,
     ) -> Result<impl warp::Reply, Infallible> {
+        info!(
+            "meili_filter_person calling 'meili_filter' with entity '{}', filter  '{:?}'",
+            &entity, filter
+        );
         let response = meili_filter(entity, filter, client);
 
         let response2 = response.await;

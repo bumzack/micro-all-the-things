@@ -21,7 +21,7 @@ pub struct Person {
 }
 
 fn map_to_person(tsv_line: &TsvLine) -> Person {
-    // println!("mapping tsv_line {:?} to person  ", &tsv_line);
+    // info!("mapping tsv_line {:?} to person  ", &tsv_line);
 
     let nconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let primary_name = get_nullable_string(&tsv_line.entries, 1);

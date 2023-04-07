@@ -24,7 +24,7 @@ pub struct MovieAkas {
 }
 
 fn map_to_movieaka(tsv_line: &TsvLine) -> MovieAkas {
-    // println!("mapping tsv_line {:?} to MovieAkas  ", &tsv_line);
+    // info!("mapping tsv_line {:?} to MovieAkas  ", &tsv_line);
 
     let title_id = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let ordering = get_nullable_u32(&tsv_line.entries, 1).expect("ordering should be there");

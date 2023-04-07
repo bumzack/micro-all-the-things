@@ -3,6 +3,7 @@ use std::net::SocketAddr;
 
 use config::Config;
 use lazy_static::lazy_static;
+use log::info;
 use warp::Filter;
 
 use crate::tsv_rest::filters_tsv;
@@ -10,8 +11,10 @@ use crate::tsv_rest::filters_tsv;
 mod tsv_rest;
 
 lazy_static! {
-    static ref CONFIG :Config = Config::builder()
-        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/datasupply/rust_tsvfilereader/config.toml"))
+    static ref CONFIG: Config = Config::builder()
+        .add_source(config::File::with_name(
+            "/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"
+        ))
         .build()
         .unwrap();
 }
@@ -22,7 +25,7 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    // println!(
+    // info!(
     //     "{:?}",
     //     CONFIG
     //         .clone()
@@ -44,7 +47,7 @@ async fn main() -> io::Result<()> {
     println!("host {}", &host);
     println!("port {}", &port);
     let h = format!("{}:{}", host, port);
-    println!("host complete {}", &h);
+    info!("host complete {}", &h);
 
     let server: SocketAddr = h.parse().expect("expected to be a valid SocketAddr");
 
