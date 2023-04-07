@@ -4,6 +4,7 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_logging {
     use deadpool_postgres::Pool;
+    use log::info;
 
     use common::logging::{AddLogEntry, LogEntry, ReadLogEntry};
     use common::logging::MyError::DBQueryError;

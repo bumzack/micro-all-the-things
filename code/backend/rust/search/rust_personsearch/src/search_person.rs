@@ -2,10 +2,11 @@ pub mod filters_search_person {
     use std::convert::Infallible;
     use std::future::Future;
 
+    use log::info;
     use warp::{Filter, Reply};
 
-    use common::meili_filter::handlers_search_entity::meili_filter_person;
-    use common::meili_search::handlers_search_entity::meili_search_person;
+    use common::meili_filter::meili_filter_person::meili_filter_person;
+    use common::meili_search::meili_search_person::meili_search_person;
     use common::search::SearchPersonList;
 
     use crate::CLIENT;
@@ -19,7 +20,7 @@ pub mod filters_search_person {
         });
 
         let server2 = warp::path!("api" / "person" / "nconst" / String);
-        let _search_nconst = server2.and(warp::get()).and_then(|name: String| {
+        let search_nconst = server2.and(warp::get()).and_then(|name: String| {
             info!("GET /api/person/nconst/:nconst matched");
             filter_entity(name)
         });
@@ -33,8 +34,7 @@ pub mod filters_search_person {
                 filter_entity_with_joined_or(req)
             });
 
-        search_name.or(search_nconsts)
-        //     .or(search_nconst)
+        search_name.or(search_nconsts).or(search_nconst)
     }
 
     fn json_body_search_person_list(

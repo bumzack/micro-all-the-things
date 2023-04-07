@@ -2,9 +2,10 @@ pub mod filters_search_crew {
     use std::convert::Infallible;
     use std::future::Future;
 
+    use log::info;
     use warp::{Filter, Reply};
 
-    use common::meili_filter::handlers_search_entity::meili_filter_crew;
+    use common::meili_filter::meili_filter_crew::meili_filter_crew;
 
     use crate::CLIENT;
 

@@ -1,5 +1,6 @@
 use std::convert::Infallible;
 
+use log::info;
 use serde_json::json;
 
 use common::entity::handlers_entity::exec_meilisearch_update;

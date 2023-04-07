@@ -1,10 +1,11 @@
 use std::collections::{HashMap, HashSet};
 
+use log::{error, info};
 use reqwest::{Error, Response, StatusCode};
 use serde_json::json;
 
 use common::logging_service_client::logging_service;
-use common::meili_search::handlers_search_entity::dump_response_status;
+use common::meili_search::dump_response_status;
 use common::movie::Movie;
 use common::person::Person;
 use common::principal::Principal;
@@ -193,7 +194,7 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -226,7 +227,7 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
     // info!("got a list of movies {}", movies_as_pretty_json);
@@ -256,7 +257,7 @@ async fn log_external_service_error(
                     "ERROR".to_string(),
                     message,
                 )
-                .await;
+                    .await;
             }
         }
         Err(e) => error!("error in request to meilisearch {:?}", e),
@@ -278,7 +279,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -309,7 +310,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     principals
 }
@@ -321,7 +322,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
 
     let search_person_req = SearchPersonList { nconsts };
 
-    let search_persons = json!(&search_person_req);
+    let search_persons = json!(&search_person_req).to_string();
 
     //   info!("sending request to url {},   payload {}", search_person_url, search_persons);
 
@@ -332,7 +333,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
         .send()
         .await;
 
-    dump_response_status(&response, &search_person_url, &"none available".to_string());
+    dump_response_status(&response, &search_person_url, &search_persons);
     let response2 = response.unwrap();
 
     match response2.status().as_u16() > 300 {
@@ -361,7 +362,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
                 "INFO".to_string(),
                 &message,
             )
-            .await;
+                .await;
 
             persons
         }

@@ -127,6 +127,7 @@ pub trait EntityConverter<T> {
 pub mod handlers_entity {
     use std::convert::Infallible;
 
+    use log::error;
     use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
     use serde_json::json;

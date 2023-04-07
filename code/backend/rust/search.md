@@ -64,12 +64,11 @@ curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at
 ### movie all
 
 ```
- curl  -vv   http://localhost:18200/api/movie/Terminator        
+ curl  -vv   http://localhost:18200/api/movie/Terminator        | jq
 ```
 
 ```
 curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 500000, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
-     
 ```
 
 ### person all attributes
@@ -109,7 +108,7 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
 ### Crew for Movie (tconst)
 
 ```
- curl  -vv   http://localhost:18205/api/rating/tt0666268         |  jq    
+ curl  -vv   http://localhost:18205/api/crew/tt0666268         |  jq    
 ```
 
 ## Build Index

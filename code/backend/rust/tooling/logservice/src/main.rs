@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate log;
-
 use std::net::{SocketAddr, ToSocketAddrs};
 
 use config::Config;
@@ -52,8 +49,6 @@ async fn main() {
         .expect("expected loggingservice_service_port variable");
 
     let host = format!("{host}:{port}");
-
-    info!("host {}", host);
     let socket_addrs: Vec<SocketAddr> = host.to_socket_addrs().unwrap().collect();
     let addr = socket_addrs.first().unwrap();
     warp::serve(routes).run(*addr).await;

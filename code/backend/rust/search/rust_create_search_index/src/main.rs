@@ -1,11 +1,8 @@
-#[macro_use]
-extern crate log;
-
 use std::collections::HashMap;
 use std::io;
 
 use config::Config;
-use log::LevelFilter;
+use log::{info, LevelFilter};
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 

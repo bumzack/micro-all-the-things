@@ -1,10 +1,11 @@
 pub mod filters_search_search_index {
     use std::convert::Infallible;
 
+    use log::info;
     use warp::Filter;
 
     use common::logging_service_client::logging_service;
-    use common::meili_search::handlers_search_entity::meili_search_searchindex;
+    use common::meili_search::meili_search_searchindex::meili_search_searchindex;
     use common::search::SearchIndexRequest;
 
     use crate::CLIENT;
