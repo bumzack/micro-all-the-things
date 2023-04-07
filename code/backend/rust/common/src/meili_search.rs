@@ -63,10 +63,9 @@ pub mod search_entity_paginated {
 pub mod meili_search_searchindex {
     use std::convert::Infallible;
 
+    use log::{error, info};
     use reqwest::{Client, StatusCode};
-    use serde_json::json;
 
-    use crate::logging_service_client::logging_service;
     use crate::meili_search::search_entity_paginated::meili_search_paginated;
     use crate::search::MeiliSearchResult;
     use crate::search_doc::SearchIndexDoc;
@@ -88,49 +87,55 @@ pub mod meili_search_searchindex {
             client,
         );
 
-        let response2 = response.await.unwrap();
-
-        let result = response2.json::<MeiliSearchResult<SearchIndexDoc>>().await;
-
-        let doc = match result {
-            Ok(doc) => {
-                let msg = format!(
-                    "finished meili_search_searchindex(). search_text '{}'. limit {}, offset {}, facets {:?}.  returned {} index_documents ",
-                    search_text,
-                    limit, offset, facets,
-                    doc.hits.len()
-                );
-                logging_service::log_entry("meili_search".to_string(), "INFO".to_string(), &msg)
-                    .await;
-
-                Ok(warp::reply::with_status(
-                    json!(&doc).to_string(),
-                    StatusCode::OK,
-                ))
+        let response2 = response.await;
+        let docs = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<SearchIndexDoc>"
+                    );
+                    let result = r.json::<MeiliSearchResult<SearchIndexDoc>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_searchindex request success and all good. returning Vec<SearchIndexDoc>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!(
+                        "meili_search_searchindex request != OK. status {:?},     ",
+                        code
+                    );
+                    error!(
+                        "meili_search_searchindex request != OK. headers {:?},   ",
+                        x
+                    );
+                    vec![]
+                }
             }
-            Err(e) => {
-                let msg = format!(
-                    "finished meili_search_searchindex(). search_text '{}'. limit {}, offset {}, facets {:?}.  returned an error {} ",
-                    search_text,
-                    limit, offset, facets,
-                    e
-                );
-                logging_service::log_entry("meili_search".to_string(), "ERROR".to_string(), &msg)
-                    .await;
-                Ok(warp::reply::with_status(
-                    e.to_string(),
-                    StatusCode::NOT_FOUND,
-                ))
+            Err(eee) => {
+                error!("meili_search_searchindex wtf?. error {:?}", eee);
+                vec![]
             }
         };
-        doc
+        Ok(warp::reply::json(&docs))
     }
 }
 
 pub mod meili_search_person {
     use std::convert::Infallible;
 
-    use reqwest::Client;
+    use log::{error, info};
+    use reqwest::{Client, StatusCode};
 
     use crate::meili_search::meili_search::meili_search;
     use crate::person::Person;
@@ -143,13 +148,40 @@ pub mod meili_search_person {
     ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
-        let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Person>>()
-            .await
-            .expect("expected a MeiliSearchResult");
-
-        let persons = result.hits;
+        let response2 = response.await;
+        let persons = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_person request success. unwrapping MeiliSearchResult<Person>"
+                    );
+                    let result = r.json::<MeiliSearchResult<Person>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_person request success and all good. returning Vec<Person>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_person request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!("meili_search_person request != OK. status {:?},     ", code);
+                    error!("meili_search_person request != OK. headers {:?},   ", x);
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_person wtf?. error {:?}", eee);
+                vec![]
+            }
+        };
 
         Ok(warp::reply::json(&persons))
     }
@@ -158,7 +190,8 @@ pub mod meili_search_person {
 pub mod meili_search_movie {
     use std::convert::Infallible;
 
-    use reqwest::Client;
+    use log::{error, info};
+    use reqwest::{Client, StatusCode};
 
     use crate::logging_service_client::logging_service;
     use crate::meili_search::meili_search::meili_search;
@@ -172,13 +205,40 @@ pub mod meili_search_movie {
     ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text.clone(), client);
 
-        let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Movie>>()
-            .await
-            .expect("expected a MeiliSearchResult");
-
-        let movies = result.hits;
+        let response2 = response.await;
+        let movies = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_movie request success. unwrapping MeiliSearchResult<Movie>"
+                    );
+                    let result = r.json::<MeiliSearchResult<Movie>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_movie request success and all good. returning Vec<Movie>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_movie request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!("meili_search_movie request != OK. status {:?},     ", code);
+                    error!("meili_search_movie request != OK. headers {:?},   ", x);
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_movie wtf?. error {:?}", eee);
+                vec![]
+            }
+        };
 
         let msg = format!(
             "finished meili_search_movie(). search_text '{}' returned {} movies ",
@@ -199,7 +259,8 @@ pub mod meili_search_movie {
 pub mod meili_search_movieaka {
     use std::convert::Infallible;
 
-    use reqwest::Client;
+    use log::{error, info};
+    use reqwest::{Client, StatusCode};
 
     use crate::meili_search::meili_search::meili_search;
     use crate::movieaka::MovieAkas;
@@ -212,22 +273,53 @@ pub mod meili_search_movieaka {
     ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
-        let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<MovieAkas>>()
-            .await
-            .expect("expected a MeiliSearchResult");
+        let response2 = response.await;
+        let movieakas = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_movieaka request success. unwrapping MeiliSearchResult<MovieAkas>"
+                    );
+                    let result = r.json::<MeiliSearchResult<MovieAkas>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_movieaka request success and all good. returning Vec<MovieAkas>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_movieaka request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!(
+                        "meili_search_movieaka request != OK. status {:?},     ",
+                        code
+                    );
+                    error!("meili_search_movieaka request != OK. headers {:?},   ", x);
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_movieakaaka wtf?. error {:?}", eee);
+                vec![]
+            }
+        };
 
-        let persons = result.hits;
-
-        Ok(warp::reply::json(&persons))
+        Ok(warp::reply::json(&movieakas))
     }
 }
 
 pub mod meili_search_crew {
     use std::convert::Infallible;
 
-    use reqwest::Client;
+    use log::{error, info};
+    use reqwest::{Client, StatusCode};
 
     use crate::crew::Crew;
     use crate::meili_search::meili_search::meili_search;
@@ -240,25 +332,51 @@ pub mod meili_search_crew {
     ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
-        let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Crew>>()
-            .await
-            .expect("expected a MeiliSearchResult");
+        let response2 = response.await;
+        let crew = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!("meili_search_crew request success. unwrapping MeiliSearchResult<Crew>");
+                    let result = r.json::<MeiliSearchResult<Crew>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_crew request success and all good. returning Vec<Crew>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_crew request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!("meili_search_crew request != OK. status {:?},     ", code);
+                    error!("meili_search_crew request != OK. headers {:?},   ", x);
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_crew wtf?. error {:?}", eee);
+                vec![]
+            }
+        };
 
-        let persons = result.hits;
-
-        Ok(warp::reply::json(&persons))
+        Ok(warp::reply::json(&crew))
     }
 }
 
 pub mod meili_search_episode {
     use std::convert::Infallible;
 
-    use reqwest::Client;
+    use log::{error, info};
+    use reqwest::{Client, StatusCode};
 
-    use crate::episode::Episode;
     use crate::meili_search::meili_search::meili_search;
+    use crate::rating::Rating;
     use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_episode(
@@ -268,15 +386,42 @@ pub mod meili_search_episode {
     ) -> Result<impl warp::Reply, Infallible> {
         let response = meili_search(entity, search_text, client);
 
-        let response2 = response.await.unwrap();
-        let result = response2
-            .json::<MeiliSearchResult<Episode>>()
-            .await
-            .expect("expected a MeiliSearchResult");
+        let response2 = response.await;
+        let ratings = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_rating request success. unwrapping MeiliSearchResult<Rating>"
+                    );
+                    let result = r.json::<MeiliSearchResult<Rating>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_rating request success and all good. returning Vec<Rating>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_rating request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!("meili_search_rating request != OK. status {:?},     ", code);
+                    error!("meili_search_rating request != OK. headers {:?},   ", x);
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_rating wtf?. error {:?}", eee);
+                vec![]
+            }
+        };
 
-        let persons = result.hits;
-
-        Ok(warp::reply::json(&persons))
+        Ok(warp::reply::json(&ratings))
     }
 }
 
@@ -344,7 +489,7 @@ pub mod meili_search_movie_paginated {
     use std::convert::Infallible;
 
     use log::{error, info};
-    use reqwest::Client;
+    use reqwest::{Client, StatusCode};
     use serde_json::json;
 
     use crate::meili_search::dump_response_status;
@@ -398,12 +543,42 @@ pub mod meili_search_movie_paginated {
 
         dump_response_status(&response, &index, &json);
 
-        let response2 = response.unwrap();
-        let result = response2.json::<MeiliSearchResult<Movie>>().await;
-        let movies = match result {
-            Ok(r) => r.hits,
-            Err(e) => {
-                error!("an error occurred sending a paginated search request to the meilisearch server {} ",e);
+        let movies = match response {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_movie_paginated request success. unwrapping MeiliSearchResult<Movie>"
+                    );
+                    let result = r.json::<MeiliSearchResult<Movie>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_movie_paginated request success and all good. returning Vec<Movie>");
+                            r.hits
+                        }
+                        Err(ee) => {
+                            info!("meili_search_movie_paginated request error. returning empty Vec<>. error {:?}",ee);
+                            vec![]
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!(
+                        "meili_search_movie_paginated request != OK. status {:?},     ",
+                        code
+                    );
+                    error!(
+                        "meili_search_movie_paginated request != OK. headers {:?},   ",
+                        x
+                    );
+                    vec![]
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_movie_paginated wtf?. error {:?}", eee);
                 vec![]
             }
         };
@@ -448,6 +623,8 @@ pub mod exec_meilisearch_search {
         dump_response_status(&response, &index, &json);
 
         // 🙏 https://github.com/seanmonstar/warp/issues/38
+
+        // TODO unwrap no good here!
         let stream = response.unwrap().bytes_stream();
         let body = hyper::Body::wrap_stream(stream);
         Ok(warp::reply::Response::new(body))
