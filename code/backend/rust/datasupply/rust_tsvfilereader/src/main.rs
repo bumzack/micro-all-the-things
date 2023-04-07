@@ -3,7 +3,8 @@ use std::net::SocketAddr;
 
 use config::Config;
 use lazy_static::lazy_static;
-use log::info;
+use log::{info, LevelFilter};
+use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
 use crate::tsv_rest::filters_tsv;
@@ -25,20 +26,14 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    // info!(
-    //     "{:?}",
-    //     CONFIG
-    //         .clone()
-    //         .try_deserialize::<HashMap<String, String>>()
-    //         .unwrap()
-    // );
+    Builder::new().filter_level(LevelFilter::Info).init();
 
     let root = warp::path::end().map(|| "Welcome to the rust TSV reader!");
 
     let root = root.or(filters_tsv::tsv_request_route());
 
     // View access logs by setting `RUST_LOG=todos`.
-    let routes = root.with(warp::log("principalwriter"));
+    let routes = root.with(warp::log("tsvfilereader"));
     // Start up the server...
 
     let host: String = CONFIG.get("server_host").expect("expected server host");
