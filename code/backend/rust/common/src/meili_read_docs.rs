@@ -1,9 +1,10 @@
 pub mod meilisearch_read_doc {
     use std::convert::Infallible;
 
+    use log::info;
     use reqwest::{Client, Error, Response};
 
-    use crate::meili_search::handlers_search_entity::dump_response_status;
+    use crate::meili_search::dump_response_status;
     use crate::movie::Movie;
     use crate::search::MeiliDocReadResult;
 

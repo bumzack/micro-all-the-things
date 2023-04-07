@@ -1,8 +1,9 @@
 pub mod filters_search_movie {
+    use log::info;
     use warp::{Filter, Reply};
 
     use common::meili_read_docs::meilisearch_read_doc::meili_search_read_doc_movie;
-    use common::meili_search::handlers_search_entity::meili_search_movie;
+    use common::meili_search::meili_search_movie::meili_search_movie;
     use common::search::SearchPaginatedRequest;
 
     use crate::CLIENT;

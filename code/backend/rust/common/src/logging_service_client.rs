@@ -1,5 +1,6 @@
 pub mod logging_service {
     use config::Config;
+    use log::{error, info};
 
     use crate::logging::AddLogEntry;
 

@@ -1,20 +1,15 @@
-pub mod handlers_search_entity {
-    use std::convert::Infallible;
+use log::{error, info};
+use reqwest::{Error, Response, StatusCode};
 
-    use reqwest::{Client, Error, Response, StatusCode};
+pub mod search_entity_paginated {
+    use log::info;
+    use reqwest::{Client, Error, Response};
     use serde_json::json;
-    use warp::hyper;
 
-    use crate::crew::Crew;
-    use crate::episode::Episode;
-    use crate::logging_service_client::logging_service;
-    use crate::movie::Movie;
-    use crate::movieaka::MovieAkas;
-    use crate::person::Person;
-    use crate::search::{MeiliSearchRequest, MeiliSearchResult, SearchPaginatedRequest};
-    use crate::search_doc::SearchIndexDoc;
+    use crate::meili_search::dump_response_status;
+    use crate::search::MeiliSearchRequest;
 
-    async fn meili_search_paginated(
+    pub(crate) async fn meili_search_paginated(
         entity: String,
         search_text: String,
         limit: u32,
@@ -63,6 +58,18 @@ pub mod handlers_search_entity {
 
         response
     }
+}
+
+pub mod meili_search_searchindex {
+    use std::convert::Infallible;
+
+    use reqwest::{Client, StatusCode};
+    use serde_json::json;
+
+    use crate::logging_service_client::logging_service;
+    use crate::meili_search::search_entity_paginated::meili_search_paginated;
+    use crate::search::MeiliSearchResult;
+    use crate::search_doc::SearchIndexDoc;
 
     pub async fn meili_search_searchindex(
         entity: String,
@@ -118,6 +125,16 @@ pub mod handlers_search_entity {
         };
         doc
     }
+}
+
+pub mod meili_search_person {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+
+    use crate::meili_search::meili_search::meili_search;
+    use crate::person::Person;
+    use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_person(
         entity: String,
@@ -136,6 +153,17 @@ pub mod handlers_search_entity {
 
         Ok(warp::reply::json(&persons))
     }
+}
+
+pub mod meili_search_movie {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+
+    use crate::logging_service_client::logging_service;
+    use crate::meili_search::meili_search::meili_search;
+    use crate::movie::Movie;
+    use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_movie(
         entity: String,
@@ -162,10 +190,20 @@ pub mod handlers_search_entity {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
 
         Ok(warp::reply::json(&movies))
     }
+}
+
+pub mod meili_search_movieaka {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+
+    use crate::meili_search::meili_search::meili_search;
+    use crate::movieaka::MovieAkas;
+    use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_movieaka(
         entity: String,
@@ -184,6 +222,16 @@ pub mod handlers_search_entity {
 
         Ok(warp::reply::json(&persons))
     }
+}
+
+pub mod meili_search_crew {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+
+    use crate::crew::Crew;
+    use crate::meili_search::meili_search::meili_search;
+    use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_crew(
         entity: String,
@@ -202,6 +250,16 @@ pub mod handlers_search_entity {
 
         Ok(warp::reply::json(&persons))
     }
+}
+
+pub mod meili_search_episode {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+
+    use crate::episode::Episode;
+    use crate::meili_search::meili_search::meili_search;
+    use crate::search::MeiliSearchResult;
 
     pub async fn meili_search_episode(
         entity: String,
@@ -220,8 +278,17 @@ pub mod handlers_search_entity {
 
         Ok(warp::reply::json(&persons))
     }
+}
 
-    async fn meili_search(
+pub mod meili_search {
+    use log::info;
+    use reqwest::{Client, Error, Response};
+    use serde_json::json;
+
+    use crate::meili_search::dump_response_status;
+    use crate::search::MeiliSearchRequest;
+
+    pub(crate) async fn meili_search(
         entity: String,
         search_text: String,
         client: &Client,
@@ -266,6 +333,18 @@ pub mod handlers_search_entity {
 
         response
     }
+}
+
+pub mod meili_search_movie_paginated {
+    use std::convert::Infallible;
+
+    use log::{error, info};
+    use reqwest::Client;
+    use serde_json::json;
+
+    use crate::meili_search::dump_response_status;
+    use crate::movie::Movie;
+    use crate::search::{MeiliSearchRequest, MeiliSearchResult, SearchPaginatedRequest};
 
     pub async fn meili_search_movie_paginated(
         entity: String,
@@ -333,6 +412,15 @@ pub mod handlers_search_entity {
 
         Ok(warp::reply::json(&movies))
     }
+}
+
+pub mod exec_meilisearch_search {
+    use std::convert::Infallible;
+
+    use reqwest::Client;
+    use warp::hyper;
+
+    use crate::meili_search::dump_response_status;
 
     pub async fn exec_meilisearch_search(
         entity_name: &String,
@@ -359,28 +447,25 @@ pub mod handlers_search_entity {
         let body = hyper::Body::wrap_stream(stream);
         Ok(warp::reply::Response::new(body))
     }
-
-    pub fn dump_response_status(response: &Result<Response, Error>, url: &String, json: &String) {
-        match &response {
-            Ok(res) => {
-                let code = res.status();
-                if code == StatusCode::OK
-                    || code == StatusCode::ACCEPTED
-                    || code == StatusCode::CREATED
-                {
-                    info!("request success");
-                } else {
-                    let x = res.headers().clone();
-                    error!("request != OK. status {:?},    url {}", code, url);
-                    error!("request != OK. headers {:?},    url {}", x, url);
-                }
-            }
-            Err(e) => error!(
-                "request to meilisearch resulted in an error. request URL '{}', json '{}' error '{:?}'",
-                url,json, e
-            ),
-        };
-    }
 }
 
-// 9 707 500
+pub fn dump_response_status(response: &Result<Response, Error>, url: &String, json: &String) {
+    match &response {
+        Ok(res) => {
+            let code = res.status();
+            if code == StatusCode::OK || code == StatusCode::ACCEPTED || code == StatusCode::CREATED
+            {
+                info!("request success");
+            } else {
+                let x = res.headers().clone();
+                error!("request != OK. status {:?},    url {}", code, url);
+                error!("request != OK. headers {:?},    url {}", x, url);
+                error!("remote address {:?}", res.remote_addr());
+            }
+        }
+        Err(e) => error!(
+            "request to meilisearch resulted in an error. request URL '{}', json '{}' error '{:?}'",
+            url, json, e
+        ),
+    };
+}

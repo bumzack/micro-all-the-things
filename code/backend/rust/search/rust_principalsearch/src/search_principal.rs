@@ -2,9 +2,10 @@ pub mod filters_search_movie {
     use std::convert::Infallible;
     use std::future::Future;
 
+    use log::info;
     use warp::{Filter, Reply};
 
-    use common::meili_filter::handlers_search_entity::meili_filter_principal;
+    use common::meili_filter::meili_filter_principal::meili_filter_principal;
 
     use crate::CLIENT;
 

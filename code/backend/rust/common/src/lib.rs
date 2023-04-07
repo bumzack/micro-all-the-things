@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate log;
-
 pub mod crew;
 pub mod entity;
 pub mod episode;
