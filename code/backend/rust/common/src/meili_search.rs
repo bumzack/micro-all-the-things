@@ -321,6 +321,11 @@ pub mod meili_search {
         let json = json!(&search_request).to_string();
         let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
 
+        info!(
+            "searching for entity of type {}. POST to url {}   json {}",
+            &entity, &index, &json
+        );
+
         let response = client
             .post(&index)
             .body(json.clone())
