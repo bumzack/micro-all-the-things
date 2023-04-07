@@ -102,7 +102,7 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
 ### Rating by Movie (tconst)
 
 ```
- curl  -vv   http://localhost:18205/api/rating/tt0666268         |  jq    
+ curl  -vv   http://localhost:18202/api/rating/tt0666268         |  jq    
 ```
 
 ### Crew for Movie (tconst)

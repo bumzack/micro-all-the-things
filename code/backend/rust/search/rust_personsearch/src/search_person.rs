@@ -6,7 +6,6 @@ pub mod filters_search_person {
     use warp::{Filter, Reply};
 
     use common::meili_filter::meili_filter_person::meili_filter_person;
-    use common::meili_search::meili_search_person::meili_search_person;
     use common::search::SearchPersonList;
 
     use crate::CLIENT;

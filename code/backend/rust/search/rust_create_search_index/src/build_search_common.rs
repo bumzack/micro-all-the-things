@@ -270,7 +270,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         .expect("expected search_principal_by_movie_tconst URL");
 
     let url = format!("{search_principal}{tconst}");
-    //   info!("searching principals for movie tconst {tconst}. search url {url}");
+    info!("searching principals for movie tconst {tconst}. search url '{url}'");
 
     let message = format!("start search_principal().  url {}", url);
     info!("message {}", &message);
@@ -322,9 +322,13 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
 
     let search_person_req = SearchPersonList { nconsts };
 
-    let search_persons = json!(&search_person_req).to_string();
+    let search_persons = json!(&search_person_req);
+    let tmp = json!(&search_person_req).to_string();
 
-    //   info!("sending request to url {},   payload {}", search_person_url, search_persons);
+    info!(
+        "sending request to url '{}'.  payload '{}'",
+        search_person_url, &tmp
+    );
 
     let response = CLIENT
         .post(search_person_url.clone())
@@ -333,7 +337,8 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
         .send()
         .await;
 
-    dump_response_status(&response, &search_person_url, &search_persons);
+    let j = json!(&search_person_req).to_string();
+    dump_response_status(&response, &search_person_url, &j);
     let response2 = response.unwrap();
 
     match response2.status().as_u16() > 300 {
