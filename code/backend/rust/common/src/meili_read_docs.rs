@@ -49,7 +49,7 @@ pub mod meilisearch_read_doc {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         response
     }

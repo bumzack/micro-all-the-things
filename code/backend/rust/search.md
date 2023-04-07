@@ -120,23 +120,23 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
 
 ## Movie max Hits
 
-curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'
---data-binary '{ "maxTotalHits": 3000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+```
+curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json' --data-binary '{ "maxTotalHits": 3000 }' -H 'Authorization: Bearer 1234567890123456' | jq
 
-curl -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json' -d '{ "q" : "*", "offset" :
-351000, "limit" : 500, "page" : 0 , "sort" : [ "tconst:asc" ] }' | jq
+curl -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json' -d '{ "q" : "*", "offset" : 351000, "limit" : 500, "page" : 0 , "sort" : [ "tconst:asc" ] }' | jq
 
 curl   'http://meilisearch01.bumzack.at/indexes/movie/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
 curl   'http://meilisearch01.bumzack.at/indexes/person/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
 curl   'http://meilisearch01.bumzack.at/indexes/principal/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
 
-curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'
---data-binary '{ "maxTotalHits": 100000000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'  --data-binary '{ "maxTotalHits": 100000000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+```
 
 ## Read documents sorted & paginated
 
-curl   'http://meilisearch01.bumzack.at/indexes/movie/documents?limit=3&offset=1000000'     -H 'Authorization: Bearer
-1234567890123456' | jq
+```
+curl   'http://meilisearch01.bumzack.at/indexes/movie/documents?limit=3&offset=1000000'     -H 'Authorization: Bearer 1234567890123456' | jq
+```
 
 ## Search index
 
