@@ -193,7 +193,7 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -226,7 +226,7 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
     // info!("got a list of movies {}", movies_as_pretty_json);
@@ -256,7 +256,7 @@ async fn log_external_service_error(
                     "ERROR".to_string(),
                     message,
                 )
-                    .await;
+                .await;
             }
         }
         Err(e) => error!("error in request to meilisearch {:?}", e),
@@ -278,7 +278,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -309,7 +309,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     principals
 }
@@ -332,7 +332,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
         .send()
         .await;
 
-    dump_response_status(&response, &search_person_url);
+    dump_response_status(&response, &search_person_url, &"none available".to_string());
     let response2 = response.unwrap();
 
     match response2.status().as_u16() > 300 {
@@ -361,7 +361,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
                 "INFO".to_string(),
                 &message,
             )
-                .await;
+            .await;
 
             persons
         }
