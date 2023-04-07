@@ -8,8 +8,7 @@ pub mod filters_search_crew {
 
     use crate::CLIENT;
 
-    pub fn search_crew_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_crew_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "crew" / String);
         server.and(warp::get()).and_then(|tconst: String| {
             info!("/api/crew/:tconst matched");
@@ -21,7 +20,7 @@ pub mod filters_search_crew {
         entity: String,
         attribute: String,
         value: String,
-    ) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
+    ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
         info!("filter_entity  {attribute} =  {value}");
         let f = format!("\"{}\"  = \"{}\"", attribute, value);
         let filter: Vec<String> = vec![f];
