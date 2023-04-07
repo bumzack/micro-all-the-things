@@ -332,7 +332,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
         .send()
         .await;
 
-    dump_response_status(&response);
+    dump_response_status(&response, &search_person_url);
     let response2 = response.unwrap();
 
     match response2.status().as_u16() > 300 {

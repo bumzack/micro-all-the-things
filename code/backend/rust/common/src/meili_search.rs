@@ -59,7 +59,7 @@ pub mod handlers_search_entity {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         response
     }
@@ -262,7 +262,7 @@ pub mod handlers_search_entity {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         response
     }
@@ -312,7 +312,7 @@ pub mod handlers_search_entity {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         let response2 = response.unwrap();
         let result = response2.json::<MeiliSearchResult<Movie>>().await;
@@ -352,7 +352,7 @@ pub mod handlers_search_entity {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         // 🙏 https://github.com/seanmonstar/warp/issues/38
         let stream = response.unwrap().bytes_stream();
@@ -360,10 +360,10 @@ pub mod handlers_search_entity {
         Ok(warp::reply::Response::new(body))
     }
 
-    pub fn dump_response_status(response: &Result<Response, Error>) {
+    pub fn dump_response_status(response: &Result<Response, Error>, url: &String) {
         match &response {
             Ok(res) => {
-                let code = res.status().clone();
+                let code = res.status();
                 if code == StatusCode::OK
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
@@ -371,13 +371,16 @@ pub mod handlers_search_entity {
                     info!("request success");
                 } else {
                     let x = res.headers().clone();
-                    // let b = res.text().await.unwrap();
-                    error!("request != OK. status {:?}", code);
-                    error!("request != OK. headers {:?}", x);
-                    // info!("meilisearch search request != OK. response body {:?}", &b);
+                    error!("request != OK. status {:?},    url {}", code, url);
+                    error!("request != OK. headers {:?},    url {}", x, url);
                 }
             }
-            Err(e) => error!("error in request to meilisearch {:?}", e),
+            Err(e) => error!(
+                "request to meilisearch resulted in an error. request URL '{}', error '{:?}'",
+                url, e
+            ),
         };
     }
 }
+
+// 9 707 500

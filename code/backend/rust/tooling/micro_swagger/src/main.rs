@@ -1,7 +1,7 @@
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
-use warp::ws::WebSocket;
 use warp::Filter;
+use warp::ws::WebSocket;
 
 use crate::index_html::INDEX_HTML;
 

@@ -131,7 +131,7 @@ pub mod handlers_search_entity {
             .send()
             .await;
 
-        dump_response_status(&response);
+        dump_response_status(&response, &index);
 
         response
     }
