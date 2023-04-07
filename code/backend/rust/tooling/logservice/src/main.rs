@@ -4,6 +4,8 @@ extern crate log;
 use std::net::{SocketAddr, ToSocketAddrs};
 
 use config::Config;
+use log::LevelFilter;
+use pretty_env_logger::env_logger::Builder;
 
 use crate::db::db::create_pool;
 use crate::log_mod::log_routes::filters_logging::logging_route;
@@ -23,7 +25,7 @@ lazy_static::lazy_static! {
 // #[tokio::main(worker_threads = 2)]
 #[tokio::main]
 async fn main() {
-    pretty_env_logger::init();
+    Builder::new().filter_level(LevelFilter::Info).init();
 
     let pool = create_pool();
 

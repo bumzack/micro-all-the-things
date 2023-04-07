@@ -3,6 +3,8 @@ extern crate log;
 
 use std::io;
 
+use log::LevelFilter;
+use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
 mod search_crew;
@@ -13,6 +15,8 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
+    Builder::new().filter_level(LevelFilter::Info).init();
+
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 
     let root = root.or(search_crew::filters_search_crew::search_crew_route());
