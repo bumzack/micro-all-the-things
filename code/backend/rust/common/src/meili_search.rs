@@ -53,13 +53,13 @@ pub mod handlers_search_entity {
 
         let response = client
             .post(&index)
-            .body(json)
+            .body(json.clone())
             .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
 
-        dump_response_status(&response, &index);
+        dump_response_status(&response, &index, &json);
 
         response
     }
@@ -162,7 +162,7 @@ pub mod handlers_search_entity {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
 
         Ok(warp::reply::json(&movies))
     }
@@ -256,13 +256,13 @@ pub mod handlers_search_entity {
 
         let response = client
             .post(&index)
-            .body(json)
+            .body(json.clone())
             .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
 
-        dump_response_status(&response, &index);
+        dump_response_status(&response, &index, &json);
 
         response
     }
@@ -306,13 +306,13 @@ pub mod handlers_search_entity {
 
         let response = client
             .post(&index)
-            .body(json)
+            .body(json.clone())
             .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
 
-        dump_response_status(&response, &index);
+        dump_response_status(&response, &index, &json);
 
         let response2 = response.unwrap();
         let result = response2.json::<MeiliSearchResult<Movie>>().await;
@@ -346,13 +346,13 @@ pub mod handlers_search_entity {
 
         let response = client
             .post(&index)
-            .body(json)
+            .body(json.clone())
             .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
 
-        dump_response_status(&response, &index);
+        dump_response_status(&response, &index, &json);
 
         // 🙏 https://github.com/seanmonstar/warp/issues/38
         let stream = response.unwrap().bytes_stream();
@@ -360,7 +360,7 @@ pub mod handlers_search_entity {
         Ok(warp::reply::Response::new(body))
     }
 
-    pub fn dump_response_status(response: &Result<Response, Error>, url: &String) {
+    pub fn dump_response_status(response: &Result<Response, Error>, url: &String, json: &String) {
         match &response {
             Ok(res) => {
                 let code = res.status();
@@ -376,8 +376,8 @@ pub mod handlers_search_entity {
                 }
             }
             Err(e) => error!(
-                "request to meilisearch resulted in an error. request URL '{}', error '{:?}'",
-                url, e
+                "request to meilisearch resulted in an error. request URL '{}', json '{}' error '{:?}'",
+                url,json, e
             ),
         };
     }

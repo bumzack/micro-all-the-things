@@ -125,13 +125,13 @@ pub mod handlers_search_entity {
 
         let response = client
             .post(&index)
-            .body(json)
+            .body(json.clone())
             .header("Authorization", "Bearer 1234567890123456".to_owned())
             .header("Content-Type", "application/json".to_owned())
             .send()
             .await;
 
-        dump_response_status(&response, &index);
+        dump_response_status(&response, &index, &json);
 
         response
     }
