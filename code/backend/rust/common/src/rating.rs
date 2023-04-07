@@ -16,7 +16,7 @@ pub struct Rating {
 }
 
 fn map_to_rating(tsv_line: &TsvLine) -> Rating {
-    // println!("mapping tsv_line {:?} to Rating  ", &tsv_line);
+    // info!("mapping tsv_line {:?} to Rating  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let average_rating = get_nullable_f32(&tsv_line.entries, 1).unwrap();

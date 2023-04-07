@@ -29,7 +29,7 @@ pub mod filters_search_movie {
         attribute: String,
         value: String,
     ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
-        //  println!("filter_entity  {attribute} =  {value}");
+        //  info!("filter_entity  {attribute} =  {value}");
         let f = format!("\"{}\"  = \"{}\"", attribute, value);
         let filter: Vec<String> = vec![f];
         meili_filter_principal(entity, filter, &CLIENT)

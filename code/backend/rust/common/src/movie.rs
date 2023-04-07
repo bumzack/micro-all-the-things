@@ -25,7 +25,7 @@ pub struct Movie {
 }
 
 fn map_to_movie(tsv_line: &TsvLine) -> Movie {
-    // println!("mapping tsv_line {:?} to Movie  ", &tsv_line);
+    // info!("mapping tsv_line {:?} to Movie  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let title_type = get_nullable_string(&tsv_line.entries, 1);

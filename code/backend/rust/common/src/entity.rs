@@ -1,5 +1,6 @@
 use std::fmt::Debug;
 
+use log::info;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -106,7 +107,7 @@ pub fn get_nullable_string_list_of_string_array(
             }
             let result = serde_json::from_str::<Vec<String>>(s);
             if result.is_err() {
-                println!(
+                info!(
                     "serializing the line did not work:  '{}'     input:   '{:?}'    ",
                     &s, &input
                 );
@@ -127,7 +128,7 @@ pub trait EntityConverter<T> {
 pub mod handlers_entity {
     use std::convert::Infallible;
 
-    use log::error;
+    use log::{error, info};
     use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
     use serde_json::json;
@@ -144,7 +145,7 @@ pub mod handlers_entity {
         where
             TsvLines: EntityConverter<T>,
     {
-        println!(
+        info!(
             "processing request with {} lines. {}",
             tsv_lines.lines.len(),
             &entity_name
@@ -180,19 +181,19 @@ pub mod handlers_entity {
                     || code == StatusCode::CREATED
                     || code == StatusCode::ACCEPTED
                 {
-                    println!("meilisearch request success");
+                    info!("meilisearch request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!(
+                    info!(
                         "meilisearch request != OK AND != CREATED AND != ACCEPTED. status {:?}",
                         code
                     );
-                    println!(
+                    info!(
                         "meilisearch request != OK AND != CREATED AND != ACCEPTED. headers {:?}",
                         x
                     );
-                    println!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
+                    info!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
 
                     let msg = format!(
                         "exec_meilisearch_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
@@ -204,7 +205,7 @@ pub mod handlers_entity {
                 }
             }
             Err(e) => {
-                println!("error in request to meilisearch {:?}", e);
+                info!("error in request to meilisearch {:?}", e);
                 let msg = format!(
                     "exec_meilisearch_update returned an error. inserting entity {}. error: {}",
                     &entity_name, e
@@ -246,19 +247,19 @@ pub mod handlers_entity {
                     || code == StatusCode::CREATED
                     || code == StatusCode::ACCEPTED
                 {
-                    println!("solr request success");
+                    info!("solr request success");
                 } else {
                     let x = res.headers().clone();
                     let b = res.text().await.unwrap();
-                    println!(
+                    info!(
                         "solr request != OK AND != CREATED  != ACCEPTED. status {:?}",
                         code
                     );
-                    println!(
+                    info!(
                         "solr request != OK AND != CREATED  != ACCEPTED. headers {:?}",
                         x
                     );
-                    println!(
+                    info!(
                         "solr request != OK AND != CREATED  != ACCEPTED. response body {:?}",
                         &b
                     );
@@ -272,7 +273,7 @@ pub mod handlers_entity {
                 }
             }
             Err(e) => {
-                println!("solr request error in request to solr {:?}", e);
+                info!("solr request error in request to solr {:?}", e);
                 let msg = format!(
                     "exec_solr_update returned an error. inserting entity {}. error: {}",
                     &entity_name, e
