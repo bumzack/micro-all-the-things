@@ -220,6 +220,7 @@ pub mod meili_filter_crew {
 }
 
 pub mod meili_filter {
+    use log::info;
     use reqwest::{Client, Error, Response};
     use serde_json::json;
 
@@ -237,7 +238,7 @@ pub mod meili_filter {
             limit: None,
             page: None,
             hits_per_page: None,
-            filter: Some(filter),
+            filter: Some(filter.clone()),
             facets: None,
             attributes_to_retrieve: None,
             attributes_to_crop: None,
@@ -253,6 +254,11 @@ pub mod meili_filter {
 
         let json = json!(&search_request).to_string();
         let index = format!("http://meilisearch01.bumzack.at/indexes/{}/search", &entity);
+
+        info!(
+            "meili_filter entity {}, filter {:?}, request_json {}",
+            &entity, &filter, &json
+        );
 
         let response = client
             .post(&index)

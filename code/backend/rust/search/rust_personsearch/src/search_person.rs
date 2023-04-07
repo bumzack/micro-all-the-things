@@ -11,8 +11,7 @@ pub mod filters_search_person {
 
     use crate::CLIENT;
 
-    pub fn search_person_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_person_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server1 = warp::path!("api" / "person" / "name" / String);
         let search_name = server1.and(warp::get()).and_then(|name: String| {
             info!("GET /api/person/name/:name matched");
@@ -30,7 +29,7 @@ pub mod filters_search_person {
             .and(warp::post())
             .and(json_body_search_person_list())
             .and_then(|req: SearchPersonList| {
-                //  println!("POST  /api/person/nconst  matched");
+                info!("POST  /api/person/nconst  matched");
                 filter_entity_with_joined_or(req)
             });
 
@@ -38,12 +37,11 @@ pub mod filters_search_person {
         // .or(search_nconst)
     }
 
-    fn json_body_search_person_list(
-    ) -> impl Filter<Extract = (SearchPersonList,), Error = warp::Rejection> + Clone {
+    fn json_body_search_person_list() -> impl Filter<Extract=(SearchPersonList, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
-    fn filter_entity(name: String) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
+    fn filter_entity(name: String) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
         //  println!("filter_entity   {name}");
         let f = format!("\"{}\"  = \"{}\"", "nconst", name);
         let filter: Vec<String> = vec![f];
@@ -52,14 +50,15 @@ pub mod filters_search_person {
 
     fn filter_entity_with_joined_or(
         req: SearchPersonList,
-    ) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
+    ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
         //  println!("filter_entity for a list of person nconsts  {:?}", &req);
 
         let nconsts = req
             .nconsts
             .iter()
-            .map(|nconst| format!("nconst = {}", nconst))
+            .map(|nconst| format!("\"{}\"  = \"{}\"", "nconst".to_string(), nconst))
             .collect::<Vec<String>>();
+
         let nconsts = nconsts.join(" OR ");
         //  println!("filter person request: {}", &nconsts);
 
