@@ -138,7 +138,7 @@ mod handlers_tsv {
                     break;
                 }
 
-                let entries = line.clone().split("\t").map(|s| s.to_string()).collect();
+                let entries = line.clone().split('\t').map(|s| s.to_string()).collect();
                 let tsv = TsvLine {
                     entries,
                     original: line,

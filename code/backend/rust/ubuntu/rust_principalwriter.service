@@ -1,0 +1,26 @@
+[Unit]
+Description=Rust Principal Writer Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/datasupply
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/rust/datasupply
+ExecStart=/home/bumzack/micro-all-the-things/code/backend/rust/target/release/rust_principalwriter
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/rust_principalwriter
+ExecStartPre=/bin/chown syslog:adm /var/log/rust_principalwriter
+ExecStartPre=/bin/chmod 755 /var/log/rust_principalwriter
+SyslogIdentifier=rust_principalwriter
+
+[Install]
+WantedBy=multi-user.target

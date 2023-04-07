@@ -154,7 +154,7 @@ pub mod handlers_entity {
 
         let json = json!(&entities).to_string();
 
-        exec_meilisearch_update(&entity_name, client, json.clone()).await;
+        // exec_meilisearch_update(&entity_name, client, json.clone()).await;
         exec_solr_update(&entity_name, client, json).await;
 
         let res = "all good".to_string();
