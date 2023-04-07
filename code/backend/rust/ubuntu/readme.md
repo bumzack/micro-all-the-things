@@ -43,3 +43,5 @@ sudo systemctl restart  rust_search_principal.service
 sudo systemctl restart  rust_logservice.service
 ```
 
+"proxy_busy_buffers_size" must be equal to or greater than the maximum of the value of "proxy_buffer_size" and one of
+the "proxy_buffers" in /etc/nginx/nginx.conf:61

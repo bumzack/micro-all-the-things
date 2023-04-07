@@ -34,7 +34,8 @@ pub mod filters_search_person {
                 filter_entity_with_joined_or(req)
             });
 
-        search_name.or(search_nconsts).or(search_nconst)
+        search_name.or(search_nconsts)
+        // .or(search_nconst)
     }
 
     fn json_body_search_person_list(
