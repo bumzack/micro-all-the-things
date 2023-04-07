@@ -66,7 +66,3 @@ curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch0
 curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/episode'
 curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/crew'
 
-
- 
-
- 

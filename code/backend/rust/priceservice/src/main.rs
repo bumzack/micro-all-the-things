@@ -4,20 +4,19 @@ extern crate log;
 use std::net::{SocketAddr, ToSocketAddrs};
 
 use config::Config;
-use log::LevelFilter;
-use pretty_env_logger::env_logger::Builder;
 
 use crate::db::db::create_pool;
 use crate::log_mod::log_routes::filters_logging::logging_route;
+use crate::prices::price_routes::filters_logging::price_route;
 
 mod db;
-mod log_mod;
+mod prices;
 
 // gotta give credit where credit is due and stuff
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config =  Config::builder()
-        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/config.toml"))
+        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
         .build()
         .unwrap();
 }
@@ -41,7 +40,7 @@ async fn main() {
     //     ])
     //     .allow_methods(vec!["POST", "GET"]);
 
-    let routes = logging_route(pool);
+    let routes = price_route(pool);
 
     let host: String = CONFIG
         .get("loggingservice_service_host")

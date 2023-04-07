@@ -5,6 +5,8 @@ use std::collections::HashMap;
 use std::io;
 
 use config::Config;
+use log::LevelFilter;
+use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
 mod build_search_common;
@@ -26,7 +28,7 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    pretty_env_logger::init();
+    Builder::new().filter_level(LevelFilter::Info).init();
 
     info!(
         "{:?}",

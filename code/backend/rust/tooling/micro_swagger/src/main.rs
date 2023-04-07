@@ -1,6 +1,7 @@
-use serde_json::json;
-use warp::Filter;
+use log::LevelFilter;
+use pretty_env_logger::env_logger::Builder;
 use warp::ws::WebSocket;
+use warp::Filter;
 
 use crate::index_html::INDEX_HTML;
 
@@ -8,7 +9,7 @@ mod index_html;
 
 #[tokio::main]
 async fn main() {
-    pretty_env_logger::init();
+    Builder::new().filter_level(LevelFilter::Info).init();
 
     let get_scenes = warp::get()
         .and(warp::path("scenes"))

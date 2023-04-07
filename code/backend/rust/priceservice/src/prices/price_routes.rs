@@ -2,24 +2,19 @@ pub mod filters_logging {
     use deadpool_postgres::Pool;
     use warp::{Filter, Rejection, Reply};
 
-    use common::logging::{AddLogEntry, ReadLogEntry};
-
     use crate::db::server::with_db;
-    use crate::log_mod::log_handler::filters_logging::{
-        insert_log_entry_handler, read_log_entries,
-    };
+    use crate::prices::prices_handler::filters_logging::read_price_entry;
 
-    pub fn logging_route(
+    pub fn price_route(
         pool: Pool,
     ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
-        let server1 = warp::path!("api" / "log" / "entries");
+        let server1 = warp::path!("api" / "price" / String);
         let search_name = server1
             .and(with_db(pool.clone()))
-            .and(warp::post())
-            .and(json_body_read_log_entry())
-            .and_then(|pool: Pool, req: ReadLogEntry| {
-                info!("POST /api/log_mod/entries");
-                read_log_entries(pool, req)
+            .and(warp::get())
+            .and_then(|pool: Pool, tconst| {
+                info!("GET /api/price/:tconst");
+                read_price_entry(pool, tconst)
             });
 
         let server3 = warp::path!("api" / "log" / "entry");
@@ -28,7 +23,7 @@ pub mod filters_logging {
             .and(warp::post())
             .and(json_body_add_log_entry())
             .and_then(|pool: Pool, req: AddLogEntry| {
-                info!("POST  /api/log_mod/entry  matched");
+                info!("POST  /api/prices/entry  matched");
                 log_entry(&req);
                 insert_log_entry_handler(pool, req)
             });
@@ -67,12 +62,7 @@ pub mod filters_logging {
         info!("log entry {:?}", &req);
     }
 
-    fn json_body_add_log_entry() -> impl Filter<Extract=(AddLogEntry, ), Error=Rejection> + Clone
-    {
-        warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
-    }
-
-    fn json_body_read_log_entry() -> impl Filter<Extract=(ReadLogEntry, ), Error=Rejection> + Clone {
+    fn json_body_read_log_entry() -> impl Filter<Extract=(AddPriceEntry, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }
