@@ -3,10 +3,11 @@ use std::convert::Infallible;
 use log::info;
 use serde_json::json;
 
-use common::entity::handlers_entity::exec_meilisearch_update;
-use common::logging_service_client::logging_service;
+use common::entity::entity::Entity;
+use common::logging::logging_service_client::logging_service;
+use common::meili::meili_http::meili_http_stuff::meili_update_http;
 
-use crate::build_search_common::{convert_to_meilisearch_doc, search_movies};
+use crate::build_search_common::{convert_to_search_index_doc, search_movies};
 use crate::CLIENT;
 
 pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
@@ -28,12 +29,12 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         .await;
 
     while cnt_movies < total_cnt_movies {
-        let movies = search_movies(limit, offset).await;
+        let movies = search_movies(limit, offset, "meili".to_string()).await;
         cnt_movies += movies.len();
         offset += limit;
 
         let mut docs = vec![];
-        convert_to_meilisearch_doc(movies, &mut docs).await;
+        convert_to_search_index_doc(movies, &mut docs, "meili".to_string()).await;
 
         let docs_json = json!(&docs).to_string();
 
@@ -53,7 +54,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
             .await;
 
         info!("starting update request for  {} docs", docs.len());
-        exec_meilisearch_update(&"searchindex".to_string(), &CLIENT, docs_json).await;
+        meili_update_http(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
         info!(
             "finished update request for  {} docs.  . movies processed {} / {} ",
             docs.len(),

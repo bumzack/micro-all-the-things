@@ -14,24 +14,24 @@ use common::meili::meili_http::meili_http_stuff::meili_update_http;
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
-use crate::CLIENT;
-use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData};
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
+use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
+use crate::CLIENT;
 
-pub async fn build_index_v2(
+pub async fn build_index_v3(
+    engine: String,
     offset: u32,
     limit: u32,
-    multiplier: u32,
+    tasks: u32,
 ) -> Result<impl warp::Reply, Infallible> {
     let (manager_sender, manager_receiver) = mpsc::unbounded_channel();
 
     let handle_config_manager = start_config_manager(limit, offset, manager_receiver);
-    let num_cpus = num_cpus::get();
-    let num_tasks = num_cpus * multiplier as usize;
+    let num_tasks = tasks as usize;
 
-    log_build_stats("v2 ???".to_string(), num_tasks).await;
+    log_build_stats(engine.clone(), num_tasks).await;
 
-    let tasks = start_tasks(num_tasks, manager_sender);
+    let tasks = start_tasks(num_tasks, manager_sender, engine.clone());
 
     log_start(offset, limit).await;
 
@@ -69,15 +69,16 @@ pub async fn build_index_v2(
     Ok(warp::reply::json(&message))
 }
 
-async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
-    let movies = search_movies(limit, offset, "meili".to_string()).await;
+async fn search_and_write_to_index(offset: u32, limit: u32, engine: String) -> usize {
+    info!("XXX    search_and_write_to_index");
+    let movies = search_movies(limit, offset, engine.clone()).await;
 
     if movies.is_empty() {
         return 0;
     }
     let cnt = movies.len();
     let mut docs = vec![];
-    convert_to_search_index_doc(movies, &mut docs, "meili".to_string()).await;
+    convert_to_search_index_doc(movies, &mut docs, engine.clone()).await;
 
     let docs_json = json!(&docs).to_string();
 
@@ -105,11 +106,13 @@ async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
 fn start_tasks(
     tasks: usize,
     manager_sender: UnboundedSender<ManagerCommand>,
+    engine: String,
 ) -> Vec<JoinHandle<(usize, usize)>> {
     let mut t = vec![];
     for i in 1..=tasks {
         let sender = manager_sender.clone();
         let id = i;
+        let engine = engine.to_owned();
         let t1 = tokio::spawn(async move {
             let (tx, mut rx) = mpsc::unbounded_channel();
             let wd = WorkerData { sender: tx, id };
@@ -129,7 +132,7 @@ fn start_tasks(
                 let offset = pg.offset;
 
                 // do stuff
-                let cnt_movies = search_and_write_to_index(offset, limit).await;
+                let cnt_movies = search_and_write_to_index(offset, limit, engine.clone()).await;
                 cnt += cnt_movies;
                 if cnt_movies == 0 {
                     let wd = WorkerNoMoreItemsFound(id);

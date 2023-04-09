@@ -39,8 +39,8 @@ async fn main() -> io::Result<()> {
     let host: String = CONFIG.get("server_host").expect("expected server host");
     let port: String = CONFIG.get("server_port").expect("expected server host");
 
-    println!("host {}", &host);
-    println!("port {}", &port);
+    info!("host {}", &host);
+    info!("port {}", &port);
     let h = format!("{}:{}", host, port);
     info!("host complete {}", &h);
 

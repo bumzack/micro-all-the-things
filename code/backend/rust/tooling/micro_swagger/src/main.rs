@@ -36,7 +36,7 @@ async fn main() {
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await
 }
 
-async fn render_scene(ws: WebSocket) {
+async fn render_scene(_ws: WebSocket) {
     // let scenes = get_scenes_dtos();
     // let (mut websocket_tx, mut websocket_rx) = ws.split();
     //

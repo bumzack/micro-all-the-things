@@ -3,7 +3,7 @@ pub mod filters_logging {
     use log::{error, info};
     use warp::{Filter, Rejection, Reply};
 
-    use common::logging::{AddLogEntry, ReadLogEntry};
+    use common::logging::logging::{AddLogEntry, ReadLogEntry};
 
     use crate::db::server::with_db;
     use crate::log_mod::log_handler::filters_logging::{

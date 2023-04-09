@@ -1,7 +1,7 @@
 pub mod filters_tsv {
     use warp::Filter;
 
-    use common::tsv::TsvFileImportRequest;
+    use common::tsv::tsv::TsvFileImportRequest;
 
     use super::handlers_tsv;
 
@@ -30,8 +30,8 @@ mod handlers_tsv {
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
 
-    use common::logging_service_client::logging_service;
-    use common::tsv::{TsvFileImportRequest, TsvLine, TsvLines};
+    use common::logging::logging_service_client::logging_service;
+    use common::tsv::tsv::{TsvFileImportRequest, TsvLine, TsvLines};
 
     use crate::{CLIENT, CONFIG};
 

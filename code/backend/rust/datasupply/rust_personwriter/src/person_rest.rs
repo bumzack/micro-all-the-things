@@ -1,12 +1,11 @@
 pub mod filters_person {
     use warp::Filter;
 
-    use common::tsv::TsvLines;
+    use common::tsv::tsv::TsvLines;
 
     use super::handlers_entity;
 
-    pub fn person_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
-    {
+    pub fn person_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         warp::path("api").and(person_post())
     }
 
@@ -25,13 +24,14 @@ pub mod filters_person {
 mod handlers_entity {
     use std::convert::Infallible;
 
-    use common::entity::handlers_entity::post_entity;
-    use common::person::Person;
-    use common::tsv::TsvLines;
+    use common::entity::entity::Entity;
+    use common::entity::entity::handlers_entity::post_entity;
+    use common::models::person::Person;
+    use common::tsv::tsv::TsvLines;
 
     use crate::CLIENT;
 
     pub async fn post_person(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
-        post_entity::<Person>(tsv_lines, "person".to_string(), &CLIENT).await
+        post_entity::<Person>(tsv_lines, Entity::PERSON, &CLIENT).await
     }
 }

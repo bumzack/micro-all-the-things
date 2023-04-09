@@ -1,7 +1,7 @@
 pub mod filters_principal {
     use warp::Filter;
 
-    use common::tsv::TsvLines;
+    use common::tsv::tsv::TsvLines;
 
     use super::handlers_entity;
 
@@ -24,13 +24,14 @@ pub mod filters_principal {
 mod handlers_entity {
     use std::convert::Infallible;
 
-    use common::entity::handlers_entity::post_entity;
-    use common::principal::Principal;
-    use common::tsv::TsvLines;
+    use common::entity::entity::Entity;
+    use common::entity::entity::handlers_entity::post_entity;
+    use common::models::principal::Principal;
+    use common::tsv::tsv::TsvLines;
 
     use crate::CLIENT;
 
     pub async fn post_principal(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
-        post_entity::<Principal>(tsv_lines, "principal".to_string(), &CLIENT).await
+        post_entity::<Principal>(tsv_lines, Entity::PRINCIPAL, &CLIENT).await
     }
 }
