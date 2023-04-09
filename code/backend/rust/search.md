@@ -64,57 +64,83 @@ curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at
 ### movie all
 
 ```
- curl  -vv   http://localhost:18200/api/movie/Terminator        | jq
+ curl  -vv   http://localhost:18200/api/solr/movie/Terminator        | jq
 ```
 
 ```
-curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 500000, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+ curl  -vv   http://localhost:18200/api/meili/movie/Terminator        | jq
 ```
 
-### person all attributes
+```
+curl  -X POST   http://localhost:18200/api/solr/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 9000009, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+```
 
 ```
- curl  -vv   http://localhost:18203/api/person/name/Schwarzeneger           |  jq  
+curl  -X POST   http://localhost:18200/api/meili/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 500000, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
 ```
 
 ### person by nconst POST a list
 
 ```
- curl  -vv -X POST   http://localhost:18203/api/person/nconst      -d '{"nconsts":["nm0374658","nm1588970","nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
+curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
 ```
 
 ```
- curl  -vv   http://localhost:18203/api/person/nconst/nm0000216        |  jq     
+curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
 ```
 
 ### Principal by Person Name (nconst)
 
 ```
- curl  -vv   http://localhost:18204/api/principal/name/nm1122026      |  jq  
+ curl  -vv   http://localhost:18204/api/solr/principal/filter/name/nm1122026      |  jq  
+```
+
+```
+ curl  -vv   http://localhost:18204/api/meili/principal/name/nm1122026      |  jq  
 ```
 
 ### Principal by Movie ID (tconst)
 
 ```
- curl  -vv   http://localhost:18204/api/principal/title/tt0666268         |  jq    
+ curl  -vv   http://localhost:18204/api/solr/principal/filter/title/tt0666268         |  jq    
+```
+
+```
+ curl  -vv   http://localhost:18204/api/meili/principal/filter/title/tt0666268         |  jq    
 ```
 
 ### Rating by Movie (tconst)
 
 ```
- curl  -vv   http://localhost:18202/api/rating/tt0666268         |  jq    
+ curl  -vv   http://localhost:18202/api/solr/rating/filter/tt0666268         |  jq    
 ```
 
 ### Crew for Movie (tconst)
 
 ```
- curl  -vv   http://localhost:18205/api/crew/tt0666268         |  jq    
+ curl  -vv   http://localhost:18205/api/solr/crew/filter/tt0666268         |  jq    
+ 
+ curl  -vv   http://localhost:18205/api/meili/crew/filter/tt0666268         |  jq
+```
+
+### movieAka  for Movie (tconst)
+
+```
+ curl  -vv   http://localhost:18201/api/solr/movieaka/filter/tt0666268         |  jq    
+ 
+ curl  -vv   http://localhost:18201/api/meili/movieaka/filter/tt0666268         |  jq
 ```
 
 ## Build Index
 
 ```
  curl  -vv   http://localhost:18300/api/searchindex/build         |  jq    
+```
+
+## /:engine/:start/:pagesize/:tasks
+
+```
+ curl  -vv   http://localhost:18300/api/v3/solr/searchindex/build/0/100/1         |  jq    
 ```
 
 ## Movie max Hits

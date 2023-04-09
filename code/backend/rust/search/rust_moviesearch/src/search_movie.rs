@@ -1,30 +1,87 @@
 pub mod filters_search_movie {
+    use std::convert::Infallible;
+
     use log::info;
+    use reqwest::Client;
     use warp::{Filter, Reply};
 
-    use common::meili_read_docs::meilisearch_read_doc::meili_search_read_doc_movie;
-    use common::meili_search::meili_search_movie::meili_search_movie;
-    use common::search::SearchPaginatedRequest;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::{meili_read_doc, meili_search_entity};
+    use common::models::movie::Movie;
+    use common::models::search_doc::SearchPaginatedRequest;
+    use common::solr::solr_entity::solr_entity_stuff::{solr_read_doc, solr_search_entity};
 
     use crate::CLIENT;
 
     pub fn search_movie_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
-        let server = warp::path!("api" / "movie" / String);
-        let search = server.and(warp::get()).and_then(|name: String| {
-            info!("GET /api/movie/:name  matched");
-            meili_search_movie("movie".to_string(), name, &CLIENT)
+        let server = warp::path!("api" / "meili" / "movie" / String);
+        let search_meili = server.and(warp::get()).and_then(|search_text: String| {
+            info!("GET /api/meili/movie/:search_text  matched");
+            search_movie(search_text, "meili".to_string(), &CLIENT)
         });
 
-        let server1 = warp::path!("api" / "movie");
-        let search_name = server1
+        let server = warp::path!("api" / "solr" / "movie" / String);
+        let search_solr = server.and(warp::get()).and_then(|search_text: String| {
+            info!("GET /api/solr/movie/:search_text  matched");
+            search_movie(search_text, "solr".to_string(), &CLIENT)
+        });
+
+        let server = warp::path!("api" / "meili" / "movie");
+        let search_name_meili = server
             .and(warp::post())
             .and(search_movies_request())
             .and_then(|req: SearchPaginatedRequest| {
-                info!("POST /api/movie/  matched");
-                meili_search_read_doc_movie(req.offset, req.limit, &CLIENT)
+                info!("POST /api/meili/movie/  matched");
+                read_movie_documents(req.offset, req.limit, "meili".to_string(), &CLIENT)
             });
 
-        search_name.or(search)
+        let server = warp::path!("api" / "solr" / "movie");
+        let search_name_solr = server
+            .and(warp::post())
+            .and(search_movies_request())
+            .and_then(|req: SearchPaginatedRequest| {
+                info!("POST /api/solr/movie/  matched");
+                read_movie_documents(req.offset, req.limit, "solr".to_string(), &CLIENT)
+            });
+
+        search_meili
+            .or(search_solr)
+            .or(search_name_meili)
+            .or(search_name_solr)
+    }
+
+    pub async fn search_movie(
+        search_text: String,
+        engine: String,
+        client: &Client,
+    ) -> Result<impl Reply, Infallible> {
+        let movies = match engine.as_str() {
+            "solr" => {
+                solr_search_entity::<Movie>(Entity::MOVIE, search_text, 0, 50, vec![], client).await
+            }
+            "meili" => {
+                meili_search_entity::<Movie>(Entity::MOVIE, search_text, 0, 50, vec![], client)
+                    .await
+            }
+            _ => vec![],
+        };
+
+        Ok(warp::reply::json(&movies))
+    }
+
+    pub async fn read_movie_documents(
+        offset: u32,
+        limit: u32,
+        engine: String,
+        client: &Client,
+    ) -> Result<impl Reply, Infallible> {
+        let movies = match engine.as_str() {
+            "solr" => solr_read_doc::<Movie>(Entity::MOVIE, offset, limit, client).await,
+            "meili" => meili_read_doc::<Movie>(Entity::MOVIE, offset, limit, client).await,
+            _ => vec![],
+        };
+
+        Ok(warp::reply::json(&movies))
     }
 
     fn search_movies_request() -> impl Filter<Extract=(SearchPaginatedRequest, ), Error=warp::Rejection> + Clone {
