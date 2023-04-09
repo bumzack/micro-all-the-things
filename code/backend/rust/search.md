@@ -108,13 +108,29 @@ curl  -X POST   http://localhost:18200/api/movie    -H 'Content-Type: applicatio
 ### Crew for Movie (tconst)
 
 ```
- curl  -vv   http://localhost:18205/api/crew/tt0666268         |  jq    
+ curl  -vv   http://localhost:18205/api/solr/crew/filter/tt0666268         |  jq    
+ 
+ curl  -vv   http://localhost:18205/api/meili/crew/filter/tt0666268         |  jq
+```
+
+### movieAka  for Movie (tconst)
+
+```
+ curl  -vv   http://localhost:18201/api/solr/movieaka/filter/tt0666268         |  jq    
+ 
+ curl  -vv   http://localhost:18201/api/meili/movieaka/filter/tt0666268         |  jq
 ```
 
 ## Build Index
 
 ```
  curl  -vv   http://localhost:18300/api/searchindex/build         |  jq    
+```
+
+## /:engine/:start/:pagesize/:tasks
+
+```
+ curl  -vv   http://localhost:18300/api/v3/searchindex/build/solr/0/100/1         |  jq    
 ```
 
 ## Movie max Hits

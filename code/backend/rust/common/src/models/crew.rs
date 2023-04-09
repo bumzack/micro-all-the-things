@@ -3,8 +3,8 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{EntityConverter, get_nullable_string, get_nullable_string_list};
-use crate::tsv::{TsvLine, TsvLines};
+use crate::entity::entity::{EntityConverter, get_nullable_string, get_nullable_string_list};
+use crate::tsv::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Crew {

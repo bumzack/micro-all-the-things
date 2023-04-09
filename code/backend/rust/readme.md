@@ -29,24 +29,23 @@ curl  -vvvv  -X POST -H 'Authorization: Bearer 1234567890123456'  -H 'Content-Ty
 ``` 
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "start": 1,  "end": 10928301, "pageSize": 50000}'        
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "EPISODE",  "start": 1,  "end": 9979300, "pageSize": 50000}'         
-time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 9998301, "pageSize": 40000}'       
+time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIE",  "start": 1,  "end": 15000000, "pageSize": 40000}'       
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "MOVIEAKA",  "start": 1,  "end": 45461900, "pageSize": 50000}'       
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PERSON",  "start": 1,  "end": 15508003, "pageSize": 50000}'         
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "RATING",  "start": 1,  "end": 1994595, "pageSize": 50000}'          
 time     curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "PRINCIPAL",  "start": 1,  "end": 60000000, "pageSize": 50000}'
 
- ```
-
+```
 
 ## number of documents
-12_408_003            name.basics.tsv
-35_461_875            title.akas.tsv
-9_728_301             title.basics.tsv    
-9_728_301             title.crew.tsv
-7_379_210             title.episode.tsv
-55_347_231            title.principals.tsv
-1_294_595               title.ratings.tsv
 
+12_408_003 name.basics.tsv
+35_461_875 title.akas.tsv
+9_728_301 title.basics.tsv    
+9_728_301 title.crew.tsv
+7_379_210 title.episode.tsv
+55_347_231 title.principals.tsv
+1_294_595 title.ratings.tsv
 
 curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/json" -d '{  "tsvType": "CREW",  "
 start": 1,  "end": 2001, "pageSize": 500}' &&

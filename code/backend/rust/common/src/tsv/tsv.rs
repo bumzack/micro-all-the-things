@@ -3,7 +3,7 @@ use std::fmt::{Debug, Formatter};
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::Entity;
+use crate::entity::entity::Entity;
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -24,7 +24,6 @@ pub struct TsvLine {
 pub struct TsvLines {
     pub lines: Vec<TsvLine>,
 }
-
 
 impl Debug for TsvLine {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

@@ -1,69 +1,64 @@
 pub mod filters_search_person {
     use std::convert::Infallible;
-    use std::future::Future;
 
     use log::info;
+    use reqwest::Client;
     use warp::{Filter, Reply};
 
-    use common::meili_filter::meili_filter_person::meili_filter_person;
-    use common::search::SearchPersonList;
+    use common::meili::meili_filter::meili_filter_person::meili_filter_person_vec;
+    use common::models::person::SearchPersonList;
+    use common::solr::solr_filter::solr_filter_person::solr_filter_person_vec;
 
     use crate::CLIENT;
 
-    pub fn search_person_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
-        // let server1 = warp::path!("api" / "person" / "name" / String);
-        // let search_name = server1.and(warp::get()).and_then(|name: String| {
-        //     info!("GET /api/person/name/:name matched");
-        //     meili_search_person("person".to_string(), name, &CLIENT)
-        // });
-
-        // let server2 = warp::path!("api" / "person" / "nconst" / String);
-        // let search_nconst = server2.and(warp::get()).and_then(|name: String| {
-        //     info!("GET /api/person/nconst/:nconst matched");
-        //     filter_entity(name)
-        // });
-
-        let server3 = warp::path!("api" / "person" / "nconst");
-        let search_nconsts = server3
+    pub fn filter_person_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
+        let server3 = warp::path!("api" / "meili" / "person" / "filter");
+        let search_nconsts_meili = server3
             .and(warp::post())
             .and(json_body_search_person_list())
             .and_then(|req: SearchPersonList| {
-                info!("POST  /api/person/nconst  matched");
-                filter_entity_with_joined_or(req)
+                info!("POST  /api/meili/person/filter      matched");
+                filter_person(
+                    "nconst".to_string(),
+                    req.nconsts,
+                    "meili".to_string(),
+                    &CLIENT,
+                )
             });
 
-        search_nconsts
-        // .or(search_nconst)
+        let server3 = warp::path!("api" / "solr" / "person" / "filter");
+        let search_nconsts_solr = server3
+            .and(warp::post())
+            .and(json_body_search_person_list())
+            .and_then(|req: SearchPersonList| {
+                info!("POST  /api/solr/person/filter       matched");
+                filter_person(
+                    "nconst".to_string(),
+                    req.nconsts,
+                    "solr".to_string(),
+                    &CLIENT,
+                )
+            });
+
+        search_nconsts_meili.or(search_nconsts_solr)
     }
 
-    fn json_body_search_person_list(
-    ) -> impl Filter<Extract = (SearchPersonList,), Error = warp::Rejection> + Clone {
+    fn json_body_search_person_list() -> impl Filter<Extract=(SearchPersonList, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
-    fn filter_entity(name: String) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
-        //  info!("filter_entity   {name}");
-        let f = format!("\"{}\"  = \"{}\"", "nconst", name);
-        let filter: Vec<String> = vec![f];
-        meili_filter_person("person".to_string(), filter, &CLIENT)
-    }
+    pub async fn filter_person(
+        filter_field: String,
+        filter_values: Vec<String>,
+        engine: String,
+        client: &Client,
+    ) -> Result<impl Reply, Infallible> {
+        let persons = match engine.as_str() {
+            "solr" => solr_filter_person_vec(filter_field, filter_values, client).await,
+            "meili" => meili_filter_person_vec(filter_field, filter_values, client).await,
+            _ => vec![],
+        };
 
-    fn filter_entity_with_joined_or(
-        req: SearchPersonList,
-    ) -> impl Future<Output = Result<impl Reply + Sized, Infallible>> {
-        //  info!("filter_entity for a list of person nconsts  {:?}", &req);
-
-        let nconsts = req
-            .nconsts
-            .iter()
-            .map(|nconst| format!("\"{}\"  = \"{}\"", "nconst".to_string(), nconst))
-            .collect::<Vec<String>>();
-
-        let nconsts = nconsts.join(" OR ");
-        info!("filter person request: {}", &nconsts);
-
-        let filter: Vec<String> = vec![nconsts];
-        meili_filter_person("person".to_string(), filter, &CLIENT)
+        Ok(warp::reply::json(&persons))
     }
 }

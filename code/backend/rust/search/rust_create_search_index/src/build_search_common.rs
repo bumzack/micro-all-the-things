@@ -4,19 +4,22 @@ use log::{error, info};
 use reqwest::{Error, Response, StatusCode};
 use serde_json::json;
 
-use common::logging_service_client::logging_service;
-use common::meili_search::dump_response_status;
-use common::movie::Movie;
-use common::person::Person;
-use common::principal::Principal;
-use common::search::{SearchPaginatedRequest, SearchPersonList};
-use common::search_doc::SearchIndexDoc;
+use common::logging::logging_service_client::logging_service;
+use common::meili::dump_response_status;
+use common::models::movie::Movie;
+use common::models::person::{Person, SearchPersonList};
+use common::models::principal::Principal;
+use common::models::search_doc::{SearchIndexDoc, SearchPaginatedRequest};
 
 use crate::{CLIENT, CONFIG};
 
-pub async fn convert_to_meilisearch_doc(movies: Vec<Movie>, docs: &mut Vec<SearchIndexDoc>) {
+pub async fn convert_to_search_index_doc(
+    movies: Vec<Movie>,
+    docs: &mut Vec<SearchIndexDoc>,
+    engine: String,
+) {
     for m in movies {
-        let principals = search_principal(&m.tconst.clone()).await;
+        let principals = search_principal(&m.tconst.clone(), engine.clone()).await;
         // let crew = search_crew(&m.tconst).await;
 
         let mut person_nconsts: HashSet<String> = HashSet::new();
@@ -26,7 +29,7 @@ pub async fn convert_to_meilisearch_doc(movies: Vec<Movie>, docs: &mut Vec<Searc
         });
         let vec1 = person_nconsts.iter().cloned().collect::<Vec<String>>();
 
-        let mut persons_vec = search_person(vec1).await;
+        let mut persons_vec = search_person(vec1, engine.clone()).await;
         let mut persons = HashMap::new();
         persons_vec.drain(..).for_each(|p| {
             let id = p.nconst.clone();
@@ -61,6 +64,7 @@ pub async fn convert_to_meilisearch_doc(movies: Vec<Movie>, docs: &mut Vec<Searc
             adult: m.adult,
             genres: m.genres.clone(),
             characters,
+            title_type: None,
         };
         docs.push(doc);
 
@@ -170,10 +174,13 @@ pub fn collect_data(
     });
 }
 
-pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
+pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
+    info!("XXX    search_movies");
     let search_movie: String = CONFIG
         .get("search_movie")
         .expect("expected search_movie URL");
+
+    let search_movie = search_movie.replace("ENGINE", &engine);
 
     let search_request = SearchPaginatedRequest {
         q: "*".to_string(),
@@ -183,10 +190,11 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
     };
 
     let message = format!(
-        "start search_movies().  offset {}, limit {}, sort {:?} ",
+        "start search_movies().  offset {}, limit {}, sort {:?}, engine: {}",
         offset,
         limit,
-        &search_request.sort.clone()
+        &search_request.sort.clone(),
+        engine.clone()
     );
     info!("message {}", &message);
     logging_service::log_entry(
@@ -194,7 +202,7 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -208,11 +216,24 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
     let msg = "search for movies paginated search request".to_string();
     log_external_service_error(&msg, &message, &response).await;
 
+    if response.is_err() {
+        error!(
+            "error from SearchMovie Service {:?}",
+            response.err().unwrap()
+        );
+        return vec![];
+    }
+    info!("XXX    search_movies all good");
+
     let response2 = response.unwrap();
     let movies = response2
         .json::<Vec<Movie>>()
         .await
         .expect("expected a list of Movies");
+    info!(
+        "XXX    search_movies all good. found {} movies",
+        movies.len()
+    );
 
     let message = format!(
         "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found ",
@@ -227,7 +248,8 @@ pub async fn search_movies(limit: u32, offset: u32) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
+    info!("XXX    search_movies finished succesfully");
 
     // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
     // info!("got a list of movies {}", movies_as_pretty_json);
@@ -257,20 +279,22 @@ async fn log_external_service_error(
                     "ERROR".to_string(),
                     message,
                 )
-                    .await;
+                .await;
             }
         }
         Err(e) => error!("error in request to meilisearch {:?}", e),
     };
 }
 
-async fn search_principal(tconst: &String) -> Vec<Principal> {
+async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
     let search_principal: String = CONFIG
         .get("search_principal_by_movie_tconst")
         .expect("expected search_principal_by_movie_tconst URL");
 
-    let url = format!("{search_principal}{tconst}");
-    info!("searching principals for movie tconst {tconst}. search url '{url}'");
+    let search_principal = search_principal.replace("ENGINE", &engine);
+
+    let url = format!("{search_principal}{engine}/title/{tconst}");
+    info!("searching principals for movie tconst {tconst}. engine {engine}.  search url '{url}'");
 
     let message = format!("start search_principal().  url {}", url);
     info!("message {}", &message);
@@ -279,7 +303,7 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -310,15 +334,19 @@ async fn search_principal(tconst: &String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     principals
 }
 
-async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
+async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
     let search_person_url: String = CONFIG
-        .get("search_person_by_nconst")
-        .expect("expected search_person_by_nconst URL");
+        .get("search_person")
+        .expect("expected search_person URL");
+
+    let search_person_url = search_person_url.replace("ENGINE", &engine);
+
+    let search_person_url = format!("{search_person_url}/{engine}/nconst");
 
     let search_person_req = SearchPersonList { nconsts };
 
@@ -326,8 +354,8 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
     let tmp = json!(&search_person_req).to_string();
 
     info!(
-        "sending request to url '{}'.  payload '{}'",
-        search_person_url, &tmp
+        "sending request to engine '{}' to url '{}'.  payload '{}'",
+        engine, search_person_url, &tmp
     );
 
     let response = CLIENT
@@ -338,7 +366,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
         .await;
 
     let j = json!(&search_person_req).to_string();
-    dump_response_status(&response, &search_person_url, &j);
+    dump_response_status(&response, &search_person_url, &j, engine);
     let response2 = response.unwrap();
 
     match response2.status().as_u16() > 300 {
@@ -367,7 +395,7 @@ async fn search_person(nconsts: Vec<String>) -> Vec<Person> {
                 "INFO".to_string(),
                 &message,
             )
-                .await;
+            .await;
 
             persons
         }

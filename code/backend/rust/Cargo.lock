@@ -1467,6 +1467,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_movieakasearch"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "dotenvy",
+ "futures",
+ "lazy_static",
+ "log",
+ "pretty_env_logger",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
 name = "rust_movieakaswriter"
 version = "0.1.0"
 dependencies = [
