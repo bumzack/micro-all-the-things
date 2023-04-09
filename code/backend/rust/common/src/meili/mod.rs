@@ -1,11 +1,9 @@
 use log::{error, info};
 use reqwest::{Error, Response, StatusCode};
 
-pub mod meili;
-pub mod meili_filter;
+pub mod meili_entity;
+pub mod meili_http;
 pub mod meili_models;
-pub mod meili_read_docs;
-pub mod meili_search;
 
 pub fn dump_response_status(
     response: &Result<Response, Error>,

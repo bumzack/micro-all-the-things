@@ -4,15 +4,15 @@ pub mod filters_search_search_index {
     use log::info;
     use warp::Filter;
 
+    use common::entity::entity::Entity;
     use common::logging::logging_service_client::logging_service;
-    use common::meili::meili_search::meili_search_searchindex::meili_search_searchindex_vec;
-    use common::models::search_doc::SearchIndexRequest;
-    use common::solr::solr_search::solr_search_search_index::solr_search_search_index_vec;
+    use common::meili::meili_entity::meili_entity_stuff::meili_search_entity;
+    use common::models::search_doc::{SearchIndexDoc, SearchIndexRequest};
+    use common::solr::solr_entity::solr_entity_stuff::solr_search_entity;
 
     use crate::CLIENT;
 
-    pub fn search_index_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "searchindex" / "search");
         let search_meili = server
             .and(warp::post())
@@ -34,8 +34,7 @@ pub mod filters_search_search_index {
         search_meili.or(search_solr)
     }
 
-    fn search_index_request(
-    ) -> impl Filter<Extract = (SearchIndexRequest,), Error = warp::Rejection> + Clone {
+    fn search_index_request() -> impl Filter<Extract=(SearchIndexRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
@@ -53,7 +52,7 @@ pub mod filters_search_search_index {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
 
         let facets = vec![
             "genres".to_string(),
@@ -66,10 +65,26 @@ pub mod filters_search_search_index {
 
         let search_docs = match engine.as_str() {
             "solr" => {
-                solr_search_search_index_vec(req.q, req.limit, req.offset, facets, &CLIENT).await
+                solr_search_entity::<SearchIndexDoc>(
+                    Entity::SEARCHINDEX,
+                    req.q,
+                    req.limit,
+                    req.offset,
+                    facets,
+                    &CLIENT,
+                )
+                    .await
             }
             "meili" => {
-                meili_search_searchindex_vec(req.q, req.limit, req.offset, facets, &CLIENT).await
+                meili_search_entity::<SearchIndexDoc>(
+                    Entity::SEARCHINDEX,
+                    req.q,
+                    req.limit,
+                    req.offset,
+                    facets,
+                    &CLIENT,
+                )
+                    .await
             }
             _ => vec![],
         };

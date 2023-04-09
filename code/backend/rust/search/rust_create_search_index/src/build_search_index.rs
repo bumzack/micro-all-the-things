@@ -22,7 +22,7 @@ pub mod filters_build_index {
             });
 
         let v3_meili =
-            warp::path!("api" / "v3" / "searchindex" / "build" / "meili" / u32 / u32 / u32)
+            warp::path!("api" / "v3" / "meili" / "searchindex" / "build"  / u32 / u32 / u32)
                 .and(warp::get())
                 .and_then(|start, pagesize, tasks| {
                     info!("GET /api/v3/meili/searchindex/build/:start/:pagesize/:tasks matched");
@@ -30,7 +30,7 @@ pub mod filters_build_index {
                 });
 
         let v3_solr =
-            warp::path!("api" / "v3" / "searchindex" / "build" / "solr" / u32 / u32 / u32)
+            warp::path!("api" / "v3" / "solr" / "searchindex" / "build"  / u32 / u32 / u32)
                 .and(warp::get())
                 .and_then(|start, pagesize, tasks| {
                     info!("GET /api/v3/solr/searchindex/build/:start/:pagesize/:tasks matched");

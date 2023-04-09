@@ -10,8 +10,8 @@ use common::entity::entity::Entity;
 use common::logging::logging_service_client::logging_service::{
     log_build_stats, log_docs_processed, log_end, log_start, log_task_end, log_task_error,
 };
-use common::meili::meili::mod_meili::exec_meilisearch_update;
-use common::solr::solr::mod_solr::exec_solr_update;
+use common::meili::meili_http::meili_http_stuff::meili_update_http;
+use common::solr::solr_http::mod_solr_http::solr_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
 use crate::CLIENT;
@@ -90,8 +90,8 @@ async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
         limit
     );
     let entity = Entity::SEARCHINDEX;
-    exec_meilisearch_update(&entity, &CLIENT, docs_json.clone()).await;
-    exec_solr_update(&entity, &CLIENT, docs_json).await;
+    meili_update_http(&entity, &CLIENT, docs_json.clone()).await;
+    solr_update_http(&entity, &CLIENT, docs_json).await;
     info!(
         "finished update request for  {} docs.  offset {}, limit {}",
         docs.len(),

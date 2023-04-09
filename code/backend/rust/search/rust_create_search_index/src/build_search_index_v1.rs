@@ -5,7 +5,7 @@ use serde_json::json;
 
 use common::entity::entity::Entity;
 use common::logging::logging_service_client::logging_service;
-use common::meili::meili::mod_meili::exec_meilisearch_update;
+use common::meili::meili_http::meili_http_stuff::meili_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
 use crate::CLIENT;
@@ -54,7 +54,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
             .await;
 
         info!("starting update request for  {} docs", docs.len());
-        exec_meilisearch_update(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
+        meili_update_http(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
         info!(
             "finished update request for  {} docs.  . movies processed {} / {} ",
             docs.len(),

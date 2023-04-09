@@ -5,8 +5,10 @@ pub mod filters_search_movieaka {
     use reqwest::Client;
     use warp::{Filter, Reply};
 
-    use common::meili::meili_filter::meili_filter_movieaka::meili_filter_movieaka_vec;
-    use common::solr::solr_filter::solr_filter_movieaka::solr_filter_movieaka_vec;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::meili_filter_entity;
+    use common::models::movieaka::MovieAkas;
+    use common::solr::solr_entity::solr_entity_stuff::solr_filter_entity;
 
     use crate::CLIENT;
 
@@ -33,8 +35,24 @@ pub mod filters_search_movieaka {
         client: &Client,
     ) -> Result<impl Reply, Infallible> {
         let principals = match engine.as_str() {
-            "solr" => solr_filter_movieaka_vec(filter_field, vec![filter_value], client).await,
-            "meili" => meili_filter_movieaka_vec(filter_field, vec![filter_value], client).await,
+            "solr" => {
+                solr_filter_entity::<MovieAkas>(
+                    Entity::MOVIEAKA,
+                    filter_field,
+                    vec![filter_value],
+                    client,
+                )
+                    .await
+            }
+            "meili" => {
+                meili_filter_entity::<MovieAkas>(
+                    Entity::MOVIEAKA,
+                    filter_field,
+                    vec![filter_value],
+                    client,
+                )
+                    .await
+            }
             _ => vec![],
         };
 

@@ -1,6 +1,5 @@
 use std::fmt::Debug;
 
-use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -14,7 +13,7 @@ pub struct SolrParams {
     pub sort: Option<String>,
     #[serde(rename = "q.op")]
     pub q_op: Option<i32>,
-    pub rows: Option<i32>,
+    pub rows: Option<String>,
     #[serde(rename = "useParams")]
     pub use_params: Option<u32>,
     #[serde(rename = "_")]
@@ -45,14 +44,4 @@ pub struct SolrResponse<T> {
     #[serde(rename = "responseHeader")]
     pub response_header: Option<ResponseHeader>,
     pub response: Option<SolrResponseDocs<T>>,
-}
-
-#[derive(Debug, Deserialize,Serialize)]
-pub struct SolrResponseDocs2<T > {
-    pub docs: Option<Vec<T>>,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct SolrResponse2<T> {
-    pub response: Option<SolrResponseDocs2<T>>,
 }

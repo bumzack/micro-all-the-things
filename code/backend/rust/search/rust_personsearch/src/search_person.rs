@@ -5,9 +5,10 @@ pub mod filters_search_person {
     use reqwest::Client;
     use warp::{Filter, Reply};
 
-    use common::meili::meili_filter::meili_filter_person::meili_filter_person_vec;
-    use common::models::person::SearchPersonList;
-    use common::solr::solr_filter::solr_filter_person::solr_filter_person_vec;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::meili_filter_entity;
+    use common::models::person::{Person, SearchPersonList};
+    use common::solr::solr_entity::solr_entity_stuff::solr_filter_entity;
 
     use crate::CLIENT;
 
@@ -54,8 +55,14 @@ pub mod filters_search_person {
         client: &Client,
     ) -> Result<impl Reply, Infallible> {
         let persons = match engine.as_str() {
-            "solr" => solr_filter_person_vec(filter_field, filter_values, client).await,
-            "meili" => meili_filter_person_vec(filter_field, filter_values, client).await,
+            "solr" => {
+                solr_filter_entity::<Person>(Entity::PERSON, filter_field, filter_values, client)
+                    .await
+            }
+            "meili" => {
+                meili_filter_entity::<Person>(Entity::PERSON, filter_field, filter_values, client)
+                    .await
+            }
             _ => vec![],
         };
 

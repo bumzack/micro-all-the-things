@@ -1,4 +1,4 @@
-pub mod mod_meili {
+pub mod meili_http_stuff {
     use std::collections::HashMap;
 
     use log::info;
@@ -10,7 +10,7 @@ pub mod mod_meili {
     use crate::meili::dump_response_status;
     use crate::meili::meili_models::MeiliSearchRequest;
 
-    pub(crate) async fn meili_search(
+    pub(crate) async fn meili_search_http(
         entity: Entity,
         filters: Option<HashMap<String, Vec<String>>>,
         facets: Option<Vec<String>>,
@@ -109,7 +109,7 @@ pub mod mod_meili {
         response
     }
 
-    pub async fn meili_read_doc(
+    pub async fn meili_read_document_http(
         entity: Entity,
         offset: u32,
         limit: u32,
@@ -151,7 +151,7 @@ pub mod mod_meili {
         response
     }
 
-    pub async fn exec_meilisearch_update(entity: &Entity, client: &Client, json: String) {
+    pub async fn meili_update_http(entity: &Entity, client: &Client, json: String) {
         let index = format!(
             "http://meilisearch01.bumzack.at/indexes/{}/documents?primaryKey=id",
             &entity.to_string()

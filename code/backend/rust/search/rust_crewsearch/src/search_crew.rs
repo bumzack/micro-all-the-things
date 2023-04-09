@@ -4,8 +4,10 @@ pub mod filters_search_crew {
     use log::info;
     use warp::{Filter, Reply};
 
-    use common::meili::meili_filter::meili_filter_crew::meili_filter_crew_vec;
-    use common::solr::solr_filter::solr_filter_crew::solr_filter_crew_vec;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::meili_filter_entity;
+    use common::models::crew::Crew;
+    use common::solr::solr_entity::solr_entity_stuff::solr_filter_entity;
 
     use crate::CLIENT;
 
@@ -31,8 +33,14 @@ pub mod filters_search_crew {
         engine: String,
     ) -> Result<impl Reply, Infallible> {
         let persons = match engine.as_str() {
-            "solr" => solr_filter_crew_vec(filter_field, vec![filter_value], &CLIENT).await,
-            "meili" => meili_filter_crew_vec(filter_field, vec![filter_value], &CLIENT).await,
+            "solr" => {
+                solr_filter_entity::<Crew>(Entity::CREW, filter_field, vec![filter_value], &CLIENT)
+                    .await
+            }
+            "meili" => {
+                meili_filter_entity::<Crew>(Entity::CREW, filter_field, vec![filter_value], &CLIENT)
+                    .await
+            }
             _ => vec![],
         };
 

@@ -1,4 +1,4 @@
-pub mod mod_solr {
+pub mod mod_solr_http {
     use std::collections::HashMap;
 
     use log::info;
@@ -8,7 +8,7 @@ pub mod mod_solr {
     use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::dump_response_status;
 
-    pub(crate) async fn solr_search(
+    pub(crate) async fn solr_search_http(
         entity: Entity,
         filters: Option<HashMap<String, Vec<String>>>,
         facets: Option<Vec<String>>,
@@ -22,24 +22,36 @@ pub mod mod_solr {
 
         if filters.is_some() {
             let f = filters.unwrap();
+            let mut filt = vec![];
             f.iter().for_each(|f| {
                 let field_name = f.0;
                 let field_values = f.1;
-                for filter_value in field_values {
-                    let entry = format!("{field_name}:{filter_value}");
-                    let entry = ("fq".to_string(), entry);
-                    url_params.push(entry)
-                }
-            })
+                let mut values: Vec<String> = field_values
+                    .iter()
+                    .map(|val| {
+                        let entry = format!("{field_name}:{}", val.to_string());
+                        entry
+                    })
+                    .collect();
+                filt.append(&mut values);
+            });
+            let filt = filt.join(" OR ");
+            println!(" filter qurey {}", &filt);
+            url_params.push(("fq".to_string(), filt));
         };
 
         if search_text.is_some() {
             let search_text = search_text.unwrap();
-            search_text.iter().for_each(|(field, txt)| {
-                let entry = format!("{field}:{txt}");
-                let entry = ("q".to_string(), entry);
-                url_params.push(entry)
-            })
+            let qs = search_text
+                .iter()
+                .map(|(field, txt)| {
+                    let entry = format!("{field}:{txt}");
+                    entry
+                })
+                .collect::<Vec<String>>();
+
+            let qs = qs.join(" OR ");
+            url_params.push(("q".to_string(), qs));
         } else {
             url_params.push(("q".to_string(), "*:*".to_string()));
         };
@@ -110,7 +122,7 @@ pub mod mod_solr {
         response
     }
 
-    pub async fn exec_solr_update(entity: &Entity, client: &Client, json: String) {
+    pub async fn solr_update_http(entity: &Entity, client: &Client, json: String) {
         let cmd = "/update?commitWithin=1000&overwrite=true&wt=json".to_string();
         let index = format!(
             "http://solr01.bumzack.at/solr/{}/{}",

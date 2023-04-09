@@ -5,11 +5,11 @@ pub mod filters_search_movie {
     use reqwest::Client;
     use warp::{Filter, Reply};
 
-    use common::meili::meili_read_docs::meilisearch_read_doc::meili_search_read_doc_movie_vec;
-    use common::meili::meili_search::meili_search_movie::meili_search_movie_vec;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::{meili_read_doc, meili_search_entity};
+    use common::models::movie::Movie;
     use common::models::search_doc::SearchPaginatedRequest;
-    use common::solr::solr_read_docs::solr_read_doc::solr_read_doc_movie_vec;
-    use common::solr::solr_search::solr_search_movie::solr_search_movie_vec;
+    use common::solr::solr_entity::solr_entity_stuff::{solr_read_doc, solr_search_entity};
 
     use crate::CLIENT;
 
@@ -56,8 +56,13 @@ pub mod filters_search_movie {
         client: &Client,
     ) -> Result<impl Reply, Infallible> {
         let movies = match engine.as_str() {
-            "solr" => solr_search_movie_vec(search_text, client).await,
-            "meili" => meili_search_movie_vec(search_text, client).await,
+            "solr" => {
+                solr_search_entity::<Movie>(Entity::MOVIE, search_text, 0, 50, vec![], client).await
+            }
+            "meili" => {
+                meili_search_entity::<Movie>(Entity::MOVIE, search_text, 0, 50, vec![], client)
+                    .await
+            }
             _ => vec![],
         };
 
@@ -71,8 +76,8 @@ pub mod filters_search_movie {
         client: &Client,
     ) -> Result<impl Reply, Infallible> {
         let movies = match engine.as_str() {
-            "solr" => solr_read_doc_movie_vec(offset, limit, client).await,
-            "meili" => meili_search_read_doc_movie_vec(offset, limit, client).await,
+            "solr" => solr_read_doc::<Movie>(Entity::MOVIE, offset, limit, client).await,
+            "meili" => meili_read_doc::<Movie>(Entity::MOVIE, offset, limit, client).await,
             _ => vec![],
         };
 

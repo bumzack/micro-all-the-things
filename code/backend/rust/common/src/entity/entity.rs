@@ -135,8 +135,8 @@ pub mod handlers_entity {
     use serde_json::json;
 
     use crate::entity::entity::{Entity, EntityConverter};
-    use crate::meili::meili::mod_meili::exec_meilisearch_update;
-    use crate::solr::solr::mod_solr::exec_solr_update;
+    use crate::meili::meili_http::meili_http_stuff::meili_update_http;
+    use crate::solr::solr_http::mod_solr_http::solr_update_http;
     use crate::tsv::tsv::TsvLines;
 
     pub async fn post_entity<'a, T: Serialize + Deserialize<'a> + Send>(
@@ -144,8 +144,8 @@ pub mod handlers_entity {
         entity: Entity,
         client: &Client,
     ) -> Result<impl warp::Reply, Infallible>
-        where
-            TsvLines: EntityConverter<T>,
+    where
+        TsvLines: EntityConverter<T>,
     {
         info!(
             "processing request with {} lines. {}",
@@ -156,8 +156,8 @@ pub mod handlers_entity {
 
         let json = json!(&entities).to_string();
 
-        exec_meilisearch_update(&entity, client, json.clone()).await;
-        exec_solr_update(&entity, client, json).await;
+        meili_update_http(&entity, client, json.clone()).await;
+        solr_update_http(&entity, client, json).await;
 
         let res = "all good".to_string();
         Ok(warp::reply::json(&res))
