@@ -1,9 +1,10 @@
 pub mod filters_logging {
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use warp::{reject, Rejection, Reply};
     use warp::reply::json;
 
-    use common::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
+    use common::logging::logging::{AddLogEntry, DivideByZero, ReadLogEntry};
 
     use crate::log_mod::db::db_logging::{insert_log_entry, list_entries};
 

@@ -10,6 +10,7 @@ members = [
     "datasupply/rust_ratingwriter",
     "datasupply/rust_tsvfilereader",
     "search/rust_moviesearch",
+    "search/rust_movieakasearch",
     "search/rust_create_search_index",
     "search/rust_personsearch",
     "search/rust_principalsearch",

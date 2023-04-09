@@ -1,0 +1,8 @@
+env="production"
+db_path="../../data/meilifile"
+master_key="1234567890123456"
+http_addr="localhost:18984"
+no_analytics=true
+max_indexing_memory = "64GB"
+max_indexing_threads = 9
+meili_log_level=warn

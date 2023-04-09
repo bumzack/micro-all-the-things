@@ -24,4 +24,21 @@ pub struct SearchIndexDoc {
     pub genres: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub characters: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub title_type: Option<Vec<String>>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct SearchIndexRequest {
+    pub q: String,
+    pub offset: u32,
+    pub limit: u32,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct SearchPaginatedRequest {
+    pub q: String,
+    pub offset: u32,
+    pub limit: u32,
+    pub sort: Vec<String>,
 }

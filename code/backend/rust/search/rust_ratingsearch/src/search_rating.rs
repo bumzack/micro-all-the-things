@@ -1,29 +1,59 @@
 pub mod filters_search_rating {
     use std::convert::Infallible;
-    use std::future::Future;
 
+    use log::info;
     use warp::{Filter, Reply};
 
-    use common::meili_filter::handlers_search_entity::meili_filter_rating;
+    use common::entity::entity::Entity;
+    use common::meili::meili_entity::meili_entity_stuff::meili_filter_entity;
+    use common::models::rating::Rating;
+    use common::solr::solr_entity::solr_entity_stuff::solr_filter_entity;
 
     use crate::CLIENT;
 
-    pub fn search_rating_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
-        let server = warp::path!("api" / "rating" / String);
-        server.and(warp::get()).and_then(|tconst: String| {
-            info!("/api/rating/:tconst matched");
-            filter_entity("rating".to_string(), "tconst".to_string(), tconst)
-        })
+    pub fn filter_rating_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
+        let server = warp::path!("api" / "meili" / "rating" / "filter" / String);
+        let search_rating_meili = server.and(warp::get()).and_then(|tconst: String| {
+            info!("/api/rating/filter/:tconst matched");
+            filter_rating("tconst".to_string(), tconst, "meili".to_string())
+        });
+
+        let server = warp::path!("api" / "solr" / "rating" / "filter" / String);
+        let search_rating_solr = server.and(warp::get()).and_then(|tconst: String| {
+            info!("/api/rating/filter/:tconst matched");
+            filter_rating("tconst".to_string(), tconst, "solr".to_string())
+        });
+
+        search_rating_meili.or(search_rating_solr)
     }
 
-    fn filter_entity(
-        entity: String,
-        attribute: String,
-        value: String,
-    ) -> impl Future<Output=Result<impl Reply + Sized, Infallible>> {
-        info!("filter_entity  {attribute} =  {value}");
-        let f = format!("\"{}\"  = \"{}\"", attribute, value);
-        let filter: Vec<String> = vec![f];
-        meili_filter_rating(entity, filter, &CLIENT)
+    pub async fn filter_rating(
+        filter_field: String,
+        filter_value: String,
+        engine: String,
+    ) -> Result<impl Reply, Infallible> {
+        let principals = match engine.as_str() {
+            "solr" => {
+                solr_filter_entity::<Rating>(
+                    Entity::RATING,
+                    filter_field,
+                    vec![filter_value],
+                    &CLIENT,
+                )
+                    .await
+            }
+            "meili" => {
+                meili_filter_entity::<Rating>(
+                    Entity::RATING,
+                    filter_field,
+                    vec![filter_value],
+                    &CLIENT,
+                )
+                    .await
+            }
+            _ => vec![],
+        };
+
+        Ok(warp::reply::json(&principals))
     }
 }

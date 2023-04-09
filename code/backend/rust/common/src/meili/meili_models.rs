@@ -75,28 +75,3 @@ pub struct MeiliDocReadResult<T> {
     pub limit: u32,
     pub total: u32,
 }
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct MeiliSearchRequestMovie {
-    pub title: String,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct SearchPaginatedRequest {
-    pub q: String,
-    pub offset: u32,
-    pub limit: u32,
-    pub sort: Vec<String>,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct SearchPersonList {
-    pub nconsts: Vec<String>,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct SearchIndexRequest {
-    pub q: String,
-    pub offset: u32,
-    pub limit: u32,
-}

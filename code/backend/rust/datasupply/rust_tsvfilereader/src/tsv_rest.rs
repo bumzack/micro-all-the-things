@@ -1,7 +1,7 @@
 pub mod filters_tsv {
     use warp::Filter;
 
-    use common::tsv::TsvFileImportRequest;
+    use common::tsv::tsv::TsvFileImportRequest;
 
     use super::handlers_tsv;
 
@@ -25,12 +25,13 @@ pub mod filters_tsv {
 mod handlers_tsv {
     use std::convert::Infallible;
 
+    use log::info;
     use serde_json::json;
     use tokio::fs::File;
     use tokio::io::{AsyncBufReadExt, BufReader};
 
-    use common::logging_service_client::logging_service;
-    use common::tsv::{TsvFileImportRequest, TsvLine, TsvLines};
+    use common::logging::logging_service_client::logging_service;
+    use common::tsv::tsv::{TsvFileImportRequest, TsvLine, TsvLines};
 
     use crate::{CLIENT, CONFIG};
 
@@ -44,7 +45,7 @@ mod handlers_tsv {
         logging_service::log_entry("rust_tsvfilereader".to_string(), "INFO".to_string(), &msg)
             .await;
 
-        println!("tsv_file_import_request {:?}", &tsv_request);
+        info!("tsv_file_import_request {:?}", &tsv_request);
 
         let start = tsv_request.start as usize;
         let page_size = tsv_request.page_size as u64;
@@ -52,7 +53,7 @@ mod handlers_tsv {
         let t = tsv_request.tsv_type;
 
         let filename_property = format!("datasource_{:?}_filename", t);
-        // println!("filename_property {}", &filename_property);
+        // info!("filename_property {}", &filename_property);
         let filename: String = CONFIG
             .get(&filename_property)
             .expect("filename_property must exist");
@@ -61,7 +62,7 @@ mod handlers_tsv {
             .expect("datasource_folder must exist");
 
         let filename = format!("{}/{}", datasource_folder, filename);
-        // println!("filename {}", &filename);
+        // info!("filename {}", &filename);
         let file = File::open(&filename).await;
         let file = match file {
             Ok(f) => f,
@@ -77,7 +78,7 @@ mod handlers_tsv {
                 )
                     .await;
 
-                println!("error opening file {}. err {}", &filename, err);
+                info!("error opening file {}. err {}", &filename, err);
                 let ret = format!("error opening file {}", &filename);
                 return Ok(warp::reply::json(&ret));
             }
@@ -98,7 +99,7 @@ mod handlers_tsv {
             .expect("target_host_property must exist");
 
         let request_url = format!("{}:{}{}", host, port, url);
-        // println!("request_url {}", &request_url);
+        // info!("request_url {}", &request_url);
 
         // FUNNY NICE DEMO BUG
         //  while let Ok(l) = reader.lines().next_line().await {
@@ -127,17 +128,17 @@ mod handlers_tsv {
                 current_line += 1;
 
                 if l.is_none() {
-                    println!("we are done here ");
+                    info!("we are done here ");
                     break;
                 }
 
                 let line = l.unwrap();
                 if line.is_empty() {
-                    println!("line is empty -> skipping");
+                    info!("line is empty -> skipping");
                     break;
                 }
 
-                let entries = line.clone().split("\t").map(|s| s.to_string()).collect();
+                let entries = line.clone().split('\t').map(|s| s.to_string()).collect();
                 let tsv = TsvLine {
                     entries,
                     original: line,
@@ -155,13 +156,13 @@ mod handlers_tsv {
             let tsv_lines = TsvLines { lines: tsv_lines };
 
             if tsv_lines.lines.is_empty() {
-                println!("no tsv_lines available -> breaking in while");
+                info!("no tsv_lines available -> breaking in while");
                 stuff_available = false;
             }
 
             let json = json!(&tsv_lines).to_string();
 
-            println!("request url  '{}'", &request_url);
+            info!("request url  '{}'", &request_url);
             //  let client = reqwest::Client::new();
             let res = CLIENT
                 .post(&request_url)
@@ -175,12 +176,12 @@ mod handlers_tsv {
                     let code = res.status();
                     let header = res.headers().clone();
                     // let b = res.text().await.unwrap();
-                    println!("request ok. status {:?}", code);
-                    println!("request ok. headers {:?}", header);
-                    // println!("request ok. response body {:?}", &b);
+                    info!("request ok. status {:?}", code);
+                    info!("request ok. headers {:?}", header);
+                    // info!("request ok. response body {:?}", &b);
                 }
                 Err(e) => {
-                    println!("error in request {:?}", e);
+                    info!("error in request {:?}", e);
                     let msg = format!(
                         "error in post_tsv_request. calling URL {:?} resulted in error  {:?}",
                         &request_url, e
@@ -194,7 +195,7 @@ mod handlers_tsv {
                 }
             }
 
-            println!("processed batch {} for type {:?}", batches, &t);
+            info!("processed batch {} for type {:?}", batches, &t);
 
             let msg = format!(
                 "start post_tsv_request. processed {} batches for entity {:?}",
@@ -205,7 +206,7 @@ mod handlers_tsv {
 
             tokio::time::sleep(tokio::time::Duration::from_secs(3)).await;
         }
-        println!("processed lines {}", current_line);
+        info!("processed lines {}", current_line);
 
         let msg = format!(
             "end post_tsv_request. processed {:?} batches of entity {:?}",

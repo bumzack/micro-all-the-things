@@ -3,11 +3,11 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::{
+use crate::entity::entity::{
     EntityConverter, get_nullable_bool, get_nullable_string, get_nullable_string_list,
     get_nullable_u32,
 };
-use crate::tsv::{TsvLine, TsvLines};
+use crate::tsv::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -24,8 +24,13 @@ pub struct Movie {
     pub genres: Option<Vec<String>>,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SearchRequestMovie {
+    pub title: String,
+}
+
 fn map_to_movie(tsv_line: &TsvLine) -> Movie {
-    // println!("mapping tsv_line {:?} to Movie  ", &tsv_line);
+    // info!("mapping tsv_line {:?} to Movie  ", &tsv_line);
 
     let tconst = get_nullable_string(&tsv_line.entries, 0).unwrap();
     let title_type = get_nullable_string(&tsv_line.entries, 1);

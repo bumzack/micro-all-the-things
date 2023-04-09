@@ -1,6 +1,3 @@
-#[macro_use]
-extern crate log;
-
 use std::io;
 
 use log::LevelFilter;
@@ -19,7 +16,7 @@ async fn main() -> io::Result<()> {
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 
-    let root = root.or(search_person::filters_search_person::search_person_route());
+    let root = root.or(search_person::filters_search_person::filter_person_route());
 
     // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("meilisearcperson"));

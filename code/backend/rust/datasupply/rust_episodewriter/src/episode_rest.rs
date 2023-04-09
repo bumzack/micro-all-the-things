@@ -1,7 +1,7 @@
 pub mod filters_episode {
     use warp::Filter;
 
-    use common::tsv::TsvLines;
+    use common::tsv::tsv::TsvLines;
 
     use super::handlers_entity;
 
@@ -24,13 +24,14 @@ pub mod filters_episode {
 mod handlers_entity {
     use std::convert::Infallible;
 
-    use common::entity::handlers_entity::post_entity;
-    use common::episode::Episode;
-    use common::tsv::TsvLines;
+    use common::entity::entity::Entity;
+    use common::entity::entity::handlers_entity::post_entity;
+    use common::models::episode::Episode;
+    use common::tsv::tsv::TsvLines;
 
     use crate::CLIENT;
 
     pub async fn post_episode(tsv_lines: TsvLines) -> Result<impl warp::Reply, Infallible> {
-        post_entity::<Episode>(tsv_lines, "episode".to_string(), &CLIENT).await
+        post_entity::<Episode>(tsv_lines, Entity::EPISODE, &CLIENT).await
     }
 }

@@ -17,10 +17,10 @@ ExecStart=/home/bumzack/micro-all-the-things/code/backend/rust/target/release/lo
 
 # make sure log directory exists and owned by syslog
 PermissionsStartOnly=true
-ExecStartPre=/bin/mkdir -p /var/log/logservice*
-ExecStartPre=/bin/chown syslog:adm /var/log/logservice*
-ExecStartPre=/bin/chmod 755 /var/log/logservice*
-SyslogIdentifier=logservice*
+ExecStartPre=/bin/mkdir -p /var/log/logservice
+ExecStartPre=/bin/chown syslog:adm /var/log/logservice
+ExecStartPre=/bin/chmod 755 /var/log/logservice
+SyslogIdentifier=logservice
 
 [Install]
 WantedBy=multi-user.target
