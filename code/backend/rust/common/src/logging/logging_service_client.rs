@@ -58,7 +58,7 @@ pub mod logging_service {
 
     pub async fn log_error(msg: String) {
         let msg = format!(
-            "build_index_v2.exec_meilisearch_update. request not successful {}",
+            "build_index_v3.exec_meilisearch_update. request not successful {}",
             msg,
         );
         error!("{}", msg);
@@ -87,7 +87,7 @@ pub mod logging_service {
 
     pub async fn log_end(total_movies_processed: usize) -> String {
         let message = format!(
-            "build_index_v2.finished. processed {} movies ",
+            "build_index_v3.finished. processed {} movies ",
             total_movies_processed
         );
         info!("res {}", &message);
@@ -102,7 +102,7 @@ pub mod logging_service {
 
     pub async fn log_start(offset: u32, limit: u32) {
         let msg = format!(
-            "build_index_v2.start. start offset {}, start limit {}",
+            "build_index_v3.start. start offset {}, start limit {}",
             offset, limit
         );
         log_entry(
@@ -115,7 +115,7 @@ pub mod logging_service {
 
     pub async fn log_build_stats(engine: String, num_tasks: usize) {
         let msg = format!(
-            "build_index_v2.stats. engine  {}.  total_tasks created {}",
+            "build_index_v3.stats. engine  {}.  total_tasks created {}",
             engine, num_tasks
         );
         info!("{}", msg);
@@ -129,7 +129,7 @@ pub mod logging_service {
 
     pub async fn log_task_error(name: String, e: String) {
         let msg = format!(
-            "build_index_v2.worker_error. worker {} crashed with error {}",
+            "build_index_v3.worker_error. worker {} crashed with error {}",
             name, e
         );
         error!("{}", msg);
@@ -143,7 +143,7 @@ pub mod logging_service {
 
     pub async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
         let message = format!(
-            "build_index_v2()  finished task {} with {} and processed {} movies ",
+            "build_index_v3()  finished task {} with {} and processed {} movies ",
             name, id, cnt_movies
         );
         info!("res {}", &message);

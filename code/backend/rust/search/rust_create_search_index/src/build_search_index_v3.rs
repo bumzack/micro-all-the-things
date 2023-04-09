@@ -14,9 +14,9 @@ use common::meili::meili_http::meili_http_stuff::meili_update_http;
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
-use crate::CLIENT;
-use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData};
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
+use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
+use crate::CLIENT;
 
 pub async fn build_index_v3(
     engine: String,

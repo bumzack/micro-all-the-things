@@ -140,7 +140,7 @@ curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nc
 ## /:engine/:start/:pagesize/:tasks
 
 ```
- curl  -vv   http://localhost:18300/api/v3/searchindex/build/solr/0/100/1         |  jq    
+ curl  -vv   http://localhost:18300/api/v3/solr/searchindex/build/0/100/1         |  jq    
 ```
 
 ## Movie max Hits

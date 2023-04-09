@@ -175,7 +175,7 @@ pub fn collect_data(
 }
 
 pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
-    info!("XXX    search_movies");
+    info!("search_movies");
     let search_movie: String = CONFIG
         .get("search_movie")
         .expect("expected search_movie URL");
@@ -204,6 +204,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
     )
         .await;
 
+    info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
 
@@ -293,7 +294,7 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
 
     let search_principal = search_principal.replace("ENGINE", &engine);
 
-    let url = format!("{search_principal}{engine}/title/{tconst}");
+    let url = format!("{search_principal}{tconst}");
     info!("searching principals for movie tconst {tconst}. engine {engine}.  search url '{url}'");
 
     let message = format!("start search_principal().  url {}", url);
@@ -345,8 +346,6 @@ async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
         .expect("expected search_person URL");
 
     let search_person_url = search_person_url.replace("ENGINE", &engine);
-
-    let search_person_url = format!("{search_person_url}/{engine}/nconst");
 
     let search_person_req = SearchPersonList { nconsts };
 
