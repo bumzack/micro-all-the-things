@@ -23,7 +23,7 @@ pub mod db_logging {
 
         // TODO
         //  oh boy, that's beyond ugly
-        let mut data = client.query_one(&query, &[]).await.map_err(|e| {
+        let data = client.query_one(&query, &[]).await.map_err(|e| {
             error!("error rejection {:?}", e);
             reject::custom(DivideByZero)
         })?;

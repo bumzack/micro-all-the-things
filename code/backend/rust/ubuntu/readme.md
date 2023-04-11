@@ -43,28 +43,6 @@ sudo systemctl restart  rust_search_principal.service
 sudo systemctl restart  rust_logservice.service
 ```
 
-Apr 7 17:28:26 bumzack-rust rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_search] remote address
-Some(195.201.240.124:80)
-Apr 7 17:28:26 bumzack-rust
-rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_filter::meili_filter_person] meili_filter_person
-request != OK. status 408,
-Apr 7 17:28:26 bumzack-rust
-rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_filter::meili_filter_person] meili_filter_person
-request != OK. headers {"server": "nginx/1.18.0 (Ubuntu)", "date": "Fri, 07 Apr 2023 17:28:26 GMT", "content-length": "
-0", "connection": "keep-alive"},
-Apr 7 17:28:26 bumzack-rust rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_search] request != OK.
-status 408, url http://meilisearch01.bumzack.at/indexes/person/search
-Apr 7 17:28:26 bumzack-rust rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_search] request != OK.
-headers {"server": "nginx/1.18.0 (Ubuntu)", "date": "Fri, 07 Apr 2023 17:28:26 GMT", "content-length": "0", "
-connection": "keep-alive"}, url http://meilisearch01.bumzack.at/indexes/person/search
-Apr 7 17:28:26 bumzack-rust rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_search] remote address
-Some(195.201.240.124:80)
-Apr 7 17:28:26 bumzack-rust
-rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_filter::meili_filter_person] meili_filter_person
-request != OK. status 408,
-Apr 7 17:28:26 bumzack-rust rust_personsearch[731]: [2023-04-07T17:28:26Z ERROR common::meili_filter::
-meili_filter_persorust_create_search_index.service
-
 ## Data Supply
 
 ```
@@ -104,15 +82,23 @@ sudo systemctl restart rust_ratingwriter.service
 sudo systemctl restart rust_tsvfilereader.service
 ```
 
+## Price and Customer
 
+```
+sudo systemctl enable rust_customerpriceservice.service
+sudo systemctl enable  
+sudo systemctl enable  
+```
 
+```
+sudo systemctl start rust_customerpriceservice.service
+sudo systemctl start rust_customerservice.service
+sudo systemctl start rust_priceservice.service
+```
 
-
-
-
-
-
-
-
-
+```
+sudo systemctl restart rust_customerpriceservice.service
+sudo systemctl restart rust_customerservice.service
+sudo systemctl restart rust_priceservice.service
+```
 

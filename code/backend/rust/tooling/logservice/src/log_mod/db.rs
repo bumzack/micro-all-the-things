@@ -8,7 +8,6 @@ pub mod db_logging {
     use warp::reject;
 
     use common::logging::logging::{AddLogEntry, DivideByZero, LogEntry, ReadLogEntry};
-    use common::logging::logging::MyError::DBQueryError;
 
     use crate::db::db::TABLE_LOG_ENTRY;
 
