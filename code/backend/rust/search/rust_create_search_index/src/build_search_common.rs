@@ -1,10 +1,10 @@
 use std::collections::{HashMap, HashSet};
 
 use log::{error, info};
-use reqwest::{Error, Response, StatusCode};
 use serde_json::json;
 
 use common::logging::logging_service_client::logging_service;
+use common::logging::logging_service_client::logging_service::log_external_service_error;
 use common::meili::dump_response_status;
 use common::models::movie::Movie;
 use common::models::person::{Person, SearchPersonList};
