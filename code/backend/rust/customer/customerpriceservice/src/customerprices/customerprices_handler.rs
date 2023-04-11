@@ -85,6 +85,11 @@ pub mod filters_customer_price {
                 let years_ranges = years_ranges.clone();
                 for (idx, year) in years_ranges.into_iter().enumerate() {
                     let discount = 3.0 * (idx as f32 + 1.0) + rand::random::<f32>() * 20.0;
+                    let mut discount = (discount * 10.0).round() / 10.0;
+
+                    if discount > 90.0 {
+                        discount = 91.1;
+                    }
 
                     let add_customer = AddCustomerPriceEntry {
                         customer_id: customer.id,

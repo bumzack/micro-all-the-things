@@ -46,7 +46,8 @@ pub mod handlers_price {
             let movies = search_movies(limit, offset, "solr".to_string()).await;
             movies_found = !movies.is_empty();
             for m in movies {
-                let amount = 10.0 + rand::random::<f32>() * 5.0;
+                let amount = 15.0 + rand::random::<f32>() * 15.0;
+                let amount = (amount * 100.0).round() / 100.0;
 
                 let add_price_entry = AddPriceEntry {
                     movie_tconst: m.tconst.clone(),
