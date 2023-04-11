@@ -3,11 +3,15 @@ search_movie_by_name = "http://localhost:18200/api/ENGINE/movie/"
 search_movie = "http://localhost:18200/api/ENGINE/movie/"
 search_person_by_nconst = "http://localhost:18203/api/ENGINE/person/nconst"
 search_person = "http://localhost:18203/api/ENGINE/person/filter"
+search_person_doc = "http://localhost:18203/api/v1/ENGINE/person"
+
 search_principal_by_movie_tconst = "http://localhost:18204/api/ENGINE/principal/filter/title/"
 search_principal_by_person_nconst = "http://localhost:18204/api/ENGINE/principal/filter/name/"
 search_crew_by_tconst = "http://localhost:18205/api/ENGINE/crew/filter"
 search_movieaka_by_tconst = "http://localhost:18201/api/ENGINE/movieaka/filter"
 search_rating_by_tconst = "http://localhost:18201/api/ENGINE/rating/filter"
+
+search_customers_paginated = "http://localhost:18980/api/v1/customer/paginated/:offset/:limit"
 
 
 
@@ -35,7 +39,16 @@ customerservice_db_password = "bumzack"
 customerservice_db_host = "localhost"
 customerservice_db_name = "bumzack"
 customerservice_service_host = "localhost"
-customerservice_service_port = "18900"
+customerservice_service_port = "18980"
+
+# customerprice service
+customerpriceservice_db_user = "bumzack"
+customerpriceservice_db_password = "bumzack"
+customerpriceservice_db_host = "localhost"
+customerpriceservice_db_name = "bumzack"
+customerpriceservice_service_host = "localhost"
+customerpriceservice_service_port = "18981"
+
 
 
 server_port = "18900"

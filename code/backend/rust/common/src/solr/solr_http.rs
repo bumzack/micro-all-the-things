@@ -7,6 +7,7 @@ pub mod mod_solr_http {
     use crate::entity::entity::Entity;
     use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::dump_response_status;
+    use crate::solr::SOLR_DEFAULT_LIMIT;
 
     pub(crate) async fn solr_search_http(
         entity: Entity,
@@ -58,6 +59,9 @@ pub mod mod_solr_http {
 
         if limit.is_some() {
             let entry = ("rows".to_string(), limit.unwrap().to_string());
+            url_params.push(entry)
+        } else {
+            let entry = ("rows".to_string(), SOLR_DEFAULT_LIMIT.to_string());
             url_params.push(entry)
         }
 

@@ -3,7 +3,7 @@ use tokio_postgres::NoTls;
 
 use crate::CONFIG;
 
-pub const TABLE_PRICE: &str = "prices";
+pub const TABLE_PRICE: &str = "price";
 
 pub fn create_pool() -> Pool {
     let mut pg_config = tokio_postgres::Config::new();

@@ -19,5 +19,8 @@ members = [
     "search/rust_search_search_index",
     "common",
     "tooling/logservice",
-    "tooling/micro_swagger"
+    "tooling/micro_swagger",
+    "customer/customerpriceservice",
+    "customer/customerservice",
+    "price/priceservice"
 ]

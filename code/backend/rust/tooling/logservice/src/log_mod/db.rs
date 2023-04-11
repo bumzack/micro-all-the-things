@@ -4,9 +4,10 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_logging {
     use deadpool_postgres::Pool;
-    use log::info;
+    use log::{error, info};
+    use warp::reject;
 
-    use common::logging::logging::{AddLogEntry, LogEntry, ReadLogEntry};
+    use common::logging::logging::{AddLogEntry, DivideByZero, LogEntry, ReadLogEntry};
     use common::logging::logging::MyError::DBQueryError;
 
     use crate::db::db::TABLE_LOG_ENTRY;
@@ -61,7 +62,10 @@ pub mod db_logging {
                 &[&req.service_id, &req.log_type, &req.message, &req.logtime],
             )
             .await
-            .map_err(DBQueryError)?;
+            .map_err(|e| {
+                error!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
         let entry = LogEntry::from(&row);
         Ok(entry)
     }

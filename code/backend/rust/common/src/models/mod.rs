@@ -1,8 +1,11 @@
 pub mod crew;
+pub mod customer;
+pub mod customer_prices;
 pub mod episode;
 pub mod movie;
 pub mod movieaka;
 pub mod person;
+pub mod prices;
 pub mod principal;
 pub mod rating;
 pub mod search_doc;

@@ -134,13 +134,13 @@ curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nc
 ## Build Index
 
 ```
- curl  -vv   http://localhost:18300/api/searchindex/build         |  jq    
+ curl  -vv   http://localhost:18300/api/v3/solr/searchindex/build         |  jq    
 ```
 
 ## /:engine/:start/:pagesize/:tasks
 
 ```
- curl  -vv   http://localhost:18300/api/v3/solr/searchindex/build/0/100/1         |  jq    
+curl http://localhost:18300/api/v3/solr/searchindex/build/9728000/50/1         |  jq    
 ```
 
 ## Movie max Hits

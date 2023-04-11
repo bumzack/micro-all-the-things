@@ -202,7 +202,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -249,42 +249,12 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     info!("XXX    search_movies finished succesfully");
 
     // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
     // info!("got a list of movies {}", movies_as_pretty_json);
     movies
-}
-
-async fn log_external_service_error(
-    msg1: &String,
-    message: &String,
-    response: &Result<Response, Error>,
-) {
-    match &response {
-        Ok(res) => {
-            let code = res.status();
-            if code != StatusCode::OK {
-                let x = res.headers().clone();
-                // let b = res.text().await.unwrap();
-                info!("{} != OK.  returned HTTP code {} ", msg1, code);
-                info!(
-                    "{} != OK.  returned HTTP code {} headers {:?}",
-                    msg1, code, x
-                );
-
-                info!("message {}", &message);
-                logging_service::log_entry(
-                    "rust_create_search_index".to_string(),
-                    "ERROR".to_string(),
-                    message,
-                )
-                .await;
-            }
-        }
-        Err(e) => error!("error in request to meilisearch {:?}", e),
-    };
 }
 
 async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
@@ -304,7 +274,7 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -335,7 +305,7 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     principals
 }
@@ -394,7 +364,7 @@ async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
                 "INFO".to_string(),
                 &message,
             )
-            .await;
+                .await;
 
             persons
         }

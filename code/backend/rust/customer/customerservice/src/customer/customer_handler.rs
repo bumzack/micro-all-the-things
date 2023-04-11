@@ -1,0 +1,196 @@
+pub mod handler_customer {
+    use deadpool_postgres::Pool;
+    use serde_json::json;
+    use warp::{reject, Rejection, Reply};
+    use warp::hyper::StatusCode;
+    use warp::reply::json;
+
+    use common::logging::logging::DivideByZero;
+    use common::logging::logging_service_client::logging_service;
+    use common::logging::logging_service_client::logging_service::log_external_service_error;
+    use common::models::customer::AddCustomer;
+    use common::models::person::Person;
+    use common::models::search_doc::SearchPaginatedRequest;
+
+    use crate::{CLIENT, CONFIG};
+    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
+
+    pub async fn insert_customer_handler(
+        pool: Pool,
+        req: AddCustomer,
+    ) -> Result<impl Reply, Rejection> {
+        info!("adding customer entry {:?}", req);
+
+        let customer = insert_customer(pool.clone(), req)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                error!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
+
+        Ok(json(&customer))
+    }
+
+    pub async fn read_customer_paginated_handler(
+        pool: Pool,
+        offset: i32,
+        limit: i32,
+    ) -> Result<impl Reply, Rejection> {
+        info!(
+            "reading customers paginated   offset {}, limit {}",
+            offset, limit
+        );
+
+        let customers = get_customers_paginated(pool.clone(), offset, limit)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                error!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
+
+        Ok(json(&customers))
+    }
+
+    pub async fn read_customer_handler(pool: Pool, email: String) -> Result<impl Reply, Rejection> {
+        info!("reading customer for email entries {:?}", &email);
+
+        let customer = get_customer(pool, email)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                error!("error rejection {:?}", e);
+                reject::custom(DivideByZero)
+            })?;
+
+        Ok(json(&customer))
+    }
+
+    pub async fn insert_dummy_data_handler(
+        mut offset: u32,
+        limit: u32,
+        count: u32,
+        pool: Pool,
+    ) -> Result<impl Reply, Rejection> {
+        info!("inserting all persons as customers");
+
+        let mut persons_found = true;
+        let mut persons_processed = 0;
+        while persons_found && persons_processed < count {
+            let persons = search_persons(limit, offset, "solr".to_string()).await;
+            persons_found = !persons.is_empty();
+            for p in persons {
+                let email = format!("{}@foryouandyourfakewebshop.at", p.nconst);
+                let (first_name, last_name) = match p.primary_name {
+                    Some(n) => {
+                        let mut names: Vec<&str> = n.split_ascii_whitespace().collect();
+                        if names.len() > 1 {
+                            let first_name = names.get(0).unwrap().to_string();
+                            let last_names: Vec<&str> = names.drain(1..).collect();
+                            let last_name = last_names.join(" / ");
+                            (first_name, last_name)
+                        } else {
+                            // oh boy
+                            let n = names.get(0).unwrap().to_string();
+                            (n.clone(), n)
+                        }
+                    }
+                    None => (p.nconst.clone(), p.nconst),
+                };
+                let add_customer = AddCustomer {
+                    first_name,
+                    last_name,
+                    email,
+                    password: "1234".to_string(),
+                };
+                let _ = insert_customer(pool.clone(), add_customer).await;
+                persons_processed += 1;
+            }
+            offset += limit;
+        }
+        let msg = format!("customers processed {}", persons_processed);
+        Ok(warp::reply::with_status(msg, StatusCode::CREATED))
+    }
+
+    async fn search_persons(limit: u32, offset: u32, engine: String) -> Vec<Person> {
+        info!("rust_customerservice_insert_dummy_data. search_persons");
+        let search_person: String = CONFIG
+            .get("search_person_doc")
+            .expect("expected search_person_doc POST request URL");
+
+        let search_person = search_person.replace("ENGINE", &engine);
+
+        let search_request = SearchPaginatedRequest {
+            q: "*".to_string(),
+            offset,
+            limit,
+            sort: vec!["nconst:asc".to_string()],
+        };
+
+        let message = format!(
+            "start rust_customerservice_insert_dummy_data. search_persons().  offset {}, limit {}, sort {:?}, engine: {}",
+            offset,
+            limit,
+            &search_request.sort.clone(),
+            engine.clone()
+        );
+        info!("message {}", &message);
+        logging_service::log_entry(
+            " rust_customerservice_insert_dummy_data".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
+
+        info!("search person POST URL {}", &search_person);
+        let json = json!(&search_request);
+        let response = CLIENT.post(search_person).json(&json).send().await;
+
+        let message = format!(
+            "error rust_customerservice_insert_dummy_data. search_persons(). offset {}, limit {}, sort {:?}.",
+            offset,
+            limit,
+            &search_request.sort.clone()
+        );
+        let msg = "search for persons paginated search request".to_string();
+        log_external_service_error(&msg, &message, &response).await;
+
+        if response.is_err() {
+            error!(
+                "error from SearchMovie Service {:?}",
+                response.err().unwrap()
+            );
+            return vec![];
+        }
+        info!("XXX     search_persons all good");
+
+        let response2 = response.unwrap();
+        let persons = response2
+            .json::<Vec<Person>>()
+            .await
+            .expect("expected a list of persons");
+        info!(
+            "rust_customerservice_insert_dummy_data. search_persons all good. found {} persons",
+            persons.len()
+        );
+
+        let message = format!(
+            "end rust_customerservice_insert_dummy_data. search_persons().  offset {}, limit {}, sort {:?}. {} persons found ",
+            offset,
+            limit,
+            &search_request.sort.clone(),
+            persons.len()
+        );
+        info!("message {}", &message);
+        logging_service::log_entry(
+            " rust_customerservice_insert_dummy_data".to_string(),
+            "INFO".to_string(),
+            &message,
+        )
+            .await;
+        info!(".rust_customerservice_insert_dummy_data search_persons finished successfully");
+
+        persons
+    }
+}

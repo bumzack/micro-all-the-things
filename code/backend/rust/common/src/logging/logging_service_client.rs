@@ -1,6 +1,7 @@
 pub mod logging_service {
     use config::Config;
     use log::{error, info};
+    use reqwest::{Error, Response, StatusCode};
 
     use crate::logging::logging::AddLogEntry;
 
@@ -154,5 +155,35 @@ pub mod logging_service {
         )
             .await;
         message
+    }
+
+    pub async fn log_external_service_error(
+        msg1: &String,
+        message: &String,
+        response: &Result<Response, Error>,
+    ) {
+        match &response {
+            Ok(res) => {
+                let code = res.status();
+                if code != StatusCode::OK {
+                    let x = res.headers().clone();
+                    // let b = res.text().await.unwrap();
+                    info!("{} != OK.  returned HTTP code {} ", msg1, code);
+                    info!(
+                        "{} != OK.  returned HTTP code {} headers {:?}",
+                        msg1, code, x
+                    );
+
+                    info!("message {}", &message);
+                    log_entry(
+                        "rust_create_search_index".to_string(),
+                        "ERROR".to_string(),
+                        message,
+                    )
+                        .await;
+                }
+            }
+            Err(e) => error!("error in request to meilisearch {:?}", e),
+        };
     }
 }

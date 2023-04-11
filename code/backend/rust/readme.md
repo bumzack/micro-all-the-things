@@ -15,9 +15,13 @@ curl -X POST  http://localhost:18900/tsv/read    -H  "Content-Type: application/
 curl  -vvvv  -X POST -H 'Authorization: Bearer 1234567890123456'  -H 'Content-Type: application/json' 'http://meilisearch01.bumzack.at/indexes/principal/documents?primaryKey=id' --data-binary '{"category":"director","characters":["\\N"],"id":"tt0000001_2_nm0005690","nconst":"nm0005690","ordering":2,"tconst":"tt0000001"}'  | jq
 ```
 
+```
 curl -X GET 'http://meilisearch01.bumzack.at/tasks/0'      -H 'Authorization: Bearer 1234567890123456'
 curl -X GET 'http://meilisearch01.bumzack.at/tasks/1'    -H 'Authorization: Bearer 1234567890123456'
 curl -X GET 'http://meilisearch01.bumzack.at/tasks/8'    -H 'Authorization: Bearer 1234567890123456' | jq
+```
+
+curl -X GET 'http://localhost:18984/tasks/0'      -H 'Authorization: Bearer 1234567890123456'
 
 ```
 
