@@ -86,8 +86,8 @@ sudo systemctl restart rust_tsvfilereader.service
 
 ```
 sudo systemctl enable rust_customerpriceservice.service
-sudo systemctl enable  
-sudo systemctl enable  
+sudo systemctl enable rust_customerservice.service
+sudo systemctl enable rust_priceservice.service
 ```
 
 ```
