@@ -33,7 +33,7 @@ curl  -vv  http://localhost:18800/api/v1/price/tt0000001   | jq
 ## insert dummy data prices for all movies
 
 ``` 
-curl  -vv  http://localhost:18800/api/v1/price/insertdummydata/0/20/1000000
+curl  -vv  http://localhost:18800/api/v1/price/insertdummydata/0/200/1100000
 ``` 
 
 ## Customer Price

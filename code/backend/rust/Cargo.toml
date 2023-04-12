@@ -22,5 +22,6 @@ members = [
     "tooling/micro_swagger",
     "customer/customerpriceservice",
     "customer/customerservice",
-    "price/priceservice"
+    "price/priceservice",
+    "customer/authenticationservice"
 ]

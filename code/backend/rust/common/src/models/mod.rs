@@ -1,3 +1,4 @@
+pub mod authentication;
 pub mod crew;
 pub mod customer;
 pub mod customer_prices;
