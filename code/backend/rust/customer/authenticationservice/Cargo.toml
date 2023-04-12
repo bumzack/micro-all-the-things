@@ -1,0 +1,29 @@
+[package]
+name = "authenticationservice"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+warp = "0.3.4"
+tokio = { version = "1.26.0", features = ["full"] }
+serde = { version = "1.0.158", features = ["derive"] }
+serde_json = "1.0.94"
+serde_urlencoded = "0.7.1"
+serde_derive = "1.0.155"
+lazy_static = "1.4.0"
+config = "0.13.3"
+deadpool-postgres = "0.10.5"
+tokio-postgres = { version = "0.7.7", features = ["with-serde_json-1", "with-chrono-0_4"] }
+thiserror = "1.0.39"
+chrono = { version = "0.4.24", features = ["serde"] }
+pretty_env_logger = "0.4"
+log = "0.4"
+common = { path = "../../common" }
+rand = "0.8.5"
+reqwest = { version = "0.11.16", features = ["json", "stream"] }
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+futures = "0.3.27"
