@@ -18,7 +18,7 @@ pub struct LogOutRequest {
 pub struct AuthenticationEntry {
     pub id: i32,
     pub customer_id: i32,
-    pub jwt: String,
+    pub jwt: Option<String>,
     pub logged_in: Option<DateTime<Utc>>,
     pub logged_out: Option<DateTime<Utc>>,
     pub created: Option<DateTime<Utc>>,
@@ -35,4 +35,10 @@ impl From<&Row> for AuthenticationEntry {
             created: value.get(5),
         }
     }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct AuthenticatedCustomer {
+    pub customer_id: i32,
+    pub jwt: String,
 }

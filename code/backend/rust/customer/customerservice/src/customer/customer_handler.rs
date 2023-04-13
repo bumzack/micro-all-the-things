@@ -1,9 +1,9 @@
 pub mod handler_customer {
     use deadpool_postgres::Pool;
     use serde_json::json;
+    use warp::{reject, Rejection, Reply};
     use warp::hyper::StatusCode;
     use warp::reply::json;
-    use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
@@ -12,8 +12,8 @@ pub mod handler_customer {
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
-    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
     use crate::{CLIENT, CONFIG};
+    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
 
     pub async fn insert_customer_handler(
         pool: Pool,
@@ -141,7 +141,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
 
         info!("search person POST URL {}", &search_person);
         let json = json!(&search_request);
@@ -188,7 +188,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
         info!(".rust_customerservice_insert_dummy_data search_persons finished successfully");
 
         persons

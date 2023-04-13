@@ -1,0 +1,3257 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 59,
+    "params": {
+      "q": "tconst:Terminator OR titles:Terminator OR actors:Terminator OR directors:Terminator OR writers:Terminator OR genres:Terminator OR characters:Terminator OR titleType:Terminator",
+      "facet.field": [
+        "genres",
+        "actors",
+        "directors",
+        "titles",
+        "characters",
+        "titleType"
+      ],
+      "rows": "500",
+      "facet": "true"
+    }
+  },
+  "response": {
+    "numFound": 79,
+    "start": 0,
+    "numFoundExact": true,
+    "docs": [
+      {
+        "actors": [
+          "Tim Phillips",
+          "Loris Basso",
+          "James Callahan",
+          "Debbie Medows",
+          "Michelle Kovach",
+          "Ken Pietrzyk",
+          "Mike Fitzgerald",
+          "Glenn Drong"
+        ],
+        "adult": false,
+        "characters": [
+          "Rude Jogger",
+          "Terminator",
+          "Kyle Reese",
+          "Sarah Lee",
+          "Other Sarah Lee",
+          "Security Guard 1",
+          "Security Guard 2",
+          "Businessman"
+        ],
+        "directors": [
+          "Ben Hernandez"
+        ],
+        "genres": [
+          "Action",
+          "Sci-Fi",
+          "Short"
+        ],
+        "id": "tt5817168",
+        "runtimeMinutes": 39,
+        "tconst": "tt5817168",
+        "titles": [
+          "Terminator"
+        ],
+        "writers": [
+          "James Cameron"
+        ],
+        "_version_": 1762891785565110285
+      },
+      {
+        "actors": [
+          "Andrey Sochnov"
+        ],
+        "adult": false,
+        "characters": [
+          "Nikolay Petrovich",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt5127586",
+        "runtimeMinutes": 2,
+        "tconst": "tt5127586",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762888644496982023
+      },
+      {
+        "actors": [
+          "J. Tamás Tóth",
+          "Hypós Feri",
+          "Sarolta Zöldhegyi",
+          "Zsolt Gonda"
+        ],
+        "adult": false,
+        "characters": [
+          "Cérna",
+          "Terminator",
+          "Mamus",
+          "Penge"
+        ],
+        "directors": [
+          "Péter Gábor"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Crime"
+        ],
+        "id": "tt0193383",
+        "runtimeMinutes": 70,
+        "tconst": "tt0193383",
+        "titles": [
+          "Pattogatott kukorica",
+          "Popcorn"
+        ],
+        "_version_": 1762829133603143698
+      },
+      {
+        "actors": [
+          "Lech Grzmocinski",
+          "Wieslaw Zanowicz",
+          "Wojciech Kostecki",
+          "Stanislaw Michalski",
+          "Jerzy Rogalski"
+        ],
+        "adult": false,
+        "characters": [
+          "Boatswain",
+          "Captain",
+          "First Officer",
+          "Chief Nowaczyk",
+          "Terminator"
+        ],
+        "directors": [
+          "Zbigniew Kuzminski"
+        ],
+        "genres": [
+          "Drama"
+        ],
+        "id": "tt0172645",
+        "runtimeMinutes": 91,
+        "tconst": "tt0172645",
+        "titles": [
+          "Kapitan z 'Oriona'"
+        ],
+        "writers": [
+          "Kazimierz Radowicz"
+        ],
+        "_version_": 1762829131781767172
+      },
+      {
+        "actors": [
+          "Kris Tait",
+          "Donal Stevenson",
+          "Thomas Cully",
+          "Gareth Myles",
+          "Fergus Stevenson",
+          "Melissa Bell",
+          "Gareth Richardson"
+        ],
+        "adult": false,
+        "characters": [
+          "Bruce",
+          "Davi",
+          "Dr. Evil",
+          "Falfa",
+          "McCowhide",
+          "Trudi",
+          "Terminator"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy"
+        ],
+        "id": "tt0233111",
+        "tconst": "tt0233111",
+        "titles": [
+          "Stunts"
+        ],
+        "_version_": 1762829114402668547
+      },
+      {
+        "adult": false,
+        "characters": [
+          "Self",
+          "Kyle Reese",
+          "Self - Writer & Director",
+          "Self - Additional Dialogue & Cameron Collaborator",
+          "Self - Terminator Makeup Effects Creator",
+          "Self - Fantasy II VFX Supervisor",
+          "Self",
+          "Terminator",
+          "Self",
+          "Sarah Connor",
+          "Self - Producer"
+        ],
+        "directors": [
+          "Van Ling"
+        ],
+        "genres": [
+          "Documentary",
+          "Sci-Fi"
+        ],
+        "id": "tt0365601",
+        "runtimeMinutes": 60,
+        "tconst": "tt0365601",
+        "titles": [
+          "Other Voices: Back Through Time: Creating 'the Terminator': Cast & Crew Recollections",
+          "Other Voices: Back Through Time: Creating 'The Terminator': Cast & Crew Recollections"
+        ],
+        "_version_": 1762829127301201961
+      },
+      {
+        "actors": [
+          "Ashley McGuire",
+          "Marcus Brigstocke",
+          "Victoria Hamilton",
+          "Geoffrey Palmer",
+          "Liberty Morris",
+          "Jake Fitzgerald",
+          "Shauna Shim",
+          "Gresby Nash",
+          "Flaminia Cinque",
+          "Graham Turner"
+        ],
+        "adult": false,
+        "characters": [
+          "Frightening Girl",
+          "Adam",
+          "Jessica",
+          "Donald",
+          "Nicola",
+          "Luke",
+          "Holly",
+          "Mark",
+          "Maria",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt0281483",
+        "runtimeMinutes": 30,
+        "tconst": "tt0281483",
+        "titles": [
+          "The Savages"
+        ],
+        "_version_": 1762829128287911938
+      },
+      {
+        "actors": [
+          "Arnold Schwarzenegger",
+          "Robert Patrick",
+          "Edward Furlong",
+          "Peter Kent"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "T-1000",
+          "John Connor",
+          "Terminator"
+        ],
+        "directors": [
+          "Jack Haeger",
+          "George Petro"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Sci-Fi"
+        ],
+        "id": "tt0244839",
+        "tconst": "tt0244839",
+        "titles": [
+          "Terminator 2: Judgment Day"
+        ],
+        "writers": [
+          "James Cameron",
+          "William Wisher"
+        ],
+        "_version_": 1762829115103117336
+      },
+      {
+        "actors": [
+          "Harry Enfield",
+          "Kathy Burke",
+          "Paul Whitehouse",
+          "Martin Clunes"
+        ],
+        "adult": false,
+        "characters": [
+          "Kevin Patterson",
+          "Alf Git",
+          "Terry Scouser",
+          "Perry",
+          "Waynetta Slob",
+          "Fred Git",
+          "Self-Righteous Brother George",
+          "Terminator"
+        ],
+        "directors": [
+          "John Stroud"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt0597090",
+        "runtimeMinutes": 28,
+        "tconst": "tt0597090",
+        "titles": [
+          "Episode #1.3"
+        ],
+        "writers": [
+          "Ian Hislop",
+          "Nick Newman",
+          "Geoffrey Perkins",
+          "Harry Thompson"
+        ],
+        "_version_": 1762832363566399488
+      },
+      {
+        "actors": [
+          "Arnold Schwarzenegger",
+          "Nick Stahl",
+          "Kristanna Loken",
+          "Claire Danes"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "John Connor",
+          "T-X",
+          "Kate Brewster"
+        ],
+        "directors": [
+          "Jonathan Mostow"
+        ],
+        "genres": [
+          "Action",
+          "Sci-Fi"
+        ],
+        "id": "tt0181852",
+        "runtimeMinutes": 109,
+        "tconst": "tt0181852",
+        "titles": [
+          "Terminator 3: Rise of the Machines"
+        ],
+        "writers": [
+          "John Brancato",
+          "Michael Ferris",
+          "Tedi Sarafian"
+        ],
+        "_version_": 1762829132784205866
+      },
+      {
+        "actors": [
+          "Eliot Dewberry",
+          "Ricky Hayberg",
+          "Olga Kay",
+          "Matthew Santoro"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Eliot",
+          "Ricky",
+          "Olga",
+          "Matt"
+        ],
+        "directors": [
+          "Charles Paek"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Sci-Fi"
+        ],
+        "id": "tt10170888",
+        "tconst": "tt10170888",
+        "titles": [
+          "Part 2"
+        ],
+        "writers": [
+          "Jay Bushman"
+        ],
+        "_version_": 1762835516386967581
+      },
+      {
+        "actors": [
+          "Arnold Schwarzenegger",
+          "Eliot Dewberry",
+          "Ricky Hayberg",
+          "Olga Kay",
+          "Matthew Santoro"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Eliot",
+          "Ricky",
+          "Olga",
+          "Matt"
+        ],
+        "directors": [
+          "Charles Paek"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Sci-Fi"
+        ],
+        "id": "tt10170890",
+        "tconst": "tt10170890",
+        "titles": [
+          "Part 3"
+        ],
+        "writers": [
+          "Jay Bushman"
+        ],
+        "_version_": 1762835516386967583
+      },
+      {
+        "actors": [
+          "Kevin Brueck",
+          "Bobby Jennings",
+          "Steve Zaragoza"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Bill",
+          "Ted",
+          "Doc Brown",
+          "T-1000",
+          "Ned"
+        ],
+        "directors": [
+          "Dane Boedigheimer"
+        ],
+        "genres": [
+          "Animation",
+          "Comedy"
+        ],
+        "id": "tt10639232",
+        "tconst": "tt10639232",
+        "titles": [
+          "Time Machine"
+        ],
+        "writers": [
+          "Spencer Grove",
+          "Aaron Massey"
+        ],
+        "_version_": 1762835531708760066
+      },
+      {
+        "actors": [
+          "Dmitriy Nagiev",
+          "Polina Askeri",
+          "Gulya Nizhinskaya",
+          "Andrey Batt",
+          "Irina Temicheva",
+          "Andrey Sedov",
+          "Lyubov Zaytseva",
+          "Yanina Studilina",
+          "Ivan Nikolaev",
+          "Maksim Shchyogolev"
+        ],
+        "adult": false,
+        "characters": [
+          "Doberman",
+          "Svetlana Konegen",
+          "Svetlana Konegen produser",
+          "Maxim",
+          "Ksyusha",
+          "Terminator",
+          "Masha Svetlova",
+          "Nastya Goncharova",
+          "Nik Gromov",
+          "Roman Parov"
+        ],
+        "genres": [
+          "Crime"
+        ],
+        "id": "tt1445857",
+        "runtimeMinutes": 44,
+        "tconst": "tt1445857",
+        "titles": [
+          "Gorod soblaznov"
+        ],
+        "_version_": 1762851149049757697
+      },
+      {
+        "actors": [
+          "Jeury Tavares",
+          "Hector Rodriguez Jr.",
+          "Ralph A. Wilburn Jr.",
+          "George Aloi",
+          "Craig Newman",
+          "LoDeon",
+          "Mike Fitzgerald",
+          "Mike Funk",
+          "Don Gomez",
+          "Timothy J. Cox"
+        ],
+        "adult": false,
+        "characters": [
+          "Thug",
+          "Kay",
+          "Taz",
+          "Detective Dan Lewis",
+          "Det. Derrick Parker",
+          "Doctor",
+          "Terminator",
+          "Bad Guy # 1",
+          "Baltimore Drug Dealer",
+          "Body Guard",
+          "Detective Mark Valencia",
+          "Detective Joe Loughran",
+          "Uniformed Cop",
+          "Uniform Police Officer",
+          "Detective Ken Clancy",
+          "Homicide Detective",
+          "Strip Club Patron"
+        ],
+        "genres": [
+          "Crime"
+        ],
+        "id": "tt1272033",
+        "tconst": "tt1272033",
+        "titles": [
+          "Watching the Detectives"
+        ],
+        "_version_": 1762844947383320589
+      },
+      {
+        "actors": [
+          "Nick Christanthou",
+          "Sophia Constantinou",
+          "George Moiseni",
+          "Michael Nicle",
+          "Marios Papadopoulos",
+          "Socratis Polycarpou",
+          "Timothy Alan Richardson"
+        ],
+        "adult": false,
+        "characters": [
+          "Gang member",
+          "Gang member",
+          "Gang member",
+          "Terminator",
+          "Grenade thrower",
+          "Gang member",
+          "Police officer"
+        ],
+        "genres": [
+          "Action",
+          "Short"
+        ],
+        "id": "tt13092600",
+        "runtimeMinutes": 13,
+        "tconst": "tt13092600",
+        "titles": [
+          "The Terminator Returns"
+        ],
+        "_version_": 1762844971109449747
+      },
+      {
+        "actors": [
+          "Vladimir Turchinsky"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy",
+          "Family"
+        ],
+        "id": "tt14119560",
+        "tconst": "tt14119560",
+        "titles": [
+          "Vypusk 200: Zhiznenniy opyt, Goryachaya kartoshechka, Terminator"
+        ],
+        "_version_": 1762848073478832148
+      },
+      {
+        "actors": [
+          "Kyle Gering",
+          "Adam Groshko",
+          "John Groshko",
+          "Steven See"
+        ],
+        "adult": false,
+        "characters": [
+          "T-EX",
+          "John Connor",
+          "Terminator"
+        ],
+        "genres": [
+          "Sci-Fi",
+          "Short"
+        ],
+        "id": "tt14140688",
+        "runtimeMinutes": 32,
+        "tconst": "tt14140688",
+        "titles": [
+          "Terminator: Tides of Steel"
+        ],
+        "_version_": 1762848073768239133
+      },
+      {
+        "actors": [
+          "Michael Andersen",
+          "Søren Børgesen",
+          "Erik Jensen",
+          "Morten Lundsgård",
+          "Jakob Nyborg",
+          "Lars Svensson",
+          "Allan Teisen"
+        ],
+        "adult": false,
+        "characters": [
+          "Victim",
+          "Terminator",
+          "Police officer",
+          "Boy losing his mask",
+          "Stand-up guy",
+          "Bully-boy #2",
+          "The Bully Chief",
+          "Bully-boy #1"
+        ],
+        "directors": [
+          "Heini Grünbaum"
+        ],
+        "genres": [
+          "Horror",
+          "Short"
+        ],
+        "id": "tt13576152",
+        "runtimeMinutes": 24,
+        "tconst": "tt13576152",
+        "titles": [
+          "Trapped at Boarding School"
+        ],
+        "_version_": 1762848037986631718
+      },
+      {
+        "actors": [
+          "Francisco Quintela",
+          "Jesus Roque",
+          "Tiago Lopes",
+          "João Pedro Gomes",
+          "Nuno Tudela"
+        ],
+        "adult": false,
+        "characters": [
+          "Self - Host",
+          "Self - Host",
+          "Terminator",
+          "Vitima",
+          "Chinese Guru",
+          "Ninja #1",
+          "Ninja #2"
+        ],
+        "directors": [
+          "António Forte",
+          "José Francisco Pinheiro"
+        ],
+        "genres": [
+          "Music",
+          "News",
+          "Talk-Show"
+        ],
+        "id": "tt12148870",
+        "tconst": "tt12148870",
+        "titles": [
+          "Episode #4.13"
+        ],
+        "_version_": 1762841859861774354
+      },
+      {
+        "actors": [
+          "Verbal Ase"
+        ],
+        "adult": false,
+        "characters": [
+          "Verbal Ase",
+          "Cyborg",
+          "Terminator"
+        ],
+        "genres": [
+          "Animation",
+          "Comedy",
+          "Music"
+        ],
+        "id": "tt12885606",
+        "runtimeMinutes": 5,
+        "tconst": "tt12885606",
+        "titles": [
+          "Cyborg vs Terminator"
+        ],
+        "_version_": 1762844949265514551
+      },
+      {
+        "actors": [
+          "Sheila M. Lin",
+          "Emily Koch",
+          "Jacob Kitts",
+          "Logan Miller"
+        ],
+        "adult": false,
+        "characters": [
+          "Sarah Connor",
+          "John Connor",
+          "Terminator",
+          "T-1000"
+        ],
+        "genres": [
+          "Animation",
+          "Comedy",
+          "Short"
+        ],
+        "id": "tt12641688",
+        "runtimeMinutes": 4,
+        "tconst": "tt12641688",
+        "titles": [
+          "Terminator 2: One More Chip"
+        ],
+        "_version_": 1762844949285437485
+      },
+      {
+        "actors": [
+          "Seth Green",
+          "Melissa Benoist",
+          "Abraham Benrubi",
+          "Mikey Day"
+        ],
+        "adult": false,
+        "characters": [
+          "Freddy Krueger",
+          "Alan Schaefer",
+          "Terminator",
+          "Laura",
+          "Malorie Hayes",
+          "Glen's Classmate",
+          "Zordon",
+          "Titanic Lookout",
+          "Bed Bugs Dad",
+          "Detective Pikachu",
+          "Human Narrator"
+        ],
+        "directors": [
+          "Tom Sheppard"
+        ],
+        "genres": [
+          "Adventure",
+          "Animation",
+          "Comedy"
+        ],
+        "id": "tt12670498",
+        "runtimeMinutes": 11,
+        "tconst": "tt12670498",
+        "titles": [
+          "Sundancer Craig in: 30% of the Way to Crying"
+        ],
+        "writers": [
+          "Harmony McElligott",
+          "Douglas Goldstein",
+          "Tom Root",
+          "Mike Fasolo",
+          "Jared Gruszecki"
+        ],
+        "_version_": 1762844949713256530
+      },
+      {
+        "actors": [
+          "Márcio Ferreira",
+          "Luís Carvalho",
+          "Ana Figueiredo"
+        ],
+        "adult": false,
+        "characters": [
+          "Self - Contestant",
+          "Self - Host",
+          "Self - Jury",
+          "Self - Jury",
+          "Self - Jury",
+          "John Connor",
+          "Terminator"
+        ],
+        "directors": [
+          "Manuel Amaro da Costa"
+        ],
+        "genres": [
+          "Game-Show"
+        ],
+        "id": "tt12087758",
+        "tconst": "tt12087758",
+        "titles": [
+          "Episode #1.22"
+        ],
+        "_version_": 1762841849032081412
+      },
+      {
+        "actors": [
+          "Jaime Fernandez",
+          "Jamie Frevele",
+          "Michael Koscik"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Mackenzie",
+          "Claire",
+          "Lena",
+          "RoboCop"
+        ],
+        "directors": [
+          "Pete Bune"
+        ],
+        "genres": [
+          "Animation",
+          "Short"
+        ],
+        "id": "tt12972890",
+        "runtimeMinutes": 5,
+        "tconst": "tt12972890",
+        "titles": [
+          "Robo Wingman"
+        ],
+        "_version_": 1762844968726036487
+      },
+      {
+        "actors": [
+          "Paul Winfield",
+          "Michael Biehn",
+          "Linda Hamilton",
+          "Lance Henriksen",
+          "Marianne Muellerleile",
+          "Arnold Schwarzenegger"
+        ],
+        "adult": false,
+        "characters": [
+          "Traxler",
+          "Kyle Reese",
+          "Sarah Connor",
+          "Vukovich",
+          "Wrong Sarah",
+          "Terminator"
+        ],
+        "directors": [
+          "James Cameron"
+        ],
+        "genres": [
+          "Action",
+          "Sci-Fi",
+          "Short"
+        ],
+        "id": "tt15739442",
+        "runtimeMinutes": 10,
+        "tconst": "tt15739442",
+        "titles": [
+          "The Terminator: 'Terminated' Deleted Scenes",
+          "The Terminator: 'Terminated' Scenes"
+        ],
+        "writers": [
+          "Gale Anne Hurd",
+          "William Wisher"
+        ],
+        "_version_": 1762857342124163096
+      },
+      {
+        "actors": [
+          "Rob Boor",
+          "Nestor Sebastian Miranda"
+        ],
+        "adult": false,
+        "characters": [
+          "Rob",
+          "Marty McFly",
+          "Professional Kid Reviewer",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt15206164",
+        "runtimeMinutes": 42,
+        "tconst": "tt15206164",
+        "titles": [
+          "Terminator 3: Rise Of The Machines (2003)"
+        ],
+        "_version_": 1762854251693867036
+      },
+      {
+        "actors": [
+          "Santi Peña",
+          "Diana Ferrando",
+          "Rocio Melo",
+          "David Díaz"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "John Connor",
+          "Sarah Connor",
+          "Voz inicio"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt9738296",
+        "runtimeMinutes": 3,
+        "tconst": "tt9738296",
+        "titles": [
+          "Terminator 2"
+        ],
+        "writers": [
+          "Juan Pérez",
+          "Daniel Retuerta"
+        ],
+        "_version_": 1762851905282768931
+      },
+      {
+        "actors": [
+          "Rita Artmann",
+          "Joe Bauer"
+        ],
+        "adult": false,
+        "characters": [
+          "Rita",
+          "Rey",
+          "Joe",
+          "Terminator",
+          "T-1000"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt15357936",
+        "tconst": "tt15357936",
+        "titles": [
+          "Terminator Joe-dgment Day"
+        ],
+        "_version_": 1762854258722471966
+      },
+      {
+        "actors": [
+          "Alice Berni-Reed",
+          "Rob Boor",
+          "Aaron Oxlade",
+          "Jimmy Phillips",
+          "Eric Boor",
+          "Simone Salvatore",
+          "Nestor Sebastian Miranda",
+          "Rich Harris",
+          "Dan Bull"
+        ],
+        "adult": false,
+        "characters": [
+          "Alice",
+          "Rob",
+          "Justin Competent",
+          "Percy Longstockings",
+          "Aaron",
+          "Elderly Jesus",
+          "Jimmy",
+          "Kyle Reese",
+          "Marv",
+          "Eric",
+          "Darth Vader",
+          "Self",
+          "Professional Kid Reviewer",
+          "Terminator",
+          "Alfred Pennyworth",
+          "Dan Bull"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt15177856",
+        "runtimeMinutes": 30,
+        "tconst": "tt15177856",
+        "titles": [
+          "The New Adventures of Cinematic Venom"
+        ],
+        "_version_": 1762854248453767177
+      },
+      {
+        "actors": [
+          "David Díaz"
+        ],
+        "adult": false,
+        "characters": [
+          "El presentador",
+          "Robert Brewster",
+          "Scientist",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy",
+          "History"
+        ],
+        "id": "tt1795155",
+        "runtimeMinutes": 15,
+        "tconst": "tt1795155",
+        "titles": [
+          "Especial Ironia: Terminator 3"
+        ],
+        "writers": [
+          "Juan Pérez",
+          "Luis Rodrigo"
+        ],
+        "_version_": 1762860479453069321
+      },
+      {
+        "actors": [
+          "Andrey Sedov"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator"
+        ],
+        "genres": [
+          "Crime"
+        ],
+        "id": "tt4208024",
+        "tconst": "tt4208024",
+        "titles": [
+          "Episode #1.24"
+        ],
+        "_version_": 1762882443516313682
+      },
+      {
+        "actors": [
+          "Patrick Darnell",
+          "Ben Todman"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Self - Host",
+          "Self - Host",
+          "Circus Worker"
+        ],
+        "genres": [
+          "Sci-Fi"
+        ],
+        "id": "tt2056249",
+        "tconst": "tt2056249",
+        "titles": [
+          "Terminated"
+        ],
+        "_version_": 1762863596450086924
+      },
+      {
+        "actors": [
+          "Mikey Day",
+          "Kevin Kirkpatrick",
+          "Timothy Brennen",
+          "Jared Cyr"
+        ],
+        "adult": false,
+        "characters": [
+          "John Connor",
+          "Voice of Jerry",
+          "Rick Jensen",
+          "Voice of Bobby",
+          "Terminator",
+          "Bad Terminator"
+        ],
+        "directors": [
+          "James Logan"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Sci-Fi"
+        ],
+        "id": "tt2076347",
+        "runtimeMinutes": 6,
+        "tconst": "tt2076347",
+        "titles": [
+          "Terminator: Termination"
+        ],
+        "writers": [
+          "James Cameron"
+        ],
+        "_version_": 1762863597263781922
+      },
+      {
+        "actors": [
+          "Aleksey Klimushkin",
+          "Kseniya Baskakova",
+          "Anton Belousko",
+          "Aleksey Gavrilov",
+          "Andrey Gaydulyan",
+          "Vitaliy Gogunskiy"
+        ],
+        "adult": false,
+        "characters": [
+          "Dad",
+          "Nastya",
+          "Terminator",
+          "Gosha",
+          "Sasha",
+          "Kuzya"
+        ],
+        "directors": [
+          "Pyotr Tochilin"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3153590",
+        "tconst": "tt3153590",
+        "titles": [
+          "Sasha - ofitsiant"
+        ],
+        "writers": [
+          "Yuliya Akhmedova"
+        ],
+        "_version_": 1762879206522355751
+      },
+      {
+        "actors": [
+          "David Abrams",
+          "Harry T."
+        ],
+        "adult": false,
+        "characters": [
+          "Batman",
+          "Scarecrow",
+          "Terminator",
+          "Spiderman",
+          "Superman"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3587030",
+        "runtimeMinutes": 10,
+        "tconst": "tt3587030",
+        "titles": [
+          "The Elem3ntalist"
+        ],
+        "writers": [
+          "Harry Tandy"
+        ],
+        "_version_": 1762879315384467464
+      },
+      {
+        "adult": false,
+        "characters": [
+          "Self",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3007644",
+        "tconst": "tt3007644",
+        "titles": [
+          "Terminator 2"
+        ],
+        "_version_": 1762879193579782179
+      },
+      {
+        "actors": [
+          "Vincent Martinez Jr.",
+          "Danny Blanchard",
+          "Andrew Ramirez",
+          "Randall LaRue",
+          "Cassadie A. Petersen",
+          "Tiffanie Lanmon",
+          "Molly Fonseca",
+          "Stephanie Osan",
+          "Kyle Sadler",
+          "Joseph Worland"
+        ],
+        "adult": false,
+        "characters": [
+          "Boyfriend",
+          "Danny",
+          "Andrew",
+          "Lawrence",
+          "Margot",
+          "Tiffany",
+          "Erma",
+          "Margot",
+          "The Doctor",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3304520",
+        "runtimeMinutes": 12,
+        "tconst": "tt3304520",
+        "titles": [
+          "Five Minutes to Air"
+        ],
+        "_version_": 1762879285949890580
+      },
+      {
+        "actors": [
+          "Ararat Keshchyan",
+          "Kseniya Baskakova",
+          "Anton Belousko",
+          "Natalya Eprikyan",
+          "Andrey Gaydulyan",
+          "Vitaliy Gogunskiy"
+        ],
+        "adult": false,
+        "characters": [
+          "Maykl",
+          "Nastya",
+          "Terminator",
+          "Natalya Eprikyan",
+          "Sasha",
+          "Kuzya"
+        ],
+        "directors": [
+          "Ivan Kitaev"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3456446",
+        "tconst": "tt3456446",
+        "titles": [
+          "Show girls"
+        ],
+        "writers": [
+          "Yuliya Akhmedova"
+        ],
+        "_version_": 1762879316803190831
+      },
+      {
+        "actors": [
+          "Darya Mikhaylova",
+          "Kseniya Baskakova",
+          "Anton Belousko",
+          "Andrey Gaydulyan",
+          "Vitaliy Gogunskiy",
+          "Ararat Keshchyan",
+          "Mariya Kozhevnikova"
+        ],
+        "adult": false,
+        "characters": [
+          "Mom",
+          "Nastya",
+          "Terminator",
+          "Sasha",
+          "Kuzya",
+          "Maykl",
+          "Alla"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3204380",
+        "tconst": "tt3204380",
+        "titles": [
+          "Zhmotryara"
+        ],
+        "writers": [
+          "Yuliya Akhmedova"
+        ],
+        "_version_": 1762879208897380385
+      },
+      {
+        "actors": [
+          "Mariya Kozhevnikova",
+          "Kseniya Baskakova",
+          "Anton Belousko",
+          "Andrey Gaydulyan",
+          "Vitaliy Gogunskiy",
+          "Ararat Keshchyan"
+        ],
+        "adult": false,
+        "characters": [
+          "Alla",
+          "Nastya",
+          "Terminator",
+          "Sasha",
+          "Kuzya",
+          "Maykl"
+        ],
+        "directors": [
+          "Pyotr Tochilin"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3204418",
+        "tconst": "tt3204418",
+        "titles": [
+          "Tri udara"
+        ],
+        "writers": [
+          "Yuliya Akhmedova"
+        ],
+        "_version_": 1762879208898428938
+      },
+      {
+        "actors": [
+          "Vlad Dragulin",
+          "Alexandru Arnautu Vraciu"
+        ],
+        "adult": false,
+        "characters": [
+          "Niros",
+          "Self",
+          "Self",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt25275512",
+        "tconst": "tt25275512",
+        "titles": [
+          "Episode #1.11"
+        ],
+        "_version_": 1762872941375127579
+      },
+      {
+        "actors": [
+          "Kristen Holding",
+          "Erik Bartsch",
+          "Barrett Blomberg",
+          "Reese Brown",
+          "Bob Diamond",
+          "Joe Edwin",
+          "Alexander Favors",
+          "Beth Forni Chalupa",
+          "Cody Gough"
+        ],
+        "adult": false,
+        "characters": [
+          "Maya",
+          "Windeu",
+          "Suptrashcan",
+          "Chris",
+          "Clyde",
+          "Monster Joe",
+          "Terminator",
+          "Lily"
+        ],
+        "directors": [
+          "Joseph William Greene"
+        ],
+        "genres": [
+          "Comedy",
+          "Sport"
+        ],
+        "id": "tt2752358",
+        "runtimeMinutes": 139,
+        "tconst": "tt2752358",
+        "titles": [
+          "The Serious Business Double Feature"
+        ],
+        "_version_": 1762876124907438129
+      },
+      {
+        "actors": [
+          "Noël Wells",
+          "Michael Laurie",
+          "Cole Parker",
+          "Luke Sholl",
+          "Matt Shore"
+        ],
+        "adult": false,
+        "characters": [
+          "Carrie",
+          "Hannibal",
+          "Damian",
+          "Terminator",
+          "Leatherface"
+        ],
+        "directors": [
+          "Clint Gage"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt2653670",
+        "runtimeMinutes": 4,
+        "tconst": "tt2653670",
+        "titles": [
+          "Housemates of Horror"
+        ],
+        "writers": [
+          "Luke Simmons"
+        ],
+        "_version_": 1762876060088664093
+      },
+      {
+        "actors": [
+          "Adam Harrison",
+          "J. Alexander Douglas",
+          "Maureen Morales",
+          "Carolyn Meyer"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Bug Guy",
+          "Neighbor",
+          "Edith"
+        ],
+        "directors": [
+          "Joe Lonesome"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt19499434",
+        "tconst": "tt19499434",
+        "titles": [
+          "The ExTerminator Episode"
+        ],
+        "writers": [
+          "Shay Zak"
+        ],
+        "_version_": 1762863552003047445
+      },
+      {
+        "actors": [
+          "Claire 'Fluff' Llewellyn",
+          "Cody Gough",
+          "Kevin James Parli",
+          "Barrett Blomberg",
+          "Ryan Campbell",
+          "Bob Diamond",
+          "Alexander Favors"
+        ],
+        "adult": false,
+        "characters": [
+          "Yvette",
+          "Derek",
+          "Ryzen Xia",
+          "SupTrashCan",
+          "Doorman",
+          "Clyde",
+          "Terminator"
+        ],
+        "directors": [
+          "Joseph William Greene"
+        ],
+        "genres": [
+          "Comedy",
+          "Sport"
+        ],
+        "id": "tt1990199",
+        "runtimeMinutes": 64,
+        "tconst": "tt1990199",
+        "titles": [
+          "Dance Dance Revolution: The Warrior's Path"
+        ],
+        "_version_": 1762863567943499782
+      },
+      {
+        "actors": [
+          "Derya Taray",
+          "Davud Pivac",
+          "Markus Webel",
+          "Fabian Knöbl"
+        ],
+        "adult": false,
+        "characters": [
+          "Gefangener (rechts)",
+          "Gefangener (links)",
+          "Baby Porn",
+          "Leiche",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy",
+          "Horror",
+          "Short"
+        ],
+        "id": "tt3960266",
+        "runtimeMinutes": 3,
+        "tconst": "tt3960266",
+        "titles": [
+          "Baby Porn vs Terminator"
+        ],
+        "_version_": 1762882376619261982
+      },
+      {
+        "actors": [
+          "Daniel Jefferson",
+          "Nick Thomas-Webster",
+          "Daniel Vivian"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Drunk",
+          "Duncan"
+        ],
+        "directors": [
+          "Kai Murphy"
+        ],
+        "genres": [
+          "Short"
+        ],
+        "id": "tt2483168",
+        "tconst": "tt2483168",
+        "titles": [
+          "The Broken Flute"
+        ],
+        "_version_": 1762872917423554584
+      },
+      {
+        "actors": [
+          "Ararat Keshchyan",
+          "Kseniya Baskakova",
+          "Anton Belousko",
+          "Anastasiya Denisova",
+          "Andrey Gaydulyan",
+          "Vitaliy Gogunskiy"
+        ],
+        "adult": false,
+        "characters": [
+          "Maykl",
+          "Nastya",
+          "Terminator",
+          "Sasha",
+          "Kuzya"
+        ],
+        "directors": [
+          "Pyotr Tochilin"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt3169838",
+        "tconst": "tt3169838",
+        "titles": [
+          "Maykl vernulsya"
+        ],
+        "writers": [
+          "Yuliya Akhmedova"
+        ],
+        "_version_": 1762879206685933569
+      },
+      {
+        "actors": [
+          "Jacob Kitts"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator"
+        ],
+        "genres": [
+          "Action",
+          "Animation",
+          "Short"
+        ],
+        "id": "tt4466248",
+        "runtimeMinutes": 5,
+        "tconst": "tt4466248",
+        "titles": [
+          "The Terminator"
+        ],
+        "writers": [
+          "James Cameron"
+        ],
+        "_version_": 1762885518295564309
+      },
+      {
+        "actors": [
+          "Anthony Caruso",
+          "Joshua Borcyk",
+          "Eli David",
+          "Nicole Marines",
+          "Derek Russo",
+          "Chris Frank",
+          "Lindsay Miller",
+          "Anna Schulman",
+          "Michael Schuberth"
+        ],
+        "adult": false,
+        "characters": [
+          "Movie Trivia Geek",
+          "Ash",
+          "Rex",
+          "Billy",
+          "Peter Parker",
+          "Spider-Man",
+          "Sarah Connor",
+          "Jason Voorhees",
+          "Rob",
+          "Roxette",
+          "Roxanne",
+          "Terminator",
+          "Self - Host"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Horror"
+        ],
+        "id": "tt4075608",
+        "tconst": "tt4075608",
+        "titles": [
+          "Slash/Up"
+        ],
+        "_version_": 1762882408251654157
+      },
+      {
+        "actors": [
+          "Ben B. Singer",
+          "Chad James",
+          "Joe Gaudet",
+          "Xander Mobus",
+          "Curtis Arnott"
+        ],
+        "adult": false,
+        "characters": [
+          "Wizard - Host",
+          "Boomstick - Host",
+          "Terminator",
+          "RoboCop",
+          "Gun Salesman",
+          "Terminator",
+          "RoboCop"
+        ],
+        "genres": [
+          "Action",
+          "Animation",
+          "Comedy"
+        ],
+        "id": "tt4128604",
+        "tconst": "tt4128604",
+        "titles": [
+          "Terminator VS RoboCop"
+        ],
+        "_version_": 1762882442634461191
+      },
+      {
+        "actors": [
+          "Diana Ferrando",
+          "David Díaz",
+          "Shathu Entayla",
+          "Daniel Retuerta",
+          "Santi Peña",
+          "Carlos Movilla",
+          "Agustín Montero",
+          "Jos Gómez",
+          "Cristina Sanz"
+        ],
+        "adult": false,
+        "characters": [
+          "John Connor",
+          "Kim",
+          "Voz inicio",
+          "Atreyu",
+          "Darth Vader",
+          "Camarero",
+          "Mano con luz",
+          "Marvin",
+          "Fuyur",
+          "Julius",
+          "Marty McFly",
+          "Doble Harry",
+          "Ricardo",
+          "Terminator",
+          "Espartaco",
+          "Roy Batty",
+          "Gerry",
+          "Luke Skywalker",
+          "Brett",
+          "Bryan Mills",
+          "Florentino",
+          "Hermione Granger"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt4132184",
+        "tconst": "tt4132184",
+        "titles": [
+          "Caption Fail Movies"
+        ],
+        "writers": [
+          "Juan Pérez"
+        ],
+        "_version_": 1762882442677452836
+      },
+      {
+        "actors": [
+          "Kate McIntyre",
+          "Mary Lou",
+          "Timothy Cakebread",
+          "Clinton Roper Elledge"
+        ],
+        "adult": false,
+        "characters": [
+          "Madame Clarisse",
+          "Marnie",
+          "Terminator",
+          "George"
+        ],
+        "directors": [
+          "Leila Vieira"
+        ],
+        "genres": [
+          "Short",
+          "Thriller"
+        ],
+        "id": "tt4614526",
+        "runtimeMinutes": 16,
+        "tconst": "tt4614526",
+        "titles": [
+          "Bloody Boots"
+        ],
+        "_version_": 1762885516584288258
+      },
+      {
+        "actors": [
+          "Ian",
+          "Mike",
+          "Kim",
+          "Phil",
+          "Ravi",
+          "Wissam"
+        ],
+        "adult": false,
+        "characters": [
+          "Terminator",
+          "Soldier #1",
+          "T-1000",
+          "Scientist",
+          "Kid #1",
+          "Sarah Connor",
+          "Scientist #2",
+          "Biker #2",
+          "John Connor",
+          "Soldier #2",
+          "Dyson",
+          "Liquid Nitrogen Truck",
+          "Elevator",
+          "Dr. Silverman",
+          "Todd",
+          "Biker #1"
+        ],
+        "directors": [
+          "Chris"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Short"
+        ],
+        "id": "tt5894352",
+        "runtimeMinutes": 12,
+        "tconst": "tt5894352",
+        "titles": [
+          "T2 Judgement Day: Sweded Edition"
+        ],
+        "_version_": 1762891786481565715
+      },
+      {
+        "actors": [
+          "Rhett Harrington",
+          "Brent Jerell Reed"
+        ],
+        "adult": false,
+        "characters": [
+          "Silverman",
+          "Terminator",
+          "Slade Williams"
+        ],
+        "directors": [
+          "Daniel Clay Fox"
+        ],
+        "genres": [
+          "Action",
+          "Short"
+        ],
+        "id": "tt5901914",
+        "runtimeMinutes": 3,
+        "tconst": "tt5901914",
+        "titles": [
+          "Terminator: Dawn of Judgement Day"
+        ],
+        "_version_": 1762891786573840416
+      },
+      {
+        "actors": [
+          "Jody Nolan",
+          "Jeff Hoult",
+          "Hunter Hooper",
+          "Jahman Hughes",
+          "Megan Hatton",
+          "Jason Sharon",
+          "Erica Nolan",
+          "Jennifer Reyes",
+          "Andrew Hatton"
+        ],
+        "adult": false,
+        "characters": [
+          "Pig Face",
+          "The Don",
+          "Employee 1",
+          "Terminator",
+          "Employee 2",
+          "Box Office Attendant",
+          "Usher",
+          "Female Customer",
+          "Concessionist",
+          "Napoleon Dynamite"
+        ],
+        "genres": [
+          "Short"
+        ],
+        "id": "tt5808952",
+        "runtimeMinutes": 15,
+        "tconst": "tt5808952",
+        "titles": [
+          "Theater Wars"
+        ],
+        "_version_": 1762891785479127069
+      },
+      {
+        "actors": [
+          "Danny Larsen",
+          "Christoffer Löfström",
+          "Fredrik Olsson"
+        ],
+        "adult": false,
+        "characters": [
+          "Klemens",
+          "Algot",
+          "Döende mannen",
+          "Johnny",
+          "Micke Film",
+          "Prästen",
+          "Gösta",
+          "Inge Rullar",
+          "Terminator"
+        ],
+        "genres": [
+          "Comedy",
+          "Short"
+        ],
+        "id": "tt4957258",
+        "runtimeMinutes": 28,
+        "tconst": "tt4957258",
+        "titles": [
+          "En kväll med Klemens"
+        ],
+        "_version_": 1762885580452003857
+      },
+      {
+        "actors": [
+          "Lilly Singh",
+          "Toby Turner",
+          "Ricky Hayberg",
+          "Olga Kay",
+          "Matthew Santoro",
+          "Eliot Dewberry",
+          "Woody Tondorf",
+          "Arnold Schwarzenegger"
+        ],
+        "adult": false,
+        "characters": [
+          "Lilly",
+          "Toby",
+          "Ricky",
+          "Olga",
+          "Matt",
+          "Eliot",
+          "Woody",
+          "Terminator"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Sci-Fi"
+        ],
+        "id": "tt4824394",
+        "tconst": "tt4824394",
+        "titles": [
+          "Terminator Genisys: The YouTube Chronicles"
+        ],
+        "_version_": 1762885576877408258
+      },
+      {
+        "actors": [
+          "Seth Green",
+          "Abraham Benrubi",
+          "Bob Bergen",
+          "Mikey Day"
+        ],
+        "adult": false,
+        "characters": [
+          "Boots the Monkey",
+          "Terminator",
+          "John Hammond",
+          "Darth Vader",
+          "Soundwave",
+          "Suge Knight",
+          "Luke Skywalker",
+          "Zapper",
+          "John Connor",
+          "Willy Wonka",
+          "Aspiring Actor"
+        ],
+        "directors": [
+          "Tom Sheppard"
+        ],
+        "genres": [
+          "Adventure",
+          "Animation",
+          "Comedy"
+        ],
+        "id": "tt5660166",
+        "runtimeMinutes": 11,
+        "tconst": "tt5660166",
+        "titles": [
+          "Not Enough Women"
+        ],
+        "writers": [
+          "Shelby Fero",
+          "Matthew Senreich",
+          "Douglas Goldstein",
+          "Tom Root",
+          "Mike Fasolo"
+        ],
+        "_version_": 1762888734647255049
+      },
+      {
+        "actors": [
+          "Bernie Bregman",
+          "Lonstermash"
+        ],
+        "adult": false,
+        "characters": [
+          "Self - Host",
+          "Gaston",
+          "Terminator",
+          "Self"
+        ],
+        "directors": [
+          "Elsie Arambula"
+        ],
+        "genres": [
+          "Reality-TV"
+        ],
+        "id": "tt5662630",
+        "tconst": "tt5662630",
+        "titles": [
+          "Long Beach Comic Con"
+        ],
+        "_version_": 1762888734672420868
+      },
+      {
+        "actors": [
+          "Joshua Chaisson",
+          "Charles McDonald",
+          "Jonah Morgan",
+          "Brennen Pittman"
+        ],
+        "adult": false,
+        "characters": [
+          "Evil Fox",
+          "Terminator",
+          "Super Josh",
+          "Lieutenant McDonald",
+          "Corporal Yaeger",
+          "General Pittman"
+        ],
+        "directors": [
+          "Benjamin Eunice"
+        ],
+        "genres": [
+          "Action",
+          "Short"
+        ],
+        "id": "tt6479000",
+        "runtimeMinutes": 9,
+        "tconst": "tt6479000",
+        "titles": [
+          "Begin"
+        ],
+        "_version_": 1762894897044520984
+      },
+      {
+        "actors": [
+          "Shaun Finney",
+          "Eric Jacobus",
+          "Felix Fukuyoshi Ruwwe",
+          "Lorenz Hideyoshi Ruwwe"
+        ],
+        "adult": false,
+        "characters": [
+          "Bum",
+          "President",
+          "Tutorial Guy",
+          "Terminator"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Sci-Fi"
+        ],
+        "id": "tt6600428",
+        "runtimeMinutes": 6,
+        "tconst": "tt6600428",
+        "titles": [
+          "Future Boss"
+        ],
+        "_version_": 1762894906821443592
+      },
+      {
+        "actors": [
+          "Quami Adams",
+          "Leo Camacho",
+          "Paul Carganilla",
+          "Brittnee Garza",
+          "Ed King",
+          "Chris Villain"
+        ],
+        "adult": false,
+        "characters": [
+          "Wizard",
+          "Black Stallion",
+          "Starfighter",
+          "LadyHawke",
+          "Terminator",
+          "Lost Boy"
+        ],
+        "genres": [
+          "Comedy",
+          "Short"
+        ],
+        "id": "tt8045744",
+        "tconst": "tt8045744",
+        "titles": [
+          "Wizard and Starfighter"
+        ],
+        "_version_": 1762901242167689251
+      },
+      {
+        "actors": [
+          "Russell Christmas",
+          "Leigh Francis",
+          "James Galvin"
+        ],
+        "adult": false,
+        "characters": [
+          "Self",
+          "T-1000",
+          "Bar Cowboy",
+          "Keith Lemon",
+          "Terminator",
+          "Psychiatric Doctor",
+          "Self",
+          "Sarah Connor",
+          "Self",
+          "John Connor"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt8248304",
+        "tconst": "tt8248304",
+        "titles": [
+          "Terminator 2"
+        ],
+        "_version_": 1762904368017833995
+      },
+      {
+        "adult": false,
+        "characters": [
+          "Self",
+          "Self",
+          "Self",
+          "Self"
+        ],
+        "genres": [
+          "Biography",
+          "Documentary"
+        ],
+        "id": "tt0415312",
+        "runtimeMinutes": 60,
+        "tconst": "tt0415312",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762829129984507934
+      },
+      {
+        "actors": [
+          "Marko Nikolic",
+          "Svetlana Bojkovic",
+          "Boris Komnenic",
+          "Lidija Vukicevic"
+        ],
+        "adult": false,
+        "characters": [
+          "Dragisa 'Giga' Popadic",
+          "Emilija 'Ema' Popadic",
+          "Aleksandar 'Sasa' Popadic",
+          "Violeta 'Viki' Popadic"
+        ],
+        "directors": [
+          "Aleksandar Djordjevic",
+          "Mihailo Vukobratovic"
+        ],
+        "genres": [
+          "Comedy",
+          "Drama",
+          "Family"
+        ],
+        "id": "tt0935211",
+        "tconst": "tt0935211",
+        "titles": [
+          "Terminator"
+        ],
+        "writers": [
+          "Ljiljana Pavic",
+          "Sinisa Pavic"
+        ],
+        "_version_": 1762832386600468522
+      },
+      {
+        "adult": false,
+        "genres": [
+          "Action",
+          "Adventure",
+          "Animation"
+        ],
+        "id": "tt14153236",
+        "tconst": "tt14153236",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762848073927622690
+      },
+      {
+        "actors": [
+          "Nico Thulin",
+          "Andrew Dykes"
+        ],
+        "adult": false,
+        "genres": [
+          "Comedy",
+          "Reality-TV"
+        ],
+        "id": "tt14844598",
+        "tconst": "tt14844598",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762851179917737984
+      },
+      {
+        "actors": [
+          "Stephen Lomer",
+          "Nicole Vanlandingham",
+          "Kyle Merker",
+          "Arianna Lekhraj"
+        ],
+        "adult": false,
+        "characters": [
+          "PNN Anchor",
+          "Anne Gale Hurd",
+          "Dirk Fate",
+          "Jen Issis"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt15404476",
+        "tconst": "tt15404476",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762854269112811559
+      },
+      {
+        "adult": false,
+        "genres": [
+          "Action",
+          "Sci-Fi"
+        ],
+        "id": "tt15909732",
+        "tconst": "tt15909732",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762857336989286428
+      },
+      {
+        "actors": [
+          "Saif Al Ghanime",
+          "Mais Kamar",
+          "Saad Khalifa",
+          "Risan Matar",
+          "Ayad Radhi",
+          "Zohair Rasheed"
+        ],
+        "adult": false,
+        "characters": [
+          "Swadi",
+          "Hoobi"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt27012035",
+        "tconst": "tt27012035",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762876069623365651
+      },
+      {
+        "actors": [
+          "Joshua Miller"
+        ],
+        "adult": false,
+        "characters": [
+          "Mike Hunt"
+        ],
+        "directors": [
+          "Ryan McDonald"
+        ],
+        "genres": [
+          "Action",
+          "Short"
+        ],
+        "id": "tt1994570",
+        "tconst": "tt1994570",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762863568042065921
+      },
+      {
+        "actors": [
+          "Julien Diaz"
+        ],
+        "adult": false,
+        "characters": [
+          "Sad Panda",
+          "Self"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt2125856",
+        "runtimeMinutes": 5,
+        "tconst": "tt2125856",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762866678432006149
+      },
+      {
+        "actors": [
+          "Jerónimo Salas",
+          "Sandra Gumuzzio",
+          "David Díaz"
+        ],
+        "adult": false,
+        "characters": [
+          "Kyle Reese",
+          "Sarah Connor",
+          "Voz inicio"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt4335018",
+        "runtimeMinutes": 5,
+        "tconst": "tt4335018",
+        "titles": [
+          "Terminator"
+        ],
+        "writers": [
+          "Juan Pérez",
+          "Daniel Retuerta"
+        ],
+        "_version_": 1762885508887740430
+      },
+      {
+        "adult": false,
+        "genres": [
+          "Documentary"
+        ],
+        "id": "tt5342278",
+        "tconst": "tt5342278",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762888657001250823
+      },
+      {
+        "actors": [
+          "T.J. Garland"
+        ],
+        "adult": false,
+        "directors": [
+          "Keith Brooks"
+        ],
+        "genres": [
+          "Talk-Show"
+        ],
+        "id": "tt5370708",
+        "tconst": "tt5370708",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762888657334698022
+      },
+      {
+        "actors": [
+          "Grégoire Lassalle",
+          "Kevin Sardet",
+          "Jessie Lambotte"
+        ],
+        "adult": false,
+        "characters": [
+          "Grégou",
+          "Le coach",
+          "Voix de l'émission"
+        ],
+        "directors": [
+          "Anthony Barthélémy"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt5274648",
+        "tconst": "tt5274648",
+        "titles": [
+          "Terminator"
+        ],
+        "_version_": 1762888654653489161
+      },
+      {
+        "actors": [
+          "Marek Kaliszuk",
+          "Weronika Wachowska",
+          "Miroslaw Zbrojewicz",
+          "Marieta Zukowska"
+        ],
+        "adult": false,
+        "characters": [
+          "Michal",
+          "Dusia",
+          "Electrician",
+          "Michelle"
+        ],
+        "directors": [
+          "Tomasz Konecki"
+        ],
+        "genres": [
+          "Comedy"
+        ],
+        "id": "tt8202792",
+        "tconst": "tt8202792",
+        "titles": [
+          "Terminator"
+        ],
+        "writers": [
+          "Rafal Kolikow",
+          "Mariusz Kuczewski",
+          "Krzysztof Landsberg"
+        ],
+        "_version_": 1762904353101840392
+      }
+    ]
+  },
+  "facet_counts": {
+    "facet_queries": {},
+    "facet_fields": {
+      "genres": [
+        "Comedy",
+        50,
+        "Action",
+        21,
+        "Short",
+        18,
+        "Sci-Fi",
+        13,
+        "Animation",
+        9,
+        "Adventure",
+        5,
+        "Crime",
+        4,
+        "Documentary",
+        3,
+        "Horror",
+        3,
+        "Drama",
+        2,
+        "Family",
+        2,
+        "Music",
+        2,
+        "Reality-TV",
+        2,
+        "Sport",
+        2,
+        "Talk-Show",
+        2,
+        "Biography",
+        1,
+        "Game-Show",
+        1,
+        "History",
+        1,
+        "News",
+        1,
+        "Thriller",
+        1,
+        "Adult",
+        0,
+        "Fantasy",
+        0,
+        "Film-Noir",
+        0,
+        "Musical",
+        0,
+        "Mystery",
+        0,
+        "Romance",
+        0,
+        "War",
+        0,
+        "Western",
+        0
+      ],
+      "actors": [
+        "Andrey Gaydulyan",
+        5,
+        "Anton Belousko",
+        5,
+        "Arnold Schwarzenegger",
+        5,
+        "Kseniya Baskakova",
+        5,
+        "Vitaliy Gogunskiy",
+        5,
+        "Ararat Keshchyan",
+        4,
+        "David Díaz",
+        4,
+        "Eliot Dewberry",
+        3,
+        "Matthew Santoro",
+        3,
+        "Mikey Day",
+        3,
+        "Olga Kay",
+        3,
+        "Ricky Hayberg",
+        3,
+        "Abraham Benrubi",
+        2,
+        "Alexander Favors",
+        2,
+        "Andrey Sedov",
+        2,
+        "Barrett Blomberg",
+        2,
+        "Bob Diamond",
+        2,
+        "Cody Gough",
+        2,
+        "Diana Ferrando",
+        2,
+        "Jacob Kitts",
+        2,
+        "Mariya Kozhevnikova",
+        2,
+        "Mike Fitzgerald",
+        2,
+        "Nestor Sebastian Miranda",
+        2,
+        "Rob Boor",
+        2,
+        "Santi Peña",
+        2,
+        "Seth Green",
+        2,
+        "Aaron Oxlade",
+        1,
+        "Adam Groshko",
+        1,
+        "Adam Harrison",
+        1,
+        "Agustín Montero",
+        1,
+        "Aleksey Gavrilov",
+        1,
+        "Aleksey Klimushkin",
+        1,
+        "Alexandru Arnautu Vraciu",
+        1,
+        "Alice Berni-Reed",
+        1,
+        "Allan Teisen",
+        1,
+        "Ana Figueiredo",
+        1,
+        "Anastasiya Denisova",
+        1,
+        "Andrew Dykes",
+        1,
+        "Andrew Hatton",
+        1,
+        "Andrew Ramirez",
+        1,
+        "Andrey Batt",
+        1,
+        "Andrey Sochnov",
+        1,
+        "Anna Schulman",
+        1,
+        "Anthony Caruso",
+        1,
+        "Arianna Lekhraj",
+        1,
+        "Ashley McGuire",
+        1,
+        "Ayad Radhi",
+        1,
+        "Ben B. Singer",
+        1,
+        "Ben Todman",
+        1,
+        "Bernie Bregman",
+        1,
+        "Beth Forni Chalupa",
+        1,
+        "Bob Bergen",
+        1,
+        "Bobby Jennings",
+        1,
+        "Boris Komnenic",
+        1,
+        "Brennen Pittman",
+        1,
+        "Brent Jerell Reed",
+        1,
+        "Brittnee Garza",
+        1,
+        "Carlos Movilla",
+        1,
+        "Carolyn Meyer",
+        1,
+        "Cassadie A. Petersen",
+        1,
+        "Chad James",
+        1,
+        "Charles McDonald",
+        1,
+        "Chris Frank",
+        1,
+        "Chris Villain",
+        1,
+        "Christoffer Löfström",
+        1,
+        "Claire 'Fluff' Llewellyn",
+        1,
+        "Claire Danes",
+        1,
+        "Clinton Roper Elledge",
+        1,
+        "Cole Parker",
+        1,
+        "Craig Newman",
+        1,
+        "Cristina Sanz",
+        1,
+        "Curtis Arnott",
+        1,
+        "Dan Bull",
+        1,
+        "Daniel Jefferson",
+        1,
+        "Daniel Retuerta",
+        1,
+        "Daniel Vivian",
+        1,
+        "Danny Blanchard",
+        1,
+        "Danny Larsen",
+        1,
+        "Darya Mikhaylova",
+        1,
+        "David Abrams",
+        1,
+        "Davud Pivac",
+        1,
+        "Debbie Medows",
+        1,
+        "Derek Russo",
+        1,
+        "Derya Taray",
+        1,
+        "Dmitriy Nagiev",
+        1,
+        "Don Gomez",
+        1,
+        "Donal Stevenson",
+        1,
+        "Ed King",
+        1,
+        "Edward Furlong",
+        1,
+        "Eli David",
+        1,
+        "Emily Koch",
+        1,
+        "Eric Boor",
+        1,
+        "Eric Jacobus",
+        1,
+        "Erica Nolan",
+        1,
+        "Erik Bartsch",
+        1,
+        "Erik Jensen",
+        1,
+        "Fabian Knöbl",
+        1,
+        "Felix Fukuyoshi Ruwwe",
+        1,
+        "Fergus Stevenson",
+        1,
+        "Flaminia Cinque",
+        1
+      ],
+      "directors": [
+        "Pyotr Tochilin",
+        3,
+        "Charles Paek",
+        2,
+        "Joseph William Greene",
+        2,
+        "Tom Sheppard",
+        2,
+        "Aleksandar Djordjevic",
+        1,
+        "Anthony Barthélémy",
+        1,
+        "António Forte",
+        1,
+        "Ben Hernandez",
+        1,
+        "Benjamin Eunice",
+        1,
+        "Chris",
+        1,
+        "Clint Gage",
+        1,
+        "Dane Boedigheimer",
+        1,
+        "Daniel Clay Fox",
+        1,
+        "Elsie Arambula",
+        1,
+        "George Petro",
+        1,
+        "Heini Grünbaum",
+        1,
+        "Ivan Kitaev",
+        1,
+        "Jack Haeger",
+        1,
+        "James Cameron",
+        1,
+        "James Logan",
+        1,
+        "Joe Lonesome",
+        1,
+        "John Stroud",
+        1,
+        "Jonathan Mostow",
+        1,
+        "José Francisco Pinheiro",
+        1,
+        "Kai Murphy",
+        1,
+        "Keith Brooks",
+        1,
+        "Leila Vieira",
+        1,
+        "Manuel Amaro da Costa",
+        1,
+        "Mihailo Vukobratovic",
+        1,
+        "Pete Bune",
+        1,
+        "Péter Gábor",
+        1,
+        "Ryan McDonald",
+        1,
+        "Tomasz Konecki",
+        1,
+        "Van Ling",
+        1,
+        "Zbigniew Kuzminski",
+        1,
+        "#28 Kikuchi",
+        0,
+        "$OY",
+        0,
+        "&Aringsa Johansson",
+        0,
+        "'Atlas' Ramachandran",
+        0,
+        "'Big' James Wroblewski",
+        0,
+        "'Biggy' Winzig Zbigniew",
+        0,
+        "'Bill' William Sollner",
+        0,
+        "'Bob' Insert",
+        0,
+        "'Chico' Hernandez",
+        0,
+        "'Evil' Ted Smith",
+        0,
+        "'Fish' Mark Pickart",
+        0,
+        "'Hiki' Pyotr Struchkov",
+        0,
+        "'Hollywood' Steve Huey",
+        0,
+        "'Horny' Harry",
+        0,
+        "'Jungle Jim' Shaughnessy",
+        0,
+        "'Knife' Sotelo",
+        0,
+        "'Krazy Joe' Fiore",
+        0,
+        "'Legs' McGinty",
+        0,
+        "'Mike Rob' Michael Robinson",
+        0,
+        "'Phie Mura",
+        0,
+        "'Rebecca' Qin Jiang",
+        0,
+        "'Ron Banks",
+        0,
+        "'Tamiliam' Subas",
+        0,
+        "'Weird Al' Yankovic",
+        0,
+        "'Wáats'asdíyei Joe Yates",
+        0,
+        ". Ram Pandey",
+        0,
+        ".K. Nanjunda",
+        0,
+        ".K. Sharath",
+        0,
+        ".T. Samidurai",
+        0,
+        "0010x0010",
+        0,
+        "1 Hacker Way Siopat Suhu",
+        0,
+        "1&onlyguy",
+        0,
+        "1+2 Bo'S Verdwijning",
+        0,
+        "100%",
+        0,
+        "12. Mendeljev",
+        0,
+        "13. Blind Audtions",
+        0,
+        "1312",
+        0,
+        "14. De Eerste Stappen",
+        0,
+        "199nah",
+        0,
+        "1K Phew",
+        0,
+        "2KTHOMAS",
+        0,
+        "2faces",
+        0,
+        "300k",
+        0,
+        "36 Grados",
+        0,
+        "3Stripedkilla",
+        0,
+        "50 Cent",
+        0,
+        "5crac3",
+        0,
+        "6th Element",
+        0,
+        "72u",
+        0,
+        "88 Everything",
+        0,
+        "9",
+        0,
+        "9-LexRex-23",
+        0,
+        "918",
+        0,
+        "9373R",
+        0,
+        "@Pin_Tao",
+        0,
+        "A B Arjun",
+        0,
+        "A B D Tuhin",
+        0,
+        "A Brooks Bennett",
+        0,
+        "A Cheng Dong",
+        0,
+        "A E Treco-Wells",
+        0,
+        "A Fernandez",
+        0,
+        "A Garcia",
+        0,
+        "A Harsha",
+        0,
+        "A Karim Massaquoi",
+        0,
+        "A L Katz",
+        0
+      ],
+      "titles": [
+        "Terminator",
+        16,
+        "Terminator 2",
+        3,
+        "Baby Porn vs Terminator",
+        1,
+        "Begin",
+        1,
+        "Bloody Boots",
+        1,
+        "Caption Fail Movies",
+        1,
+        "Cyborg vs Terminator",
+        1,
+        "Dance Dance Revolution: The Warrior's Path",
+        1,
+        "En kväll med Klemens",
+        1,
+        "Episode #1.11",
+        1,
+        "Episode #1.22",
+        1,
+        "Episode #1.24",
+        1,
+        "Episode #1.3",
+        1,
+        "Episode #4.13",
+        1,
+        "Especial Ironia: Terminator 3",
+        1,
+        "Five Minutes to Air",
+        1,
+        "Future Boss",
+        1,
+        "Gorod soblaznov",
+        1,
+        "Housemates of Horror",
+        1,
+        "Kapitan z 'Oriona'",
+        1,
+        "Long Beach Comic Con",
+        1,
+        "Maykl vernulsya",
+        1,
+        "Not Enough Women",
+        1,
+        "Other Voices: Back Through Time: Creating 'The Terminator': Cast & Crew Recollections",
+        1,
+        "Other Voices: Back Through Time: Creating 'the Terminator': Cast & Crew Recollections",
+        1,
+        "Part 2",
+        1,
+        "Part 3",
+        1,
+        "Pattogatott kukorica",
+        1,
+        "Popcorn",
+        1,
+        "Robo Wingman",
+        1,
+        "Sasha - ofitsiant",
+        1,
+        "Show girls",
+        1,
+        "Slash/Up",
+        1,
+        "Stunts",
+        1,
+        "Sundancer Craig in: 30% of the Way to Crying",
+        1,
+        "T2 Judgement Day: Sweded Edition",
+        1,
+        "Terminated",
+        1,
+        "Terminator 2: Judgment Day",
+        1,
+        "Terminator 2: One More Chip",
+        1,
+        "Terminator 3: Rise Of The Machines (2003)",
+        1,
+        "Terminator 3: Rise of the Machines",
+        1,
+        "Terminator Genisys: The YouTube Chronicles",
+        1,
+        "Terminator Joe-dgment Day",
+        1,
+        "Terminator VS RoboCop",
+        1,
+        "Terminator: Dawn of Judgement Day",
+        1,
+        "Terminator: Termination",
+        1,
+        "Terminator: Tides of Steel",
+        1,
+        "The Broken Flute",
+        1,
+        "The Elem3ntalist",
+        1,
+        "The ExTerminator Episode",
+        1,
+        "The New Adventures of Cinematic Venom",
+        1,
+        "The Savages",
+        1,
+        "The Serious Business Double Feature",
+        1,
+        "The Terminator",
+        1,
+        "The Terminator Returns",
+        1,
+        "The Terminator: 'Terminated' Deleted Scenes",
+        1,
+        "The Terminator: 'Terminated' Scenes",
+        1,
+        "Theater Wars",
+        1,
+        "Time Machine",
+        1,
+        "Trapped at Boarding School",
+        1,
+        "Tri udara",
+        1,
+        "Vypusk 200: Zhiznenniy opyt, Goryachaya kartoshechka, Terminator",
+        1,
+        "Watching the Detectives",
+        1,
+        "Wizard and Starfighter",
+        1,
+        "Zhmotryara",
+        1,
+        "!Next?",
+        0,
+        "!Que ve el Bisbe!",
+        0,
+        "!Women Art Revolution",
+        0,
+        "\"#RichKids of Beverly Hills\" Star EJ Johnson/Can I Rock This with EJ/QVC's Lisa Robertson Shares Latest Beauty Oil Trends",
+        0,
+        "\"#selfie\" by The Chainsmokers",
+        0,
+        "\"'S'Kastanie\", Heidelberg",
+        0,
+        "\"... and know the place for the first time.\"",
+        0,
+        "\"... so antworten Sie mit Ja\"",
+        0,
+        "\"...Just Be a Good Person\"",
+        0,
+        "\"...ein angenehmer Unbequemer...",
+        0,
+        "\"0304\" by Jewel",
+        0,
+        "\"1 jikan buchi nuki de Sasuke ga ô abare dattebayo supesharu\": Arashi o yobu otoko!! Sasuke no gejimayu-ryû taijutsu!",
+        0,
+        "\"1 jikan buchi nuki de Sasuke ga ô abare dattebayo supesharu\": Date ni okureta wake janai! Kyûkyoku ôgi - Chidori tanjô!!",
+        0,
+        "\"12 Apostoles\", Mallorca",
+        0,
+        "\"12 Years a Slave\" Review",
+        0,
+        "\"15 of My Leading Ladies\" or \"Richard Burton Eat Your Heart Out\".",
+        0,
+        "\"2 Broke Girls\" Star Beth Behrs Is Showing Us How to Eat Healthy, Even If You're on a Broke Girl's Budget!",
+        0,
+        "\"21 Questions\" by 50 Cent Feat. Nate Dogg",
+        0,
+        "\"237 Oxhoft\", Potsdam",
+        0,
+        "\"24: Legacy\" Star Corey Hawkins/\"Rock Dog\" Actress Mae Whitman/\"Love It or List It\" Hosts Hilary Farr & David Visentin/Harry Goes Home!",
+        0,
+        "\"24: Legacy\" Star Corey Hawkins/Super Bowl Pulled Pork with Meathead/\"Kitten Bowl\" Host Beth Stern/Leading Lady",
+        0,
+        "\"2nd interview\" Keith E. Johnson",
+        0,
+        "\"30 Stühle\", Brühl",
+        0,
+        "\"300: Rise of an Empire\" Conversation with the Cast",
+        0,
+        "\"5\" Cool Tools",
+        0,
+        "\"50 Shades of Grey\" While Trying Not to Get Demonitized Challenge",
+        0,
+        "\"50 Shades! The Musical\" Is 50 Times Better Than the Book, Turning Literary Lead Into Entertainment Gold",
+        0,
+        "\"7 Years\" by Lukas Graham",
+        0,
+        "\"8-Bit Rock Stars\" with David Crane",
+        0,
+        "\"9 to 5\" at Albuquerque Little Theater",
+        0,
+        "\"90210\" Heartthrob Luke Perry Is Hanging with Rachael Today, and He's Dishing on His New Hit, \"Riverdale\"!",
+        0,
+        "\"90210\" Star AnnaLynne McCord Reveals Dissociative Identity Disorder",
+        0,
+        "\"90210\" Star Ian Ziering, Ivana Trump, Debby Boone & Project Runway Winner Christian Siriano",
+        0,
+        "\"90210\" Star Shannen Doherty/Tamara Tunie/Hill Harper/Storage Solutions",
+        0,
+        "\"911 what's your emergency?\" The deep voice surprised me.",
+        0
+      ],
+      "characters": [
+        "Terminator",
+        65,
+        "John Connor",
+        11,
+        "Sarah Connor",
+        8,
+        "Self",
+        8,
+        "T-1000",
+        6,
+        "Kuzya",
+        5,
+        "Kyle Reese",
+        5,
+        "Nastya",
+        5,
+        "Sasha",
+        5,
+        "Self - Host",
+        5,
+        "Maykl",
+        4,
+        "Darth Vader",
+        3,
+        "Eliot",
+        3,
+        "Matt",
+        3,
+        "Olga",
+        3,
+        "Ricky",
+        3,
+        "Rob",
+        3,
+        "Voz inicio",
+        3,
+        "Alla",
+        2,
+        "Clyde",
+        2,
+        "Luke Skywalker",
+        2,
+        "Marty McFly",
+        2,
+        "Police officer",
+        2,
+        "Professional Kid Reviewer",
+        2,
+        "RoboCop",
+        2,
+        "Scientist",
+        2,
+        "Aaron",
+        1,
+        "Adam",
+        1,
+        "Alan Schaefer",
+        1,
+        "Aleksandar 'Sasa' Popadic",
+        1,
+        "Alf Git",
+        1,
+        "Alfred Pennyworth",
+        1,
+        "Algot",
+        1,
+        "Alice",
+        1,
+        "Andrew",
+        1,
+        "Anne Gale Hurd",
+        1,
+        "Ash",
+        1,
+        "Aspiring Actor",
+        1,
+        "Atreyu",
+        1,
+        "Baby Porn",
+        1,
+        "Bad Guy # 1",
+        1,
+        "Bad Terminator",
+        1,
+        "Baltimore Drug Dealer",
+        1,
+        "Bar Cowboy",
+        1,
+        "Batman",
+        1,
+        "Bed Bugs Dad",
+        1,
+        "Biker #1",
+        1,
+        "Biker #2",
+        1,
+        "Bill",
+        1,
+        "Billy",
+        1,
+        "Black Stallion",
+        1,
+        "Boatswain",
+        1,
+        "Body Guard",
+        1,
+        "Boomstick - Host",
+        1,
+        "Boots the Monkey",
+        1,
+        "Box Office Attendant",
+        1,
+        "Boy losing his mask",
+        1,
+        "Boyfriend",
+        1,
+        "Brett",
+        1,
+        "Bruce",
+        1,
+        "Bryan Mills",
+        1,
+        "Bug Guy",
+        1,
+        "Bully-boy #1",
+        1,
+        "Bully-boy #2",
+        1,
+        "Bum",
+        1,
+        "Businessman",
+        1,
+        "Camarero",
+        1,
+        "Captain",
+        1,
+        "Carrie",
+        1,
+        "Chief Nowaczyk",
+        1,
+        "Chinese Guru",
+        1,
+        "Chris",
+        1,
+        "Circus Worker",
+        1,
+        "Claire",
+        1,
+        "Concessionist",
+        1,
+        "Corporal Yaeger",
+        1,
+        "Cyborg",
+        1,
+        "Cérna",
+        1,
+        "Dad",
+        1,
+        "Damian",
+        1,
+        "Dan Bull",
+        1,
+        "Danny",
+        1,
+        "Davi",
+        1,
+        "Derek",
+        1,
+        "Det. Derrick Parker",
+        1,
+        "Detective Dan Lewis",
+        1,
+        "Detective Joe Loughran",
+        1,
+        "Detective Ken Clancy",
+        1,
+        "Detective Mark Valencia",
+        1,
+        "Detective Pikachu",
+        1,
+        "Dirk Fate",
+        1,
+        "Doberman",
+        1,
+        "Doble Harry",
+        1,
+        "Doc Brown",
+        1,
+        "Doctor",
+        1,
+        "Donald",
+        1,
+        "Doorman",
+        1,
+        "Dr. Evil",
+        1,
+        "Dr. Silverman",
+        1,
+        "Dragisa 'Giga' Popadic",
+        1
+      ],
+      "titleType": []
+    },
+    "facet_ranges": {},
+    "facet_intervals": {},
+    "facet_heatmaps": {}
+  }
+}

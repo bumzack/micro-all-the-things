@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fmt::Debug;
 
 use serde::Deserialize;
@@ -41,4 +42,19 @@ pub struct SearchPaginatedRequest {
     pub offset: u32,
     pub limit: u32,
     pub sort: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct IndexDocFacetDistribution {
+    pub actors: Option<HashMap<String, HashMap<String, usize>>>,
+    pub directors: Option<HashMap<String, HashMap<String, usize>>>,
+    pub genres: Option<HashMap<String, HashMap<String, usize>>>,
+    pub titles: Option<HashMap<String, HashMap<String, usize>>>,
+    pub characters: Option<HashMap<String, HashMap<String, usize>>>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct MovieSearchResult {
+    pub movies: Vec<SearchIndexDoc>,
+    pub facets: Option<IndexDocFacetDistribution>,
 }

@@ -34,7 +34,6 @@ async fn main() -> io::Result<()> {
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root.or(search_search_index::filters_search_search_index::search_index_route());
 
-    // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("search_search_index"));
     // Start up the server...
     warp::serve(routes).run(([127, 0, 0, 1], 18320)).await;

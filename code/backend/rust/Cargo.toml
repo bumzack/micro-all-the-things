@@ -23,5 +23,6 @@ members = [
     "customer/customerpriceservice",
     "customer/customerservice",
     "price/priceservice",
-    "customer/authenticationservice"
+    "customer/authenticationservice",
+    "tooling/serialize_facets"
 ]
