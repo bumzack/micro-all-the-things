@@ -144,8 +144,8 @@ pub mod handlers_entity {
         entity: Entity,
         client: &Client,
     ) -> Result<impl warp::Reply, Infallible>
-        where
-            TsvLines: EntityConverter<T>,
+    where
+        TsvLines: EntityConverter<T>,
     {
         info!(
             "processing request with {} lines. {}",

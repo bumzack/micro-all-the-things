@@ -6,8 +6,8 @@ use std::net::{SocketAddr, ToSocketAddrs};
 use config::Config;
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
-use crate::authentication::authentication_routes::handler_authentication::authentication_route;
 
+use crate::authentication::authentication_routes::handler_authentication::authentication_route;
 use crate::db::db::create_pool;
 
 mod authentication;
@@ -39,8 +39,8 @@ async fn main() {
         .expect("expected authenticationservice_service_host variable");
 
     let port: u16 = CONFIG
-        .get("cauthenticationservice_service_port")
-        .expect("expected cauthenticationservice_service_port  variable");
+        .get("authenticationservice_service_port")
+        .expect("expected authenticationservice_service_port  variable");
 
     let host = format!("{host}:{port}");
 

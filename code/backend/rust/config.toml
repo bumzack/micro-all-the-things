@@ -12,7 +12,7 @@ search_movieaka_by_tconst = "http://localhost:18201/api/ENGINE/movieaka/filter"
 search_rating_by_tconst = "http://localhost:18201/api/ENGINE/rating/filter"
 
 search_customers_paginated = "http://localhost:18980/api/v1/customer/paginated/:offset/:limit"
-search_customer_by_email = "http://localhost:18980/api/v1/authentication/:email"
+search_customer_by_email = "http://localhost:18980/api/v1/customer/:email"
 
 
 
