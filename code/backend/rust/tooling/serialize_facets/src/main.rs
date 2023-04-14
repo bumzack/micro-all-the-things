@@ -4,6 +4,10 @@ use std::fs;
 use serde::Deserialize;
 use serde::Serialize;
 
+use crate::blupp3::blupp3;
+
+mod blupp3;
+
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Blupp {
     pub name: String,
@@ -15,21 +19,36 @@ pub struct Stuff {
     pub characters: Option<Vec<HashMap<String, usize>>>,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
-pub struct FacetCounts {
-    pub facet_fields: Option<HashMap<String, Vec<HashMap<String, usize>>>>,
-}
+// #[derive(Debug, Deserialize, Serialize)]
+// pub struct FacetCounts {
+//     pub facet_fields: Option<HashMap<String, Vec<HashMap<String, usize>>>>,
+// }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SearchResult {
-    pub facet_counts: Option<FacetCounts>,
+    pub facet_fields: Option<HashMap<String, Vec<String>>>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SearchResult2 {
+    pub facet_fields: Option<HashMap<String, Vec<HashMap<String, usize>>>>,
 }
 
 fn main() {
-    let contents = fs::read_to_string("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res1.json").expect("Should have been able to read the file");
+    blupp3()
+}
+
+fn testinger() {
+    let contents = fs::read_to_string("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res2.json").expect("Should have been able to read the file");
 
     // let a = get_facets();
     let search_result: SearchResult = serde_json::from_str(&contents).unwrap();
+    println!("search_result {:?}", &search_result);
+
+    let contents = fs::read_to_string("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res3.json").expect("Should have been able to read the file");
+
+    // let a = get_facets();
+    let search_result: SearchResult2 = serde_json::from_str(&contents).unwrap();
     println!("search_result {:?}", &search_result);
 
     // let s = get_data();

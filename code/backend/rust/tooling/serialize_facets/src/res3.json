@@ -1,0 +1,20 @@
+{
+  "facet_fields": {
+    "genres": [
+      "Comedy",
+      10,
+      "Action",
+      20,
+      "Short",
+      30
+    ],
+    "actors": [
+      "ComedyCC",
+      2,
+      "ActionBB",
+      4,
+      "ShortAA",
+      6
+    ]
+  }
+}

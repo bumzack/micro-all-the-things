@@ -1,6 +1,5 @@
 {
   "facet_counts": {
-    "facet_queries": {},
     "facet_fields": {
       "genres": [
         "Comedy",
@@ -869,9 +868,6 @@
         1
       ],
       "titleType": []
-    },
-    "facet_ranges": {},
-    "facet_intervals": {},
-    "facet_heatmaps": {}
+    }
   }
 }
