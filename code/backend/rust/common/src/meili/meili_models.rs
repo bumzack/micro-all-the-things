@@ -1,8 +1,9 @@
-use std::collections::HashMap;
 use std::fmt::Debug;
 
 use serde::Deserialize;
 use serde::Serialize;
+
+use crate::models::search_doc::IndexDocFacetDistribution;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
@@ -57,15 +58,6 @@ pub struct MeiliSearchResult<T> {
     pub facet_distribution: Option<IndexDocFacetDistribution>,
     pub processing_time_ms: i32,
     pub query: String,
-}
-
-#[derive(Debug, Deserialize, Serialize)]
-pub struct IndexDocFacetDistribution {
-    pub actors: Option<HashMap<String, usize>>,
-    pub directors: Option<HashMap<String, usize>>,
-    pub genres: Option<HashMap<String, usize>>,
-    pub titles: Option<HashMap<String, usize>>,
-    pub characters: Option<HashMap<String, usize>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

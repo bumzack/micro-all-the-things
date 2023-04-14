@@ -1,7 +1,7 @@
 # Testing the microthingi
 
 ```
-curl  -vvvv  -X POST -H 'Content-Type: application/json' 'http://localhost:18104/api/principal' --data-binary ' { "original": "tt0000001\t1\tnm1588970\tself\t\\N\t[\"Self\"]", "entries" : ["tt0000001", "1" , "nm1588970" , "self" ,"\\N",  "[\"Self\"]" ]}'
+curl  -vvvv  -X POST -H 'Content-Type: application/json' 'http://localhost:18104/api/principal' --data-binary ' { "original": "tt0000001\t1\tnm1588970\tself\t\\N\t["Self"]", "entries" : ["tt0000001", "1" , "nm1588970" , "self" ,"\\N",  "["Self"]" ]}'
 ```
 
 ```

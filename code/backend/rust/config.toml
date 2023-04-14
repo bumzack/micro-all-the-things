@@ -12,7 +12,17 @@ search_movieaka_by_tconst = "http://localhost:18201/api/ENGINE/movieaka/filter"
 search_rating_by_tconst = "http://localhost:18201/api/ENGINE/rating/filter"
 
 search_customers_paginated = "http://localhost:18980/api/v1/customer/paginated/:offset/:limit"
+search_customer_by_email = "http://localhost:18980/api/v1/customer/:email"
 
+search_index_doc = "http://localhost:18320/api/v1/ENGINE/searchindex/search"
+
+
+customer_login = "http://localhost:18982/api/v1/authentication/login"
+customer_logout = "http://localhost:18982/api/v1/authentication/logout"
+customer_authenticated = "http://localhost:18982/api/v1/authenticated/:customer_id"
+
+search_movie_price = "http://localhost:18800/api/v1/price/:tconst"
+search_movie_customerprice = "http://localhost:18800/api/v1/customerprice/:customer_id/:year"
 
 
 # logging service
@@ -48,6 +58,21 @@ customerpriceservice_db_host = "localhost"
 customerpriceservice_db_name = "bumzack"
 customerpriceservice_service_host = "localhost"
 customerpriceservice_service_port = "18981"
+
+
+
+# authentication service
+authenticationservice_db_user = "bumzack"
+authenticationservice_db_password = "bumzack"
+authenticationservice_db_host = "localhost"
+authenticationservice_db_name = "bumzack"
+authenticationservice_service_host = "localhost"
+authenticationservice_service_port = "18982"
+
+
+# searcharticle service
+searcharticle_service_host = "localhost"
+searcharticle_service_port = "18600"
 
 
 

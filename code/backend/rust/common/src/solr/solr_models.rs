@@ -3,6 +3,8 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
+use crate::models::search_doc::IndexDocFacetDistribution;
+
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SolrParams {
     pub q: Option<String>,
@@ -40,8 +42,14 @@ pub struct SolrResponseDocs<T> {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+pub struct FacetCounts {
+    pub facet_fields: Option<IndexDocFacetDistribution>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
 pub struct SolrResponse<T> {
     #[serde(rename = "responseHeader")]
     pub response_header: Option<ResponseHeader>,
     pub response: Option<SolrResponseDocs<T>>,
+    //  pub facet_counts: Option<FacetCounts>,
 }

@@ -54,6 +54,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "authenticationservice"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "common",
+ "config",
+ "deadpool-postgres",
+ "futures",
+ "hmac",
+ "jwt",
+ "lazy_static",
+ "log",
+ "pretty_env_logger",
+ "rand",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "sha2",
+ "thiserror",
+ "tokio",
+ "tokio-postgres",
+ "warp",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -821,6 +848,21 @@ dependencies = [
  "pest",
  "pest_derive",
  "serde",
+]
+
+[[package]]
+name = "jwt"
+version = "0.16.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6204285f77fe7d9784db3fdc449ecce1a0114927a51d5a41c4c7a292011c015f"
+dependencies = [
+ "base64 0.13.1",
+ "crypto-common",
+ "digest",
+ "hmac",
+ "serde",
+ "serde_json",
+ "sha2",
 ]
 
 [[package]]
@@ -1729,6 +1771,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_search_article"
+version = "0.1.0"
+dependencies = [
+ "common",
+ "config",
+ "dotenvy",
+ "futures",
+ "lazy_static",
+ "log",
+ "pretty_env_logger",
+ "reqwest",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
+ "tokio",
+ "warp",
+]
+
+[[package]]
 name = "rust_search_search_index"
 version = "0.1.0"
 dependencies = [
@@ -1898,6 +1960,16 @@ dependencies = [
  "itoa",
  "ryu",
  "serde",
+]
+
+[[package]]
+name = "serialize_facets"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_urlencoded",
 ]
 
 [[package]]

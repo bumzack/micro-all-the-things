@@ -8,6 +8,7 @@ pub mod meili_entity_stuff {
     use crate::entity::entity::Entity;
     use crate::meili::meili_http::meili_http_stuff::{meili_read_document_http, meili_search_http};
     use crate::meili::meili_models::MeiliSearchResult;
+    use crate::models::search_doc::IndexDocFacetDistribution;
 
     pub async fn meili_filter_entity<T>(
         entity: Entity,
@@ -123,6 +124,74 @@ pub mod meili_entity_stuff {
             Err(eee) => {
                 error!("meili_search_searchindex wtf?. error {:?}", eee);
                 vec![]
+            }
+        };
+        docs
+    }
+
+    pub async fn meili_search_entity_with_facets<T>(
+        entity: Entity,
+        search_text: String,
+        limit: u32,
+        offset: u32,
+        facets: Vec<String>,
+        client: &Client,
+    ) -> (Vec<T>, Option<IndexDocFacetDistribution>)
+        where
+            T: for<'de> Deserialize<'de> + Serialize,
+    {
+        let search_text = vec![("ignored for meili".to_string(), search_text)];
+        let response = meili_search_http(
+            entity,
+            None,
+            Some(facets),
+            Some(search_text),
+            None,
+            Some(limit),
+            Some(offset),
+            client,
+        );
+
+        let response2 = response.await;
+        let docs = match response2 {
+            Ok(r) => {
+                let code = r.status();
+                if code == StatusCode::OK
+                    || code == StatusCode::ACCEPTED
+                    || code == StatusCode::CREATED
+                {
+                    info!(
+                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<T>"
+                    );
+                    let result = r.json::<MeiliSearchResult<T>>().await;
+                    match result {
+                        Ok(r) => {
+                            info!("meili_search_searchindex request success and all good. returning Vec<T>");
+                            let hits = r.hits;
+                            let facets = r.facet_distribution;
+                            (hits, facets)
+                        }
+                        Err(ee) => {
+                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            (vec![], None)
+                        }
+                    }
+                } else {
+                    let x = r.headers().clone();
+                    error!(
+                        "meili_search_searchindex request != OK. status {:?},     ",
+                        code
+                    );
+                    error!(
+                        "meili_search_searchindex request != OK. headers {:?},   ",
+                        x
+                    );
+                    (vec![], None)
+                }
+            }
+            Err(eee) => {
+                error!("meili_search_searchindex wtf?. error {:?}", eee);
+                (vec![], None)
             }
         };
         docs
