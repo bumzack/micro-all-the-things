@@ -6,8 +6,8 @@ pub mod solr_entity_stuff {
     use serde::{Deserialize, Serialize};
 
     use crate::entity::entity::Entity;
-    use crate::solr::models::{FacetCounts, SolrResponse};
     use crate::solr::solr_http::mod_solr_http::solr_search_http;
+    use crate::solr::solr_models::{FacetCounts, SolrResponse};
 
     pub async fn solr_filter_entity<T>(
         entity: Entity,
@@ -312,9 +312,10 @@ pub mod solr_entity_stuff {
                                 "solr_search_person request success and all good. returning Vec<T>"
                             );
                             let re = r.response.unwrap();
-                            let facets = r.facet_counts;
+                            // let facets = r.facet_counts;
                             let docs = re.docs.unwrap();
-                            (docs, facets)
+                            //  (docs, facets)
+                            (docs, None)
                         }
                         Err(ee) => {
                             info!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);

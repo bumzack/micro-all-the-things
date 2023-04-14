@@ -33,7 +33,7 @@ pub fn blupp3() {
             }
        ]
     "#
-    .to_string();
+        .to_string();
 
     // let a = get_facets();
     let my_struct: MyStruct4 = serde_json::from_str(&str).unwrap();
@@ -53,7 +53,7 @@ pub fn blupp4() {
             }
        ]
     "#
-    .to_string();
+        .to_string();
 
     // let a = get_facets();
     let my_struct: MyStruct4 = serde_json::from_str(&str).unwrap();

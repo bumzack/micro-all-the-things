@@ -181,4 +181,24 @@ curl  -vvvv    -X POST   http://localhost:18320/api/v1/solr/searchindex/search  
 curl    -vvvv    -X POST -d '{"facets":["genres","actors","directors"],"hitsPerPage":2,"limit":2,"offset":0,"q":"Terminator","sort":null}'          http://meilisearch01.bumzack.at/indexes/searchindex/search     -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
 ```
 
+## User login and search
+
+```
+curl  -vv -X POST   http://localhost:18982/api/v1/authentication/login    -H 'Content-Type: application/json' -d '{ "email" : "bumzack@bumzack.at", "password" : "123" }' | jq
+```
+
+### search SolR
+
+```
+curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 500, "customer" : {  "customer_id": 1203, "jwt" : "yJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9- " }   }' | jq
+```
+
+### search meili
+
+```
+curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 500, "customer" : {  "customer_id": 1203, "jwt" : "yJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9- " }   }' | jq
+```
+
+
+
 
