@@ -51,5 +51,5 @@ pub struct SolrResponse<T> {
     #[serde(rename = "responseHeader")]
     pub response_header: Option<ResponseHeader>,
     pub response: Option<SolrResponseDocs<T>>,
-    pub facet_counts: Option<FacetCounts>,
+    //  pub facet_counts: Option<FacetCounts>,
 }

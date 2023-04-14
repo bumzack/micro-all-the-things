@@ -30,7 +30,7 @@ pub struct SearchIndexDoc {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
-pub struct SearchIndexRequest {
+pub struct SearchMovieIndexRequest {
     pub q: String,
     pub offset: u32,
     pub limit: u32,

@@ -7,7 +7,7 @@ pub mod filters_search_search_index {
     use common::entity::entity::Entity;
     use common::logging::logging_service_client::logging_service;
     use common::meili::meili_entity::meili_entity_stuff::meili_search_entity_with_facets;
-    use common::models::search_doc::{MovieSearchResult, SearchIndexDoc, SearchIndexRequest};
+    use common::models::search_doc::{MovieSearchResult, SearchIndexDoc, SearchMovieIndexRequest};
     use common::solr::solr_entity::solr_entity_stuff::solr_search_entity_with_facets;
 
     use crate::CLIENT;
@@ -34,12 +34,12 @@ pub mod filters_search_search_index {
         search_meili.or(search_solr)
     }
 
-    fn search_index_request() -> impl Filter<Extract=(SearchIndexRequest, ), Error=warp::Rejection> + Clone {
+    fn search_index_request() -> impl Filter<Extract=(SearchMovieIndexRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
     pub async fn search_index(
-        req: SearchIndexRequest,
+        req: SearchMovieIndexRequest,
         engine: String,
     ) -> Result<impl warp::Reply, Infallible> {
         let msg = format!(
@@ -62,6 +62,8 @@ pub mod filters_search_search_index {
             "characters".to_string(),
             "titleType".to_string(),
         ];
+
+        let facets = vec![];
 
         let search_result = match engine.as_str() {
             "solr" => {

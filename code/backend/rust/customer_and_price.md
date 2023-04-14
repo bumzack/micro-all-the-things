@@ -27,7 +27,7 @@ curl    http://localhost:18980/api/v1/customer/paginated/10/10   | jq
 ## read price for movie
 
 ``` 
-curl  -vv  http://localhost:18800/api/v1/price/tt0000001   | jq
+curl  -vv  http://localhost:18800/api/v1/price/tt5370708   | jq
 ``` 
 
 ## insert dummy data prices for all movies
