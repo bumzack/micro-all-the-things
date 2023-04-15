@@ -6,7 +6,7 @@ use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
 
-use common::entity::entity::Entity;
+use common::entity::entity::{Engine, Entity};
 use common::logging::logging_service_client::logging_service::{
     log_build_stats, log_docs_processed, log_end, log_start, log_task_end, log_task_error,
 };
@@ -19,7 +19,7 @@ use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
 
 pub async fn build_index_v3(
-    engine: String,
+    engine: Engine,
     offset: u32,
     limit: u32,
     tasks: u32,
@@ -69,7 +69,7 @@ pub async fn build_index_v3(
     Ok(warp::reply::json(&message))
 }
 
-async fn search_and_write_to_index(offset: u32, limit: u32, engine: String) -> usize {
+async fn search_and_write_to_index(offset: u32, limit: u32, engine: Engine) -> usize {
     let movies = search_movies(limit, offset, engine.clone()).await;
 
     if movies.is_empty() {
@@ -105,7 +105,7 @@ async fn search_and_write_to_index(offset: u32, limit: u32, engine: String) -> u
 fn start_tasks(
     tasks: usize,
     manager_sender: UnboundedSender<ManagerCommand>,
-    engine: String,
+    engine: Engine,
 ) -> Vec<JoinHandle<(usize, usize)>> {
     let mut t = vec![];
     for i in 1..=tasks {

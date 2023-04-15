@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+use common::entity::entity::Engine;
 use log::{error, info};
 use serde_json::json;
 
@@ -16,7 +17,7 @@ use crate::{CLIENT, CONFIG};
 pub async fn convert_to_search_index_doc(
     movies: Vec<Movie>,
     docs: &mut Vec<SearchIndexDoc>,
-    engine: String,
+    engine: Engine,
 ) {
     for m in movies {
         let principals = search_principal(&m.tconst.clone(), engine.clone()).await;
@@ -173,12 +174,12 @@ pub fn collect_data(
     });
 }
 
-pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
+pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
     let search_movie: String = CONFIG
         .get("search_movie")
         .expect("expected search_movie URL");
 
-    let search_movie = search_movie.replace("ENGINE", &engine);
+    let search_movie = search_movie.replace("ENGINE", &engine.to_string());
 
     let search_request = SearchPaginatedRequest {
         q: "*".to_string(),
@@ -192,7 +193,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         offset,
         limit,
         &search_request.sort.clone(),
-        engine.clone()
+        engine.to_string()
     );
     info!("message {}", &message);
     logging_service::log_entry(
@@ -200,7 +201,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -240,17 +241,17 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     movies
 }
 
-async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
+async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
     let search_principal: String = CONFIG
         .get("search_principal_by_movie_tconst")
         .expect("expected search_principal_by_movie_tconst URL");
 
-    let search_principal = search_principal.replace("ENGINE", &engine);
+    let search_principal = search_principal.replace("ENGINE", &engine.to_string());
 
     let url = format!("{search_principal}{tconst}");
 
@@ -261,7 +262,7 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -279,12 +280,12 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
         .expect("expected a list of principals")
 }
 
-async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
+async fn search_person(nconsts: Vec<String>, engine: Engine) -> Vec<Person> {
     let search_person_url: String = CONFIG
         .get("search_person")
         .expect("expected search_person URL");
 
-    let search_person_url = search_person_url.replace("ENGINE", &engine);
+    let search_person_url = search_person_url.replace("ENGINE", &engine.to_string());
     let search_person_req = SearchPersonList { nconsts };
     let search_persons = json!(&search_person_req);
 

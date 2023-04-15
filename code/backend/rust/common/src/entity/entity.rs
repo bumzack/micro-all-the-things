@@ -18,6 +18,31 @@ pub enum Entity {
     SEARCHINDEX,
 }
 
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub enum Engine {
+    Solr,
+    Meili,
+}
+
+impl From<String> for Engine {
+    fn from(value: String) -> Self {
+        match value.as_str() {
+            "solr" => Engine::Solr,
+            "meili" => Engine::Meili,
+            _ => panic!("not supported engine found {}", value),
+        }
+    }
+}
+
+impl ToString for Engine {
+    fn to_string(&self) -> String {
+        match self {
+            Engine::Solr => "solr".to_string(),
+            Engine::Meili => "meili".to_string(),
+        }
+    }
+}
+
 pub fn get_nullable_string(input: &Vec<String>, idx: usize) -> Option<String> {
     match input.get(idx) {
         Some(s) => {

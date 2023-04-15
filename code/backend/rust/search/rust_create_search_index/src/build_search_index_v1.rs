@@ -3,7 +3,7 @@ use std::convert::Infallible;
 use log::info;
 use serde_json::json;
 
-use common::entity::entity::Entity;
+use common::entity::entity::{Engine, Entity};
 use common::logging::logging_service_client::logging_service;
 use common::meili::meili_http::meili_http_stuff::meili_update_http;
 
@@ -26,15 +26,15 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         "INFO".to_string(),
         &msg,
     )
-        .await;
+    .await;
 
     while cnt_movies < total_cnt_movies {
-        let movies = search_movies(limit, offset, "meili".to_string()).await;
+        let movies = search_movies(limit, offset, Engine::Meili).await;
         cnt_movies += movies.len();
         offset += limit;
 
         let mut docs = vec![];
-        convert_to_search_index_doc(movies, &mut docs, "meili".to_string()).await;
+        convert_to_search_index_doc(movies, &mut docs, Engine::Meili).await;
 
         let docs_json = json!(&docs).to_string();
 
@@ -51,7 +51,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         info!("starting update request for  {} docs", docs.len());
         meili_update_http(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
@@ -70,7 +70,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
     info!("done {}", &message);
     Ok(warp::reply::json(&message))
 }

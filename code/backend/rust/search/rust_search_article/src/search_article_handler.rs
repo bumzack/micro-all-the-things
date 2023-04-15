@@ -1,6 +1,7 @@
 pub mod handler_search_article {
     use std::convert::Infallible;
 
+    use common::entity::entity::Engine;
     use log::{error, info};
 
     use common::models::article::{ArticleSearchResult, SearchArticleRequest};
@@ -10,11 +11,11 @@ pub mod handler_search_article {
 
     pub async fn search_article(
         req: SearchArticleRequest,
-        engine: String,
+        engine: Engine,
     ) -> Result<impl warp::Reply, Infallible> {
         info!(
-            "start search_article(). search_text '{}', offset {}, limit {}, engine {}",
-            req.q, req.offset, req.limit, &engine
+            "start search_article(). search_text '{}', offset {}, limit {}, engine {:?}",
+            req.q, req.offset, req.limit, engine
         );
 
         let customer = get_authentication_entry(&req.customer).await;
@@ -22,7 +23,7 @@ pub mod handler_search_article {
             let id = &req.customer.customer_id.map_or(-1, |i| i);
             error!("customer {} is not logged in (-1 if no id provided", id);
         }
-        let search_result = search_index_docs(&engine, &req.q, req.limit, req.offset).await;
+        let search_result = search_index_docs(engine, &req.q, req.limit, req.offset).await;
 
         if search_result.is_none() {
             return Ok(warp::reply::json::<Vec<ArticleSearchResult>>(&vec![]));

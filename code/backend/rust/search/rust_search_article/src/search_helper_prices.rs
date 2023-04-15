@@ -1,5 +1,5 @@
 pub mod search_helper {
-    use log::{error, info};
+    use log::error;
     use reqwest::StatusCode;
 
     use common::models::customer_prices::CustomerPriceEntry;

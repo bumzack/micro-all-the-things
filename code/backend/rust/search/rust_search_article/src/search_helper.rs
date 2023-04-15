@@ -1,5 +1,6 @@
 pub mod mod_search_helper {
-    use log::{error, info};
+    use common::entity::entity::Engine;
+    use log::error;
     use reqwest::StatusCode;
 
     use common::models::article::SearchCustomer;
@@ -69,7 +70,7 @@ pub mod mod_search_helper {
     }
 
     pub async fn search_index_docs(
-        engine: &String,
+        engine: Engine,
         q: &String,
         limit: u32,
         offset: u32,
@@ -78,7 +79,7 @@ pub mod mod_search_helper {
             .get("search_index_doc")
             .expect("expected search_index_doc GET request URL");
 
-        let search_index_docs = search_index_docs.replace("ENGINE", engine);
+        let search_index_docs = search_index_docs.replace("ENGINE", &engine.to_string());
 
         let search_index_request = SearchMovieIndexRequest {
             q: q.to_string(),

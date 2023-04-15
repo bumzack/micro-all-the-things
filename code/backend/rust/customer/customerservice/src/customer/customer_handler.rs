@@ -1,9 +1,10 @@
 pub mod handler_customer {
+    use common::entity::entity::Engine;
     use deadpool_postgres::Pool;
     use serde_json::json;
-    use warp::{reject, Rejection, Reply};
     use warp::hyper::StatusCode;
     use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
@@ -12,8 +13,8 @@ pub mod handler_customer {
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
-    use crate::{CLIENT, CONFIG};
     use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
+    use crate::{CLIENT, CONFIG};
 
     pub async fn insert_customer_handler(
         pool: Pool,
@@ -78,7 +79,7 @@ pub mod handler_customer {
         let mut persons_found = true;
         let mut persons_processed = 0;
         while persons_found && persons_processed < count {
-            let persons = search_persons(limit, offset, "solr".to_string()).await;
+            let persons = search_persons(limit, offset, Engine::Solr).await;
             persons_found = !persons.is_empty();
             for p in persons {
                 let email = format!("{}@foryouandyourfakewebshop.at", p.nconst);
@@ -113,13 +114,13 @@ pub mod handler_customer {
         Ok(warp::reply::with_status(msg, StatusCode::CREATED))
     }
 
-    async fn search_persons(limit: u32, offset: u32, engine: String) -> Vec<Person> {
+    async fn search_persons(limit: u32, offset: u32, engine: Engine) -> Vec<Person> {
         info!("rust_customerservice_insert_dummy_data. search_persons");
         let search_person: String = CONFIG
             .get("search_person_doc")
             .expect("expected search_person_doc POST request URL");
 
-        let search_person = search_person.replace("ENGINE", &engine);
+        let search_person = search_person.replace("ENGINE", &engine.to_string());
 
         let search_request = SearchPaginatedRequest {
             q: "*".to_string(),
@@ -133,7 +134,7 @@ pub mod handler_customer {
             offset,
             limit,
             &search_request.sort.clone(),
-            engine.clone()
+            engine.to_string()
         );
         info!("message {}", &message);
         logging_service::log_entry(
@@ -141,7 +142,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         info!("search person POST URL {}", &search_person);
         let json = json!(&search_request);
@@ -188,7 +189,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         info!(".rust_customerservice_insert_dummy_data search_persons finished successfully");
 
         persons

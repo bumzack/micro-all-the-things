@@ -2,6 +2,7 @@ pub mod logging_service {
     use config::Config;
     use log::{error, info};
     use reqwest::{Error, Response, StatusCode};
+    use crate::entity::entity::Engine;
 
     use crate::logging::logging::AddLogEntry;
 
@@ -114,9 +115,9 @@ pub mod logging_service {
             .await;
     }
 
-    pub async fn log_build_stats(engine: String, num_tasks: usize) {
+    pub async fn log_build_stats(engine: Engine, num_tasks: usize) {
         let msg = format!(
-            "build_index_v3.stats. engine  {}.  total_tasks created {}",
+            "build_index_v3.stats. engine  {:?}.  total_tasks created {}",
             engine, num_tasks
         );
         info!("{}", msg);

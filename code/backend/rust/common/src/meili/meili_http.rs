@@ -5,7 +5,7 @@ pub mod meili_http_stuff {
     use reqwest::{Client, Error, Response, StatusCode};
     use serde_json::json;
 
-    use crate::entity::entity::Entity;
+    use crate::entity::entity::{Engine, Entity};
     use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::dump_response_status;
     use crate::meili::meili_models::MeiliSearchRequest;
@@ -104,7 +104,7 @@ pub mod meili_http_stuff {
             .send()
             .await;
 
-        dump_response_status(&response, &url, &json, "meili".to_string());
+        dump_response_status(&response, &url, &json, Engine::Meili);
 
         response
     }
@@ -145,7 +145,7 @@ pub mod meili_http_stuff {
             &response,
             &index,
             &"none available".to_string(),
-            "meili".to_string(),
+            Engine::Meili,
         );
 
         response

@@ -1,3 +1,4 @@
+use crate::entity::entity::Engine;
 use log::{error, info};
 use reqwest::{Error, Response, StatusCode};
 
@@ -9,7 +10,7 @@ pub fn dump_response_status(
     response: &Result<Response, Error>,
     url: &String,
     json: &String,
-    engine: String,
+    engine: Engine,
 ) {
     match &response {
         Ok(res) => {
@@ -23,8 +24,11 @@ pub fn dump_response_status(
             }
         }
         Err(e) => error!(
-            "request to {} resulted in an error. request URL '{}', json '{}' error '{:?}'",
-            engine, url, json, e
+            "request to {:?} resulted in an error. request URL '{}', json '{}' error '{:?}'",
+            &engine.to_string(),
+            url,
+            json,
+            e
         ),
     };
 }
