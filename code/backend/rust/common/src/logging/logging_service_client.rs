@@ -3,6 +3,7 @@ pub mod logging_service {
     use config::Config;
     use log::{error, info};
     use reqwest::{Error, Response, StatusCode};
+    use crate::entity::entity::Engine;
 
     use crate::logging::logging::AddLogEntry;
 
