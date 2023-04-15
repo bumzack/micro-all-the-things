@@ -2,6 +2,9 @@
 
 copy to
 
+sudo apt install pkg-config libssl-dev
+
+
 ```
 /lib/systemd/system
 ```
