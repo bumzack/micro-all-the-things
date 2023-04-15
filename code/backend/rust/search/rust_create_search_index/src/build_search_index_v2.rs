@@ -6,7 +6,7 @@ use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
 
-use common::entity::entity::Entity;
+use common::entity::entity::{Engine, Entity};
 use common::logging::logging_service_client::logging_service::{
     log_build_stats, log_docs_processed, log_end, log_start, log_task_end, log_task_error,
 };
@@ -14,9 +14,9 @@ use common::meili::meili_http::meili_http_stuff::meili_update_http;
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
-use crate::CLIENT;
-use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData};
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
+use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
+use crate::CLIENT;
 
 pub async fn build_index_v2(
     offset: u32,
@@ -29,7 +29,7 @@ pub async fn build_index_v2(
     let num_cpus = num_cpus::get();
     let num_tasks = num_cpus * multiplier as usize;
 
-    log_build_stats("v2 ???".to_string(), num_tasks).await;
+    log_build_stats(Engine::Solr, num_tasks).await;
 
     let tasks = start_tasks(num_tasks, manager_sender);
 
@@ -70,14 +70,14 @@ pub async fn build_index_v2(
 }
 
 async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
-    let movies = search_movies(limit, offset, "meili".to_string()).await;
+    let movies = search_movies(limit, offset, Engine::Meili).await;
 
     if movies.is_empty() {
         return 0;
     }
     let cnt = movies.len();
     let mut docs = vec![];
-    convert_to_search_index_doc(movies, &mut docs, "meili".to_string()).await;
+    convert_to_search_index_doc(movies, &mut docs, Engine::Meili).await;
 
     let docs_json = json!(&docs).to_string();
 

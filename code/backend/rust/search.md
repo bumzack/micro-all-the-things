@@ -52,7 +52,7 @@ in /etc/security eintragen und pam dingsdi auch
   curl  -X PUT -d '[  "tconst"  ]'                  http://meilisearch01.bumzack.at/indexes/crew/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "tconst", "nconst" ]'          http://meilisearch01.bumzack.at/indexes/principal/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "tconst"]'                     http://meilisearch01.bumzack.at/indexes/rating/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-  
+  curl  -X PUT -d '[ "titles", "actors", "directors", "writers", "runtime_minutes", "adult", "genres", "characters", "title_type", "year"]'                     http://meilisearch01.bumzack.at/indexes/searchindex/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
 ```
 
 ## set sortable attributes
@@ -60,6 +60,9 @@ in /etc/security eintragen und pam dingsdi auch
 ```
 curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at/indexes/movie/settings/sortable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
 ```
+
+curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at/indexes/searchindex/settings/sortable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+
 
 ### movie all
 
@@ -190,14 +193,27 @@ curl  -vv -X POST   http://localhost:18982/api/v1/authentication/login    -H 'Co
 ### search SolR
 
 ```
-curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 500, "customer" : {  "customer_id": 1203, "jwt" : "yJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9- " }   }' | jq
+curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9" }   }' | jq
 ```
 
 ### search meili
 
 ```
-curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 500, "customer" : {  "customer_id": 1203, "jwt" : "yJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9- " }   }' | jq
+curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9 " }   }' | jq
 ```
+
+### search SolR
+
+```
+curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9" }   }' | jq
+```
+
+### search meili
+
+```
+curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9 " }   }' | jq
+```
+
 
 
 

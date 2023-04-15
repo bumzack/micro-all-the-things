@@ -1,7 +1,7 @@
 pub mod meili_entity_stuff {
     use std::collections::HashMap;
 
-    use log::{error, info};
+    use log::error;
     use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
 
@@ -16,8 +16,8 @@ pub mod meili_entity_stuff {
         filter_values: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let mut filter = HashMap::new();
         filter.insert(filter_field, filter_values);
@@ -33,15 +33,11 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(" meili_filter_entity request success. unwrapping MeiliSearchResult<T>");
                     let res = r.json::<MeiliSearchResult<T>>().await;
                     match res {
-                        Ok(r) => {
-                            info!(" meili_filter_entity request success and all good. returning Vec<T>");
-                            r.hits
-                        }
+                        Ok(r) => r.hits,
                         Err(ee) => {
-                            info!(" meili_filter_entity request error. returning empty Vec<>. error {:?}",ee);
+                            error!(" meili_filter_entity request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
                         }
                     }
@@ -71,8 +67,8 @@ pub mod meili_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text = vec![("ignored for meili".to_string(), search_text)];
         let response = meili_search_http(
@@ -94,17 +90,11 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(
-                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<T>"
-                    );
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
-                        Ok(r) => {
-                            info!("meili_search_searchindex request success and all good. returning Vec<T>");
-                            r.hits
-                        }
+                        Ok(r) => r.hits,
                         Err(ee) => {
-                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            error!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
                         }
                     }
@@ -137,8 +127,8 @@ pub mod meili_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<IndexDocFacetDistribution>)
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text = vec![("ignored for meili".to_string(), search_text)];
         let response = meili_search_http(
@@ -160,19 +150,15 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(
-                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<T>"
-                    );
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
                         Ok(r) => {
-                            info!("meili_search_searchindex request success and all good. returning Vec<T>");
                             let hits = r.hits;
                             let facets = r.facet_distribution;
                             (hits, facets)
                         }
                         Err(ee) => {
-                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            error!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
                             (vec![], None)
                         }
                     }
@@ -203,8 +189,8 @@ pub mod meili_entity_stuff {
         limit: u32,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let _sort = vec![("id".to_string(), true)];
         let response = meili_read_document_http(entity, offset, limit, client);

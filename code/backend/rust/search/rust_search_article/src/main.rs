@@ -36,7 +36,7 @@ async fn main() -> io::Result<()> {
     );
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
-    let root = root.or(search_article_routes::search_article_routes::search_article_route());
+    let root = root.or(search_article_routes::mod_search_article_routes::search_article_route());
 
     let host: String = CONFIG
         .get("searcharticle_service_host")

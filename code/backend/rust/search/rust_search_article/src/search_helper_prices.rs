@@ -1,5 +1,5 @@
 pub mod search_helper {
-    use log::{error, info};
+    use log::error;
     use reqwest::StatusCode;
 
     use common::models::customer_prices::CustomerPriceEntry;
@@ -19,16 +19,10 @@ pub mod search_helper {
             error!("error from PriceService {:?}", response.err().unwrap());
             return None;
         }
-        info!("get_movie_price all good");
 
         match response {
             Ok(res) => {
                 if res.status() == StatusCode::OK {
-                    info!(
-                        "PriceService returned status {}  == OK  for tconstd {}. ",
-                        res.status(),
-                        tconst
-                    );
                     let price_entry = res.json::<PriceEntry>().await;
 
                     match price_entry {
@@ -39,7 +33,7 @@ pub mod search_helper {
                         }
                     }
                 } else {
-                    info!(
+                    error!(
                         "priceservice returned status {} for tconst {}. ",
                         res.status(),
                         tconst
@@ -70,16 +64,10 @@ pub mod search_helper {
             );
             return None;
         }
-        info!("get_movie_customerprice all good");
 
         match response {
             Ok(res) => {
                 if res.status() == StatusCode::OK {
-                    info!(
-                        "CustomerPriceService returned status {}  == OK  for customer_id {}, year {}. ",
-                        res.status(),
-                        &id, &year,
-                    );
                     let price_entry = res.json::<CustomerPriceEntry>().await;
 
                     match price_entry {
@@ -90,7 +78,7 @@ pub mod search_helper {
                         }
                     }
                 } else {
-                    info!(
+                    error!(
                         "CustomerPriceService returned status {} for customer_id {}, year {}. ",
                         res.status(),
                         &id,

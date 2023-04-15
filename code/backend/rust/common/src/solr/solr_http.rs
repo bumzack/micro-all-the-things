@@ -4,7 +4,7 @@ pub mod mod_solr_http {
     use log::info;
     use reqwest::{Client, Error, Response, StatusCode, Url};
 
-    use crate::entity::entity::Entity;
+    use crate::entity::entity::{Engine, Entity};
     use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::dump_response_status;
     use crate::solr::SOLR_DEFAULT_LIMIT;
@@ -121,7 +121,7 @@ pub mod mod_solr_http {
             .send()
             .await;
 
-        dump_response_status(&response, &index, &"n/a".to_string(), "solr".to_string());
+        dump_response_status(&response, &index, &"n/a".to_string(), Engine::Solr);
 
         response
     }

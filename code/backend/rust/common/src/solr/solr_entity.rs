@@ -31,14 +31,9 @@ pub mod solr_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!("solr_filter  request success. unwrapping SolrResponse<T>");
-
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
                         Ok(r) => {
-                            info!(
-                                "solr_filter_person request success and all good. returning Vec<T>"
-                            );
                             r.response.unwrap().docs.unwrap()
                         }
                         Err(ee) => {
@@ -168,17 +163,13 @@ pub mod solr_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!("solr_search_person request success. unwrapping  SolrResponse<T>");
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
                         Ok(r) => {
-                            info!(
-                                "solr_search_person request success and all good. returning Vec<T>"
-                            );
                             r.response.unwrap().docs.unwrap()
                         }
                         Err(ee) => {
-                            info!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);
+                            error!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
                         }
                     }
@@ -304,13 +295,9 @@ pub mod solr_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!("solr_search_person request success. unwrapping  SolrResponse<T>");
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
                         Ok(r) => {
-                            info!(
-                                "solr_search_person request success and all good. returning Vec<T>"
-                            );
                             let re = r.response.unwrap();
                             // let facets = r.facet_counts;
                             let docs = re.docs.unwrap();
@@ -318,7 +305,7 @@ pub mod solr_entity_stuff {
                             (docs, None)
                         }
                         Err(ee) => {
-                            info!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);
+                            error!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);
                             (vec![], None)
                         }
                     }
@@ -366,17 +353,16 @@ pub mod solr_entity_stuff {
         let result = response2.unwrap().json::<SolrResponse<T>>().await;
         if result.is_err() {
             error!(
-                "cant unwrap response to SolrResponse<T> type. error {}",
+                "can't unwrap response to SolrResponse<T> type. error {}",
                 result.err().unwrap()
             );
             return vec![];
         }
         let result = result.unwrap();
 
-        let entities = match result.response {
+        match result.response {
             Some(m) => m.docs.unwrap(),
             None => vec![],
-        };
-        entities
+        }
     }
 }

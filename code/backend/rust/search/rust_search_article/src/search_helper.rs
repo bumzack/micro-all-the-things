@@ -1,10 +1,11 @@
-pub mod search_helper {
-    use log::{error, info};
+pub mod mod_search_helper {
+    use common::entity::entity::Engine;
+    use log::error;
     use reqwest::StatusCode;
 
     use common::models::article::SearchCustomer;
     use common::models::authentication::AuthenticationEntry;
-    use common::models::search_doc::{MovieSearchResult, SearchIndexDoc, SearchMovieIndexRequest};
+    use common::models::search_doc::{MovieSearchResult, SearchMovieIndexRequest};
 
     use crate::{CLIENT, CONFIG};
 
@@ -27,12 +28,10 @@ pub mod search_helper {
                     );
                     return None;
                 }
-                info!("search_customers all good");
 
                 match response {
                     Ok(res) => {
                         if res.status() == StatusCode::OK {
-                            info!("authentication Service returned status {}  == OK  for customer.id {}. assuming logged in. ", res.status(), id);
                             let auth = res.json::<AuthenticationEntry>().await;
 
                             match auth {
@@ -41,10 +40,6 @@ pub mod search_helper {
                                         && auth.logged_in.is_some()
                                         && auth.logged_out.is_none()
                                     {
-                                        info!(
-                                            "authentication Service. user .id {}. is  logged in. ",
-                                            id
-                                        );
                                         Some(auth)
                                     } else {
                                         None
@@ -56,8 +51,8 @@ pub mod search_helper {
                                 }
                             }
                         } else {
-                            info!("authentication Service returned status {} for customer.id {}. assuming not logged in. ", res.status(), id);
-                            return None;
+                            error!("authentication Service returned status {} for customer.id {}. assuming not logged in. ", res.status(), id);
+                            None
                         }
                     }
                     Err(e) => {
@@ -75,7 +70,7 @@ pub mod search_helper {
     }
 
     pub async fn search_index_docs(
-        engine: &String,
+        engine: Engine,
         q: &String,
         limit: u32,
         offset: u32,
@@ -84,7 +79,7 @@ pub mod search_helper {
             .get("search_index_doc")
             .expect("expected search_index_doc GET request URL");
 
-        let search_index_docs = search_index_docs.replace("ENGINE", engine);
+        let search_index_docs = search_index_docs.replace("ENGINE", &engine.to_string());
 
         let search_index_request = SearchMovieIndexRequest {
             q: q.to_string(),
@@ -105,15 +100,10 @@ pub mod search_helper {
             );
             return None;
         }
-        info!("search_index_docs all good");
 
         match response {
             Ok(res) => {
                 if res.status() == StatusCode::OK {
-                    info!(
-                        "SearchIndexDoc Service returned status {}  == OK    ",
-                        res.status()
-                    );
                     let res = res.json::<MovieSearchResult>().await;
 
                     match res {
@@ -124,7 +114,7 @@ pub mod search_helper {
                         }
                     }
                 } else {
-                    info!(
+                    error!(
                         "search_index_doc Service returned status {}   ",
                         res.status()
                     );

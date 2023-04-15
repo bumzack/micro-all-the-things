@@ -40,7 +40,6 @@ pub fn start_config_manager(
         while let Some(cmd) = manager_receiver.recv().await {
             match cmd {
                 ManagerCommand::WorkerReady(id) => {
-                    info!("MANAGER:  worker is ready again {}", id);
                     if workers.contains_key(&id) {
                         worker_queue.push_back(id);
                     } else {
@@ -48,12 +47,10 @@ pub fn start_config_manager(
                     }
                 }
                 ManagerCommand::WorkerNoMoreItemsFound(id) => {
-                    info!("MANAGER: worker has no more items found {}", id);
                     workers.remove(&id);
                     done = true;
                 }
                 ManagerCommand::RegisterWorker(wd) => {
-                    info!("MANAGER: got a new worker {}", wd.id);
                     let id = wd.id;
                     workers.insert(wd.id, wd);
                     worker_queue.push_back(id);
@@ -64,7 +61,6 @@ pub fn start_config_manager(
                 match worker_queue.pop_front() {
                     Some(id) => {
                         if workers.get(&id).is_some() {
-                            info!("MANAGER: ok found an active worker {}", id);
                             let wd = workers.get(&id).unwrap();
                             let new_pg_data = PaginationData { limit, offset };
                             offset += limit;

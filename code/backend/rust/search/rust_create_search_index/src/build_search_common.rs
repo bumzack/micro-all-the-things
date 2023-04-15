@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
+use common::entity::entity::Engine;
 use log::{error, info};
 use serde_json::json;
 
@@ -16,7 +17,7 @@ use crate::{CLIENT, CONFIG};
 pub async fn convert_to_search_index_doc(
     movies: Vec<Movie>,
     docs: &mut Vec<SearchIndexDoc>,
-    engine: String,
+    engine: Engine,
 ) {
     for m in movies {
         let principals = search_principal(&m.tconst.clone(), engine.clone()).await;
@@ -65,10 +66,9 @@ pub async fn convert_to_search_index_doc(
             genres: m.genres.clone(),
             characters,
             title_type: None,
+            year: m.start_year,
         };
         docs.push(doc);
-
-        info!("processing movie tconst: {}.", m.tconst);
     }
 }
 
@@ -174,13 +174,12 @@ pub fn collect_data(
     });
 }
 
-pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
-    info!("search_movies");
+pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
     let search_movie: String = CONFIG
         .get("search_movie")
         .expect("expected search_movie URL");
 
-    let search_movie = search_movie.replace("ENGINE", &engine);
+    let search_movie = search_movie.replace("ENGINE", &engine.to_string());
 
     let search_request = SearchPaginatedRequest {
         q: "*".to_string(),
@@ -194,7 +193,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         offset,
         limit,
         &search_request.sort.clone(),
-        engine.clone()
+        engine.to_string()
     );
     info!("message {}", &message);
     logging_service::log_entry(
@@ -202,9 +201,8 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
-    info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
 
@@ -224,17 +222,12 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         );
         return vec![];
     }
-    info!("XXX    search_movies all good");
 
     let response2 = response.unwrap();
     let movies = response2
         .json::<Vec<Movie>>()
         .await
         .expect("expected a list of Movies");
-    info!(
-        "XXX    search_movies all good. found {} movies",
-        movies.len()
-    );
 
     let message = format!(
         "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found ",
@@ -243,29 +236,24 @@ pub async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie
         &search_request.sort.clone(),
         movies.len()
     );
-    info!("message {}", &message);
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
         "INFO".to_string(),
         &message,
     )
-        .await;
-    info!("XXX    search_movies finished succesfully");
+    .await;
 
-    // let _movies_as_pretty_json = serde_json::to_string_pretty(&movies).unwrap();
-    // info!("got a list of movies {}", movies_as_pretty_json);
     movies
 }
 
-async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
+async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
     let search_principal: String = CONFIG
         .get("search_principal_by_movie_tconst")
         .expect("expected search_principal_by_movie_tconst URL");
 
-    let search_principal = search_principal.replace("ENGINE", &engine);
+    let search_principal = search_principal.replace("ENGINE", &engine.to_string());
 
     let url = format!("{search_principal}{tconst}");
-    info!("searching principals for movie tconst {tconst}. engine {engine}.  search url '{url}'");
 
     let message = format!("start search_principal().  url {}", url);
     info!("message {}", &message);
@@ -274,7 +262,7 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
@@ -286,46 +274,20 @@ async fn search_principal(tconst: &String, engine: String) -> Vec<Principal> {
     log_external_service_error(&msg, &message, &response).await;
 
     let response2 = response.unwrap();
-    let principals = response2
+    response2
         .json::<Vec<Principal>>()
         .await
-        .expect("expected a list of principals");
-
-    // let principals_as_pretty_json = serde_json::to_string_pretty(&principals).unwrap();
-    //   info!("got a list of principals {}", &principals_as_pretty_json);
-
-    let message = format!(
-        "end search_principal().  url {}. found {} prinicpals",
-        &url,
-        principals.len()
-    );
-    info!("message {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
-
-    principals
+        .expect("expected a list of principals")
 }
 
-async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
+async fn search_person(nconsts: Vec<String>, engine: Engine) -> Vec<Person> {
     let search_person_url: String = CONFIG
         .get("search_person")
         .expect("expected search_person URL");
 
-    let search_person_url = search_person_url.replace("ENGINE", &engine);
-
+    let search_person_url = search_person_url.replace("ENGINE", &engine.to_string());
     let search_person_req = SearchPersonList { nconsts };
-
     let search_persons = json!(&search_person_req);
-    let tmp = json!(&search_person_req).to_string();
-
-    info!(
-        "sending request to engine '{}' to url '{}'.  payload '{}'",
-        engine, search_person_url, &tmp
-    );
 
     let response = CLIENT
         .post(search_person_url.clone())
@@ -349,22 +311,6 @@ async fn search_person(nconsts: Vec<String>, engine: String) -> Vec<Person> {
                 .json::<Vec<Person>>()
                 .await
                 .expect("expected a list of Persons");
-
-            //  let persons_as_pretty_json = serde_json::to_string_pretty(&persons).unwrap();
-            //  info!("got a list of persons {}", persons_as_pretty_json);
-
-            let message = format!(
-                "end search_person().  url {}. found {} persons",
-                &search_person_url,
-                persons.len()
-            );
-            info!("message {}", &message);
-            logging_service::log_entry(
-                "rust_create_search_index".to_string(),
-                "INFO".to_string(),
-                &message,
-            )
-                .await;
 
             persons
         }

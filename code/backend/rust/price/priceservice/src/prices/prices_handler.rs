@@ -1,3 +1,4 @@
+use common::entity::entity::Engine;
 use serde_json::json;
 
 use common::logging::logging_service_client::logging_service;
@@ -8,10 +9,11 @@ use common::models::search_doc::SearchPaginatedRequest;
 use crate::{CLIENT, CONFIG};
 
 pub mod handlers_price {
+    use common::entity::entity::Engine;
     use deadpool_postgres::Pool;
-    use warp::{reject, Rejection, Reply};
     use warp::http::StatusCode;
     use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
 
     use common::models::prices::AddPriceEntry;
 
@@ -43,7 +45,7 @@ pub mod handlers_price {
         let mut movies_found = true;
         let mut movies_processed = 0;
         while movies_found && movies_processed < count {
-            let movies = search_movies(limit, offset, "solr".to_string()).await;
+            let movies = search_movies(limit, offset, Engine::Solr).await;
             movies_found = !movies.is_empty();
             for m in movies {
                 let amount = 15.0 + rand::random::<f32>() * 15.0;
@@ -63,13 +65,13 @@ pub mod handlers_price {
     }
 }
 
-async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
+async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
     info!("rust_priceservice_insert_dummy_data.search_movies");
     let search_movie: String = CONFIG
         .get("search_movie")
         .expect("expected search_movie URL");
 
-    let search_movie = search_movie.replace("ENGINE", &engine);
+    let search_movie = search_movie.replace("ENGINE", &engine.to_string());
 
     let search_request = SearchPaginatedRequest {
         q: "*".to_string(),
@@ -83,7 +85,7 @@ async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
         offset,
         limit,
         &search_request.sort.clone(),
-        engine.clone()
+        engine.to_string()
     );
     info!("message {}", &message);
     logging_service::log_entry(
@@ -91,7 +93,7 @@ async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -138,7 +140,7 @@ async fn search_movies(limit: u32, offset: u32, engine: String) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     movies
