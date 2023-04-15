@@ -1,5 +1,30 @@
 # Search Stuff
 
+
+##  Postgres
+
+```
+sudo -u postgres psql
+```
+
+```
+create database bumzack;
+```
+
+```
+create user bumzack with encrypted password 'bumzack';
+```
+
+```
+grant all privileges on database bumzack to bumzack;
+```
+
+
+```
+sudo -u postgres bumzack
+```
+
+
 ## Solr
 
 http://solr01.bumzack.at/solr/movie/select?fl=originalTitle%2CtitleType&indent=true&q.op=OR&q=originalTitle%3ATerminator%20AND%20titleType%3Amovie&rows=100&useParams=
@@ -75,11 +100,11 @@ curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at
 ```
 
 ```
-curl  -X POST   http://localhost:18200/api/solr/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 9000009, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+curl  -X POST   http://localhost:18200/api/solr/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 0, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
 ```
 
 ```
-curl  -X POST   http://localhost:18200/api/meili/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 500000, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+curl  -X POST   http://localhost:18200/api/meili/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 0, "limit" : 2, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
 ```
 
 ### person by nconst POST a list
