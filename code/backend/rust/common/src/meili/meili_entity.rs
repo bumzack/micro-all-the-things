@@ -33,15 +33,13 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(" meili_filter_entity request success. unwrapping MeiliSearchResult<T>");
                     let res = r.json::<MeiliSearchResult<T>>().await;
                     match res {
                         Ok(r) => {
-                            info!(" meili_filter_entity request success and all good. returning Vec<T>");
                             r.hits
                         }
                         Err(ee) => {
-                            info!(" meili_filter_entity request error. returning empty Vec<>. error {:?}",ee);
+                            error!(" meili_filter_entity request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
                         }
                     }
@@ -94,17 +92,13 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(
-                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<T>"
-                    );
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
                         Ok(r) => {
-                            info!("meili_search_searchindex request success and all good. returning Vec<T>");
                             r.hits
                         }
                         Err(ee) => {
-                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            error!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
                         }
                     }
@@ -160,19 +154,15 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    info!(
-                        "meili_search_searchindex request success. unwrapping MeiliSearchResult<T>"
-                    );
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
                         Ok(r) => {
-                            info!("meili_search_searchindex request success and all good. returning Vec<T>");
                             let hits = r.hits;
                             let facets = r.facet_distribution;
                             (hits, facets)
                         }
                         Err(ee) => {
-                            info!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
+                            error!("meili_search_searchindex request error. returning empty Vec<>. error {:?}",ee);
                             (vec![], None)
                         }
                     }

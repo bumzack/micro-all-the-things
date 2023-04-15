@@ -27,6 +27,8 @@ pub struct SearchIndexDoc {
     pub characters: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title_type: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub year: Option<u32>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

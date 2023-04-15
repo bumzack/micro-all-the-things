@@ -63,8 +63,6 @@ pub mod filters_search_search_index {
             "titleType".to_string(),
         ];
 
-        let facets = vec![];
-
         let search_result = match engine.as_str() {
             "solr" => {
                 let (movies, facets) = solr_search_entity_with_facets::<SearchIndexDoc>(
@@ -95,7 +93,7 @@ pub mod filters_search_search_index {
 
                 MovieSearchResult { movies, facets }
             }
-            _ => panic!("not supported search engine"),
+            _ => panic!("un-supported search engine"),
         };
 
         Ok(warp::reply::json(&search_result))

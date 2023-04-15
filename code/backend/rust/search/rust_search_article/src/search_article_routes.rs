@@ -1,4 +1,4 @@
-pub mod search_article_routes {
+pub mod mod_search_article_routes {
     use log::info;
     use warp::Filter;
 
