@@ -1,10 +1,10 @@
-pub mod search_helper {
+pub mod mod_search_helper {
     use log::{error, info};
     use reqwest::StatusCode;
 
     use common::models::article::SearchCustomer;
     use common::models::authentication::AuthenticationEntry;
-    use common::models::search_doc::{MovieSearchResult, SearchIndexDoc, SearchMovieIndexRequest};
+    use common::models::search_doc::{MovieSearchResult, SearchMovieIndexRequest};
 
     use crate::{CLIENT, CONFIG};
 
@@ -27,12 +27,10 @@ pub mod search_helper {
                     );
                     return None;
                 }
-                info!("search_customers all good");
 
                 match response {
                     Ok(res) => {
                         if res.status() == StatusCode::OK {
-                            info!("authentication Service returned status {}  == OK  for customer.id {}. assuming logged in. ", res.status(), id);
                             let auth = res.json::<AuthenticationEntry>().await;
 
                             match auth {
@@ -41,10 +39,6 @@ pub mod search_helper {
                                         && auth.logged_in.is_some()
                                         && auth.logged_out.is_none()
                                     {
-                                        info!(
-                                            "authentication Service. user .id {}. is  logged in. ",
-                                            id
-                                        );
                                         Some(auth)
                                     } else {
                                         None
@@ -56,8 +50,8 @@ pub mod search_helper {
                                 }
                             }
                         } else {
-                            info!("authentication Service returned status {} for customer.id {}. assuming not logged in. ", res.status(), id);
-                            return None;
+                            error!("authentication Service returned status {} for customer.id {}. assuming not logged in. ", res.status(), id);
+                            None
                         }
                     }
                     Err(e) => {
@@ -105,15 +99,10 @@ pub mod search_helper {
             );
             return None;
         }
-        info!("search_index_docs all good");
 
         match response {
             Ok(res) => {
                 if res.status() == StatusCode::OK {
-                    info!(
-                        "SearchIndexDoc Service returned status {}  == OK    ",
-                        res.status()
-                    );
                     let res = res.json::<MovieSearchResult>().await;
 
                     match res {
@@ -124,7 +113,7 @@ pub mod search_helper {
                         }
                     }
                 } else {
-                    info!(
+                    error!(
                         "search_index_doc Service returned status {}   ",
                         res.status()
                     );

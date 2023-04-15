@@ -14,14 +14,12 @@ pub fn dump_response_status(
     match &response {
         Ok(res) => {
             let code = res.status();
-            if code == StatusCode::OK || code == StatusCode::ACCEPTED || code == StatusCode::CREATED
+            if code != StatusCode::OK || code != StatusCode::ACCEPTED || code != StatusCode::CREATED
             {
-                info!("request success");
-            } else {
                 let x = res.headers().clone();
-                error!("request != OK. status {:?},    url {}", code, url);
-                error!("request != OK. headers {:?},    url {}", x, url);
-                error!("remote address {:?}", res.remote_addr());
+                info!("request != OK. status {:?},    url {}", code, url);
+                info!("request != OK. headers {:?},    url {}", x, url);
+                info!("remote address {:?}", res.remote_addr());
             }
         }
         Err(e) => error!(

@@ -70,7 +70,6 @@ pub async fn build_index_v3(
 }
 
 async fn search_and_write_to_index(offset: u32, limit: u32, engine: String) -> usize {
-    info!("XXX    search_and_write_to_index");
     let movies = search_movies(limit, offset, engine.clone()).await;
 
     if movies.is_empty() {
