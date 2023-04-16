@@ -11,6 +11,7 @@ tt0088247
 
 ## API
 
+
 https://askubuntu.com/questions/162229/how-do-i-increase-the-open-files-limit-for-a-non-root-user
 
 in /etc/security eintragen und pam dingsdi auch
@@ -44,7 +45,6 @@ in /etc/security eintragen und pam dingsdi auch
 ## set filterable attributes
 
 ```
-
   curl  -X PUT -d '[ "tconst" ]'                    http://meilisearch01.bumzack.at/indexes/movie/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "titleId" ]'                   http://meilisearch01.bumzack.at/indexes/movieaka/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "nconst" ]'                    http://meilisearch01.bumzack.at/indexes/person/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
@@ -58,12 +58,12 @@ in /etc/security eintragen und pam dingsdi auch
 ## set sortable attributes
 
 ```
-curl  -X PUT -d '[ "tconst"]'                    http://meilisearch01.bumzack.at/indexes/movie/settings/sortable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+curl  -X PUT -d '[ "tconst"]'     http://meilisearch01.bumzack.at/indexes/movie/settings/sortable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
 ```
 
-curl -X PUT
--d '[ "tconst"]'                    http://meilisearch01.bumzack.at/indexes/searchindex/settings/sortable-attributes
--H 'Content-Type: application/json' -H 'Authorization: Bearer 1234567890123456' | jq
+```
+curl -X PUT -d '[ "tconst"]'      http://meilisearch01.bumzack.at/indexes/searchindex/settings/sortable-attributes  -H 'Content-Type: application/json' -H 'Authorization: Bearer 1234567890123456' | jq
+```
 
 ### movie all
 
@@ -123,7 +123,9 @@ curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nc
 
 ```
  curl  -vv   http://localhost:18205/api/solr/crew/filter/tt0666268         |  jq    
- 
+```
+
+```
  curl  -vv   http://localhost:18205/api/meili/crew/filter/tt0666268         |  jq
 ```
 
@@ -131,7 +133,9 @@ curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nc
 
 ```
  curl  -vv   http://localhost:18201/api/solr/movieaka/filter/tt0666268         |  jq    
- 
+```
+
+```
  curl  -vv   http://localhost:18201/api/meili/movieaka/filter/tt0666268         |  jq
 ```
 
@@ -151,13 +155,25 @@ curl http://localhost:18300/api/v3/solr/searchindex/build/0/50000/6         |  j
 
 ```
 curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json' --data-binary '{ "maxTotalHits": 3000 }' -H 'Authorization: Bearer 1234567890123456' | jq
+```
 
+```
 curl -X POST   http://localhost:18200/api/movie    -H 'Content-Type: application/json' -d '{ "q" : "*", "offset" : 351000, "limit" : 500, "page" : 0 , "sort" : [ "tconst:asc" ] }' | jq
+```
 
+```
 curl   'http://meilisearch01.bumzack.at/indexes/movie/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
-curl   'http://meilisearch01.bumzack.at/indexes/person/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
-curl   'http://meilisearch01.bumzack.at/indexes/principal/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+```
 
+```
+curl   'http://meilisearch01.bumzack.at/indexes/person/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+```
+
+```
+curl   'http://meilisearch01.bumzack.at/indexes/principal/settings'     -H 'Authorization: Bearer 1234567890123456' | jq
+```
+
+```
 curl -X PATCH 'http://meilisearch01.bumzack.at/indexes/movie/settings/pagination' -H 'Content-Type: application/json'  --data-binary '{ "maxTotalHits": 100000000 }' -H 'Authorization: Bearer 1234567890123456' | jq
 ```
 
@@ -214,8 +230,4 @@ curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Ty
 ```
 curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Brianna", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1203, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9 " }   }' | jq
 ```
-
-
-
-
 
