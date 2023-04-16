@@ -1,10 +1,9 @@
 pub mod logging_service {
-    use crate::entity::entity::Engine;
     use config::Config;
     use log::{error, info};
     use reqwest::{Error, Response, StatusCode};
-    use crate::entity::entity::Engine;
 
+    use crate::entity::entity::Engine;
     use crate::logging::logging::AddLogEntry;
 
     lazy_static::lazy_static! {
@@ -13,7 +12,7 @@ pub mod logging_service {
 
     lazy_static::lazy_static! {
         static ref CONFIG_LOG :Config = Config::builder()
-            .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/config.toml"))
+            .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
             .build()
             .unwrap();
     }

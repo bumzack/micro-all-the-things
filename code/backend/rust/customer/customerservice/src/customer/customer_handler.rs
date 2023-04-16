@@ -1,11 +1,11 @@
 pub mod handler_customer {
-    use common::entity::entity::Engine;
     use deadpool_postgres::Pool;
     use serde_json::json;
     use warp::hyper::StatusCode;
     use warp::reply::json;
     use warp::{reject, Rejection, Reply};
 
+    use common::entity::entity::Engine;
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
     use common::logging::logging_service_client::logging_service::log_external_service_error;

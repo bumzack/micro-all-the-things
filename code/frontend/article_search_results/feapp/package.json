@@ -1,5 +1,5 @@
 {
-  "name": "search-results",
+  "name": "article_search_results",
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",

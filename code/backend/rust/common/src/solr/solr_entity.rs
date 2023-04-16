@@ -15,8 +15,8 @@ pub mod solr_entity_stuff {
         filter_values: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let mut filters = HashMap::new();
         filters.insert(filter_field, filter_values);
@@ -33,9 +33,7 @@ pub mod solr_entity_stuff {
                 {
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
-                        Ok(r) => {
-                            r.response.unwrap().docs.unwrap()
-                        }
+                        Ok(r) => r.response.unwrap().docs.unwrap(),
                         Err(ee) => {
                             info!("solr_filter_person request error. returning empty Vec<T>. error {:?}",ee);
                             vec![]
@@ -43,7 +41,10 @@ pub mod solr_entity_stuff {
                     }
                 } else {
                     let x = r.headers().clone();
-                    error!("solr_filter request != OK. status {:?},     ", code);
+                    error!(
+                        "solr_filter request != OK. status {:?},     ",
+                        code.as_u16()
+                    );
                     error!("solr_filter request != OK. headers {:?},   ", x);
                     vec![]
                 }
@@ -64,8 +65,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -165,9 +166,7 @@ pub mod solr_entity_stuff {
                 {
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
-                        Ok(r) => {
-                            r.response.unwrap().docs.unwrap()
-                        }
+                        Ok(r) => r.response.unwrap().docs.unwrap(),
                         Err(ee) => {
                             error!("solr_search_person request error. returning empty Vec<>. error {:?}",ee);
                             vec![]
@@ -196,8 +195,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<FacetCounts>)
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -330,8 +329,8 @@ pub mod solr_entity_stuff {
         limit: u32,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let sort = vec![("id".to_string(), true)];
         let response = solr_search_http(

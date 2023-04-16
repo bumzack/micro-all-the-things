@@ -1,0 +1,26 @@
+[Unit]
+Description=Rust Search Crew Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/search/rust_crewsearch
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/rust/search/rust_crewsearch
+ExecStart=/home/bumzack/micro-all-the-things/code/backend/rust/target/release/rust_crewsearch
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/rust_crewsearch
+ExecStartPre=/bin/chown syslog:adm /var/log/rust_crewsearch
+ExecStartPre=/bin/chmod 755 /var/log/rust_crewsearch
+SyslogIdentifier=rust_crewsearch
+
+[Install]
+WantedBy=multi-user.target

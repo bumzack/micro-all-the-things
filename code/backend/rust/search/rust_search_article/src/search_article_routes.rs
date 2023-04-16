@@ -1,8 +1,8 @@
 pub mod mod_search_article_routes {
-    use common::entity::entity::Engine;
     use log::info;
     use warp::Filter;
 
+    use common::entity::entity::Engine;
     use common::models::article::SearchArticleRequest;
 
     use crate::search_article_handler::handler_search_article::search_article;

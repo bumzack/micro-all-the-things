@@ -563,221 +563,27 @@ var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
 window.$ = window.jQuery = (0, _jqueryDefault.default);
 (0, _jqueryDefault.default)(document).ready(()=>{
     console.log("yo");
-    load_servers();
+    load_backendservers();
+    load_frontendservers();
 });
-const load_servers = ()=>{
-    const url = "http://proxy.ironspine.at/proxythingi/server";
+const load_backendservers = ()=>{
+    const url = "http://microthingisregistry.bumzack.at/api/backend";
     (0, _jqueryDefault.default).ajax({
         url: url
     }).done((data)=>{
         const sources = data;
-        //  console.log(`sources ${JSON.stringify(sources, null, 4)} `);
-        render_server(sources);
+        console.log(`backend server ${JSON.stringify(sources, null, 4)} `);
+    // render_server(sources);
     });
 };
-const source_link_template = (source_id, href_id, txt)=>{
-    return `
-        <li class="nav-item">
-            <a class="nav-link" href="#${href_id}" id="${source_id}">${txt}</a>
-        </li>
-    `;
-};
-const source_targets_link_list_template = (id)=>{
-    return `
-       <ul class="nav flex-column" id="${id}">
-        </ul>
-    `;
-};
-const source_server_content_template = (id, name, source)=>{
-    return `
-        <div id="${id}" class="card">
-          <h4>
-            ${name}
-          </h4>
-            <div>
-                ${source_table(source)}
-            </div>
-            <div>
-                ${source_table_stats(source.stats)}
-            </div>
-            
-            
-            
-        </div>
-    `;
-};
-const target_server_content_template = (id, name, target)=>{
-    return `
-        <div id="${id}" class="card">
-          <div class="card-header">
-            ${name}
-          </div>
-          <div class="card-body">
-                ${target_table(target)}
-          </div>
-           <div class="card-body">
-                ${target_table_stats(target.stats)}
-          </div>
-          
-        </div>
-    `;
-};
-const source_table = (source)=>{
-    return `
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">path</th>
-                        <th scope="col">method</th>
-                        <th scope="col">created</th>
-                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>${source.id}</td>
-                        <td>${source.path_starts_with}</td>
-                        <td>${source.method}</td>
-                        <td>${source.created}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-};
-const source_table_stats = (stats)=>{
-    return `
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">hits</th>
-                        <th scope="col">start</th>
-                        <th scope="col">stop</th>
-                        <th scope="col">created</th>
-                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>${stats.id}</td>
-                        <td>${stats.hits}</td>
-                        <td>${stats.start}</td>
-                        <td>${stats.stop}</td>
-                        <td>${stats.created}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-};
-const target_table = (target)=>{
-    return `
-        <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">host</th>
-                        <th scope="col">port</th>
-                        <th scope="col">path</th>
-                        <th scope="col">method</th>
-                        <th scope="col">created</th>
-                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>${target.id}</td>
-                        <td>${target.host}</td>
-                        <td>${target.port}</td>
-                        <td>${target.path}</td>
-                        <td>${target.method}</td>
-                        <td>${target.created}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    `;
-};
-const server_target_stat_row = (stat)=>{
-    return `
-        <tr>
-            <td>${stat.id}</td>
-            <td>${stat.hits}</td>
-            <td>${stat.avg_ns}</td>
-            <td>${stat.min_ns}</td>
-            <td>${stat.max_ns}</td>
-            <td>${stat.created}</td>
-            <td>${stat.start}</td>
-            <td>${stat.stop}</td>
-        </tr>
-    `;
-};
-const target_stats = (stat)=>{
-    return `
-       <div class="table-responsive">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">hits</th>
-                        <th scope="col">avg_ns</th>
-                        <th scope="col">min_ns</th>
-                        <th scope="col">max_ns</th>
-                        <th scope="col">created</th>
-                        <th scope="col">start</th>
-                        <th scope="col">stop</th>
-                     </tr>
-                </thead>
-                <tbody>
-                    ${server_target_stat_row(stat)}
-                </tbody>
-            </table>
-        </div>
-    `;
-};
-const target_table_stats = (t)=>{
-    if (t !== null) return target_stats(t);
-    return "";
-};
-const render_server = (sources)=>{
-    console.log("render_server");
-    (0, _jqueryDefault.default)("#serversources").empty();
-    (0, _jqueryDefault.default)("#targetservers").empty();
-    sources.sort((a, b)=>a.id - b.id).slice(0, 2).forEach((source)=>{
-        // left nav column
-        const href_id = `serversources-${source.id}`;
-        const txt = `${source.description} // id: ${source.id}`;
-        let source_id = `source-${source.id}`;
-        const elem = source_link_template(source_id, href_id, txt);
-        // console.log(`source.id   ${source.id}`);
-        (0, _jqueryDefault.default)("#serversources").append(elem);
-        const id_targets = `serversources-targets-${source.id}`;
-        const ul_container_target_links_id = `targets-${source.id}`;
-        let ul_container_target_links = source_targets_link_list_template(ul_container_target_links_id);
-        // console.log(`jquery("#"+id)   id ${id}    ${jquery("#" + id)}`);
-        (0, _jqueryDefault.default)("#" + source_id).append(ul_container_target_links);
-        // console.log(`id_targets ${id_targets}  s ${s}`);
-        // content column
-        let content_source_id = `content-source-${source.id}`;
-        let content = source_server_content_template(content_source_id, txt, source);
-        // console.log(`content ${content}   `);
-        (0, _jqueryDefault.default)("#targetservers").append(content);
-        source.targets.sort((a, b)=>a.id - b.id).forEach((target)=>{
-            const target_id = `serversources-${source.id}-${target.id}`;
-            const link_origin = source_link_template("id-for-" + target_id, target_id, target.description);
-            // console.log(`link_origin ${link_origin}  target_id ${target_id} `);
-            const t = "#" + ul_container_target_links_id;
-            (0, _jqueryDefault.default)(t).append(link_origin);
-            // content column
-            const target_txt = `${target.description} // id: ${target.id}`;
-            const target_elem = target_server_content_template(target_id, target_txt, target);
-            // console.log(`target_elem ${target_elem}  target_id ${target_id} `);
-            const id = "#" + content_source_id;
-            console.log(`id ${id}     target_elem ${target_elem}`);
-            (0, _jqueryDefault.default)(id).append(target_elem);
-        });
+const load_frontendservers = ()=>{
+    const url = "http://microthingisregistry.bumzack.at/api/frontend";
+    (0, _jqueryDefault.default).ajax({
+        url: url
+    }).done((data)=>{
+        const sources = data;
+        console.log(`backend server ${JSON.stringify(sources, null, 4)} `);
+    // render_server(sources);
     });
 };
 
@@ -7635,6 +7441,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["lSgxL","kuM8f"], "kuM8f", "parcelRequire0efe")
+},{}]},["lSgxL","kuM8f"], "kuM8f", "parcelRequire8316")
 
 //# sourceMappingURL=index.6b815632.js.map

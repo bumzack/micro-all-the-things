@@ -1,9 +1,9 @@
 pub mod handler_search_article {
     use std::convert::Infallible;
 
-    use common::entity::entity::Engine;
     use log::{error, info};
 
+    use common::entity::entity::Engine;
     use common::models::article::{ArticleSearchResult, SearchArticleRequest};
 
     use crate::search_helper::mod_search_helper::{get_authentication_entry, search_index_docs};
