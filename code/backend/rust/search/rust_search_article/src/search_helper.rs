@@ -1,8 +1,8 @@
 pub mod mod_search_helper {
-    use common::entity::entity::Engine;
     use log::error;
     use reqwest::StatusCode;
 
+    use common::entity::entity::Engine;
     use common::models::article::SearchCustomer;
     use common::models::authentication::AuthenticationEntry;
     use common::models::search_doc::{MovieSearchResult, SearchMovieIndexRequest};
