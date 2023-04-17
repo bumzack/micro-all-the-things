@@ -1,5 +1,4 @@
 pub mod handler_customer {
-    use common::entity::entity::Engine;
     use deadpool_postgres::Pool;
     use serde_json::json;
     use warp::hyper::StatusCode;
