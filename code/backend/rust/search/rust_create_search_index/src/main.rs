@@ -14,7 +14,10 @@ mod build_search_index_v3;
 mod pagination_manager;
 
 lazy_static::lazy_static! {
-    static ref CLIENT: reqwest::Client = reqwest::Client::new();
+    static ref CLIENT: reqwest::Client = reqwest::Client::builder()
+        .pool_max_idle_per_host(0)
+        .build()
+        .unwrap();
 }
 
 lazy_static::lazy_static! {
