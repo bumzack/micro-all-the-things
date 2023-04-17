@@ -1,9 +1,9 @@
 pub mod handler_search_article {
     use std::convert::Infallible;
 
-    use common::entity::entity::Engine;
     use log::{error, info};
 
+    use common::entity::entity::Engine;
     use common::models::article::{ArticleSearchResult, SearchArticleRequest};
 
     use crate::search_helper::mod_search_helper::{get_authentication_entry, search_index_docs};
@@ -23,9 +23,12 @@ pub mod handler_search_article {
             let id = &req.customer.customer_id.map_or(-1, |i| i);
             error!("customer {} is not logged in (-1 if no id provided", id);
         }
+        info!("search_auth   calling 'search_index_docs'");
+
         let search_result = search_index_docs(engine, &req.q, req.limit, req.offset).await;
 
         if search_result.is_none() {
+            info!("search_index_docs   no search result found -> returning empty array");
             return Ok(warp::reply::json::<Vec<ArticleSearchResult>>(&vec![]));
         }
 
@@ -37,6 +40,8 @@ pub mod handler_search_article {
             if price.is_none() {
                 error!("no price found for movie tconst {}", &m.tconst);
                 continue;
+            } else {
+                info!("search_article  found price for movie  {}", &m.tconst);
             }
             let price = price.map(|p| p.amount).unwrap();
             let customer_price = match &customer {
@@ -44,6 +49,10 @@ pub mod handler_search_article {
                     if m.year.is_some() {
                         let a =
                             get_movie_customerprice(m.year.unwrap() as i32, aa.customer_id).await;
+                        info!(
+                            "search_article  found a customer price for movie  {}, customer {}",
+                            &m.tconst, &aa.customer_id
+                        );
                         a.map(|c| (100.0 - c.discount) * price / 100.0)
                     } else {
                         info!("year not available on movie  -> no customer prize");
@@ -61,6 +70,8 @@ pub mod handler_search_article {
                 price,
                 customer_price,
             };
+            info!("search_article  added final ArticleSearchResult to vec");
+
             res.push(a);
         }
 

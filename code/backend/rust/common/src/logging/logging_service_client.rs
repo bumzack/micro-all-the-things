@@ -4,6 +4,7 @@ pub mod logging_service {
     use reqwest::{Error, Response, StatusCode};
     use crate::entity::entity::Engine;
 
+    use crate::entity::entity::Engine;
     use crate::logging::logging::AddLogEntry;
 
     lazy_static::lazy_static! {
