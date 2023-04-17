@@ -1,7 +1,6 @@
 use serde_json::json;
 
 use common::entity::entity::Engine;
-use common::entity::entity::Engine;
 use common::logging::logging_service_client::logging_service;
 use common::logging::logging_service_client::logging_service::log_external_service_error;
 use common::models::movie::Movie;
@@ -15,7 +14,6 @@ pub mod handlers_price {
     use warp::reply::json;
     use warp::{reject, Rejection, Reply};
 
-    use common::entity::entity::Engine;
     use common::entity::entity::Engine;
     use common::models::prices::AddPriceEntry;
 
