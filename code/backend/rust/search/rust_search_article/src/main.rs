@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::io;
 use std::net::{SocketAddr, ToSocketAddrs};
 
@@ -25,15 +24,7 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    Builder::new().filter_level(LevelFilter::Info).init();
-
-    info!(
-        "{:?}",
-        CONFIG
-            .clone()
-            .try_deserialize::<HashMap<String, String>>()
-            .unwrap()
-    );
+    Builder::new().filter_level(LevelFilter::Debug).init();
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root.or(search_article_routes::mod_search_article_routes::search_article_route());
