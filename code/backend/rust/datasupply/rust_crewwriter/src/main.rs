@@ -9,7 +9,10 @@ use crate::crew_rest::filters_crew;
 mod crew_rest;
 
 lazy_static::lazy_static! {
-    static ref CLIENT: reqwest::Client = reqwest::Client::new();
+    static ref CLIENT: reqwest::Client = reqwest::Client::builder()
+        .pool_max_idle_per_host(0)
+        .build()
+        .unwrap();
 }
 
 #[tokio::main]

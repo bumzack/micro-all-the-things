@@ -165,7 +165,6 @@ mod handlers_tsv {
             let json = json!(&tsv_lines).to_string();
 
             info!("request url  '{}'", &request_url);
-            //  let client = reqwest::Client::new();
             let res = CLIENT
                 .post(&request_url)
                 .header("Content-Type", "application/json".to_owned())
