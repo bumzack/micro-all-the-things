@@ -7,7 +7,10 @@ use warp::Filter;
 mod search_movieaka;
 
 lazy_static::lazy_static! {
-    static ref CLIENT: reqwest::Client = reqwest::Client::new();
+    static ref CLIENT: reqwest::Client = reqwest::Client::builder()
+        .pool_max_idle_per_host(0)
+        .build()
+        .unwrap();
 }
 
 #[tokio::main]
