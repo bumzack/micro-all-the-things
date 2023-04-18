@@ -1,4 +1,5 @@
 pub mod entity;
+pub mod helper;
 pub mod logging;
 pub mod meili;
 pub mod models;
