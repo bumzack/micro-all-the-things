@@ -1,11 +1,11 @@
 use std::io;
+use std::time::Duration;
 
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
 mod search_movie;
-use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()

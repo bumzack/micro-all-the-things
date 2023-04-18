@@ -4,7 +4,9 @@ pub mod handler_search_article {
     use log::{error, info};
 
     use common::entity::entity::Engine;
-    use common::models::article::{ArticleSearchResult, SearchArticleRequest};
+    use common::models::article::{
+        ArticleSearchResult, SearchArticleRequest, SearchArticleResponse,
+    };
 
     use crate::search_helper::mod_search_helper::{get_authentication_entry, search_index_docs};
     use crate::search_helper_prices::search_helper::{get_movie_customerprice, get_movie_price};
@@ -82,6 +84,11 @@ pub mod handler_search_article {
 
             res.push(a);
         }
+
+        let res = SearchArticleResponse {
+            articles: Some(res),
+            facets: search_result.facets,
+        };
 
         Ok(warp::reply::json(&res))
     }

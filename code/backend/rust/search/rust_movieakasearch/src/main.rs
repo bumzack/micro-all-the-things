@@ -1,8 +1,8 @@
 use std::io;
+use std::time::Duration;
 
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
-use std::time::Duration;
 use warp::Filter;
 
 mod search_movieaka;
