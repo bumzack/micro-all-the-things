@@ -2,6 +2,7 @@
 extern crate log;
 
 use std::net::{SocketAddr, ToSocketAddrs};
+use std::time::Duration;
 
 use config::Config;
 use log::LevelFilter;
@@ -24,9 +25,15 @@ lazy_static::lazy_static! {
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-        .pool_max_idle_per_host(0)
-        .build()
-        .unwrap();
+            .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
+            .build()
+            .unwrap();
 }
 
 // #[tokio::main(worker_threads = 2)]
@@ -35,18 +42,6 @@ async fn main() {
     Builder::new().filter_level(LevelFilter::Info).init();
 
     let pool = create_pool();
-
-    // let cors = warp::cors()
-    //     .allow_any_origin()
-    //     .allow_headers(vec![
-    //         "User-Agent",
-    //         "Sec-Fetch-Mode",
-    //         "Referer",
-    //         "Origin",
-    //         "Access-Control-Request-Method",
-    //         "Access-Control-Request-Headers",
-    //     ])
-    //     .allow_methods(vec!["POST", "GET"]);
 
     let routes = price_route(pool);
 

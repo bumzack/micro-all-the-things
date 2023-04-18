@@ -52,15 +52,16 @@ pub mod handler_search_article {
             }
             let price = price.map(|p| p.amount).unwrap();
             let customer_price = match &authentication_entry {
-                Some(aa) => {
+                Some(auth_entry) => {
                     if m.year.is_some() {
                         let customer_price =
-                            get_movie_customerprice(m.year.unwrap() as i32, aa.customer_id).await;
+                            get_movie_customerprice(m.year.unwrap() as i32, auth_entry.customer_id)
+                                .await;
                         info!(
                             "search_article  found a customer price for movie  {}, customer {}",
-                            &m.tconst, &aa.customer_id
+                            &m.tconst, &auth_entry.customer_id
                         );
-                        a.map(|c| (100.0 - c.discount) * price / 100.0)
+                        customer_price.map(|c| (100.0 - c.discount) * price / 100.0)
                     } else {
                         info!("year not available on movie  -> no customer prize");
                         None

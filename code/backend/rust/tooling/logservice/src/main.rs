@@ -26,18 +26,6 @@ async fn main() {
 
     let pool = create_pool();
 
-    // let cors = warp::cors()
-    //     .allow_any_origin()
-    //     .allow_headers(vec![
-    //         "User-Agent",
-    //         "Sec-Fetch-Mode",
-    //         "Referer",
-    //         "Origin",
-    //         "Access-Control-Request-Method",
-    //         "Access-Control-Request-Headers",
-    //     ])
-    //     .allow_methods(vec!["POST", "GET"]);
-
     let routes = logging_route(pool);
 
     let host: String = CONFIG

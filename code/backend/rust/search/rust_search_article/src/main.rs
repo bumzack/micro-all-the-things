@@ -6,16 +6,25 @@ use log::{info, LevelFilter};
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
+use common::server::warp_cors::warp_stuff::warp_cors;
+
 mod search_article_handler;
 mod search_article_routes;
 mod search_helper;
 mod search_helper_prices;
+use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-        .pool_max_idle_per_host(0)
-        .build()
-        .unwrap();
+            .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
+            .build()
+            .unwrap();
 }
 
 lazy_static::lazy_static! {
@@ -29,23 +38,10 @@ lazy_static::lazy_static! {
 async fn main() -> io::Result<()> {
     Builder::new().filter_level(LevelFilter::Debug).init();
 
-    let cors = warp::cors()
-        .allow_any_origin()
-        .allow_headers(vec![
-            "User-Agent",
-            "Sec-Fetch-Mode",
-            "Referer",
-            "Origin",
-            "content-type",
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers",
-        ])
-        .allow_methods(vec!["POST", "GET", "OPTIONS", "PUT", "DELETE", "HEAD"]);
-
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root
         .or(search_article_routes::mod_search_article_routes::search_article_route())
-        .with(cors);
+        .with(warp_cors());
 
     let host: String = CONFIG
         .get("searcharticle_service_host")

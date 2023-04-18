@@ -6,8 +6,8 @@ pub mod meili_http_stuff {
     use serde_json::json;
 
     use crate::entity::entity::{Engine, Entity};
+    use crate::helper::dump_response_status;
     use crate::logging::logging_service_client::logging_service::log_error;
-    use crate::meili::dump_response_status;
     use crate::meili::meili_models::MeiliSearchRequest;
 
     pub(crate) async fn meili_search_http(
