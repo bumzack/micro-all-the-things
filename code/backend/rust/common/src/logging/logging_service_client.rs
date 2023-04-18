@@ -1,4 +1,6 @@
 pub mod logging_service {
+    use std::time::Duration;
+
     use config::Config;
     use log::{error, info};
     use reqwest::{Error, Response, StatusCode};
@@ -7,8 +9,14 @@ pub mod logging_service {
     use crate::logging::logging::AddLogEntry;
 
     lazy_static::lazy_static! {
-        static ref CLIENT_LOG: reqwest::Client = reqwest::Client::builder()
+        static ref CLIENT: reqwest::Client = reqwest::Client::builder()
             .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
             .build()
             .unwrap();
     }
@@ -49,7 +57,7 @@ pub mod logging_service {
             &service_id, &log_type, &message
         );
         let url: &String = &LOG_SERVICE_URL;
-        let response = CLIENT_LOG.post(url).json(&add_log_entry).send().await;
+        let response = CLIENT.post(url).json(&add_log_entry).send().await;
 
         // dump_response_status(&response);
 
@@ -72,7 +80,7 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
     pub async fn log_docs_processed(num_docs: usize, offset: u32, limit: u32) {
@@ -87,7 +95,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
     }
 
     pub async fn log_end(total_movies_processed: usize) -> String {
@@ -101,7 +109,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         message
     }
 
@@ -115,7 +123,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
     pub async fn log_build_stats(engine: Engine, num_tasks: usize) {
@@ -129,7 +137,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
     pub async fn log_task_error(name: String, e: String) {
@@ -143,7 +151,7 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
     pub async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
@@ -157,7 +165,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         message
     }
 
@@ -184,7 +192,7 @@ pub mod logging_service {
                         "ERROR".to_string(),
                         message,
                     )
-                        .await;
+                    .await;
                 }
             }
             Err(e) => error!("error in request to meilisearch {:?}", e),

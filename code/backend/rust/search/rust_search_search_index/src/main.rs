@@ -8,12 +8,19 @@ use warp::Filter;
 use common::server::warp_cors::warp_stuff::warp_cors;
 
 mod search_search_index;
+use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-        .pool_max_idle_per_host(0)
-        .build()
-        .unwrap();
+            .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
+            .build()
+            .unwrap();
 }
 
 lazy_static::lazy_static! {
@@ -26,7 +33,6 @@ lazy_static::lazy_static! {
 #[tokio::main]
 async fn main() -> io::Result<()> {
     Builder::new().filter_level(LevelFilter::Debug).init();
-
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root

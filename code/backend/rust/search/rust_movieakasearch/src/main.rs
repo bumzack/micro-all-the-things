@@ -2,15 +2,22 @@ use std::io;
 
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
+use std::time::Duration;
 use warp::Filter;
 
 mod search_movieaka;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-        .pool_max_idle_per_host(0)
-        .build()
-        .unwrap();
+            .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
+            .build()
+            .unwrap();
 }
 
 #[tokio::main]

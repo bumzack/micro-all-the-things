@@ -560,6 +560,33 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
+var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 window.$ = window.jQuery = (0, _jqueryDefault.default);
 (0, _jqueryDefault.default)(document).ready(()=>{
     console.log("yo");
@@ -568,9 +595,7 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             event.preventDefault();
             const txt = (0, _jqueryDefault.default)("#searchMovie").val();
             console.log(`return pressed     ${txt}  `);
-            let url = "http://search.rust.bumzack.at/api/v1/solr/article";
-            //  let url = "http://proxy.proxythingi.at/rust/solr/search"
-            //  let url = "http://searchindex.rust.bumzack.at/api/v1/solr/searchindex/search";
+            const url = "http://proxy.proxythingi.at/rust/solr/search";
             const customer = {
                 customer_id: 1,
                 jwt: "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9"
@@ -578,28 +603,31 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             const req = {
                 q: txt,
                 offset: 0,
-                limit: 50,
+                limit: 1,
                 customer: customer
             };
             console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
-            var ajxReq = (0, _jqueryDefault.default).ajax(url, {
-                type: "POST",
-                data: JSON.stringify(req),
-                contentType: "application/json",
-                dataType: "json",
-                timeout: 300,
-                success: function(data, status, jqXhr) {
-                    console.log(`status   ${JSON.stringify(status)}`);
-                    const movies = data;
-                    console.log(`movies  ${JSON.stringify(movies, null, 4)} `);
-                    if (movies.articles !== undefined) {
-                        if (movies.articles.length > 0) (0, _jqueryDefault.default)("#search_results").innerHTML("no movies found");
-                        else (0, _jqueryDefault.default)("#search_results").innerHTML(`found ${movies.articles.length} movies`);
-                    } else (0, _jqueryDefault.default)("#search_results").text(`ups - got an empty result`);
-                },
-                fail: function(e) {
-                    console.error(`fail error requesting the movies. ${e}`);
-                }
+            // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+            function postData(url = "", data = {}) {
+                return __awaiter(this, void 0, void 0, function*() {
+                    // Default options are marked with *
+                    const response = yield fetch(url, {
+                        method: "POST",
+                        mode: "cors",
+                        cache: "no-cache",
+                        credentials: "same-origin",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        redirect: "follow",
+                        referrerPolicy: "no-referrer",
+                        body: JSON.stringify(data)
+                    });
+                    return response.json(); // parses JSON response into native JavaScript objects
+                });
+            }
+            postData(url, req).then((data)=>{
+                console.log(data); // JSON data parsed by `data.json()` call
             });
         }
     });

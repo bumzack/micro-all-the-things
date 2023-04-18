@@ -12,12 +12,19 @@ mod search_article_handler;
 mod search_article_routes;
 mod search_helper;
 mod search_helper_prices;
+use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-        .pool_max_idle_per_host(0)
-        .build()
-        .unwrap();
+            .pool_max_idle_per_host(0)
+            .connection_verbose(true)
+            .timeout(Duration::from_secs(30))
+            .connect_timeout(Duration::from_secs(30))
+            .no_brotli()
+            .no_deflate()
+            .no_gzip()
+            .build()
+            .unwrap();
 }
 
 lazy_static::lazy_static! {
