@@ -29,8 +29,23 @@ lazy_static::lazy_static! {
 async fn main() -> io::Result<()> {
     Builder::new().filter_level(LevelFilter::Debug).init();
 
+    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_headers(vec![
+            "User-Agent",
+            "Sec-Fetch-Mode",
+            "Referer",
+            "Origin",
+            "content-type",
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Headers",
+        ])
+        .allow_methods(vec!["POST", "GET", "OPTIONS", "PUT", "DELETE", "HEAD"]);
+
     let root = warp::path::end().map(|| "Welcome to my warp server!");
-    let root = root.or(search_article_routes::mod_search_article_routes::search_article_route());
+    let root = root
+        .or(search_article_routes::mod_search_article_routes::search_article_route())
+        .with(cors);
 
     let host: String = CONFIG
         .get("searcharticle_service_host")
