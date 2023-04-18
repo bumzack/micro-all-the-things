@@ -190,8 +190,8 @@ pub mod solr_entity_stuff {
     pub async fn solr_search_entity_with_facets<T>(
         entity: Entity,
         search_text: String,
-        _limit: u32,
-        _offset: u32,
+        limit: u32,
+        offset: u32,
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<FacetCounts>)
@@ -281,8 +281,8 @@ pub mod solr_entity_stuff {
             Some(facets),
             Some(search_text),
             None,
-            None,
-            None,
+            Some(limit),
+            Some(offset),
             client,
         );
 
@@ -294,12 +294,18 @@ pub mod solr_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
+                    info!("solr_search_entity_with_facets got a OK, ACCEPTED; CREATED response");
                     let res = r.json::<SolrResponse<T>>().await;
                     match res {
                         Ok(r) => {
+                            info!("solr_search_entity_with_facets got a SolResponseDoc response");
                             let re = r.response.unwrap();
                             // let facets = r.facet_counts;
                             let docs = re.docs.unwrap();
+                            info!(
+                                "solr_search_entity_with_facets got {} docs response",
+                                docs.len()
+                            );
                             //  (docs, facets)
                             (docs, None)
                         }

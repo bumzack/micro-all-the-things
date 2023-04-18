@@ -23,12 +23,9 @@ pub mod handler_search_article {
             let id = &req.customer.customer_id.map_or(-1, |i| i);
             error!("customer {} is not logged in (-1 if no id provided", id);
         }
-        info!("search_auth   calling 'search_index_docs'");
-
         let search_result = search_index_docs(engine, &req.q, req.limit, req.offset).await;
 
         if search_result.is_none() {
-            info!("search_index_docs   no search result found -> returning empty array");
             return Ok(warp::reply::json::<Vec<ArticleSearchResult>>(&vec![]));
         }
 
@@ -48,8 +45,6 @@ pub mod handler_search_article {
             if price.is_none() {
                 error!("no price found for movie tconst {}", &m.tconst);
                 continue;
-            } else {
-                info!("search_article  found price for movie  {}", &m.tconst);
             }
             let price = price.map(|p| p.amount).unwrap();
             let customer_price = match &authentication_entry {
@@ -78,8 +73,6 @@ pub mod handler_search_article {
                 price,
                 customer_price,
             };
-            info!("search_article  added final ArticleSearchResult to vec");
-
             res.push(a);
         }
 

@@ -7,7 +7,10 @@ pub mod logging_service {
     use crate::logging::logging::AddLogEntry;
 
     lazy_static::lazy_static! {
-        static ref CLIENT_LOG: reqwest::Client = reqwest::Client::new();
+        static ref CLIENT_LOG: reqwest::Client = reqwest::Client::builder()
+            .pool_max_idle_per_host(0)
+            .build()
+            .unwrap();
     }
 
     lazy_static::lazy_static! {

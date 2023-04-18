@@ -1,7 +1,7 @@
 pub mod meili_entity_stuff {
     use std::collections::HashMap;
 
-    use log::error;
+    use log::{error, info};
     use reqwest::{Client, StatusCode};
     use serde::{Deserialize, Serialize};
 
@@ -130,7 +130,13 @@ pub mod meili_entity_stuff {
         where
             T: for<'de> Deserialize<'de> + Serialize,
     {
+        info!(
+            "meili_search_entity_with_facets search_text {}, limit  {:?}, offset {:?}, facets: {:?}",
+            &search_text,  limit, offset, facets
+        );
+
         let search_text = vec![("ignored for meili".to_string(), search_text)];
+
         let response = meili_search_http(
             entity,
             None,
@@ -150,6 +156,7 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
+                    error!("meili_search_searchindex got a OK; ACCEPTED or CREATE response");
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
                         Ok(r) => {
