@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::entity::entity::{get_nullable_string, get_nullable_u32, EntityConverter};
+use crate::entity::entity::{EntityConverter, get_nullable_string, get_nullable_u32};
 use crate::tsv::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
