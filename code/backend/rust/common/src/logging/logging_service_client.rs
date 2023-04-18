@@ -72,7 +72,7 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-        .await;
+            .await;
     }
 
     pub async fn log_docs_processed(num_docs: usize, offset: u32, limit: u32) {
@@ -87,7 +87,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
     }
 
     pub async fn log_end(total_movies_processed: usize) -> String {
@@ -101,7 +101,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
         message
     }
 
@@ -115,7 +115,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
     }
 
     pub async fn log_build_stats(engine: Engine, num_tasks: usize) {
@@ -129,7 +129,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-        .await;
+            .await;
     }
 
     pub async fn log_task_error(name: String, e: String) {
@@ -143,7 +143,7 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-        .await;
+            .await;
     }
 
     pub async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
@@ -157,7 +157,7 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
         message
     }
 
@@ -184,7 +184,7 @@ pub mod logging_service {
                         "ERROR".to_string(),
                         message,
                     )
-                    .await;
+                        .await;
                 }
             }
             Err(e) => error!("error in request to meilisearch {:?}", e),

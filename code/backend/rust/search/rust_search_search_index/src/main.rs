@@ -1,8 +1,7 @@
-use std::collections::HashMap;
 use std::io;
 
 use config::Config;
-use log::{info, LevelFilter};
+use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 

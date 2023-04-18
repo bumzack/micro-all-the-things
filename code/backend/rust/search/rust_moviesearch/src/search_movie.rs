@@ -13,8 +13,7 @@ pub mod filters_search_movie {
 
     use crate::CLIENT;
 
-    pub fn search_movie_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_movie_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "movie" / String);
         let search_meili = server.and(warp::get()).and_then(|search_text: String| {
             info!("GET /api/meili/movie/:search_text  matched");
@@ -83,8 +82,7 @@ pub mod filters_search_movie {
         Ok(warp::reply::json(&movies))
     }
 
-    fn search_movies_request(
-    ) -> impl Filter<Extract = (SearchPaginatedRequest,), Error = warp::Rejection> + Clone {
+    fn search_movies_request() -> impl Filter<Extract=(SearchPaginatedRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }

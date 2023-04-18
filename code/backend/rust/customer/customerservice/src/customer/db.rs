@@ -28,8 +28,10 @@ pub mod db_logging {
             reject::custom(DivideByZero)
         })?;
 
-        let entry = Customer::from(&data);
-        Ok(entry)
+        let customer = Customer::from(&data);
+        info!("found a customer for email {}:  {:?}", &email,customer);
+
+        Ok(customer)
     }
 
     pub async fn get_customers_paginated(

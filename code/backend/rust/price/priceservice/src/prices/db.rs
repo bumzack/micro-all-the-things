@@ -2,7 +2,7 @@ use warp::Rejection;
 
 pub type Result<T> = std::result::Result<T, Rejection>;
 
-pub mod db_logging {
+pub mod db_prices {
     use deadpool_postgres::Pool;
     use warp::reject;
 
@@ -11,7 +11,7 @@ pub mod db_logging {
 
     use crate::db::db::TABLE_PRICE;
 
-    pub async fn get_price(pool: Pool, tconst: String) -> super::Result<PriceEntry> {
+    pub async fn get_price(pool: Pool, tconst: &String) -> super::Result<PriceEntry> {
         let client = pool.get().await.unwrap();
 
         let query = format!(
