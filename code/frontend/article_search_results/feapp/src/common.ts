@@ -47,3 +47,4 @@ export interface SearchArticleRequest {
     customer: SearchCustomer,
 }
 
+
