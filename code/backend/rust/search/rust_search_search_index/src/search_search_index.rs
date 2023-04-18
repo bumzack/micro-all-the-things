@@ -12,7 +12,8 @@ pub mod filters_search_search_index {
 
     use crate::CLIENT;
 
-    pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn search_index_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         let server = warp::path!("api" / "v1" / "meili" / "searchindex" / "search");
         let search_meili = server
             .and(warp::post())
@@ -27,14 +28,15 @@ pub mod filters_search_search_index {
             .and(warp::post())
             .and(search_index_request())
             .and_then(|req| {
-                info!("POST /api/solr/searchindex/search matched");
+                info!("POST /api/v1/solr/searchindex/search matched");
                 search_index(req, Engine::Solr)
             });
 
         search_meili.or(search_solr)
     }
 
-    fn search_index_request() -> impl Filter<Extract=(SearchMovieIndexRequest, ), Error=warp::Rejection> + Clone {
+    fn search_index_request(
+    ) -> impl Filter<Extract = (SearchMovieIndexRequest,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
@@ -52,7 +54,7 @@ pub mod filters_search_search_index {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
 
         let facets = vec![
             "genres".to_string(),
@@ -73,7 +75,7 @@ pub mod filters_search_search_index {
                     facets,
                     &CLIENT,
                 )
-                    .await;
+                .await;
                 let facets = match facets {
                     Some(f) => f.facet_fields,
                     None => None,
@@ -89,7 +91,7 @@ pub mod filters_search_search_index {
                     facets,
                     &CLIENT,
                 )
-                    .await;
+                .await;
 
                 MovieSearchResult { movies, facets }
             }
