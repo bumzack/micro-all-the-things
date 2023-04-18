@@ -5,8 +5,8 @@ pub mod mod_solr_http {
     use reqwest::{Client, Error, Response, StatusCode, Url};
 
     use crate::entity::entity::{Engine, Entity};
+    use crate::helper::dump_response_status;
     use crate::logging::logging_service_client::logging_service::log_error;
-    use crate::meili::dump_response_status;
     use crate::solr::SOLR_DEFAULT_LIMIT;
 
     pub(crate) async fn solr_search_http(

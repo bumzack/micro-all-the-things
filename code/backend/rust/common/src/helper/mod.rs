@@ -1,6 +1,7 @@
-use crate::entity::entity::Engine;
 use log::{error, info};
 use reqwest::{Error, Response, StatusCode};
+
+use crate::entity::entity::Engine;
 
 pub fn dump_response_status(
     response: &Result<Response, Error>,
