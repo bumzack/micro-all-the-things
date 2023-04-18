@@ -1,5 +1,6 @@
 use std::io;
 use std::net::SocketAddr;
+use std::time::Duration;
 
 use config::Config;
 use lazy_static::lazy_static;

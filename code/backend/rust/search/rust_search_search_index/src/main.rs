@@ -1,4 +1,5 @@
 use std::io;
+use std::time::Duration;
 
 use config::Config;
 use log::LevelFilter;

@@ -603,31 +603,28 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             const req = {
                 q: txt,
                 offset: 0,
-                limit: 1,
+                limit: 50,
                 customer: customer
             };
             console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
-            // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-            function postData(url = "", data = {}) {
-                return __awaiter(this, void 0, void 0, function*() {
-                    // Default options are marked with *
-                    const response = yield fetch(url, {
-                        method: "POST",
-                        mode: "cors",
-                        cache: "no-cache",
-                        credentials: "same-origin",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        redirect: "follow",
-                        referrerPolicy: "no-referrer",
-                        body: JSON.stringify(data)
-                    });
-                    return response.json(); // parses JSON response into native JavaScript objects
-                });
-            }
-            postData(url, req).then((data)=>{
-                console.log(data); // JSON data parsed by `data.json()` call
+            var ajxReq = (0, _jqueryDefault.default).ajax(url, {
+                type: "POST",
+                data: JSON.stringify(req),
+                contentType: "application/json",
+                dataType: "json",
+                timeout: 300,
+                success: function(data, status, jqXhr) {
+                    console.log(`status   ${JSON.stringify(status)}`);
+                    const movies = data;
+                    console.log(`movies  ${JSON.stringify(movies, null, 4)} `);
+                    if (movies.articles !== undefined) {
+                        if (movies.articles.length > 0) (0, _jqueryDefault.default)("#search_results").innerHTML("no movies found");
+                        else (0, _jqueryDefault.default)("#search_results").innerHTML(`found ${movies.articles.length} movies`);
+                    } else (0, _jqueryDefault.default)("#search_results").text(`ups - got an empty result`);
+                },
+                fail: function(e) {
+                    console.error(`fail error requesting the movies. ${e}`);
+                }
             });
         }
     });

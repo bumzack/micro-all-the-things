@@ -29,12 +29,41 @@ jquery(document).ready(() => {
             const req: SearchArticleRequest = {
                 q: txt,
                 offset: 0,
-                limit: 1,
+                limit: 5,
                 customer: customer,
             };
 
             console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
 
+            // funny stuff demo
+
+            // var ajxReq = jquery.ajax(url, {
+            //     type: "POST",
+            //     data: JSON.stringify(req),
+            //     contentType: 'application/json',
+            //     dataType: 'json',
+            //     timeout: 300,
+            //     success: function (data, status) {
+            //         console.log(`status   ${JSON.stringify(status)}`);
+            //         const movies = data as SearchArticleResponse;
+            //         console.log(`movies  ${JSON.stringify(movies, null, 4)} `);
+            //
+            //         if (movies.articles !== undefined) {
+            //             if (movies.articles.length > 0) {
+            //                 jquery("#search_results").innerHTML("no movies found");
+            //             } else {
+            //                 jquery("#search_results").innerHTML(`found ${movies.articles.length} movies`);
+            //             }
+            //         } else {
+            //             jquery("#search_results").text(`ups - got an empty result`);
+            //         }
+            //     },
+            //     fail: function (e) {
+            //         console.error(`fail error requesting the movies. ${e}`);
+            //     },
+            //
+            // });
+            //
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
             async function postData(url = "", data = {}) {
@@ -57,7 +86,11 @@ jquery(document).ready(() => {
 
             postData(url, req).then((data) => {
                 console.log(data); // JSON data parsed by `data.json()` call
+                const movies = data as SearchArticleResponse;
+                console.log(`movies.len ${movies.articles.length} `);
             });
+
+
         }
     });
 })
