@@ -26,7 +26,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         "INFO".to_string(),
         &msg,
     )
-    .await;
+        .await;
 
     while cnt_movies < total_cnt_movies {
         let movies = search_movies(limit, offset, Engine::Meili).await;
@@ -51,7 +51,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
 
         info!("starting update request for  {} docs", docs.len());
         meili_update_http(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
@@ -70,7 +70,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     info!("done {}", &message);
     Ok(warp::reply::json(&message))
 }

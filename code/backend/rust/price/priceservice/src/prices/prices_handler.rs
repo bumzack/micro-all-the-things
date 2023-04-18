@@ -10,14 +10,14 @@ use crate::{CLIENT, CONFIG};
 
 pub mod handlers_price {
     use deadpool_postgres::Pool;
+    use warp::{reject, Rejection, Reply};
     use warp::http::StatusCode;
     use warp::reply::json;
-    use warp::{reject, Rejection, Reply};
 
     use common::entity::entity::Engine;
     use common::models::prices::AddPriceEntry;
 
-    use crate::prices::db::db_logging::{get_price, insert_price_entry};
+    use crate::prices::db::db_prices::{get_price, insert_price_entry};
     use crate::prices::prices_handler::search_movies;
 
     pub async fn read_price_entry(pool: Pool, tconst: String) -> Result<impl Reply, Rejection> {
@@ -26,11 +26,12 @@ pub mod handlers_price {
             &tconst
         );
 
-        let price_entry = get_price(pool, tconst).await.map_err(|e| {
+        let price_entry = get_price(pool, &tconst).await.map_err(|e| {
             error!("error this can be a 404 too {:?}", e);
             reject::not_found()
         })?;
 
+        info!("found a price for tconst {}:  {:?}", &tconst, &price_entry);
         Ok(json(&price_entry))
     }
 
@@ -93,7 +94,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -140,7 +141,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     movies

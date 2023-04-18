@@ -1,5 +1,5 @@
 pub mod search_helper {
-    use log::error;
+    use log::{error, info};
     use reqwest::StatusCode;
 
     use common::models::customer_prices::CustomerPriceEntry;
@@ -55,6 +55,12 @@ pub mod search_helper {
 
         let search_customerprice = search_customerprice.replace(":customer_id", &id.to_string());
         let search_customerprice = search_customerprice.replace(":year", &year.to_string());
+
+        info!(
+            "CustomerPriceService request URL     {:?}",
+            &search_customerprice
+        );
+
         let response = CLIENT.get(search_customerprice).send().await;
 
         if response.is_err() {
@@ -67,11 +73,15 @@ pub mod search_helper {
 
         match response {
             Ok(res) => {
+                info!("CustomerPriceService response is ok");
                 if res.status() == StatusCode::OK {
                     let price_entry = res.json::<CustomerPriceEntry>().await;
 
                     match price_entry {
-                        Ok(price_entry) => Some(price_entry),
+                        Ok(price_entry) => {
+                            info!("CustomerPriceService got a price {:?}", &price_entry);
+                            Some(price_entry)
+                        }
                         Err(e) => {
                             error!("CustomerPriceService returned an error {:?}", e);
                             None

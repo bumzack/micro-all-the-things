@@ -18,13 +18,12 @@ pub mod handler_search_article {
             req.q, req.offset, req.limit, engine
         );
 
-        let customer = get_authentication_entry(&req.customer).await;
-        if customer.is_none() {
+        let authentication_entry = get_authentication_entry(&req.customer).await;
+        if authentication_entry.is_none() {
             let id = &req.customer.customer_id.map_or(-1, |i| i);
             error!("customer {} is not logged in (-1 if no id provided", id);
         }
         info!("search_auth   calling 'search_index_docs'");
-
         let search_result = search_index_docs(engine, &req.q, req.limit, req.offset).await;
 
         if search_result.is_none() {
@@ -36,7 +35,15 @@ pub mod handler_search_article {
         let mut res = vec![];
 
         for m in search_result.movies.drain(..) {
+            info!(
+                "search_article  before  get_movie_price. tconst  {}",
+                &m.tconst
+            );
             let price = get_movie_price(&m.tconst).await;
+            info!(
+                "search_article  after  get_movie_price. tconst  {}",
+                &m.tconst
+            );
             if price.is_none() {
                 error!("no price found for movie tconst {}", &m.tconst);
                 continue;
@@ -44,10 +51,10 @@ pub mod handler_search_article {
                 info!("search_article  found price for movie  {}", &m.tconst);
             }
             let price = price.map(|p| p.amount).unwrap();
-            let customer_price = match &customer {
+            let customer_price = match &authentication_entry {
                 Some(aa) => {
                     if m.year.is_some() {
-                        let a =
+                        let customer_price =
                             get_movie_customerprice(m.year.unwrap() as i32, aa.customer_id).await;
                         info!(
                             "search_article  found a customer price for movie  {}, customer {}",

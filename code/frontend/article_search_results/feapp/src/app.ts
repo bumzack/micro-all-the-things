@@ -20,7 +20,7 @@ jquery(document).ready(() => {
             const txt = jquery("#searchMovie").val() as string;
             console.log(`return pressed     ${txt}  `);
             let url = "http://search.rust.bumzack.at/api/v1/solr/article";
-           //  let url = "http://proxy.proxythingi.at/rust/solr/search"
+            //  let url = "http://proxy.proxythingi.at/rust/solr/search"
 
             const customer: SearchCustomer = {
                 customer_id: 1,
