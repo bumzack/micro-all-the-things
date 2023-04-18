@@ -39,7 +39,7 @@ pub mod filters_customer_price {
             &customer_id, year,
         );
 
-        let data = get_customerprice(pool, customer_id, year)
+        let customer_price_entry = get_customerprice(pool, &customer_id, year)
             .await
             // TODO fix CustomError
             .map_err(|e| {
@@ -47,7 +47,11 @@ pub mod filters_customer_price {
                 reject::not_found()
             })?;
 
-        Ok(json(&data))
+        info!(
+            "found a customerprice for  customer_id {:?}, year {}:  {:?}",
+            &customer_id, year, &customer_price_entry
+        );
+        Ok(json(&customer_price_entry))
     }
 
     pub async fn insert_dummy_data_customer_prices_handler(

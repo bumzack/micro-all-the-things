@@ -4,8 +4,8 @@ use serde::Deserialize;
 use serde::Serialize;
 
 use crate::entity::entity::{
-    EntityConverter, get_nullable_string, get_nullable_string_list_of_string_array,
-    get_nullable_u32,
+    get_nullable_string, get_nullable_string_list_of_string_array, get_nullable_u32,
+    EntityConverter,
 };
 use crate::tsv::tsv::{TsvLine, TsvLines};
 

@@ -13,8 +13,7 @@ pub mod filters_search_person {
 
     use crate::CLIENT;
 
-    pub fn filter_person_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_person_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server3 = warp::path!("api" / "meili" / "person" / "filter");
         let search_nconsts_meili = server3
             .and(warp::post())
@@ -57,8 +56,7 @@ pub mod filters_search_person {
             .or(search_name_meili)
     }
 
-    fn json_body_search_person_list(
-    ) -> impl Filter<Extract = (SearchPersonList,), Error = warp::Rejection> + Clone {
+    fn json_body_search_person_list() -> impl Filter<Extract=(SearchPersonList, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
@@ -96,8 +94,7 @@ pub mod filters_search_person {
         Ok(warp::reply::json(&persons))
     }
 
-    fn search_persons_request(
-    ) -> impl Filter<Extract = (SearchPaginatedRequest,), Error = warp::Rejection> + Clone {
+    fn search_persons_request() -> impl Filter<Extract=(SearchPaginatedRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }

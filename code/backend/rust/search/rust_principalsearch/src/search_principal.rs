@@ -12,8 +12,7 @@ pub mod filters_search_movie {
 
     use crate::CLIENT;
 
-    pub fn filter_principal_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_principal_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "principal" / "filter" / "name" / String);
         let search_name_meili = server.and(warp::get()).and_then(|nconst: String| {
             info!("/api/meili/principal/filter/name/:nconst     matched");
@@ -58,7 +57,7 @@ pub mod filters_search_movie {
                     vec![filter_value],
                     client,
                 )
-                .await
+                    .await
             }
             Engine::Meili => {
                 meili_filter_entity::<Principal>(
@@ -67,7 +66,7 @@ pub mod filters_search_movie {
                     vec![filter_value],
                     client,
                 )
-                .await
+                    .await
             }
         };
 

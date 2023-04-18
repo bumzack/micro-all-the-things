@@ -563,29 +563,45 @@ var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
 window.$ = window.jQuery = (0, _jqueryDefault.default);
 (0, _jqueryDefault.default)(document).ready(()=>{
     console.log("yo");
-    load_backendservers();
-    load_frontendservers();
+    (0, _jqueryDefault.default)("#searchMovie").keydown((event)=>{
+        if (event.which == 13) {
+            event.preventDefault();
+            const txt = (0, _jqueryDefault.default)("#searchMovie").val();
+            console.log(`return pressed     ${txt}  `);
+            let url = "http://proxy.proxythingi.at/rust/solr/search";
+            const customer = {
+                customer_id: 1,
+                jwt: "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9"
+            };
+            const req = {
+                q: txt,
+                offset: 0,
+                limit: 50,
+                customer: customer
+            };
+            console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
+            var ajxReq = (0, _jqueryDefault.default).ajax(url, {
+                type: "POST",
+                data: JSON.stringify(req),
+                contentType: "application/json",
+                dataType: "json",
+                timeout: 300,
+                success: function(data, status, jqXhr) {
+                    console.log(`status   ${JSON.stringify(status)}`);
+                    const movies = data;
+                    console.log(`movies  ${JSON.stringify(movies, null, 4)} `);
+                    if (movies.articles !== undefined) {
+                        if (movies.articles.length > 0) (0, _jqueryDefault.default)("#search_results").innerHTML("no movies found");
+                        else (0, _jqueryDefault.default)("#search_results").innerHTML(`found ${movies.articles.length} movies`);
+                    } else (0, _jqueryDefault.default)("#search_results").text(`ups - got an empty result`);
+                },
+                fail: function(e) {
+                    console.error(`fail error requesting the movies. ${e}`);
+                }
+            });
+        }
+    });
 });
-const load_backendservers = ()=>{
-    const url = "http://microthingisregistry.bumzack.at/api/backend";
-    (0, _jqueryDefault.default).ajax({
-        url: url
-    }).done((data)=>{
-        const sources = data;
-        console.log(`backend server ${JSON.stringify(sources, null, 4)} `);
-    // render_server(sources);
-    });
-};
-const load_frontendservers = ()=>{
-    const url = "http://microthingisregistry.bumzack.at/api/frontend";
-    (0, _jqueryDefault.default).ajax({
-        url: url
-    }).done((data)=>{
-        const sources = data;
-        console.log(`backend server ${JSON.stringify(sources, null, 4)} `);
-    // render_server(sources);
-    });
-};
 
 },{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hgMhh":[function(require,module,exports) {
 /*!

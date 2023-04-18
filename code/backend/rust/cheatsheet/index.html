@@ -1,7 +1,6 @@
 <!doctype html>
 <html data-bs-theme="auto" lang="en">
 <head>
-    <script src="../assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -10,11 +9,18 @@
     <meta content="Hugo 0.111.3" name="generator">
     <title>Cheatsheet · Bootstrap v5.3</title>
 
-    <link href="https://getbootstrap.com/docs/5.3/examples/cheatsheet/" rel="canonical">
 
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
+          rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
+    <script>hljs.highlightAll();</script>
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -123,45 +129,6 @@
         </svg>
         <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
-    <ul aria-labelledby="bd-theme-text" class="dropdown-menu dropdown-menu-end shadow">
-        <li>
-            <button aria-pressed="false" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
-                    type="button">
-                <svg class="bi me-2 opacity-50 theme-icon" height="1em" width="1em">
-                    <use href="#sun-fill"></use>
-                </svg>
-                Light
-                <svg class="bi ms-auto d-none" height="1em" width="1em">
-                    <use href="#check2"></use>
-                </svg>
-            </button>
-        </li>
-        <li>
-            <button aria-pressed="false" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
-                    type="button">
-                <svg class="bi me-2 opacity-50 theme-icon" height="1em" width="1em">
-                    <use href="#moon-stars-fill"></use>
-                </svg>
-                Dark
-                <svg class="bi ms-auto d-none" height="1em" width="1em">
-                    <use href="#check2"></use>
-                </svg>
-            </button>
-        </li>
-        <li>
-            <button aria-pressed="true" class="dropdown-item d-flex align-items-center active"
-                    data-bs-theme-value="auto"
-                    type="button">
-                <svg class="bi me-2 opacity-50 theme-icon" height="1em" width="1em">
-                    <use href="#circle-half"></use>
-                </svg>
-                Auto
-                <svg class="bi ms-auto d-none" height="1em" width="1em">
-                    <use href="#check2"></use>
-                </svg>
-            </button>
-        </li>
-    </ul>
 </div>
 
 
@@ -280,6 +247,8 @@
             <div>
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
+                        <h4>Ubuntu install dependencies</h4>
+                        <pre><code class="language-plaintext">
 
                         sudo apt install libssl-dev
 
@@ -308,25 +277,29 @@
 
                         diesel migration redo --all
 
+                        </code></pre>
+
 
                     </div>
                 </div>
 
                 <h4>Micro Thingis Registry</h4>
                 <div class="bd-example-snippet bd-code-snippet">
-                    <div class="bd-example">
-
-                        CREATE USER 'microthingisregistry'@localhost IDENTIFIED BY 'microthingisregistry';
-                        GRANT ALL PRIVILEGES ON *.* TO 'microthingisregistry'@localhost IDENTIFIED BY
-                        'microthingisregistry';
-                        FLUSH PRIVILEGES;
-
-                    </div>
+                         <pre>
+                            <code class="language-sql">
+                                CREATE USER 'microthingisregistry'@localhost IDENTIFIED BY 'microthingisregistry';
+                                GRANT ALL PRIVILEGES ON *.* TO 'microthingisregistry'@localhost IDENTIFIED BY 'microthingisregistry';
+                                FLUSH PRIVILEGES;
+                        </code>
+                        </pre>
                 </div>
 
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
-                        sudo cp ubuntu/rust_microthingisregistry.service /lib/systemd/system/
+                        <pre>
+                            <code class="language-sql">
+
+                                sudo cp ubuntu/rust_microthingisregistry.service /lib/systemd/system/
 
                         sudo systemctl enable rust_microthingisregistry.service
 
@@ -335,13 +308,17 @@
                         sudo systemctl restart rust_microthingisregistry.service
 
                         sudo systemctl daemon-reload
-
+                            </code>
+                        </pre>
                     </div>
                 </div>
 
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
-                        sudo cp microthingsregistry /etc/nginx/sites-available
+                      <pre>
+                            <code class="language-sql">
+
+                                sudo cp microthingsregistry /etc/nginx/sites-available
 
                         cd /etc/nginx/sites-enabled
 
@@ -349,13 +326,17 @@
 
                         sudo systemctl restart nginx.service
 
-
+                            </code>
+                      </pre>
                     </div>
                 </div>
 
 
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
+
+                         <pre>
+                            <code class="language-sql">
 
                         Testservers in proxythingi
 
@@ -384,7 +365,8 @@
                         sudo systemctl stop rust_proxy_warp_diesel.service
                         sudo systemctl stop rust_proxy_warp_tokio_postgres.service
                         sudo systemctl stop rust_proxythingi_v6.service
-
+                            </code>
+                         </pre>
 
                     </div>
                 </div>
@@ -392,6 +374,10 @@
 
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
+
+                         <pre>
+                            <code class="language-sql">
+
                         https://www.postgresql.org/download/linux/ubuntu/
 
 
@@ -443,50 +429,71 @@
                         NOPE sudo -u postgres psql
 
 
+                            </code>
+                         </pre>
+
                     </div>
                 </div>
 
 
                 <div class="bd-example-snippet bd-code-snippet">
                     <div class="bd-example">
-                        <blockquote class="blockquote">
-                            <p>A well-known quote, contained in a blockquote element.</p>
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
-                                Title</cite></footer>
-                        </blockquote>
+
+                        <h4>Insert bumnzack as customer</h4>
+
+                        <pre>
+                            <code class="language-sql">
+                            curl -X POST http://localhost:18980/api/v1/customer -H 'Content-Type: application/json' -d
+                            '{ "first_name" : "bum", "last_name" : "zack", "email" : "bumzack@bumzack.at", "password" :
+                            "123" }' | jq
+                            </code>
+                        </pre>
+                        <p> insert dummy customers </p>
+
+                        <pre>
+                            <code class="language-sql">
+
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/0/10000/1000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/1000000/10000/2000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/2000000/10000/3000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/3000000/10000/4000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/4000000/10000/5000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/5000000/10000/6000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/6000000/10000/7000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/7000000/10000/8000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/8000000/10000/9000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/9000000/10000/10000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/10000000/10000/11000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/11000000/10000/12000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/12000000/10000/13000000
+                            time curl http://localhost:18980/api/v1/customer/insertdummydata/13000000/10000/13000000
+                            </code>
+                        </pre>
+
+
+                        <h4> Insert dummy prices for movies</h4>
+                        <pre>
+                            <code class="language-sql">
+
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/0/100000/1000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/1000000/100000/2000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/2000000/100000/3000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/3000000/100000/4000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/4000000/100000/5000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/5000000/100000/6000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/6000000/100000/7000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/7000000/100000/8000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/8000000/100000/9000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/9000000/100000/10000000
+                                time  curl     http://localhost:18800/api/v1/price/insertdummydata/10000000/100000/11000000
+
+                            </code>
+                        </pre>
+
+
                     </div>
                 </div>
 
-
-                <div class="bd-example-snippet bd-code-snippet">
-                    <div class="bd-example">
-                        <ul class="list-unstyled">
-                            <li>This is a list.</li>
-                            <li>It appears completely unstyled.</li>
-                            <li>Structurally, it's still a list.</li>
-                            <li>However, this style only applies to immediate child elements.</li>
-                            <li>Nested lists:
-                                <ul>
-                                    <li>are unaffected by this style</li>
-                                    <li>will still show a bullet</li>
-                                    <li>and have appropriate left margin</li>
-                                </ul>
-                            </li>
-                            <li>This may still come in handy in some situations.</li>
-                        </ul>
-                    </div>
-                </div>
-
-
-                <div class="bd-example-snippet bd-code-snippet">
-                    <div class="bd-example">
-                        <ul class="list-inline">
-                            <li class="list-inline-item">This is a list item.</li>
-                            <li class="list-inline-item">And another one.</li>
-                            <li class="list-inline-item">But they're displayed inline.</li>
-                        </ul>
-                    </div>
-                </div>
 
             </div>
         </article>
