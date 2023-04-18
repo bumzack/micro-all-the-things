@@ -568,7 +568,8 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             event.preventDefault();
             const txt = (0, _jqueryDefault.default)("#searchMovie").val();
             console.log(`return pressed     ${txt}  `);
-            let url = "http://proxy.proxythingi.at/rust/solr/search";
+            let url = "http://search.rust.bumzack.at/api/v1/solr/article";
+            //  let url = "http://proxy.proxythingi.at/rust/solr/search"
             const customer = {
                 customer_id: 1,
                 jwt: "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9"
