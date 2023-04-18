@@ -28,7 +28,7 @@ lazy_static::lazy_static! {
 // #[tokio::main(worker_threads = 2)]
 #[tokio::main]
 async fn main() {
-    Builder::new().filter_level(LevelFilter::Info).init();
+    Builder::new().filter_level(LevelFilter::Debug).init();
 
     let pool = create_pool();
     let routes = price_route(pool);

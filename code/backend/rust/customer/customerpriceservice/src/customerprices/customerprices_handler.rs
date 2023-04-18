@@ -1,16 +1,16 @@
 pub mod filters_customer_price {
     use deadpool_postgres::Pool;
     use reqwest::StatusCode;
-    use warp::{reject, Rejection, Reply};
     use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
     use common::models::customer::Customer;
     use common::models::customer_prices::AddCustomerPriceEntry;
 
-    use crate::{CLIENT, CONFIG};
     use crate::customerprices::db::db_logging::{get_customerprice, insert_price_entry};
+    use crate::{CLIENT, CONFIG};
 
     pub async fn insert_customer_price_handler(
         pool: Pool,
@@ -39,7 +39,7 @@ pub mod filters_customer_price {
             &customer_id, year,
         );
 
-        let data = get_customerprice(pool, customer_id, year)
+        let customer_price_entry = get_customerprice(pool, &customer_id, year)
             .await
             // TODO fix CustomError
             .map_err(|e| {
@@ -47,7 +47,11 @@ pub mod filters_customer_price {
                 reject::not_found()
             })?;
 
-        Ok(json(&data))
+        info!(
+            "found a customerprice for  customer_id {:?}, year {}:  {:?}",
+            &customer_id, year, &customer_price_entry
+        );
+        Ok(json(&customer_price_entry))
     }
 
     pub async fn insert_dummy_data_customer_prices_handler(
@@ -135,7 +139,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         let response = CLIENT.get(search_customer).send().await;
 
@@ -167,7 +171,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         info!(
             ".rust_customerpriceservice_insert_dummy_data search_customers finished successfully"
         );

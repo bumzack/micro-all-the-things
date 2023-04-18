@@ -21,15 +21,7 @@ lazy_static::lazy_static! {
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    Builder::new().filter_level(LevelFilter::Info).init();
-
-    info!(
-        "{:?}",
-        CONFIG
-            .clone()
-            .try_deserialize::<HashMap<String, String>>()
-            .unwrap()
-    );
+    Builder::new().filter_level(LevelFilter::Debug).init();
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root.or(search_search_index::filters_search_search_index::search_index_route());

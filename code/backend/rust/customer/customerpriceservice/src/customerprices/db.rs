@@ -13,7 +13,7 @@ pub mod db_logging {
 
     pub async fn get_customerprice(
         pool: Pool,
-        customer_id: String,
+        customer_id: &String,
         year: i32,
     ) -> super::Result<CustomerPriceEntry> {
         let client = pool.get().await.unwrap();

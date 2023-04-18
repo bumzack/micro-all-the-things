@@ -55,7 +55,7 @@ pub mod handler_customer {
     }
 
     pub async fn read_customer_handler(pool: Pool, email: String) -> Result<impl Reply, Rejection> {
-        info!("reading customer for email entries {:?}", &email);
+        info!("reading customer for email {:?}", &email);
 
         let customer = get_customer(pool, email)
             .await
