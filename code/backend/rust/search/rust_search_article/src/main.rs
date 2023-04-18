@@ -6,6 +6,8 @@ use log::{info, LevelFilter};
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
+use common::server::warp_cors::warp_stuff::warp_cors;
+
 mod search_article_handler;
 mod search_article_routes;
 mod search_helper;
@@ -29,33 +31,10 @@ lazy_static::lazy_static! {
 async fn main() -> io::Result<()> {
     Builder::new().filter_level(LevelFilter::Debug).init();
 
-    let cors = warp::cors()
-        .allow_any_origin()
-        .allow_headers(vec![
-            "User-Agent",
-            "Sec-Fetch-Mode",
-            "Referer",
-            "Origin",
-            "content-type",
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers",
-            "Access-Control-Allow-Headers",
-            "Access-Control-Allow-Methods",
-            "Access-Control-Allow-Origin",
-            "Access-Control-Expose-Headers",
-            "Access-Control-Request-Headers",
-            "Access-Control-Request-Methods",
-            "Accept-Encoding",
-            "Accept-Language",
-            "Accept-Post",
-            "Access-Control-Allow-Credentials",
-        ])
-        .allow_methods(vec!["POST", "GET", "OPTIONS", "PUT", "DELETE", "HEAD"]);
-
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root
         .or(search_article_routes::mod_search_article_routes::search_article_route())
-        .with(cors);
+        .with(warp_cors());
 
     let host: String = CONFIG
         .get("searcharticle_service_host")
