@@ -3,7 +3,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "rm dist/* &&  yarn parcel build src/index.html && ./blupp.sh",
+    "build": "parcel build",
     "check": "tsc --noEmit"
   },
   "devDependencies": {

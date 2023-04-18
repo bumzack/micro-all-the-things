@@ -1,5 +1,5 @@
 import jquery from "jquery";
-import {SearchArticleRequest, SearchArticleResponse, SearchCustomer} from "./common";
+import {ArticleSearchResult, SearchArticleRequest, SearchArticleResponse, SearchCustomer} from "./common";
 
 declare global {
     interface Window { // ⚠️ notice that "Window" is capitalized here
@@ -66,36 +66,88 @@ jquery(document).ready(() => {
             //
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-            async function postData(url = "", data = {}) {
+            async function postData(url = "", data = {}):Promise<[Response,Headers]> {
                 // Default options are marked with *
-                const response = await fetch(url, {
+                const response= await fetch(url, {
                     method: "POST", // *GET, POST, PUT, DELETE, etc.
                     mode: "cors", // no-cors, *cors, same-origin
                     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
                     credentials: "same-origin", // include, *same-origin, omit
                     headers: {
                         "Content-Type": "application/json",
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                        'Access-Control-Expose-Headers': 'x-duration,x-provided-by'
                     },
                     redirect: "follow", // manual, *follow, error
                     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     body: JSON.stringify(data), // body data type must match "Content-Type" header
                 });
-                return response.json(); // parses JSON response into native JavaScript objects
+                return [await response.json(),  response.headers] ; // parses JSON response into native JavaScript objects
             }
 
-            postData(url, req).then((data) => {
+            postData(url, req).then(([data,headers]) => {
                 console.log(data); // JSON data parsed by `data.json()` call
+                console.log(headers); // JSON data parsed by `data.json()` call
+
+                for (var pair of headers.entries()) {
+                    console.log(pair[0]+ ': '+ pair[1]);
+                }
+
+
+                const dur = headers.get("x-duration");
+                const provided_by = headers.get("x-provided-by");
+                console.log(`proxythingi backend  ${provided_by},  duration  ${dur} `);
+
                 const movies = data as SearchArticleResponse;
                 console.log(`movies.len ${movies.articles.length} `);
+
+                jquery("#search_results").empty();
+
+                movies.articles.forEach(a=> {
+                    const elem = article_template(a);
+                    jquery("#search_results").append(elem);
+                })
             });
-
-
         }
     });
 })
 
 
+const article_template = (article:ArticleSearchResult): string => {
+    const title = article.article.titles.join(" / ");
+    const characters ="Characters: " +  article.article.characters.join(" / ");
+    const act ="Actresses / Actors : " +  article.article.actors.join(" / ");
+
+
+    let price:string;
+    if (article.customer_price!== undefined) {
+          price = `SRP € <sr>${article.price.toFixed(2)}</sr>, your price: € ${article.customer_price.toFixed(2)}`;
+    }else {
+          price = `SRP € ${article.price} `;
+    }
+
+    return `   
+        <div class="col">
+            <div class="card h-100">
+                 <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${act}</p>
+                    <p class="card-text">${characters}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row row-cols-2 row-cols-md-2 g-6">
+                        <div class="col">
+                            ${price}
+                        </div>
+                        <div class="col">
+                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+     
+}
 export {};
 
 
