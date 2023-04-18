@@ -94,7 +94,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -141,7 +141,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     movies

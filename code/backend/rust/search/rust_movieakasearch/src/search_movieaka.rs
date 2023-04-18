@@ -12,8 +12,7 @@ pub mod filters_search_movieaka {
 
     use crate::CLIENT;
 
-    pub fn filter_movieaka_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_movieaka_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "movieaka" / "filter" / String);
         let search_name_meili = server.and(warp::get()).and_then(|tconst: String| {
             info!("/api/meili/movieaka/filter/:titleId     matched");
@@ -43,7 +42,7 @@ pub mod filters_search_movieaka {
                     vec![filter_value],
                     client,
                 )
-                .await
+                    .await
             }
             Engine::Meili => {
                 meili_filter_entity::<MovieAkas>(
@@ -52,7 +51,7 @@ pub mod filters_search_movieaka {
                     vec![filter_value],
                     client,
                 )
-                .await
+                    .await
             }
         };
 

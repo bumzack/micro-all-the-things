@@ -5,12 +5,11 @@ pub mod filters_tsv {
 
     use super::handlers_tsv;
 
-    pub fn tsv_request_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn tsv_request_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         warp::path("tsv").and(tsv_post())
     }
 
-    pub fn tsv_post() -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone
+    pub fn tsv_post() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone
     {
         warp::path!("read")
             .and(warp::post())
@@ -18,8 +17,7 @@ pub mod filters_tsv {
             .and_then(handlers_tsv::post_tsv_request)
     }
 
-    fn json_body_tsv_request(
-    ) -> impl Filter<Extract = (TsvFileImportRequest,), Error = warp::Rejection> + Clone {
+    fn json_body_tsv_request() -> impl Filter<Extract=(TsvFileImportRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }
@@ -78,7 +76,7 @@ mod handlers_tsv {
                     "INFO".to_string(),
                     &msg,
                 )
-                .await;
+                    .await;
 
                 info!("error opening file {}. err {}", &filename, err);
                 let ret = format!("error opening file {}", &filename);
@@ -193,7 +191,7 @@ mod handlers_tsv {
                         "INFO".to_string(),
                         &msg,
                     )
-                    .await;
+                        .await;
                 }
             }
 

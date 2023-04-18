@@ -16,8 +16,8 @@ pub mod meili_entity_stuff {
         filter_values: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-    where
-        T: for<'de> Deserialize<'de> + Serialize,
+        where
+            T: for<'de> Deserialize<'de> + Serialize,
     {
         let mut filter = HashMap::new();
         filter.insert(filter_field, filter_values);
@@ -67,8 +67,8 @@ pub mod meili_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-    where
-        T: for<'de> Deserialize<'de> + Serialize,
+        where
+            T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text = vec![("ignored for meili".to_string(), search_text)];
         let response = meili_search_http(
@@ -127,8 +127,8 @@ pub mod meili_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<IndexDocFacetDistribution>)
-    where
-        T: for<'de> Deserialize<'de> + Serialize,
+        where
+            T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text = vec![("ignored for meili".to_string(), search_text)];
         let response = meili_search_http(
@@ -189,8 +189,8 @@ pub mod meili_entity_stuff {
         limit: u32,
         client: &Client,
     ) -> Vec<T>
-    where
-        T: for<'de> Deserialize<'de> + Serialize,
+        where
+            T: for<'de> Deserialize<'de> + Serialize,
     {
         let _sort = vec![("id".to_string(), true)];
         let response = meili_read_document_http(entity, offset, limit, client);

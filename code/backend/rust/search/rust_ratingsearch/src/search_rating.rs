@@ -11,8 +11,7 @@ pub mod filters_search_rating {
 
     use crate::CLIENT;
 
-    pub fn filter_rating_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_rating_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "rating" / "filter" / String);
         let search_rating_meili = server.and(warp::get()).and_then(|tconst: String| {
             info!("/api/rating/filter/:tconst matched");
@@ -41,7 +40,7 @@ pub mod filters_search_rating {
                     vec![filter_value],
                     &CLIENT,
                 )
-                .await
+                    .await
             }
             Engine::Meili => {
                 meili_filter_entity::<Rating>(
@@ -50,7 +49,7 @@ pub mod filters_search_rating {
                     vec![filter_value],
                     &CLIENT,
                 )
-                .await
+                    .await
             }
         };
 

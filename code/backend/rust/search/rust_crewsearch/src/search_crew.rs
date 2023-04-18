@@ -11,8 +11,7 @@ pub mod filters_search_crew {
 
     use crate::CLIENT;
 
-    pub fn filter_crew_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_crew_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "crew" / "filter" / String);
         let search_crew_meili = server.and(warp::get()).and_then(|tconst: String| {
             info!("/api/meili/crew/filter/:tconst matched");
