@@ -10,6 +10,10 @@ pub struct SearchIndexDoc {
     pub id: String,
     pub tconst: String,
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub primary_title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub original_title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub titles: Option<Vec<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub actors: Option<Vec<String>>,

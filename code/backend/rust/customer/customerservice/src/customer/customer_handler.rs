@@ -1,25 +1,37 @@
 pub mod handler_customer {
+    use std::time::Instant;
+
     use deadpool_postgres::Pool;
+    use reqwest::header::HeaderMap;
     use serde_json::json;
     use warp::{reject, Rejection, Reply};
-    use warp::hyper::StatusCode;
-    use warp::reply::json;
 
     use common::entity::entity::Engine;
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
     use common::logging::logging_service_client::logging_service::log_external_service_error;
+    use common::logging::tracing_headers::tracing_headers_stuff::{
+        build_response_from_json, build_tracing_headers, get_trace_infos,
+    };
     use common::models::customer::AddCustomer;
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
-    use crate::{CLIENT, CONFIG};
     use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
+    use crate::{CLIENT, CONFIG};
+
+    const SERVICE_NAME: &str = "Customer Service";
 
     pub async fn insert_customer_handler(
         pool: Pool,
         req: AddCustomer,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!("adding customer entry {:?}", req);
 
         let customer = insert_customer(pool.clone(), req)
@@ -30,14 +42,33 @@ pub mod handler_customer {
                 reject::custom(DivideByZero)
             })?;
 
-        Ok(json(&customer))
+        let msg = format!("inserted new customer with id  {} ", customer.id);
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customer, headers);
+
+        Ok(response)
     }
 
     pub async fn read_customer_paginated_handler(
         pool: Pool,
         offset: i32,
         limit: i32,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!(
             "reading customers paginated   offset {}, limit {}",
             offset, limit
@@ -51,10 +82,32 @@ pub mod handler_customer {
                 reject::custom(DivideByZero)
             })?;
 
-        Ok(json(&customers))
+        let msg = format!("reading {} customers paginated", customers.len());
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customers, headers);
+
+        Ok(response)
     }
 
-    pub async fn read_customer_handler(pool: Pool, email: String) -> Result<impl Reply, Rejection> {
+    pub async fn read_customer_handler(
+        pool: Pool,
+        email: String,
+        headers: HeaderMap,
+    ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!("reading customer for email {:?}", &email);
 
         let customer = get_customer(pool, email)
@@ -65,7 +118,20 @@ pub mod handler_customer {
                 reject::custom(DivideByZero)
             })?;
 
-        Ok(json(&customer))
+        let msg = format!("found customer id {}", customer.id);
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customer, headers);
+
+        Ok(response)
     }
 
     pub async fn insert_dummy_data_handler(
@@ -73,8 +139,14 @@ pub mod handler_customer {
         limit: u32,
         count: u32,
         pool: Pool,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
         info!("inserting all persons as customers");
+
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
 
         let mut persons_found = true;
         let mut persons_processed = 0;
@@ -111,7 +183,19 @@ pub mod handler_customer {
             offset += limit;
         }
         let msg = format!("customers processed {}", persons_processed);
-        Ok(warp::reply::with_status(msg, StatusCode::CREATED))
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(msg, headers);
+
+        Ok(response)
     }
 
     async fn search_persons(limit: u32, offset: u32, engine: Engine) -> Vec<Person> {
@@ -142,7 +226,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         info!("search person POST URL {}", &search_person);
         let json = json!(&search_request);
@@ -189,8 +273,8 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-            .await;
-        info!(".rust_customerservice_insert_dummy_data search_persons finished successfully");
+        .await;
+        info!("rust_customerservice_insert_dummy_data search_persons finished successfully");
 
         persons
     }

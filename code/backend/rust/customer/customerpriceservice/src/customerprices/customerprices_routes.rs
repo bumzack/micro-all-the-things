@@ -1,6 +1,8 @@
 pub mod filters_logging {
     use deadpool_postgres::Pool;
     use warp::{Filter, Rejection, Reply};
+    use warp::header::headers_cloned;
+    use warp::http::HeaderMap;
 
     use common::models::customer_prices::AddCustomerPriceEntry;
 
@@ -17,9 +19,10 @@ pub mod filters_logging {
         let customerprice_get = server1
             .and(with_db(pool.clone()))
             .and(warp::get())
-            .and_then(|customer_id: String, year: i32, pool: Pool| {
+            .and(headers_cloned())
+            .and_then(|customer_id: String, year: i32, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/customerprice/:customer_id/:year");
-                read_customerprice_entry(pool, customer_id, year)
+                read_customerprice_entry(pool, customer_id, year, headers.clone())
             });
 
         let server3 = warp::path!("api" / "v1" / "customerprice");
@@ -27,9 +30,10 @@ pub mod filters_logging {
             .and(with_db(pool.clone()))
             .and(warp::post())
             .and(json_body_add_customer_price())
-            .and_then(|pool: Pool, req: AddCustomerPriceEntry| {
+            .and(headers_cloned())
+            .and_then(|pool: Pool, req: AddCustomerPriceEntry, headers: HeaderMap| {
                 info!("POST  /api/v1/customerprice/  matched");
-                insert_customer_price_handler(pool, req)
+                insert_customer_price_handler(pool, req, headers.clone())
             });
 
         let server1 =
@@ -37,9 +41,10 @@ pub mod filters_logging {
         let insert_dummy_data = server1
             .and(with_db(pool.clone()))
             .and(warp::get())
-            .and_then(|offset: u32, limit: u32, count: u32, pool: Pool| {
+            .and(headers_cloned())
+            .and_then(|offset: u32, limit: u32, count: u32, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/customerprice/insertdummydata");
-                insert_dummy_data_customer_prices_handler(offset, limit, count, pool)
+                insert_dummy_data_customer_prices_handler(offset, limit, count, pool, headers.clone())
             });
 
         customerprice_get

@@ -3,6 +3,9 @@ pub mod mod_search_helper {
     use reqwest::StatusCode;
 
     use common::entity::entity::Engine;
+    use common::logging::tracing_headers::tracing_headers_stuff::{
+        get_trace_infos, HEADER_X_INITIATED_BY, HEADER_X_PROCESSED_BY, HEADER_X_UUID,
+    };
     use common::models::article::SearchCustomer;
     use common::models::authentication::AuthenticationEntry;
     use common::models::search_doc::{MovieSearchResult, SearchMovieIndexRequest};
@@ -11,7 +14,10 @@ pub mod mod_search_helper {
 
     pub async fn get_authentication_entry(
         search_customer: &SearchCustomer,
-    ) -> Option<AuthenticationEntry> {
+        initiated_by: &String,
+        uuid: &String,
+        processed_by: &String,
+    ) -> (Option<AuthenticationEntry>, String) {
         let search_auth: String = CONFIG
             .get("customer_authenticated")
             .expect("expected customer_authenticated GET request URL");
@@ -22,19 +28,27 @@ pub mod mod_search_helper {
             Some(id) => {
                 let search_auth = search_auth.replace(":customer_id", &id.to_string());
                 info!("search_auth request  {:?}", &search_auth);
-                let response = CLIENT.get(search_auth).send().await;
+                let response = CLIENT
+                    .get(search_auth)
+                    .header(HEADER_X_PROCESSED_BY, processed_by)
+                    .header(HEADER_X_UUID, uuid)
+                    .header(HEADER_X_INITIATED_BY, initiated_by)
+                    .send()
+                    .await;
                 if response.is_err() {
                     error!(
-                        "error from AuthenticatioService {:?}",
+                        "error from AuthenticationService {:?}",
                         response.err().unwrap()
                     );
-                    return None;
+                    return (None, processed_by.to_string());
                 }
 
                 info!("search_auth request  got a useful response");
 
                 match response {
                     Ok(res) => {
+                        let (processed_by_new, _, _) =
+                            get_trace_infos(res.headers(), "get_authentication".to_string());
                         if res.status() == StatusCode::OK {
                             info!("search_auth   response is 200");
 
@@ -47,31 +61,31 @@ pub mod mod_search_helper {
                                         && auth.logged_in.is_some()
                                         && auth.logged_out.is_none()
                                     {
-                                        Some(auth)
+                                        (Some(auth), processed_by_new)
                                     } else {
-                                        None
+                                        (None, processed_by_new)
                                     }
                                 }
                                 Err(e) => {
                                     error!("authentication service returned an error {:?}", e);
-                                    None
+                                    (None, processed_by_new)
                                 }
                             }
                         } else {
                             error!("authentication Service returned status {} for customer.id {}. assuming not logged in. ", res.status(), id);
-                            None
+                            (None, processed_by_new)
                         }
                     }
                     Err(e) => {
                         error!("authentication service returned an error {:?}", e);
-                        None
+                        (None, processed_by.to_string())
                     }
                 }
             }
 
             None => {
                 error!("no customer id provided ");
-                None
+                (None, processed_by.to_string())
             }
         }
     }
@@ -81,7 +95,10 @@ pub mod mod_search_helper {
         q: &String,
         limit: u32,
         offset: u32,
-    ) -> Option<MovieSearchResult> {
+        initiated_by: &String,
+        uuid: &String,
+        processed_by: &String,
+    ) -> (Option<MovieSearchResult>, String) {
         let search_index_docs: String = CONFIG
             .get("search_index_doc")
             .expect("expected search_index_doc GET request URL");
@@ -100,6 +117,9 @@ pub mod mod_search_helper {
 
         let response = CLIENT
             .post(search_index_docs)
+            .header(HEADER_X_PROCESSED_BY, processed_by)
+            .header(HEADER_X_UUID, uuid)
+            .header(HEADER_X_INITIATED_BY, initiated_by)
             .json(&search_index_request)
             .send()
             .await;
@@ -109,13 +129,16 @@ pub mod mod_search_helper {
                 "error from SearchIndexDoc Service  {:?}",
                 response.err().unwrap()
             );
-            return None;
+            return (None, processed_by.to_string());
         }
 
         info!("search_index_docs   CLIENT.POST returned a OK response");
 
         match response {
             Ok(res) => {
+                let (processed_by_new, _, _) =
+                    get_trace_infos(res.headers(), "search_index_docs".to_string());
+
                 if res.status() == StatusCode::OK {
                     info!("search_index_docs   CLIENT.POST returned an OK status code ");
                     let res = res.json::<MovieSearchResult>().await;
@@ -126,11 +149,11 @@ pub mod mod_search_helper {
                                 "search_index_docs   got a valid search result {:?}",
                                 &search_result
                             );
-                            Some(search_result)
+                            (Some(search_result), processed_by_new)
                         }
                         Err(e) => {
                             error!("search_index_doc service returned an error {:?}", e);
-                            None
+                            (None, processed_by_new)
                         }
                     }
                 } else {
@@ -138,12 +161,12 @@ pub mod mod_search_helper {
                         "search_index_doc Service returned status {}   ",
                         res.status()
                     );
-                    None
+                    (None, processed_by_new)
                 }
             }
             Err(e) => {
                 error!("search_index_doc service returned an error {:?}", e);
-                None
+                (None, processed_by.to_string())
             }
         }
     }

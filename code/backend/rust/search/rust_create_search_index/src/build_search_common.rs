@@ -6,7 +6,6 @@ use serde_json::json;
 use common::entity::entity::Engine;
 use common::helper::dump_response_status;
 use common::logging::logging_service_client::logging_service;
-use common::logging::logging_service_client::logging_service::log_external_service_error;
 use common::models::movie::Movie;
 use common::models::person::{Person, SearchPersonList};
 use common::models::principal::Principal;
@@ -57,6 +56,8 @@ pub async fn convert_to_search_index_doc(
         let doc = SearchIndexDoc {
             id: m.tconst.clone(),
             tconst: m.tconst.clone(),
+            primary_title: m.primary_title,
+            original_title: m.original_title,
             titles,
             actors,
             directors,
@@ -201,19 +202,19 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
 
-    let message = format!(
-        "error search_movies(). offset {}, limit {}, sort {:?}.",
-        offset,
-        limit,
-        &search_request.sort.clone()
-    );
-    let msg = "search for movies paginated search request".to_string();
-    log_external_service_error(&msg, &message, &response).await;
+    // let message = format!(
+    //     "error search_movies(). offset {}, limit {}, sort {:?}.",
+    //     offset,
+    //     limit,
+    //     &search_request.sort.clone()
+    // );
+    // let msg = "search for movies paginated search request".to_string();
+    // log_external_service_error(&msg, &message, &response).await;
 
     if response.is_err() {
         error!(
@@ -241,7 +242,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     movies
 }
@@ -262,16 +263,16 @@ async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
-    let message = format!(
-        "error search_principal(). an error occurred in requesting a list of principals. url {}  ",
-        &url
-    );
-    let msg = "search for principal search request".to_string();
-    log_external_service_error(&msg, &message, &response).await;
+    // let message = format!(
+    //     "error search_principal(). an error occurred in requesting a list of principals. url {}  ",
+    //     &url
+    // );
+    // let msg = "search for principal search request".to_string();
+    // log_external_service_error(&msg, &message, &response).await;
 
     let response2 = response.unwrap();
     response2
