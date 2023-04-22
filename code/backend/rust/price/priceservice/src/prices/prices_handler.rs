@@ -9,18 +9,33 @@ use common::models::search_doc::SearchPaginatedRequest;
 use crate::{CLIENT, CONFIG};
 
 pub mod handlers_price {
+    use std::time::Instant;
+
     use deadpool_postgres::Pool;
+    use reqwest::header::HeaderMap;
     use warp::{reject, Rejection, Reply};
-    use warp::http::StatusCode;
-    use warp::reply::json;
 
     use common::entity::entity::Engine;
+    use common::logging::tracing_headers::tracing_headers_stuff::{
+        build_response_from_json, build_tracing_headers, get_trace_infos,
+    };
     use common::models::prices::AddPriceEntry;
 
     use crate::prices::db::db_prices::{get_price, insert_price_entry};
     use crate::prices::prices_handler::search_movies;
 
-    pub async fn read_price_entry(pool: Pool, tconst: String) -> Result<impl Reply, Rejection> {
+    const SERVICE_NAME: &str = "Price Service";
+
+    pub async fn read_price_entry(
+        pool: Pool,
+        tconst: String,
+        headers: HeaderMap,
+    ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!(
             "reading price entry for movie title movie_tconst: {:?}",
             &tconst
@@ -32,7 +47,20 @@ pub mod handlers_price {
         })?;
 
         info!("found a price for tconst {}:  {:?}", &tconst, &price_entry);
-        Ok(json(&price_entry))
+        let msg = format!("found a price for tconst {}:  {:?}", &tconst, &price_entry);
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(price_entry, headers);
+
+        Ok(response)
     }
 
     pub async fn insert_dummy_data(
@@ -40,7 +68,13 @@ pub mod handlers_price {
         limit: u32,
         count: u32,
         pool: Pool,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!("inserting dummy data for all movies");
 
         let mut movies_found = true;
@@ -62,7 +96,19 @@ pub mod handlers_price {
             offset += limit;
         }
         let msg = format!("movies processed {}", movies_processed);
-        Ok(warp::reply::with_status(msg, StatusCode::CREATED))
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(msg, headers);
+
+        Ok(response)
     }
 }
 
@@ -94,7 +140,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -141,7 +187,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     movies
