@@ -30,7 +30,7 @@ lazy_static::lazy_static! {
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
-        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
+        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/config.toml"))
         .build()
         .unwrap();
 }

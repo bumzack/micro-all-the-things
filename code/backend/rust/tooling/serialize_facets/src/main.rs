@@ -39,13 +39,13 @@ fn main() {
 }
 
 fn testinger() {
-    let contents = fs::read_to_string("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res2.json").expect("Should have been able to read the file");
+    let contents = fs::read_to_string("/home/bumzack/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res2.json").expect("Should have been able to read the file");
 
     // let a = get_facets();
     let search_result: SearchResult = serde_json::from_str(&contents).unwrap();
     println!("search_result {:?}", &search_result);
 
-    let contents = fs::read_to_string("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res3.json").expect("Should have been able to read the file");
+    let contents = fs::read_to_string("/home/bumzack/micro-all-the-things/code/backend/rust/tooling/serialize_facets/src/res3.json").expect("Should have been able to read the file");
 
     // let a = get_facets();
     let search_result: SearchResult2 = serde_json::from_str(&contents).unwrap();
