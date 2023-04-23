@@ -147,7 +147,7 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
 ## /:engine/:start/:pagesize/:tasks
 
 ```
-curl http://localhost:18300/api/v3/solr/searchindex/build/0/50000/6         |  jq    
+curl http://localhost:18300/api/v3/solr/searchindex/build/9000000/50000/1         |  jq    
 ```
 
 ## Movie max Hits
