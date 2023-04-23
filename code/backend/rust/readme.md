@@ -72,11 +72,34 @@ curl -X GET -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.b
 
 ## Delete index
 
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/principal'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/movie'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/movieaka'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/person'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/rating'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/episode'
-curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/crew'
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/principal
+```
 
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/movie
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/movieaka
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/person
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/rating
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/episode
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/crew
+```
+
+```
+curl -X DELETE -H 'Authorization: Bearer 1234567890123456'  'http://meilisearch01.bumzack.at/indexes/searchindex
+```
