@@ -29,7 +29,7 @@ pub mod filters_search_search_index {
             .and(headers_cloned())
             .and_then(|req, headers: HeaderMap| {
                 info!("POST /api/v1/meili/searchindex/search matched");
-                search_index(req, Engine::Meili, headers.clone())
+                search_index(req, Engine::Meili, headers)
             });
 
         let server = warp::path!("api" / "v1" / "solr" / "searchindex" / "search");
@@ -39,7 +39,7 @@ pub mod filters_search_search_index {
             .and(headers_cloned())
             .and_then(|req, headers: HeaderMap| {
                 info!("POST /api/v1/solr/searchindex/search matched");
-                search_index(req, Engine::Solr, headers.clone())
+                search_index(req, Engine::Solr, headers)
             });
 
         search_meili.or(search_solr)

@@ -27,7 +27,7 @@ pub mod filters_search_movie {
         let search_meili = server.and(warp::get()).and(headers_cloned()).and_then(
             |search_text: String, headers: HeaderMap| {
                 info!("GET /api/meili/movie/:search_text  matched");
-                search_movie(search_text, Engine::Meili, &CLIENT, headers.clone())
+                search_movie(search_text, Engine::Meili, &CLIENT, headers)
             },
         );
 
@@ -35,7 +35,7 @@ pub mod filters_search_movie {
         let search_solr = server.and(warp::get()).and(headers_cloned()).and_then(
             |search_text: String, headers: HeaderMap| {
                 info!("GET /api/solr/movie/:search_text  matched");
-                search_movie(search_text, Engine::Solr, &CLIENT, headers.clone())
+                search_movie(search_text, Engine::Solr, &CLIENT, headers)
             },
         );
 
@@ -46,13 +46,7 @@ pub mod filters_search_movie {
             .and(headers_cloned())
             .and_then(|req: SearchPaginatedRequest, headers: HeaderMap| {
                 info!("POST /api/meili/movie/  matched");
-                read_movie_documents(
-                    req.offset,
-                    req.limit,
-                    Engine::Meili,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                read_movie_documents(req.offset, req.limit, Engine::Meili, &CLIENT, headers)
             });
 
         let server = warp::path!("api" / "solr" / "movie");
@@ -62,13 +56,7 @@ pub mod filters_search_movie {
             .and(headers_cloned())
             .and_then(|req: SearchPaginatedRequest, headers: HeaderMap| {
                 info!("POST /api/solr/movie/  matched");
-                read_movie_documents(
-                    req.offset,
-                    req.limit,
-                    Engine::Solr,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                read_movie_documents(req.offset, req.limit, Engine::Solr, &CLIENT, headers)
             });
 
         search_meili
