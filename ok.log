@@ -1,0 +1,158 @@
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] found a matching target server for uri: /rust/solr/search, method  POST //  target server: host: localhost // port 18600 // method POST // path /api/v1/solr/article
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "host" -> "proxy.proxythingi.at"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "x-real-ip" -> "95.217.104.116"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "x-forwarded-for" -> "95.217.104.116"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "connection" -> "close"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "content-length" -> "238"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "user-agent" -> "curl/7.81.0"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "accept" -> "*/*"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] header: "content-type" -> "application/json"
+[2023-04-18T16:16:10Z INFO  proxythingi::proxy::server] request uri http://localhost:18600/api/v1/solr/article
+
+
+
+
+
+
+
+
+
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 11 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (238 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_article_routes::mod_search_article_routes] POST /api/solr/article matched
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_article_handler::handler_search_article] start search_article(). search_text 'Edison Kinetoscopic Record of a Sneeze', offset 0, limit 1, engine Solr
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search for customer SearchCustomer { customer_id: Some(1), jwt: Some("eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9") }
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_auth request  "http://localhost:18982/api/v1/authenticated/1"
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18982/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18982
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18982
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 76 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (245 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_auth request  got a useful response
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_auth   response is 200
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_auth   authentication Entry present
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_index_docs   request URL  "http://localhost:18320/api/v1/solr/searchindex/search"
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_index_docs   request   SearchMovieIndexRequest { q: "Edison Kinetoscopic Record of a Sneeze", offset: 0, limit: 1 }
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18320/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18320
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18320
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 204 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (335 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_index_docs   CLIENT.POST returned a OK response
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_index_docs   CLIENT.POST returned an OK status code
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper::mod_search_helper] search_index_docs   got a valid search result MovieSearchResult { movies: [SearchIndexDoc { id: "tt0093584", tconst: "tt0093584", titles: Some(["Murder Rap"]), actors: Some(["John Hawkes", "S. Kathleen Feigny", "Coquina Dunn", "Tim Mateer"]), directors: Some(["Kliff Keuhl"]), writers: None, runtime_minutes: Some(108), adult: Some(false), genres: Some(["Crime", "Thriller"]), characters: Some(["Christopher", "Wiseman", "Anna", "Michelle", "Edison"]), title_type: None, year: Some(1988) }], facets: None }
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_article_handler::handler_search_article] search_article  before  get_movie_price. tconst  tt0093584
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18800/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18800
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18800
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 76 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (94 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_article_handler::handler_search_article] search_article  after  get_movie_price. tconst  tt0093584
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper_prices::search_helper] CustomerPriceService request URL     "http://localhost:18981/api/v1/customerprice/1/1988"
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18981/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18981
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18981
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 81 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (114 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper_prices::search_helper] CustomerPriceService response is ok
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_helper_prices::search_helper] CustomerPriceService got a price CustomerPriceEntry { id: 1, customer_id: 1, discount: 10.0, start_year: 1500, end_year: 2300, created: Some(2023-04-18T16:49:20.585839Z) }
+[2023-04-18T16:52:30Z INFO  rust_search_article::search_article_handler::handler_search_article] search_article  found a customer price for movie  tt0093584, customer 1
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 469 bytes
+
+
+
+
+
+
+
+
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 4 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (67 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_search_index::search_search_index::filters_search_search_index] POST /api/solr/searchindex/search matched
+[2023-04-18T16:52:30Z INFO  common::logging::logging_service_client::logging_service] LOGGING_entry service_id rust_search_search_index, log_type INFO, message start search_index(). search_text 'Edison Kinetoscopic Record of a Sneeze', offset 0, limit 1, engine Solr
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18700/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18700
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18700
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 342 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (271 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  common::solr::solr_http::mod_solr_http] solr_search  entity "searchindex",  url http://solr01.bumzack.at/solr/searchindex/select?q=tconst%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+titles%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+actors%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+directors%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+writers%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+genres%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+characters%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+titleType%3AEdison+Kinetoscopic+Record+of+a+Sneeze&rows=1&start=0&facet=true&facet.field=genres&facet.field=actors&facet.field=directors&facet.field=titles&facet.field=characters&facet.field=titleType
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://solr01.bumzack.at/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="solr01.bumzack.at"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 95.217.104.116:80
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 95.217.104.116:80
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 679 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 10 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (13349 bytes)
+[2023-04-18T16:52:30Z INFO  common::meili] request != OK. status 200,    url http://solr01.bumzack.at/solr/searchindex/select
+[2023-04-18T16:52:30Z INFO  common::meili] request != OK. headers {"server": "nginx/1.18.0 (Ubuntu)", "date": "Tue, 18 Apr 2023 16:52:30 GMT", "content-type": "application/json;charset=utf-8", "content-length": "13349", "connection": "keep-alive", "content-security-policy": "default-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'self'; font-src 'self'; frame-ancestors 'none'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self';", "x-content-type-options": "nosniff", "x-frame-options": "SAMEORIGIN", "x-xss-protection": "1; mode=block", "vary": "Accept-Encoding"},    url http://solr01.bumzack.at/solr/searchindex/select
+[2023-04-18T16:52:30Z INFO  common::meili] remote address Some(95.217.104.116:80)
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got a OK, ACCEPTED; CREATED response
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got a SolResponseDoc response
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got 1 docs response
+[2023-04-18T16:52:30Z INFO  warp::filters::log] 127.0.0.1:55646 "POST /api/v1/solr/searchindex/search HTTP/1.1" 200 "-" "-" 36.205059ms
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 444 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] read eof
+
+
+
+
+
+
+
+
+
+
+
+
+
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 4 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (67 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  rust_search_search_index::search_search_index::filters_search_search_index] POST /api/solr/searchindex/search matched
+[2023-04-18T16:52:30Z INFO  common::logging::logging_service_client::logging_service] LOGGING_entry service_id rust_search_search_index, log_type INFO, message start search_index(). search_text 'Edison Kinetoscopic Record of a Sneeze', offset 0, limit 1, engine Solr
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://localhost:18700/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="localhost"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 127.0.0.1:18700
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 127.0.0.1:18700
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 342 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 3 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (271 bytes)
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  common::solr::solr_http::mod_solr_http] solr_search  entity "searchindex",  url http://solr01.bumzack.at/solr/searchindex/select?q=tconst%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+titles%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+actors%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+directors%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+writers%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+genres%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+characters%3AEdison+Kinetoscopic+Record+of+a+Sneeze+OR+titleType%3AEdison+Kinetoscopic+Record+of+a+Sneeze&rows=1&start=0&facet=true&facet.field=genres&facet.field=actors&facet.field=directors&facet.field=titles&facet.field=characters&facet.field=titleType
+[2023-04-18T16:52:30Z DEBUG reqwest::connect] starting new connection: http://solr01.bumzack.at/
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::dns] resolving host="solr01.bumzack.at"
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connecting to 95.217.104.116:80
+[2023-04-18T16:52:30Z DEBUG hyper::client::connect::http] connected to 95.217.104.116:80
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 679 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] parsed 10 headers
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body is content-length (13349 bytes)
+[2023-04-18T16:52:30Z INFO  common::meili] request != OK. status 200,    url http://solr01.bumzack.at/solr/searchindex/select
+[2023-04-18T16:52:30Z INFO  common::meili] request != OK. headers {"server": "nginx/1.18.0 (Ubuntu)", "date": "Tue, 18 Apr 2023 16:52:30 GMT", "content-type": "application/json;charset=utf-8", "content-length": "13349", "connection": "keep-alive", "content-security-policy": "default-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'self'; font-src 'self'; frame-ancestors 'none'; img-src 'self' data:; media-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self';", "x-content-type-options": "nosniff", "x-frame-options": "SAMEORIGIN", "x-xss-protection": "1; mode=block", "vary": "Accept-Encoding"},    url http://solr01.bumzack.at/solr/searchindex/select
+[2023-04-18T16:52:30Z INFO  common::meili] remote address Some(95.217.104.116:80)
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got a OK, ACCEPTED; CREATED response
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] incoming body completed
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got a SolResponseDoc response
+[2023-04-18T16:52:30Z INFO  common::solr::solr_entity::solr_entity_stuff] solr_search_entity_with_facets got 1 docs response
+[2023-04-18T16:52:30Z INFO  warp::filters::log] 127.0.0.1:55646 "POST /api/v1/solr/searchindex/search HTTP/1.1" 200 "-" "-" 36.205059ms
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::io] flushed 444 bytes
+[2023-04-18T16:52:30Z DEBUG hyper::proto::h1::conn] read eof
+
+

@@ -5,6 +5,7 @@ use serde_json::json;
 use tokio::sync::mpsc;
 use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
+use warp::http::HeaderMap;
 
 use common::entity::entity::{Engine, Entity};
 use common::logging::logging_service_client::logging_service::{
@@ -23,6 +24,7 @@ pub async fn build_index_v3(
     offset: u32,
     limit: u32,
     tasks: u32,
+    _headers: HeaderMap,
 ) -> Result<impl warp::Reply, Infallible> {
     let (manager_sender, manager_receiver) = mpsc::unbounded_channel();
 

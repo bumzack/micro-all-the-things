@@ -1,32 +1,43 @@
 pub mod handler_authentication {
     use std::collections::BTreeMap;
+    use std::time::Instant;
 
     use deadpool_postgres::Pool;
     use hmac::{Hmac, Mac};
     use jwt::{AlgorithmType, Header, SignWithKey, Token};
+    use reqwest::header::HeaderMap;
     use sha2::Sha384;
-    use warp::{reject, Rejection, reply, Reply};
     use warp::http::StatusCode;
-    use warp::reply::json;
+    use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
+    use common::logging::tracing_headers::tracing_headers_stuff::{
+        build_response_from_json, build_response_from_json_with_status, build_tracing_headers,
+        get_trace_infos, HEADER_X_INITIATED_BY, HEADER_X_PROCESSED_BY, HEADER_X_UUID,
+    };
     use common::models::authentication::{LogInRequest, LogOutRequest};
     use common::models::customer::Customer;
 
-    use crate::{CLIENT, CONFIG};
     use crate::authentication::db::db_logging::{
         find_authentication, insert_authentication, update_authentication_login,
         update_authentication_logout,
     };
+    use crate::{CLIENT, CONFIG};
+
+    const SERVICE_NAME: &str = "authenticated_service";
 
     pub async fn check_authenticated_handler(
         pool: Pool,
         customer_id: i32,
+        map: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+        let (initiated_by, uuid, processed_by) = get_trace_infos(&map, SERVICE_NAME.to_string());
+
         info!(
-            "find authentication entry for customer_id: {:?}",
-            customer_id
+            "uuid {} find authentication entry for customer_id: {:?}",
+            &uuid, customer_id
         );
 
         let authentication = find_authentication(pool.clone(), customer_id)
@@ -37,36 +48,36 @@ pub mod handler_authentication {
                 reject::not_found()
             })?;
 
-        Ok(json(&authentication))
-    }
+        let msg = format!("found auth for custoomer_id: {}", customer_id);
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
 
-    // pub async fn read_authentication_handler(
-    //     pool: Pool,
-    //     email: String,
-    // ) -> Result<impl Reply, Rejection> {
-    //     info!("reading authentication for email entries {:?}", &email);
-    //
-    //     let customer = get_customer(pool, email)
-    //         .await
-    //         // TODO fix CustomError
-    //         .map_err(|e| {
-    //             error!("error rejection {:?}", e);
-    //             reject::custom(DivideByZero)
-    //         })?;
-    //
-    //     Ok(json(&customer))
-    // }
+        let response = build_response_from_json(authentication, headers);
+
+        Ok(response)
+    }
 
     pub async fn login_handler(
         pool: Pool,
         login_request: LogInRequest,
+        map: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
         info!(
             "trying to login customers paginated   login_request {:?}",
             login_request,
         );
 
-        let customer = search_customer(&login_request.email).await;
+        let (initiated_by, uuid, processed_by) = get_trace_infos(&map, SERVICE_NAME.to_string());
+        info!("initial  processed by  {:?}", &processed_by,);
+        let (customer, processed_by_new) =
+            search_customer(&login_request.email, &initiated_by, &uuid, &processed_by).await;
 
         match &customer {
             Some(c) => {
@@ -74,7 +85,20 @@ pub mod handler_authentication {
                 match auth {
                     Ok(a) => {
                         if a.jwt.is_some() {
-                            return Ok(reply::with_status(json(&a), StatusCode::OK));
+                            let msg =
+                                format!("user already logged in. email: {}", login_request.email);
+                            let headers = build_tracing_headers(
+                                &start_total,
+                                &SERVICE_NAME.to_string(),
+                                &initiated_by,
+                                &uuid,
+                                &processed_by_new,
+                                &msg,
+                            );
+
+                            let response = build_response_from_json(a, headers);
+
+                            return Ok(response);
                         }
                         if c.password.eq(&login_request.password)
                             && c.email.eq(&login_request.email)
@@ -83,11 +107,29 @@ pub mod handler_authentication {
                             info!("customer token {}", &token);
                             let aa = update_authentication_login(pool.clone(), &token, c.id).await;
                             let aa = aa.expect("expect db update to be successful");
-                            return Ok(reply::with_status(json(&aa), StatusCode::OK));
+
+                            let msg = format!(
+                                "user succesfully logged in. email: {}",
+                                login_request.email
+                            );
+                            let headers = build_tracing_headers(
+                                &start_total,
+                                &SERVICE_NAME.to_string(),
+                                &initiated_by,
+                                &uuid,
+                                &processed_by_new,
+                                &msg,
+                            );
+
+                            let response = build_response_from_json(aa, headers);
+
+                            return Ok(response);
                         }
                     }
                     Err(e) => {
-                        info!("this is an error but shouldn't be {:?}", e);
+                        // WTF?
+                        // whats going on here
+                        info!("this is an error but shouldn't be. this is if no entry was found for the email/customer id {:?}", e);
                         if c.password.eq(&login_request.password)
                             && c.email.eq(&login_request.email)
                         {
@@ -96,14 +138,46 @@ pub mod handler_authentication {
 
                             let res = insert_authentication(pool.clone(), c.id, &token).await;
                             return match res {
-                                Ok(authentication_entry) => Ok(reply::with_status(
-                                    json(&authentication_entry),
-                                    StatusCode::OK,
-                                )),
-                                Err(e) => Ok(reply::with_status(
-                                    json(&format!("{:?}", e)),
-                                    StatusCode::INTERNAL_SERVER_ERROR,
-                                )),
+                                Ok(authentication_entry) => {
+                                    let msg = format!(
+                                        "new authentication entry inserted into DB for email: {} ",
+                                        &login_request.email
+                                    );
+                                    let headers = build_tracing_headers(
+                                        &start_total,
+                                        &SERVICE_NAME.to_string(),
+                                        &initiated_by,
+                                        &uuid,
+                                        &processed_by_new,
+                                        &msg,
+                                    );
+
+                                    let response =
+                                        build_response_from_json(authentication_entry, headers);
+
+                                    Ok(response)
+                                }
+
+                                Err(e) => {
+                                    error!("error doing stuff {:?}", e);
+                                    let msg = "error authenticating user".to_string();
+                                    let headers = build_tracing_headers(
+                                        &start_total,
+                                        &SERVICE_NAME.to_string(),
+                                        &initiated_by,
+                                        &uuid,
+                                        &processed_by_new,
+                                        &msg,
+                                    );
+
+                                    let response = build_response_from_json_with_status(
+                                        msg,
+                                        headers,
+                                        StatusCode::INTERNAL_SERVER_ERROR,
+                                    );
+
+                                    Ok(response)
+                                }
                             };
                         }
                     }
@@ -146,7 +220,11 @@ pub mod handler_authentication {
     pub async fn logout_handler(
         pool: Pool,
         logout_request: LogOutRequest,
+        map: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+        let (initiated_by, uuid, processed_by) = get_trace_infos(&map, SERVICE_NAME.to_string());
+
         info!(
             "trying to logout customer     logout_request {:?}",
             logout_request,
@@ -159,13 +237,40 @@ pub mod handler_authentication {
                 let authentication =
                     update_authentication_logout(pool.clone(), a.customer_id).await;
                 match authentication {
-                    Ok(aa) => Ok(reply::with_status(json(&aa), StatusCode::OK)),
+                    Ok(aa) => {
+                        let msg = "logout user success".to_string();
+                        let headers = build_tracing_headers(
+                            &start_total,
+                            &SERVICE_NAME.to_string(),
+                            &initiated_by,
+                            &uuid,
+                            &processed_by,
+                            &msg,
+                        );
+
+                        let response = build_response_from_json(aa, headers);
+
+                        Ok(response)
+                    }
                     Err(e) => {
                         info!("error updating authentication entry {:?}", e);
-                        Ok(reply::with_status(
-                            json(&format!("{:?}", e)),
+                        let msg = "error authenticating user".to_string();
+                        let headers = build_tracing_headers(
+                            &start_total,
+                            &SERVICE_NAME.to_string(),
+                            &initiated_by,
+                            &uuid,
+                            &processed_by,
+                            &msg,
+                        );
+
+                        let response = build_response_from_json_with_status(
+                            msg,
+                            headers,
                             StatusCode::INTERNAL_SERVER_ERROR,
-                        ))
+                        );
+
+                        Ok(response)
                     }
                 }
             }
@@ -176,7 +281,12 @@ pub mod handler_authentication {
         }
     }
 
-    async fn search_customer(email: &String) -> Option<Customer> {
+    async fn search_customer(
+        email: &String,
+        initiated_by: &String,
+        uuid: &String,
+        processed_by: &String,
+    ) -> (Option<Customer>, String) {
         info!("rust_authenticationservice. search_customer");
         let search_customer: String = CONFIG
             .get("search_customer_by_email")
@@ -192,28 +302,37 @@ pub mod handler_authentication {
         logging_service::log_entry(" search_customer".to_string(), "INFO".to_string(), &message)
             .await;
 
-        let response = CLIENT.get(search_customer).send().await;
+        let response = CLIENT
+            .get(search_customer)
+            .header(HEADER_X_PROCESSED_BY, processed_by)
+            .header(HEADER_X_UUID, uuid)
+            .header(HEADER_X_INITIATED_BY, initiated_by)
+            .send()
+            .await;
 
         if response.is_err() {
             error!("error from CustomerService {:?}", response.err().unwrap());
-            return None;
+            return (None, processed_by.to_string());
         }
         info!("search_customer all good");
 
         match response {
             Ok(r) => {
+                let (_, _, processed_by_new) =
+                    get_trace_infos(r.headers(), "search_index_docs".to_string());
+                info!("processed_by_new   {:?}", &processed_by,);
                 if r.status().as_u16() < 299 {
                     let customer = r.json::<Customer>().await.expect("expected a customer");
-                    return Some(customer);
+                    return (Some(customer), processed_by_new);
                 } else {
                     info!("error retrieving customer {}", r.status());
                     info!("error retrieving {:?}", r.text().await.unwrap());
                 }
-                None
+                (None, processed_by_new)
             }
             Err(e) => {
                 error!("got an error  {:?}", e);
-                None
+                (None, "something gone wrong".to_string())
             }
         }
     }

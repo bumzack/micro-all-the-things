@@ -1,23 +1,36 @@
 pub mod filters_customer_price {
+    use std::time::Instant;
+
     use deadpool_postgres::Pool;
-    use reqwest::StatusCode;
+    use reqwest::header::HeaderMap;
     use warp::{reject, Rejection, Reply};
-    use warp::reply::json;
 
     use common::logging::logging::DivideByZero;
     use common::logging::logging_service_client::logging_service;
+    use common::logging::tracing_headers::tracing_headers_stuff::{
+        build_response_from_json, build_tracing_headers, get_trace_infos,
+    };
     use common::models::customer::Customer;
     use common::models::customer_prices::AddCustomerPriceEntry;
 
-    use crate::{CLIENT, CONFIG};
     use crate::customerprices::db::db_logging::{get_customerprice, insert_price_entry};
+    use crate::{CLIENT, CONFIG};
+
+    const SERVICE_NAME: &str = "CustomerPrice Service";
 
     pub async fn insert_customer_price_handler(
         pool: Pool,
         req: AddCustomerPriceEntry,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
         info!("adding customerprices entry {:?}", req);
 
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
+        let customer_id = req.customer_id;
         let customer_price = insert_price_entry(pool.clone(), req)
             .await
             // TODO fix CustomError
@@ -26,14 +39,33 @@ pub mod filters_customer_price {
                 reject::custom(DivideByZero)
             })?;
 
-        Ok(json(&customer_price))
+        let msg = format!("customer price inserted for customer id {}", customer_id);
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customer_price, headers);
+
+        Ok(response)
     }
 
     pub async fn read_customerprice_entry(
         pool: Pool,
         customer_id: String,
         year: i32,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
         info!(
             "reading customerprices entries. customer_id  {:?}, year: {}",
             &customer_id, year,
@@ -51,7 +83,23 @@ pub mod filters_customer_price {
             "found a customerprice for  customer_id {:?}, year {}:  {:?}",
             &customer_id, year, &customer_price_entry
         );
-        Ok(json(&customer_price_entry))
+        let msg = format!(
+            "found customer price found for customer id {}, year {}",
+            customer_id, year
+        );
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customer_price_entry, headers);
+
+        Ok(response)
     }
 
     pub async fn insert_dummy_data_customer_prices_handler(
@@ -59,8 +107,14 @@ pub mod filters_customer_price {
         limit: u32,
         count: u32,
         pool: Pool,
+        headers: HeaderMap,
     ) -> Result<impl Reply, Rejection> {
         info!("inserting dummy customer customer ");
+
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
 
         let years_ranges = vec![
             (0, 1900),
@@ -112,7 +166,19 @@ pub mod filters_customer_price {
             "customers processed {}. inserted  {} pricerows",
             customers_processed, pricerows_inserted
         );
-        Ok(warp::reply::with_status(msg, StatusCode::CREATED))
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(msg, headers);
+
+        Ok(response)
     }
 
     async fn search_customers(limit: u32, offset: u32, count: u32) -> Vec<Customer> {
@@ -139,7 +205,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         let response = CLIENT.get(search_customer).send().await;
 
@@ -171,7 +237,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         info!(
             ".rust_customerpriceservice_insert_dummy_data search_customers finished successfully"
         );

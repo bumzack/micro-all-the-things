@@ -66,7 +66,7 @@ jquery(document).ready(() => {
             //
 
             // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-            async function postData(url = "", data = {}):Promise<[Response,Headers]> {
+            async function postData(url = "", data = {}): Promise<[Response, Headers]> {
                 // Default options are marked with *
                 const response= await fetch(url, {
                     method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -146,7 +146,7 @@ const article_template = (article:ArticleSearchResult): string => {
             </div>
         </div>
     `;
-     
+
 }
 export {};
 

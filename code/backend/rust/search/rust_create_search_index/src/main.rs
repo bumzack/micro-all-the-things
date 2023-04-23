@@ -1,9 +1,8 @@
-use std::collections::HashMap;
 use std::io;
 use std::time::Duration;
 
 use config::Config;
-use log::{info, LevelFilter};
+use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
@@ -29,7 +28,7 @@ lazy_static::lazy_static! {
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
-        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/config.toml"))
+        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
         .build()
         .unwrap();
 }
@@ -37,14 +36,6 @@ lazy_static::lazy_static! {
 #[tokio::main]
 async fn main() -> io::Result<()> {
     Builder::new().filter_level(LevelFilter::Info).init();
-
-    info!(
-        "{:?}",
-        CONFIG
-            .clone()
-            .try_deserialize::<HashMap<String, String>>()
-            .unwrap()
-    );
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 

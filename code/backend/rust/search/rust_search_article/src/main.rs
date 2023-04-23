@@ -30,14 +30,14 @@ lazy_static::lazy_static! {
 
 lazy_static::lazy_static! {
     static ref CONFIG: Config = Config::builder()
-        .add_source(config::File::with_name("/home/bumzack/micro-all-the-things/code/backend/rust/config.toml"))
+        .add_source(config::File::with_name("/Users/bumzack/stoff/micro-all-the-things/code/backend/rust/config.toml"))
         .build()
         .unwrap();
 }
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    Builder::new().filter_level(LevelFilter::Debug).init();
+    Builder::new().filter_level(LevelFilter::Info).init();
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
     let root = root

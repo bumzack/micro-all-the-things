@@ -1,6 +1,8 @@
 pub mod handler_authentication {
     use deadpool_postgres::Pool;
     use warp::{Filter, Rejection, Reply};
+    use warp::header::headers_cloned;
+    use warp::http::HeaderMap;
 
     use common::models::authentication::{LogInRequest, LogOutRequest};
 
@@ -16,9 +18,10 @@ pub mod handler_authentication {
         let authentication = server1
             .and(with_db(pool.clone()))
             .and(warp::get())
-            .and_then(|customer_id: i32, pool: Pool| {
+            .and(headers_cloned())
+            .and_then(|customer_id: i32, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/authenticated/:customer_id");
-                check_authenticated_handler(pool, customer_id)
+                check_authenticated_handler(pool, customer_id, headers.clone())
             });
 
         let server1 = warp::path!("api" / "v1" / "authentication" / "login");
@@ -26,9 +29,10 @@ pub mod handler_authentication {
             .and(with_db(pool.clone()))
             .and(warp::post())
             .and(json_body_login())
-            .and_then(|pool: Pool, login_request| {
+            .and(headers_cloned())
+            .and_then(|pool: Pool, login_request, headers: HeaderMap| {
                 info!("POST /api/v1/authentication/login");
-                login_handler(pool, login_request)
+                login_handler(pool, login_request, headers.clone())
             });
 
         let server1 = warp::path!("api" / "v1" / "authentication" / "logout");
@@ -36,9 +40,10 @@ pub mod handler_authentication {
             .and(with_db(pool))
             .and(warp::post())
             .and(json_body_logout())
-            .and_then(|pool: Pool, logout_request: LogOutRequest| {
+            .and(headers_cloned())
+            .and_then(|pool: Pool, logout_request: LogOutRequest, headers: HeaderMap| {
                 info!("POST /api/v1/authentication/logout");
-                logout_handler(pool, logout_request)
+                logout_handler(pool, logout_request, headers.clone())
             });
 
         // let server1 =
