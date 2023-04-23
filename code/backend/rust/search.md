@@ -89,7 +89,7 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
 ```
 
 ```
-curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
+curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
 ```
 
 ### Principal by Person Name (nconst)
