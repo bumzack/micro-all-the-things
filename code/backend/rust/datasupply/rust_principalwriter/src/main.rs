@@ -11,8 +11,8 @@ mod principal_rest;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-            .pool_max_idle_per_host(0)
-            .connection_verbose(true)
+           //  .pool_max_idle_per_host(0)
+//             .connection_verbose(true)
             .timeout(Duration::from_secs(300))
             .connect_timeout(Duration::from_secs(300))
             .no_brotli()
