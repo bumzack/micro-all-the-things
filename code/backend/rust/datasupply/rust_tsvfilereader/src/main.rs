@@ -6,7 +6,6 @@ use config::Config;
 use lazy_static::lazy_static;
 use log::{info, LevelFilter};
 use pretty_env_logger::env_logger::Builder;
-use std::time::Duration;
 use warp::Filter;
 
 use crate::tsv_rest::filters_tsv;

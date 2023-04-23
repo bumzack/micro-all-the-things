@@ -6,7 +6,6 @@ use pretty_env_logger::env_logger::Builder;
 use warp::Filter;
 
 mod search_person;
-use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()

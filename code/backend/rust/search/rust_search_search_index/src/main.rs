@@ -9,7 +9,6 @@ use warp::Filter;
 use common::server::warp_cors::warp_stuff::warp_cors;
 
 mod search_search_index;
-use std::time::Duration;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::builder()
