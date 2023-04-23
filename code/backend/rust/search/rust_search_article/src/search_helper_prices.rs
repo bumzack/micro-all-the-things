@@ -37,7 +37,7 @@ pub mod search_helper {
 
         match response {
             Ok(res) => {
-                let (processed_by_new, _, _) =
+                let (_, _, processed_by_new) =
                     get_trace_infos(res.headers(), SERVICE_NAME.to_string());
 
                 if res.status() == StatusCode::OK {
@@ -103,7 +103,7 @@ pub mod search_helper {
 
         match response {
             Ok(res) => {
-                let (processed_by_new, _, _) =
+                let (_, _, processed_by_new) =
                     get_trace_infos(res.headers(), SERVICE_NAME.to_string());
 
                 info!("CustomerPriceService response is ok");

@@ -29,7 +29,13 @@ pub mod handler_search_article {
             let id = &req.customer.customer_id.map_or(-1, |i| i);
             error!("customer {} is not logged in (-1 if no id provided", id);
         }
+
         info!("search_auth   calling 'search_index_docs'");
+        info!(
+            "new_processed_by before   search_index_docs  {}",
+            &new_processed_by
+        );
+
         let (search_result, n) = search_index_docs(
             engine,
             &req.q,
@@ -41,6 +47,11 @@ pub mod handler_search_article {
         )
         .await;
         new_processed_by = n;
+
+        info!(
+            "new_processed_by after   search_index_docs  {}",
+            &new_processed_by
+        );
 
         if search_result.is_none() {
             info!("search_index_docs   no search result found -> returning empty array");
@@ -64,8 +75,8 @@ pub mod handler_search_article {
             new_processed_by = n;
 
             info!(
-                "search_article  after  get_movie_price. tconst  {}",
-                &m.tconst
+                "search_article  after  get_movie_price. tconst  {},  new_processed_by  {}",
+                &m.tconst, new_processed_by
             );
             if price.is_none() {
                 error!("no price found for movie tconst {}", &m.tconst);
@@ -86,12 +97,18 @@ pub mod handler_search_article {
                         )
                         .await;
 
+                        info!(
+                            "new_processed_by  after  get_movie_customerprice. new_processed_by  {}",
+                            new_processed_by
+                        );
+
                         new_processed_by = n;
 
                         info!(
                             "search_article  found a customer price for movie  {}, customer {}",
                             &m.tconst, &auth_entry.customer_id
                         );
+
                         (
                             customer_price.map(|c| (100.0 - c.discount) * price / 100.0),
                             new_processed_by.to_string(),
@@ -123,6 +140,10 @@ pub mod handler_search_article {
             facets: search_result.facets,
         };
 
+        info!(
+            "search_article  final  new_processed_by {}",
+            new_processed_by
+        );
         (res, new_processed_by)
     }
 }

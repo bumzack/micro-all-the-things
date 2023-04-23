@@ -47,7 +47,7 @@ pub mod mod_search_helper {
 
                 match response {
                     Ok(res) => {
-                        let (processed_by_new, _, _) =
+                        let (_, _, processed_by_new) =
                             get_trace_infos(res.headers(), "get_authentication".to_string());
                         if res.status() == StatusCode::OK {
                             info!("search_auth   response is 200");
@@ -136,7 +136,7 @@ pub mod mod_search_helper {
 
         match response {
             Ok(res) => {
-                let (processed_by_new, _, _) =
+                let (_, _, processed_by_new) =
                     get_trace_infos(res.headers(), "search_index_docs".to_string());
 
                 if res.status() == StatusCode::OK {

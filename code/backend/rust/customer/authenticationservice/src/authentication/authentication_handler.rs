@@ -75,7 +75,7 @@ pub mod handler_authentication {
         );
 
         let (initiated_by, uuid, processed_by) = get_trace_infos(&map, SERVICE_NAME.to_string());
-
+        info!("initial  processed by  {:?}", &processed_by,);
         let (customer, processed_by_new) =
             search_customer(&login_request.email, &initiated_by, &uuid, &processed_by).await;
 
@@ -318,9 +318,9 @@ pub mod handler_authentication {
 
         match response {
             Ok(r) => {
-                let (processed_by_new, _, _) =
+                let (_, _, processed_by_new) =
                     get_trace_infos(r.headers(), "search_index_docs".to_string());
-
+                info!("processed_by_new   {:?}", &processed_by,);
                 if r.status().as_u16() < 299 {
                     let customer = r.json::<Customer>().await.expect("expected a customer");
                     return (Some(customer), processed_by_new);
