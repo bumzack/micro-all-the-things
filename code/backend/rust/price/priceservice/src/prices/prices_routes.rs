@@ -17,7 +17,7 @@ pub mod filters_price {
             .and(headers_cloned())
             .and_then(|tconst: String, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/price/:tconst");
-                read_price_entry(pool, tconst, headers.clone())
+                read_price_entry(pool, tconst, headers)
             });
 
         let server1 = warp::path!("api" / "v1" / "price" / "insertdummydata" / u32 / u32 / u32);
@@ -28,7 +28,7 @@ pub mod filters_price {
             .and_then(
                 |offset: u32, limit: u32, count: u32, pool: Pool, headers: HeaderMap| {
                     info!("GET /api/v1/price/insertdummydata/:offet/:limit/:count");
-                    insert_dummy_data(offset, limit, count, pool, headers.clone())
+                    insert_dummy_data(offset, limit, count, pool, headers)
                 },
             );
 

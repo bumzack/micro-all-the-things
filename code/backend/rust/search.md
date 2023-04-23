@@ -89,7 +89,7 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
 ```
 
 ```
-curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
+curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nconsts":["nm0374658", "nm1588970", "nm0005690"]}'    -H 'Content-Type: application/json'   |  jq  
 ```
 
 ### Principal by Person Name (nconst)
@@ -147,7 +147,7 @@ curl  -vv -X POST   http://localhost:18203/api/meili/person/filter      -d '{"nc
 ## /:engine/:start/:pagesize/:tasks
 
 ```
-curl http://localhost:18300/api/v3/solr/searchindex/build/0/50000/6         |  jq    
+curl http://localhost:18300/api/v3/solr/searchindex/build/9000000/50000/1         |  jq    
 ```
 
 ## Movie max Hits

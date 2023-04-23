@@ -31,7 +31,7 @@ pub mod filters_search_movie {
                     nconst,
                     Engine::Meili,
                     &CLIENT,
-                    headers.clone(),
+                    headers,
                 )
             },
         );
@@ -45,7 +45,7 @@ pub mod filters_search_movie {
                     tconst,
                     Engine::Meili,
                     &CLIENT,
-                    headers.clone(),
+                    headers,
                 )
             },
         );
@@ -54,13 +54,7 @@ pub mod filters_search_movie {
         let search_name_solr = server.and(warp::get()).and(headers_cloned()).and_then(
             |nconst: String, headers: HeaderMap| {
                 info!("/api/solr/principal/filter/name/:nconst     matched");
-                filter_principal(
-                    "nconst".to_string(),
-                    nconst,
-                    Engine::Solr,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                filter_principal("nconst".to_string(), nconst, Engine::Solr, &CLIENT, headers)
             },
         );
 
@@ -68,13 +62,7 @@ pub mod filters_search_movie {
         let filter_title_solr = server2.and(warp::get()).and(headers_cloned()).and_then(
             |tconst: String, headers: HeaderMap| {
                 info!("/api/solr/principal/filter/title/:tconst     matched");
-                filter_principal(
-                    "tconst".to_string(),
-                    tconst,
-                    Engine::Solr,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                filter_principal("tconst".to_string(), tconst, Engine::Solr, &CLIENT, headers)
             },
         );
 

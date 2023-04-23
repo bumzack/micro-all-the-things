@@ -25,7 +25,7 @@ pub mod filters_search_crew {
         let search_crew_meili = server.and(warp::get()).and(headers_cloned()).and_then(
             |tconst: String, headers: HeaderMap| {
                 info!("/api/meili/crew/filter/:tconst matched");
-                filter_crew("tconst".to_string(), tconst, Engine::Meili, headers.clone())
+                filter_crew("tconst".to_string(), tconst, Engine::Meili, headers)
             },
         );
 
@@ -33,7 +33,7 @@ pub mod filters_search_crew {
         let search_crew_solr = server.and(warp::get()).and(headers_cloned()).and_then(
             |tconst: String, headers: HeaderMap| {
                 info!("/api/solr/crew/filter/:tconst matched");
-                filter_crew("tconst".to_string(), tconst, Engine::Solr, headers.clone())
+                filter_crew("tconst".to_string(), tconst, Engine::Solr, headers)
             },
         );
 

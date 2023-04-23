@@ -22,7 +22,7 @@ pub mod handler_customer {
             .and(headers_cloned())
             .and_then(|email: String, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/customer/:email");
-                read_customer_handler(pool, email, headers.clone())
+                read_customer_handler(pool, email, headers)
             });
 
         let server1 = warp::path!("api" / "v1" / "customer" / "paginated" / i32 / i32);
@@ -32,7 +32,7 @@ pub mod handler_customer {
             .and(headers_cloned())
             .and_then(|offset: i32, limit: i32, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/customer/paginated/:offset/:limit");
-                read_customer_paginated_handler(pool, offset, limit, headers.clone())
+                read_customer_paginated_handler(pool, offset, limit, headers)
             });
 
         let server3 = warp::path!("api" / "v1" / "customer");
@@ -43,7 +43,7 @@ pub mod handler_customer {
             .and(headers_cloned())
             .and_then(|pool: Pool, req: AddCustomer, headers: HeaderMap| {
                 info!("POST  /api/customerprices/entry  matched");
-                insert_customer_handler(pool, req, headers.clone())
+                insert_customer_handler(pool, req, headers)
             });
 
         let server1 = warp::path!("api" / "v1" / "customer" / "insertdummydata" / u32 / u32 / u32);
@@ -54,7 +54,7 @@ pub mod handler_customer {
             .and_then(
                 |offset: u32, limit: u32, count: u32, pool: Pool, headers: HeaderMap| {
                     info!("GET /api/v1/customer/insertdummydata");
-                    insert_dummy_data_handler(offset, limit, count, pool, headers.clone())
+                    insert_dummy_data_handler(offset, limit, count, pool, headers)
                 },
             );
 

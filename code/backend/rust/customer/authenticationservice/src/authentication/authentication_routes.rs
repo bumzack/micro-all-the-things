@@ -1,8 +1,8 @@
 pub mod handler_authentication {
     use deadpool_postgres::Pool;
-    use warp::{Filter, Rejection, Reply};
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
+    use warp::{Filter, Rejection, Reply};
 
     use common::models::authentication::{LogInRequest, LogOutRequest};
 
@@ -13,7 +13,7 @@ pub mod handler_authentication {
 
     pub fn authentication_route(
         pool: Pool,
-    ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
+    ) -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
         let server1 = warp::path!("api" / "v1" / "authenticated" / i32);
         let authentication = server1
             .and(with_db(pool.clone()))
@@ -21,7 +21,7 @@ pub mod handler_authentication {
             .and(headers_cloned())
             .and_then(|customer_id: i32, pool: Pool, headers: HeaderMap| {
                 info!("GET /api/v1/authenticated/:customer_id");
-                check_authenticated_handler(pool, customer_id, headers.clone())
+                check_authenticated_handler(pool, customer_id, headers)
             });
 
         let server1 = warp::path!("api" / "v1" / "authentication" / "login");
@@ -32,7 +32,7 @@ pub mod handler_authentication {
             .and(headers_cloned())
             .and_then(|pool: Pool, login_request, headers: HeaderMap| {
                 info!("POST /api/v1/authentication/login");
-                login_handler(pool, login_request, headers.clone())
+                login_handler(pool, login_request, headers)
             });
 
         let server1 = warp::path!("api" / "v1" / "authentication" / "logout");
@@ -41,10 +41,12 @@ pub mod handler_authentication {
             .and(warp::post())
             .and(json_body_logout())
             .and(headers_cloned())
-            .and_then(|pool: Pool, logout_request: LogOutRequest, headers: HeaderMap| {
-                info!("POST /api/v1/authentication/logout");
-                logout_handler(pool, logout_request, headers.clone())
-            });
+            .and_then(
+                |pool: Pool, logout_request: LogOutRequest, headers: HeaderMap| {
+                    info!("POST /api/v1/authentication/logout");
+                    logout_handler(pool, logout_request, headers)
+                },
+            );
 
         // let server1 =
         //     warp::path!("api" / "v1" / "authentication" / "insertdummydata" / u32 / u32 / u32);
@@ -61,12 +63,12 @@ pub mod handler_authentication {
             .or(authentication_logout)
     }
 
-    fn json_body_login() -> impl Filter<Extract=(LogInRequest, ), Error=warp::Rejection> + Clone
+    fn json_body_login() -> impl Filter<Extract = (LogInRequest,), Error = warp::Rejection> + Clone
     {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
-    fn json_body_logout() -> impl Filter<Extract=(LogOutRequest, ), Error=warp::Rejection> + Clone
+    fn json_body_logout() -> impl Filter<Extract = (LogOutRequest,), Error = warp::Rejection> + Clone
     {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
