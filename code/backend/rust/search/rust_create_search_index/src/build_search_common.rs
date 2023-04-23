@@ -36,10 +36,10 @@ pub async fn convert_to_search_index_doc(
             persons.insert(id, p);
         });
 
-        let mut actors: Vec<String> = vec![];
-        let mut writers: Vec<String> = vec![];
-        let mut directors: Vec<String> = vec![];
-        let mut characters: Vec<String> = vec![];
+        let mut actors: HashSet<String> = HashSet::new();
+        let mut writers: HashSet<String> = HashSet::new();
+        let mut directors: HashSet<String> = HashSet::new();
+        let mut characters: HashSet<String> = HashSet::new();
 
         collect_data(
             principals,
@@ -75,10 +75,10 @@ pub async fn convert_to_search_index_doc(
 
 pub fn prepare_for_request(
     m: &Movie,
-    actors: Vec<String>,
-    writers: Vec<String>,
-    directors: Vec<String>,
-    characters: Vec<String>,
+    actors: HashSet<String>,
+    writers: HashSet<String>,
+    directors: HashSet<String>,
+    characters: HashSet<String>,
 ) -> (
     Option<Vec<String>>,
     Option<Vec<String>>,
@@ -87,6 +87,7 @@ pub fn prepare_for_request(
     Option<Vec<String>>,
 ) {
     let mut titles = HashSet::new();
+
     if m.original_title.is_some() {
         // funny demo
         // https://github.com/rust-lang/rust-clippy/issues/9064 f
@@ -101,37 +102,41 @@ pub fn prepare_for_request(
     let titles = titles.into_iter().collect::<Vec<String>>();
 
     // map to optionals
-    let titles = match titles.len() > 0 {
+    let titles = match !titles.is_empty() {
         true => Some(titles),
         false => None,
     };
-    let characters = match characters.len() > 0 {
-        true => Some(characters),
-        false => None,
-    };
-    let actors = match actors.len() > 0 {
-        true => Some(actors),
-        false => None,
-    };
-    let directors = match directors.len() > 0 {
-        true => Some(directors),
+
+    let characters = match !characters.is_empty() {
+        true => Some(characters.into_iter().collect::<Vec<String>>()),
         false => None,
     };
 
-    let writers = match writers.len() > 0 {
-        true => Some(writers),
+    let actors = match !actors.is_empty() {
+        true => Some(actors.into_iter().collect::<Vec<String>>()),
         false => None,
     };
+
+    let directors = match !directors.is_empty() {
+        true => Some(directors.into_iter().collect::<Vec<String>>()),
+        false => None,
+    };
+
+    let writers = match !writers.is_empty() {
+        true => Some(writers.into_iter().collect::<Vec<String>>()),
+        false => None,
+    };
+
     (titles, characters, actors, directors, writers)
 }
 
 pub fn collect_data(
     principals: Vec<Principal>,
     persons: HashMap<String, Person>,
-    actors: &mut Vec<String>,
-    writers: &mut Vec<String>,
-    directors: &mut Vec<String>,
-    characters: &mut Vec<String>,
+    actors: &mut HashSet<String>,
+    writers: &mut HashSet<String>,
+    directors: &mut HashSet<String>,
+    characters: &mut HashSet<String>,
 ) {
     principals.iter().for_each(|p| {
         match &p.category {
@@ -139,20 +144,26 @@ pub fn collect_data(
                 "actor" | "actress" => {
                     let a = persons.get(&p.nconst).unwrap();
                     match &a.primary_name {
-                        Some(name) => actors.push(name.clone()),
+                        Some(name) => {
+                            let _ = actors.insert(name.clone());
+                        }
                         None => {}
                     }
                 }
                 "writer" => {
                     let a = persons.get(&p.nconst).unwrap();
                     match &a.primary_name {
-                        Some(name) => writers.push(name.clone()),
+                        Some(name) => {
+                            let _ = writers.insert(name.clone());
+                        }
                         None => {}
                     }
                 }
                 "director" => match persons.get(&p.nconst) {
                     Some(per) => match &per.primary_name {
-                        Some(name) => directors.push(name.clone()),
+                        Some(name) => {
+                            let _ = directors.insert(name.clone());
+                        }
                         None => {}
                     },
                     None => info!(
@@ -167,7 +178,7 @@ pub fn collect_data(
         match &p.characters {
             Some(ch) => {
                 ch.iter().for_each(|c| {
-                    characters.push(c.clone());
+                    characters.insert(c.clone());
                 });
             }
             None => {}
