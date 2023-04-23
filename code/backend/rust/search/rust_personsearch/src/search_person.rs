@@ -35,7 +35,7 @@ pub mod filters_search_person {
                     req.nconsts,
                     Engine::Meili,
                     &CLIENT,
-                    headers.clone(),
+                    headers,
                 )
             });
 
@@ -51,7 +51,7 @@ pub mod filters_search_person {
                     req.nconsts,
                     Engine::Solr,
                     &CLIENT,
-                    headers.clone(),
+                    headers,
                 )
             });
 
@@ -62,13 +62,7 @@ pub mod filters_search_person {
             .and(headers_cloned())
             .and_then(|req: SearchPaginatedRequest, headers: HeaderMap| {
                 info!("POST /api/v1/meili/person/  matched");
-                read_person_documents(
-                    req.offset,
-                    req.limit,
-                    Engine::Meili,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                read_person_documents(req.offset, req.limit, Engine::Meili, &CLIENT, headers)
             });
 
         let server = warp::path!("api" / "v1" / "solr" / "person");
@@ -78,13 +72,7 @@ pub mod filters_search_person {
             .and(headers_cloned())
             .and_then(|req: SearchPaginatedRequest, headers: HeaderMap| {
                 info!("POST /api/v1/solr/person/  matched");
-                read_person_documents(
-                    req.offset,
-                    req.limit,
-                    Engine::Solr,
-                    &CLIENT,
-                    headers.clone(),
-                )
+                read_person_documents(req.offset, req.limit, Engine::Solr, &CLIENT, headers)
             });
 
         search_nconsts_meili
