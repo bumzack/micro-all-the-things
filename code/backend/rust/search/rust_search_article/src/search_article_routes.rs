@@ -51,9 +51,15 @@ pub mod mod_search_article_routes {
 
         let (initiated_by, uuid, processed_by) =
             get_trace_infos(&headers, SERVICE_NAME.to_string());
+        info!("header stuff from start of 'search_article'   initiated_by {}, uuid {}, processed_by  {}",&initiated_by,&uuid, &processed_by);
 
         let (search_article_response, processed_by_new) =
             search_article(req, engine, &initiated_by, &uuid, &processed_by).await;
+
+        info!(
+            "processed_by_new from search_article  {}",
+            &processed_by_new
+        );
 
         let msg = format!(
             "found {} articles",
@@ -69,6 +75,14 @@ pub mod mod_search_article_routes {
             &msg,
         );
 
+        headers.iter().for_each(|(name, value)| {
+            info!("header   {}  -->   {:?}", &name, value);
+        });
+
+        info!(
+            "processed_by_new from search_article  {}",
+            &processed_by_new
+        );
         let response = build_response_from_json(search_article_response, headers);
 
         Ok(response)

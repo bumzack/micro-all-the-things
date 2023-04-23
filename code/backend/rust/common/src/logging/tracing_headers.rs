@@ -52,7 +52,7 @@ pub mod tracing_headers_stuff {
                     "error unwrapping header value"
                 }
             },
-            None => "",
+            None => service_name.as_str(),
         };
 
         (initiated_by.to_string(), uuid, processed_by.to_string())
@@ -78,7 +78,7 @@ pub mod tracing_headers_stuff {
         headers.insert(HEADER_X_UUID, HeaderValue::from_str(&uuid).unwrap());
 
         let new_x_processed_by = format!(
-            " {}: dur {:?} μs # {} || {}",
+            " {}: dur {:?} micros # {} || {}",
             service_name,
             duration_total.as_micros(),
             &msg,
@@ -94,14 +94,7 @@ pub mod tracing_headers_stuff {
     }
 
     pub fn build_response_from_json<T: Serialize>(json: T, headers: HeaderMap) -> Response {
-        let value = json!(&json);
-        let reply = warp::reply::json(&value);
-        let reply = warp::reply::with_status(reply, StatusCode::OK);
-
-        // Convert `reply` into a `Response` so we can extend headers.
-        let mut response = reply.into_response();
-        response.headers_mut().extend(headers);
-        response
+        build_response_from_json_with_status(json, headers, StatusCode::OK)
     }
 
     pub fn build_response_from_json_with_status<T: Serialize>(
@@ -113,7 +106,6 @@ pub mod tracing_headers_stuff {
         let reply = warp::reply::json(&value);
         let reply = warp::reply::with_status(reply, status);
 
-        // Convert `reply` into a `Response` so we can extend headers.
         let mut response = reply.into_response();
         response.headers_mut().extend(headers);
         response
