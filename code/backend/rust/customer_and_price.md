@@ -56,8 +56,5 @@ curl  -vv  -X POST  http://localhost:18981/api/v1/customerprice/   -H 'Content-T
 curl  -vv    http://localhost:18981/api/v1/customerprice/insertdummydata/0/10/100   
 ``` 
 
-
-
-
 tt12087758
 
