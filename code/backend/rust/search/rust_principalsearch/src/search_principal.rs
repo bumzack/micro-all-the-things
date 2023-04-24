@@ -20,7 +20,7 @@ pub mod filters_search_principal {
     use std::convert::Infallible;
     use std::time::Instant;
 
-    use log::{error, info};
+    use log::info;
     use reqwest::Client;
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;

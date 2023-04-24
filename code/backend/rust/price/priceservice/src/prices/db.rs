@@ -4,10 +4,11 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_prices {
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use warp::reject;
 
     use common::logging::logging::DivideByZero;
-    use common::models::prices::{AddPriceEntry, price_entry_from_row, PriceEntry};
+    use common::models::prices::{price_entry_from_row, AddPriceEntry, PriceEntry};
 
     use crate::db::db::TABLE_PRICE;
 

@@ -5,6 +5,7 @@ pub mod handler_authentication {
     use deadpool_postgres::Pool;
     use hmac::{Hmac, Mac};
     use jwt::{AlgorithmType, Header, SignWithKey, Token};
+    use log::{error, info};
     use reqwest::header::HeaderMap;
     use sha2::Sha384;
     use warp::http::StatusCode;

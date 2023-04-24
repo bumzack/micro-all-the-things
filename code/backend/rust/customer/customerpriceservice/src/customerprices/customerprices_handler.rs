@@ -2,6 +2,7 @@ pub mod filters_customer_price {
     use std::time::Instant;
 
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use reqwest::header::HeaderMap;
     use warp::{reject, Rejection, Reply};
 

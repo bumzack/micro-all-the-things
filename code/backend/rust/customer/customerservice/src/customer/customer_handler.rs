@@ -2,6 +2,7 @@ pub mod handler_customer {
     use std::time::Instant;
 
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use reqwest::header::HeaderMap;
     use serde_json::json;
     use warp::{reject, Rejection, Reply};
@@ -211,6 +212,7 @@ pub mod handler_customer {
             offset,
             limit,
             sort: vec!["nconst:asc".to_string()],
+            next_cursor_mark: None,
         };
 
         let message = format!(
