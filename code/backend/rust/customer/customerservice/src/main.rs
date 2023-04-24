@@ -1,10 +1,7 @@
-#[macro_use]
-extern crate log;
-
 use std::net::{SocketAddr, ToSocketAddrs};
 
 use config::Config;
-use log::LevelFilter;
+use log::{info, LevelFilter};
 use pretty_env_logger::env_logger::Builder;
 
 use crate::customer::customer_routes::handler_customer::customer_route;

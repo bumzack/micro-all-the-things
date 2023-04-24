@@ -105,6 +105,8 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"episodeNumber",       "type":"pint",           "stored":true,  indexed:"true",     "multiValued":false     }
 }' http://localhost:8984/solr/episode/schema
 
+
+
 curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"tconst",              "type":"string",        "stored":true,      indexed:"true",     "multiValued":false     },
   "add-field":{   "name":"originalTitle",       "type":"string",        "stored":true,      indexed:"true",     "multiValued":false     },

@@ -81,17 +81,18 @@ async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: 
     let mut movies_processed = 0;
     let mut next_cursor_mark = Some("*".to_string());
 
-    let mut limit = limit;
+    let mut offset = offset;
 
     while movies_processed < max_movies {
-        info!("limit {}, offset {}", limit, offset,);
-
-        // do stuff
+        info!(
+            "limit {}, offset {},  movies_processed   {}, max_movies   {} ",
+            limit, offset, movies_processed, max_movies
+        );
 
         let (cnt_movies, n) =
             search_and_write_to_index_v4(offset, limit, next_cursor_mark, engine.clone()).await;
         next_cursor_mark = n;
-        limit += cnt_movies;
+        offset += cnt_movies;
         movies_processed += cnt_movies;
     }
 }
@@ -123,13 +124,7 @@ pub async fn search_movies_v4(
         &search_request.sort.clone(),
         engine.to_string()
     );
-    info!("message {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-    .await;
+    info!("{}", &message);
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;

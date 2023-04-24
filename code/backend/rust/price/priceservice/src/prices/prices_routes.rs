@@ -1,5 +1,6 @@
 pub mod filters_price {
     use deadpool_postgres::Pool;
+    use log::info;
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
     use warp::{Filter, Rejection, Reply};

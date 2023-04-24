@@ -1,4 +1,5 @@
 use deadpool_postgres::{Manager, ManagerConfig, Pool, RecyclingMethod};
+use log::info;
 use tokio_postgres::NoTls;
 
 use crate::CONFIG;
