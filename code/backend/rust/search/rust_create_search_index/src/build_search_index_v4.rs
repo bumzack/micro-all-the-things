@@ -3,6 +3,7 @@ use std::convert::Infallible;
 
 use log::{error, info};
 use serde_json::json;
+use tokio::time::Instant;
 use warp::http::HeaderMap;
 
 use common::entity::entity::{Engine, Entity};
@@ -39,12 +40,34 @@ pub async fn build_index_v4(
     Ok(warp::reply::json(&message))
 }
 
+async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: Engine) {
+    let mut movies_processed = 0;
+    let mut next_cursor_mark = Some("*".to_string());
+
+    let mut offset = offset;
+
+    while movies_processed < max_movies {
+        info!(
+            "limit {}, offset {},  movies_processed   {}, max_movies   {} ",
+            limit, offset, movies_processed, max_movies
+        );
+
+        let (cnt_movies, n) =
+            search_and_write_to_index_v4(offset, limit, next_cursor_mark, engine.clone()).await;
+        next_cursor_mark = n;
+        offset += cnt_movies;
+        movies_processed += cnt_movies;
+    }
+}
+
 async fn search_and_write_to_index_v4(
     offset: usize,
     limit: usize,
     next_cursor_mark: Option<String>,
     engine: Engine,
 ) -> (usize, Option<String>) {
+    let start = Instant::now();
+
     let paginated_movie_result =
         search_movies_v4(limit, offset, next_cursor_mark, engine.clone()).await;
 
@@ -67,34 +90,17 @@ async fn search_and_write_to_index_v4(
     let entity = Entity::SEARCHINDEX;
     meili_update_http(&entity, &CLIENT, docs_json.clone()).await;
     solr_update_http(&entity, &CLIENT, docs_json).await;
+
+    let elapsed = start.elapsed();
     info!(
-        "finished update request for  {} docs.  offset {}, limit {}",
+        "search_and_write_to_index_v4_request. processed {} docs. offset {}, limit {}.  duration {} ms",
         docs.len(),
         offset,
-        limit
+        limit,
+        elapsed.as_millis(),
     );
 
     (cnt, next_cursor_mark)
-}
-
-async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: Engine) {
-    let mut movies_processed = 0;
-    let mut next_cursor_mark = Some("*".to_string());
-
-    let mut offset = offset;
-
-    while movies_processed < max_movies {
-        info!(
-            "limit {}, offset {},  movies_processed   {}, max_movies   {} ",
-            limit, offset, movies_processed, max_movies
-        );
-
-        let (cnt_movies, n) =
-            search_and_write_to_index_v4(offset, limit, next_cursor_mark, engine.clone()).await;
-        next_cursor_mark = n;
-        offset += cnt_movies;
-        movies_processed += cnt_movies;
-    }
 }
 
 pub async fn search_movies_v4(
