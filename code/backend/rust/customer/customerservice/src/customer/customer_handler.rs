@@ -211,6 +211,7 @@ pub mod handler_customer {
             offset,
             limit,
             sort: vec!["nconst:asc".to_string()],
+            next_cursor_mark: None,
         };
 
         let message = format!(
