@@ -8,8 +8,8 @@ pub mod search_helper {
     use common::models::customer_prices::CustomerPriceEntry;
     use common::models::prices::PriceEntry;
 
-    use crate::search_article_routes::mod_search_article_routes::SERVICE_NAME;
     use crate::{CLIENT, CONFIG};
+    use crate::search_article_routes::mod_search_article_routes::SERVICE_NAME;
 
     pub async fn get_movie_price(
         tconst: &String,

@@ -1,9 +1,9 @@
 pub mod filters_logging {
     use deadpool_postgres::Pool;
     use log::info;
+    use warp::{Filter, Rejection, Reply};
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
-    use warp::{Filter, Rejection, Reply};
 
     use common::models::customer_prices::AddCustomerPriceEntry;
 
@@ -15,7 +15,7 @@ pub mod filters_logging {
 
     pub fn price_route(
         pool: Pool,
-    ) -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
+    ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
         let server1 = warp::path!("api" / "v1" / "customerprice" / String / i32);
         let customerprice_get = server1
             .and(with_db(pool.clone()))
@@ -59,8 +59,7 @@ pub mod filters_logging {
             .or(insert_dummy_data)
     }
 
-    fn json_body_add_customer_price(
-    ) -> impl Filter<Extract = (AddCustomerPriceEntry,), Error = warp::Rejection> + Clone {
+    fn json_body_add_customer_price() -> impl Filter<Extract=(AddCustomerPriceEntry, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }

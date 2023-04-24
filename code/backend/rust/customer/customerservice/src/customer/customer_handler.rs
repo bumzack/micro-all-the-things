@@ -18,8 +18,8 @@ pub mod handler_customer {
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
-    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
     use crate::{CLIENT, CONFIG};
+    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
 
     const SERVICE_NAME: &str = "Customer Service";
 
@@ -228,7 +228,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
 
         info!("search person POST URL {}", &search_person);
         let json = json!(&search_request);
@@ -275,7 +275,7 @@ pub mod handler_customer {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
         info!("rust_customerservice_insert_dummy_data search_persons finished successfully");
 
         persons

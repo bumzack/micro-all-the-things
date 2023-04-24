@@ -3,9 +3,9 @@ pub mod mod_search_article_routes {
     use std::time::Instant;
 
     use log::info;
+    use warp::{Filter, Reply};
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
-    use warp::{Filter, Reply};
 
     use common::entity::entity::Engine;
     use common::logging::tracing_headers::tracing_headers_stuff::{
@@ -17,8 +17,7 @@ pub mod mod_search_article_routes {
 
     pub const SERVICE_NAME: &str = "search_article";
 
-    pub fn search_article_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_article_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "v1" / "meili" / "article");
         let search_meili = server
             .and(warp::post())
@@ -88,8 +87,7 @@ pub mod mod_search_article_routes {
         Ok(response)
     }
 
-    fn search_article_request(
-    ) -> impl Filter<Extract = (SearchArticleRequest,), Error = warp::Rejection> + Clone {
+    fn search_article_request() -> impl Filter<Extract=(SearchArticleRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }
