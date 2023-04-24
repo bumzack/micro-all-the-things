@@ -14,16 +14,7 @@ mod authentication;
 mod db;
 
 lazy_static::lazy_static! {
-    static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-           //  .pool_max_idle_per_host(0)
-//             .connection_verbose(true)
-            .timeout(Duration::from_secs(300))
-            .connect_timeout(Duration::from_secs(300))
-            .no_brotli()
-            .no_deflate()
-            .no_gzip()
-            .build()
-            .unwrap();
+    static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
 
 // gotta give credit where credit is due and stuff
