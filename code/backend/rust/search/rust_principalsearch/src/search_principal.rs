@@ -2,8 +2,8 @@ use std::convert::Infallible;
 use std::time::Instant;
 
 use log::info;
-use reqwest::Client;
 use reqwest::header::HeaderMap;
+use reqwest::Client;
 use warp::Reply;
 
 use common::entity::entity::{Engine, Entity};
@@ -22,9 +22,9 @@ pub mod filters_search_principal {
 
     use log::info;
     use reqwest::Client;
-    use warp::{Filter, Reply};
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;
+    use warp::{Filter, Reply};
 
     use common::entity::entity::{Engine, Entity};
     use common::logging::tracing_headers::tracing_headers_stuff::{
@@ -35,12 +35,13 @@ pub mod filters_search_principal {
     use common::models::principal::Principal;
     use common::solr::solr_entity::solr_entity_stuff::solr_filter_entity;
 
-    use crate::CLIENT;
     use crate::search_principal::filter_principals;
+    use crate::CLIENT;
 
     const SERVICE_NAME: &str = "Search Principal Service";
 
-    pub fn filter_principal_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
+    pub fn filter_principal_route(
+    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "principal" / "filter" / "name" / String);
         let search_name_meili = server.and(warp::get()).and(headers_cloned()).and_then(
             |nconst: String, headers: HeaderMap| {
@@ -125,7 +126,8 @@ pub mod filters_search_principal {
             .or(search_tconsts_meili)
     }
 
-    fn json_body_search_principal_list() -> impl Filter<Extract=(SearchPrincipalList, ), Error=warp::Rejection> + Clone {
+    fn json_body_search_principal_list(
+    ) -> impl Filter<Extract = (SearchPrincipalList,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
@@ -148,7 +150,7 @@ pub mod filters_search_principal {
                     vec![filter_value.clone()],
                     client,
                 )
-                    .await
+                .await
             }
             Engine::Meili => {
                 meili_filter_entity::<Principal>(
@@ -157,7 +159,7 @@ pub mod filters_search_principal {
                     vec![filter_value.clone()],
                     client,
                 )
-                    .await
+                .await
             }
         };
 
@@ -190,7 +192,6 @@ pub async fn filter_principals(
     client: &Client,
     headers: HeaderMap,
 ) -> Result<impl Reply, Infallible> {
-    info!("whooooop");
     let start_total = Instant::now();
     let (initiated_by, uuid, processed_by) = get_trace_infos(&headers, SERVICE_NAME.to_string());
 

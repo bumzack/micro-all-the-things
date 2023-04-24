@@ -16,8 +16,8 @@ use common::models::principal::Principal;
 use common::models::search_doc::{SearchIndexDoc, SearchPaginatedRequest};
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
-use crate::{CLIENT, CONFIG};
 use crate::build_search_common::prepare_for_request;
+use crate::{CLIENT, CONFIG};
 
 pub async fn build_index_v4(
     engine: Engine,
@@ -33,7 +33,7 @@ pub async fn build_index_v4(
         limit as usize,
         engine.clone(),
     )
-        .await;
+    .await;
 
     let message = "processed stuff ".to_string();
     info!("done {}", &message);
@@ -57,6 +57,11 @@ async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: 
         next_cursor_mark = n;
         offset += cnt_movies;
         movies_processed += cnt_movies;
+
+        info!(
+            "limit {}, offset {},  movies_processed   {}, max_movies   {}   next_cursor_mark {:?}",
+            limit, offset, movies_processed, max_movies, next_cursor_mark,
+        );
     }
 }
 
@@ -120,15 +125,16 @@ pub async fn search_movies_v4(
         offset: offset as u32,
         limit: limit as u32,
         sort: vec!["tconst:asc".to_string()],
-        next_cursor_mark,
+        next_cursor_mark: next_cursor_mark.clone(),
     };
 
     let message = format!(
-        "start search_movies().  offset {}, limit {}, sort {:?}, engine: {}",
+        "start search_movies().  offset {}, limit {}, sort {:?}, engine: {},   next_cursor_mark {:?}",
         offset,
         limit,
         &search_request.sort.clone(),
-        engine.to_string()
+        engine.to_string(),
+        next_cursor_mark,
     );
     info!("{}", &message);
 
@@ -154,7 +160,7 @@ pub async fn search_movies_v4(
         .expect("expected a list of Movies");
 
     let message = format!(
-        "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
+        "XXXx end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
         &search_request.sort.clone(),
@@ -166,7 +172,7 @@ pub async fn search_movies_v4(
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     movies_paginated_result
 }
@@ -254,20 +260,12 @@ pub async fn convert_to_search_index_doc_v4(
                 year: m.start_year,
             };
             docs.push(doc);
-
-            info!(
-                "movies_processed {}, page_size {}, movies.len() {},  docs.len() {}",
-                movies_processed,
-                page_size,
-                movies.len(),
-                docs.len()
-            );
         }
         movies_processed += page_size;
     }
 
     info!(
-        "created {}  docs from a vec of {} movies",
+        "docs_created.  created {} docs from a vec of {} movies",
         docs.len(),
         movies.len()
     );
