@@ -214,7 +214,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -243,7 +243,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         .expect("expected a list of Movies");
 
     let message = format!(
-        "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
+        "yyyy   end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
         &search_request.sort.clone(),
@@ -255,7 +255,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     movies_paginated_result.movies
 }
@@ -276,7 +276,7 @@ async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     let response = CLIENT.get(&url).send().await;
 
