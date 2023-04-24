@@ -62,3 +62,9 @@ impl EntityConverter<Movie> for TsvLines {
         self.lines.iter().map(|t| map_to_movie(&t)).collect()
     }
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct MoviePaginationResult {
+    pub movies: Vec<Movie>,
+    pub next_cursor_mark: Option<String>,
+}

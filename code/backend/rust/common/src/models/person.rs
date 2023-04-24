@@ -4,13 +4,18 @@ use serde::Deserialize;
 use serde::Serialize;
 
 use crate::entity::entity::{
-    EntityConverter, get_nullable_string, get_nullable_string_list, get_nullable_u32,
+    get_nullable_string, get_nullable_string_list, get_nullable_u32, EntityConverter,
 };
 use crate::tsv::tsv::{TsvLine, TsvLines};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SearchPersonList {
     pub nconsts: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SearchPrincipalList {
+    pub tconsts: Vec<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

@@ -139,7 +139,11 @@ pub mod filters_search_person {
             get_trace_infos(&headers, SERVICE_NAME.to_string());
 
         let persons = match engine {
-            Engine::Solr => solr_read_doc::<Person>(Entity::PERSON, offset, limit, client).await,
+            Engine::Solr => {
+                let doc =
+                    solr_read_doc::<Person>(Entity::PERSON, offset, limit, None, client).await;
+                doc.0
+            }
             Engine::Meili => meili_read_doc::<Person>(Entity::PERSON, offset, limit, client).await,
         };
 

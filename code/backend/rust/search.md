@@ -75,7 +75,7 @@ curl -X PUT -d '[ "tconst"]'      http://meilisearch01.bumzack.at/indexes/search
 ```
 
 ```
-curl  -X POST   http://localhost:18200/api/solr/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 0, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] }'  | jq
+curl  -X POST   http://localhost:18200/api/solr/movie    -H 'Content-Type: application/json'  -d '{ "q" : "*", "offset" : 0, "limit" : 3, "page" : 0 , "sort" : [ "tconst:asc" ] , "next_cursor_mark" : "*"}'  | jq
 ```
 
 ```
@@ -101,6 +101,11 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
 ```
  curl  -vv   http://localhost:18204/api/meili/principal/name/nm1122026      |  jq  
 ```
+
+### Principal by Titles (tconsts)
+
+curl  -vv -X POST   http://localhost:18204/api/solr/principal/filter/titles/     -d '{ "tconsts" : ["tt0666268", "tt0666268"] } '    -H 'Content-Type: application/json'   |  jq
+
 
 ### Principal by Movie ID (tconst)
 
@@ -144,10 +149,10 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
  curl  -vv   http://localhost:18300/api/v3/solr/searchindex/build         |  jq    
 ```
 
-## /:engine/:start/:pagesize/:tasks
+## /:engine/:start/:pagesize/:max_movies/:tasks
 
 ```
-curl http://localhost:18300/api/v3/solr/searchindex/build/9000000/50000/1         |  jq    
+curl  -vv  http://localhost:18300/api/v4/solr/searchindex/build/9000000/50000/10000/1         |  jq    
 ```
 
 ## Movie max Hits

@@ -3,7 +3,7 @@ use serde_json::json;
 use common::entity::entity::Engine;
 use common::logging::logging_service_client::logging_service;
 use common::logging::logging_service_client::logging_service::log_external_service_error;
-use common::models::movie::Movie;
+use common::models::movie::{Movie, MoviePaginationResult};
 use common::models::search_doc::SearchPaginatedRequest;
 
 use crate::{CLIENT, CONFIG};
@@ -79,8 +79,11 @@ pub mod handlers_price {
 
         let mut movies_found = true;
         let mut movies_processed = 0;
+        let mut next_cursor_mark = Some("*".to_string());
         while movies_found && movies_processed < count {
-            let movies = search_movies(limit, offset, Engine::Solr).await;
+            let (movies, next_c) =
+                search_movies(limit, offset, next_cursor_mark.clone(), Engine::Solr).await;
+             next_cursor_mark = next_c;
             movies_found = !movies.is_empty();
             for m in movies {
                 let amount = 15.0 + rand::random::<f32>() * 15.0;
@@ -112,7 +115,12 @@ pub mod handlers_price {
     }
 }
 
-async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
+async fn search_movies(
+    limit: u32,
+    offset: u32,
+    next_cursor_mark: Option<String>,
+    engine: Engine,
+) -> (Vec<Movie>, Option<String>) {
     info!("rust_priceservice_insert_dummy_data.search_movies");
     let search_movie: String = CONFIG
         .get("search_movie")
@@ -125,6 +133,7 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
         offset,
         limit,
         sort: vec!["tconst:asc".to_string()],
+        next_cursor_mark,
     };
 
     let message = format!(
@@ -160,26 +169,27 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
             "error from SearchMovie Service {:?}",
             response.err().unwrap()
         );
-        return vec![];
+        return (vec![], None);
     }
     info!("XXX    search_movies all good");
 
     let response2 = response.unwrap();
-    let movies = response2
-        .json::<Vec<Movie>>()
+    let paginated_result = response2
+        .json::<MoviePaginationResult>()
         .await
         .expect("expected a list of Movies");
     info!(
         "rust_priceservice_insert_dummy_data.search_movies all good. found {} movies",
-        movies.len()
+        paginated_result.movies.len()
     );
 
     let message = format!(
-        "end rust_priceservice_insert_dummy_data.search_movies().  offset {}, limit {}, sort {:?}. {} movies found ",
+        "end rust_priceservice_insert_dummy_data.search_movies().  offset {}, limit {}, sort {:?}. {} movies found ,    next_cursor_mark   {:?}",
         offset,
         limit,
         &search_request.sort.clone(),
-        movies.len()
+        paginated_result.movies.len(),
+        paginated_result.next_cursor_mark,
     );
     info!("message {}", &message);
     logging_service::log_entry(
@@ -190,5 +200,5 @@ async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie> {
     .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
-    movies
+    (paginated_result.movies, paginated_result.next_cursor_mark)
 }
