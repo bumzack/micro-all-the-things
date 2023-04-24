@@ -1,7 +1,7 @@
 pub mod filters_build_index {
     use log::info;
-    use warp::header::headers_cloned;
     use warp::Filter;
+    use warp::header::headers_cloned;
 
     use common::entity::entity::Engine;
 
@@ -10,8 +10,7 @@ pub mod filters_build_index {
     use crate::build_search_index_v3::build_index_v3;
     use crate::build_search_index_v4::build_index_v4;
 
-    pub fn build_index_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn build_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let v1 = warp::path!("api" / "v1" / "searchindex" / "build")
             .and(warp::get())
             .and_then(|| {

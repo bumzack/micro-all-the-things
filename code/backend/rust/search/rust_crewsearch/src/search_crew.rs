@@ -3,9 +3,9 @@ pub mod filters_search_crew {
     use std::time::Instant;
 
     use log::info;
+    use warp::{Filter, Reply};
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;
-    use warp::{Filter, Reply};
 
     use common::entity::entity::{Engine, Entity};
     use common::logging::tracing_headers::tracing_headers_stuff::{
@@ -19,8 +19,7 @@ pub mod filters_search_crew {
 
     const SERVICE_NAME: &str = "Search Crew Service";
 
-    pub fn filter_crew_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn filter_crew_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "crew" / "filter" / String);
         let search_crew_meili = server.and(warp::get()).and(headers_cloned()).and_then(
             |tconst: String, headers: HeaderMap| {
@@ -58,7 +57,7 @@ pub mod filters_search_crew {
                     vec![filter_value.clone()],
                     &CLIENT,
                 )
-                .await
+                    .await
             }
             Engine::Meili => {
                 meili_filter_entity::<Crew>(
@@ -67,7 +66,7 @@ pub mod filters_search_crew {
                     vec![filter_value.clone()],
                     &CLIENT,
                 )
-                .await
+                    .await
             }
         };
 

@@ -8,7 +8,7 @@ pub mod db_prices {
     use warp::reject;
 
     use common::logging::logging::DivideByZero;
-    use common::models::prices::{price_entry_from_row, AddPriceEntry, PriceEntry};
+    use common::models::prices::{AddPriceEntry, price_entry_from_row, PriceEntry};
 
     use crate::db::db::TABLE_PRICE;
 

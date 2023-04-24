@@ -16,8 +16,8 @@ use common::models::principal::Principal;
 use common::models::search_doc::{SearchIndexDoc, SearchPaginatedRequest};
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
-use crate::build_search_common::prepare_for_request;
 use crate::{CLIENT, CONFIG};
+use crate::build_search_common::prepare_for_request;
 
 pub async fn build_index_v4(
     engine: Engine,
@@ -33,7 +33,7 @@ pub async fn build_index_v4(
         limit as usize,
         engine.clone(),
     )
-    .await;
+        .await;
 
     let message = "processed stuff ".to_string();
     info!("done {}", &message);
@@ -166,7 +166,7 @@ pub async fn search_movies_v4(
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     movies_paginated_result
 }
