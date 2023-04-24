@@ -1,6 +1,4 @@
 pub mod logging_service {
-    use std::time::Duration;
-
     use config::Config;
     use log::{error, info};
     use reqwest::{Error, Response, StatusCode};

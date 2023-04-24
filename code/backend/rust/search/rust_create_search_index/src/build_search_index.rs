@@ -8,6 +8,7 @@ pub mod filters_build_index {
     use crate::build_search_index_v1::build_index_v1;
     use crate::build_search_index_v2::build_index_v2;
     use crate::build_search_index_v3::build_index_v3;
+    use crate::build_search_index_v4::build_index_v4;
 
     pub fn build_index_route(
     ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
@@ -45,6 +46,34 @@ pub mod filters_build_index {
                     build_index_v3(engine, start, pagesize, tasks, headers)
                 });
 
-        v1.or(v2).or(v3_meili).or(v3_solr)
+        let v4_meili =
+            warp::path!("api" / "v4" / "meili" / "searchindex" / "build" / u32 / u32 / u32 / u32)
+                .and(warp::get())
+                .and(headers_cloned())
+                .and_then(|start, pagesize, max_movies, tasks, headers| {
+                    let engine = Engine::Meili;
+                    info!("GET /api/v4/meili/searchindex/build/:start/:pagesize/:tasks matched");
+                    info!(
+                        " start {}, pagesize {}, max_movies {}, tasks {}",
+                        start, pagesize, max_movies, tasks
+                    );
+                    build_index_v4(engine, start, pagesize, max_movies, tasks, headers)
+                });
+
+        let v4_solr =
+            warp::path!("api" / "v4" / "solr" / "searchindex" / "build" / u32 / u32 / u32 / u32)
+                .and(warp::get())
+                .and(headers_cloned())
+                .and_then(|start, pagesize, max_movies, tasks, headers| {
+                    let engine = Engine::Solr;
+                    info!("GET /api/v4/solr/searchindex/build/:start/:pagesize/:tasks matched");
+                    info!(
+                        " start {}, pagesize {}, max_movies {}, tasks {}",
+                        start, pagesize, max_movies, tasks
+                    );
+                    build_index_v4(engine, start, pagesize, max_movies, tasks, headers)
+                });
+
+        v1.or(v2).or(v3_meili).or(v3_solr).or(v4_meili).or(v4_solr)
     }
 }

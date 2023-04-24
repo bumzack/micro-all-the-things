@@ -18,6 +18,7 @@ pub mod mod_solr_http {
         limit: Option<u32>,
         offset: Option<u32>,
         client: &Client,
+        cursor_mark: Option<String>,
     ) -> Result<Response, Error> {
         let mut url_params: Vec<(String, String)> = vec![];
 
@@ -70,6 +71,14 @@ pub mod mod_solr_http {
             url_params.push(entry)
         }
 
+        if cursor_mark.clone().is_some() {
+            let entry = (
+                "cursorMark".to_string(),
+                cursor_mark.as_ref().unwrap().to_string(),
+            );
+            url_params.push(entry)
+        }
+
         if facets.is_some() {
             let entry = ("facet".to_string(), "true".to_string());
             url_params.push(entry);
@@ -99,6 +108,14 @@ pub mod mod_solr_http {
             url_params.push(entry)
         };
 
+        if cursor_mark.is_some() && offset.is_none() {
+            let mut n: Vec<(String, String)> =
+                url_params.drain(..).filter(|p| p.0.ne("start")).collect();
+            let entry = ("start".to_string(), offset.unwrap().to_string());
+            n.push(entry);
+            url_params = n;
+        }
+
         let url_params = url_params.iter();
 
         let index = format!(
@@ -110,7 +127,7 @@ pub mod mod_solr_http {
             .to_string();
 
         info!(
-            "solr_search  entity {:?},  url {}",
+            "solr_search_documents  entity {:?},  url {}",
             entity.to_string(),
             &url
         );
