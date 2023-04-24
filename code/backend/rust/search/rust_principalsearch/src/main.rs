@@ -7,16 +7,7 @@ use warp::Filter;
 mod search_principal;
 
 lazy_static::lazy_static! {
-    static ref CLIENT: reqwest::Client = reqwest::Client::builder()
-           //  .pool_max_idle_per_host(0)
-//             .connection_verbose(true)
-            .timeout(Duration::from_secs(300))
-            .connect_timeout(Duration::from_secs(300))
-            .no_brotli()
-            .no_deflate()
-            .no_gzip()
-            .build()
-            .unwrap();
+    static ref CLIENT: reqwest::Client = reqwest::Client::new();
 }
 
 #[tokio::main]
@@ -25,7 +16,7 @@ async fn main() -> io::Result<()> {
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 
-    let root = root.or(search_principal::filters_search_movie::filter_principal_route());
+    let root = root.or(search_principal::filters_search_principal::filter_principal_route());
 
     // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("meilisearchprincipal"));
