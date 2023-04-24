@@ -52,4 +52,6 @@ pub struct SolrResponse<T> {
     pub response_header: Option<ResponseHeader>,
     pub response: Option<SolrResponseDocs<T>>,
     //  pub facet_counts: Option<FacetCounts>,
+    #[serde(rename = "nextCursorMark")]
+    pub next_cursor_mark: Option<String>,
 }

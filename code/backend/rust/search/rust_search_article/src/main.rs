@@ -1,6 +1,5 @@
 use std::io;
 use std::net::{SocketAddr, ToSocketAddrs};
-use std::time::Duration;
 
 use config::Config;
 use log::{info, LevelFilter};

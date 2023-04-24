@@ -1,5 +1,4 @@
 use std::io;
-use std::time::Duration;
 
 use log::LevelFilter;
 use pretty_env_logger::env_logger::Builder;
@@ -17,7 +16,7 @@ async fn main() -> io::Result<()> {
 
     let root = warp::path::end().map(|| "Welcome to my warp server!");
 
-    let root = root.or(search_principal::filters_search_movie::filter_principal_route());
+    let root = root.or(search_principal::filters_search_principal::filter_principal_route());
 
     // View access logs by setting `RUST_LOG=todos`.
     let routes = root.with(warp::log("meilisearchprincipal"));

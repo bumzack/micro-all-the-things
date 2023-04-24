@@ -15,14 +15,25 @@ pub mod solr_entity_stuff {
         filter_values: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let mut filters = HashMap::new();
         filters.insert(filter_field, filter_values);
 
-        let response =
-            solr_search_http(entity, Some(filters), None, None, None, None, None, client);
+        info!("solr filters {:?}", &filters);
+
+        let response = solr_search_http(
+            entity,
+            Some(filters),
+            None,
+            None,
+            None,
+            None,
+            None,
+            client,
+            None,
+        );
         let response2 = response.await;
         let entities = match response2 {
             Ok(r) => {
@@ -65,8 +76,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -154,6 +165,7 @@ pub mod solr_entity_stuff {
             None,
             None,
             client,
+            None,
         );
 
         let response2 = response.await;
@@ -195,8 +207,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<FacetCounts>)
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -284,6 +296,7 @@ pub mod solr_entity_stuff {
             Some(limit),
             Some(offset),
             client,
+            None,
         );
 
         let response2 = response.await;
@@ -333,10 +346,11 @@ pub mod solr_entity_stuff {
         entity: Entity,
         offset: u32,
         limit: u32,
+        cursor_mark: Option<String>,
         client: &Client,
-    ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    ) -> (Vec<T>, Option<String>)
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let sort = vec![("id".to_string(), true)];
         let response = solr_search_http(
@@ -348,12 +362,13 @@ pub mod solr_entity_stuff {
             Some(limit),
             Some(offset),
             client,
+            cursor_mark,
         );
 
         let response2 = response.await;
         if response2.is_err() {
             error!("error requesting solr index  {}", response2.err().unwrap());
-            return vec![];
+            return (vec![], None);
         }
         let result = response2.unwrap().json::<SolrResponse<T>>().await;
         if result.is_err() {
@@ -361,13 +376,16 @@ pub mod solr_entity_stuff {
                 "can't unwrap response to SolrResponse<T> type. error {}",
                 result.err().unwrap()
             );
-            return vec![];
+            return (vec![], None);
         }
         let result = result.unwrap();
 
         match result.response {
-            Some(m) => m.docs.unwrap(),
-            None => vec![],
+            Some(m) => {
+                info!("response next_cursor_mark  {:?}", result.next_cursor_mark);
+                (m.docs.unwrap(), result.next_cursor_mark)
+            }
+            None => (vec![], None),
         }
     }
 }

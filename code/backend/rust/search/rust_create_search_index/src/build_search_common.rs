@@ -6,7 +6,7 @@ use serde_json::json;
 use common::entity::entity::Engine;
 use common::helper::dump_response_status;
 use common::logging::logging_service_client::logging_service;
-use common::models::movie::Movie;
+use common::models::movie::{Movie, MoviePaginationResult};
 use common::models::person::{Person, SearchPersonList};
 use common::models::principal::Principal;
 use common::models::search_doc::{SearchIndexDoc, SearchPaginatedRequest};
@@ -198,6 +198,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         offset,
         limit,
         sort: vec!["tconst:asc".to_string()],
+        next_cursor_mark: None,
     };
 
     let message = format!(
@@ -236,17 +237,18 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
     }
 
     let response2 = response.unwrap();
-    let movies = response2
-        .json::<Vec<Movie>>()
+    let movies_paginated_result = response2
+        .json::<MoviePaginationResult>()
         .await
         .expect("expected a list of Movies");
 
     let message = format!(
-        "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found ",
+        "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
         &search_request.sort.clone(),
-        movies.len()
+        movies_paginated_result.movies.len(),
+        movies_paginated_result.next_cursor_mark
     );
     logging_service::log_entry(
         "rust_create_search_index".to_string(),
@@ -255,7 +257,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
     )
     .await;
 
-    movies
+    movies_paginated_result.movies
 }
 
 async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
@@ -318,13 +320,9 @@ async fn search_person(nconsts: Vec<String>, engine: Engine) -> Vec<Person> {
             info!("body if not status 200 {}", body.unwrap());
             vec![]
         }
-        false => {
-            let persons = response2
-                .json::<Vec<Person>>()
-                .await
-                .expect("expected a list of Persons");
-
-            persons
-        }
+        false => response2
+            .json::<Vec<Person>>()
+            .await
+            .expect("expected a list of Persons"),
     }
 }
