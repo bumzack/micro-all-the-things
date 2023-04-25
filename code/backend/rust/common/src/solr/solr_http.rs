@@ -66,7 +66,7 @@ pub mod mod_solr_http {
             url_params.push(entry)
         }
 
-        if offset.is_some() {
+        if offset.is_some() && cursor_mark.is_none() {
             let entry = ("start".to_string(), offset.unwrap().to_string());
             url_params.push(entry)
         }
@@ -108,13 +108,13 @@ pub mod mod_solr_http {
             url_params.push(entry)
         };
 
-        if cursor_mark.is_some() && offset.is_none() {
-            let mut n: Vec<(String, String)> =
-                url_params.drain(..).filter(|p| p.0.ne("start")).collect();
-            let entry = ("start".to_string(), offset.unwrap().to_string());
-            n.push(entry);
-            url_params = n;
-        }
+        // if cursor_mark.is_some() && offset.is_none() {
+        //     let mut n: Vec<(String, String)> =
+        //         url_params.drain(..).filter(|p| p.0.ne("start")).collect();
+        //     let entry = ("start".to_string(), offset.unwrap().to_string());
+        //     n.push(entry);
+        //     url_params = n;
+        // }
 
         let url_params = url_params.iter();
 
