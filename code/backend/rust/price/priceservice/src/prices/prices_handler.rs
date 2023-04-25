@@ -1,3 +1,4 @@
+use log::{error, info};
 use serde_json::json;
 
 use common::entity::entity::Engine;
@@ -12,6 +13,7 @@ pub mod handlers_price {
     use std::time::Instant;
 
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use reqwest::header::HeaderMap;
     use warp::{reject, Rejection, Reply};
 
@@ -149,7 +151,7 @@ async fn search_movies(
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -197,7 +199,7 @@ async fn search_movies(
         "INFO".to_string(),
         &message,
     )
-    .await;
+        .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     (paginated_result.movies, paginated_result.next_cursor_mark)

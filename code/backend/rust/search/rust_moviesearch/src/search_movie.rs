@@ -4,9 +4,9 @@ pub mod filters_search_movie {
 
     use log::info;
     use reqwest::Client;
+    use warp::{Filter, Reply};
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;
-    use warp::{Filter, Reply};
 
     use common::entity::entity::{Engine, Entity};
     use common::logging::tracing_headers::tracing_headers_stuff::{
@@ -21,8 +21,7 @@ pub mod filters_search_movie {
 
     const SERVICE_NAME: &str = "Search Movie";
 
-    pub fn search_movie_route(
-    ) -> impl Filter<Extract = (impl Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_movie_route() -> impl Filter<Extract=(impl Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "meili" / "movie" / String);
         let search_meili = server.and(warp::get()).and(headers_cloned()).and_then(
             |search_text: String, headers: HeaderMap| {
@@ -93,7 +92,7 @@ pub mod filters_search_movie {
                     vec![],
                     client,
                 )
-                .await
+                    .await
             }
             Engine::Meili => {
                 meili_search_entity::<Movie>(
@@ -104,7 +103,7 @@ pub mod filters_search_movie {
                     vec![],
                     client,
                 )
-                .await
+                    .await
             }
         };
 
@@ -182,8 +181,7 @@ pub mod filters_search_movie {
         Ok(response)
     }
 
-    fn search_movies_request(
-    ) -> impl Filter<Extract = (SearchPaginatedRequest,), Error = warp::Rejection> + Clone {
+    fn search_movies_request() -> impl Filter<Extract=(SearchPaginatedRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 }

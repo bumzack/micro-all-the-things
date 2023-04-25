@@ -104,8 +104,9 @@ curl  -vv -X POST   http://localhost:18203/api/solr/person/filter      -d '{"nco
 
 ### Principal by Titles (tconsts)
 
-curl  -vv -X POST   http://localhost:18204/api/solr/principal/filter/titles/     -d '{ "tconsts" : ["tt0666268", "tt0666268"] } '    -H 'Content-Type: application/json'   |  jq
-
+```
+curl -vv -X POST   http://localhost:18204/api/solr/principal/filter/titles/     -d '{ "tconsts" : ["tt0666268", "tt0666268"] } '    -H 'Content-Type: application/json' | jq
+```
 
 ### Principal by Movie ID (tconst)
 
