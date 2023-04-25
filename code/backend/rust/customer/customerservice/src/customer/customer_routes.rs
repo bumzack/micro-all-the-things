@@ -1,8 +1,9 @@
 pub mod handler_customer {
     use deadpool_postgres::Pool;
+    use log::info;
+    use warp::{Filter, Rejection, Reply};
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
-    use warp::{Filter, Rejection, Reply};
 
     use common::models::customer::AddCustomer;
 
@@ -14,7 +15,7 @@ pub mod handler_customer {
 
     pub fn customer_route(
         pool: Pool,
-    ) -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
+    ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
         let server1 = warp::path!("api" / "v1" / "customer" / String);
         let customer_get = server1
             .and(with_db(pool.clone()))
@@ -64,8 +65,7 @@ pub mod handler_customer {
             .or(customer_get_paginated)
     }
 
-    fn json_body_add_customer(
-    ) -> impl Filter<Extract = (AddCustomer,), Error = warp::Rejection> + Clone {
+    fn json_body_add_customer() -> impl Filter<Extract=(AddCustomer, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 }

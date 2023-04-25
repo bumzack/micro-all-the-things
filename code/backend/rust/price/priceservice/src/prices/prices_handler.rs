@@ -83,7 +83,7 @@ pub mod handlers_price {
         while movies_found && movies_processed < count {
             let (movies, next_c) =
                 search_movies(limit, offset, next_cursor_mark.clone(), Engine::Solr).await;
-             next_cursor_mark = next_c;
+            next_cursor_mark = next_c;
             movies_found = !movies.is_empty();
             for m in movies {
                 let amount = 15.0 + rand::random::<f32>() * 15.0;

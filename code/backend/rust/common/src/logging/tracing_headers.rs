@@ -7,8 +7,8 @@ pub mod tracing_headers_stuff {
     use serde::Serialize;
     use serde_json::json;
     use uuid::Uuid;
-    use warp::reply::Response;
     use warp::Reply;
+    use warp::reply::Response;
 
     pub const HEADER_X_INITIATED_BY: &str = "X-initiated-by";
     pub const HEADER_X_PROCESSED_BY: &str = "X-processed-by";

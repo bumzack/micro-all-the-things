@@ -1,8 +1,9 @@
 pub mod handler_authentication {
     use deadpool_postgres::Pool;
+    use log::info;
+    use warp::{Filter, Rejection, Reply};
     use warp::header::headers_cloned;
     use warp::http::HeaderMap;
-    use warp::{Filter, Rejection, Reply};
 
     use common::models::authentication::{LogInRequest, LogOutRequest};
 
@@ -13,7 +14,7 @@ pub mod handler_authentication {
 
     pub fn authentication_route(
         pool: Pool,
-    ) -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
+    ) -> impl Filter<Extract=(impl Reply, ), Error=Rejection> + Clone {
         let server1 = warp::path!("api" / "v1" / "authenticated" / i32);
         let authentication = server1
             .and(with_db(pool.clone()))
@@ -63,12 +64,12 @@ pub mod handler_authentication {
             .or(authentication_logout)
     }
 
-    fn json_body_login() -> impl Filter<Extract = (LogInRequest,), Error = warp::Rejection> + Clone
+    fn json_body_login() -> impl Filter<Extract=(LogInRequest, ), Error=warp::Rejection> + Clone
     {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }
 
-    fn json_body_logout() -> impl Filter<Extract = (LogOutRequest,), Error = warp::Rejection> + Clone
+    fn json_body_logout() -> impl Filter<Extract=(LogOutRequest, ), Error=warp::Rejection> + Clone
     {
         warp::body::content_length_limit(1024 * 1000 * 1000).and(warp::body::json())
     }

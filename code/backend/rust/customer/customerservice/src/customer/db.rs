@@ -4,6 +4,7 @@ pub type Result<T> = std::result::Result<T, Rejection>;
 
 pub mod db_logging {
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use warp::reject;
 
     use common::logging::logging::DivideByZero;
@@ -29,7 +30,7 @@ pub mod db_logging {
         })?;
 
         let customer = Customer::from(&data);
-        info!("found a customer for email {}:  {:?}", &email,customer);
+        info!("found a customer for email {}:  {:?}", &email, customer);
 
         Ok(customer)
     }

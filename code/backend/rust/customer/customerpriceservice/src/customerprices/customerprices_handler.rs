@@ -2,6 +2,7 @@ pub mod filters_customer_price {
     use std::time::Instant;
 
     use deadpool_postgres::Pool;
+    use log::{error, info};
     use reqwest::header::HeaderMap;
     use warp::{reject, Rejection, Reply};
 
@@ -13,8 +14,8 @@ pub mod filters_customer_price {
     use common::models::customer::Customer;
     use common::models::customer_prices::AddCustomerPriceEntry;
 
-    use crate::customerprices::db::db_logging::{get_customerprice, insert_price_entry};
     use crate::{CLIENT, CONFIG};
+    use crate::customerprices::db::db_logging::{get_customerprice, insert_price_entry};
 
     const SERVICE_NAME: &str = "CustomerPrice Service";
 
@@ -205,7 +206,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
 
         let response = CLIENT.get(search_customer).send().await;
 
@@ -237,7 +238,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-        .await;
+            .await;
         info!(
             ".rust_customerpriceservice_insert_dummy_data search_customers finished successfully"
         );
