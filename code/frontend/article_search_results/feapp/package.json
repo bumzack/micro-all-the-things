@@ -3,7 +3,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "rm dist/* &&  yarn parcel build src/index.html && ./blupp.sh",
+    "build": "rm dist/* &&  yarn parcel build src/index.html",
     "check": "tsc --noEmit"
   },
   "devDependencies": {
@@ -12,7 +12,7 @@
     "typescript": "5.0.4"
   },
   "dependencies": {
-    "bootstrap": "^5.2.3",
+    "bootstrap": "^5.3.0-alpha3",
     "jquery": "3.6.4"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead"
