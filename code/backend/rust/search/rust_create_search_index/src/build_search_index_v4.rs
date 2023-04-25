@@ -3,6 +3,7 @@ use std::convert::Infallible;
 
 use log::{error, info};
 use serde_json::json;
+use tokio::time::Instant;
 use warp::http::HeaderMap;
 
 use common::entity::entity::{Engine, Entity};
@@ -39,12 +40,47 @@ pub async fn build_index_v4(
     Ok(warp::reply::json(&message))
 }
 
+async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: Engine) {
+    let mut movies_processed = 0;
+    let mut next_cursor_mark = Some("*".to_string());
+
+    let mut offset = offset;
+
+    while movies_processed < max_movies {
+        info!(
+            "limit {}, offset {},  movies_processed   {}, max_movies   {} ",
+            limit, offset, movies_processed, max_movies
+        );
+
+        let (cnt_movies, n) =
+            search_and_write_to_index_v4(offset, limit, next_cursor_mark, engine.clone()).await;
+        next_cursor_mark = n;
+        offset += cnt_movies;
+        movies_processed += cnt_movies;
+
+        info!(
+            "limit {}, offset {},  movies_processed   {}, max_movies   {}   next_cursor_mark {:?}",
+            limit, offset, movies_processed, max_movies, next_cursor_mark,
+        );
+
+        if cnt_movies == 0 {
+            info!(
+                "limit {}, offset {},  movies_processed   {}, max_movies   {}   next_cursor_mark {:?}, no new moves found -> quitting",
+                limit, offset, movies_processed, max_movies, next_cursor_mark,
+            );
+            return;
+        }
+    }
+}
+
 async fn search_and_write_to_index_v4(
     offset: usize,
     limit: usize,
     next_cursor_mark: Option<String>,
     engine: Engine,
 ) -> (usize, Option<String>) {
+    let start = Instant::now();
+
     let paginated_movie_result =
         search_movies_v4(limit, offset, next_cursor_mark, engine.clone()).await;
 
@@ -67,33 +103,17 @@ async fn search_and_write_to_index_v4(
     let entity = Entity::SEARCHINDEX;
     meili_update_http(&entity, &CLIENT, docs_json.clone()).await;
     solr_update_http(&entity, &CLIENT, docs_json).await;
+
+    let elapsed = start.elapsed();
     info!(
-        "finished update request for  {} docs.  offset {}, limit {}",
+        "search_and_write_to_index_v4_request. processed {} docs. offset {}, limit {}.  duration {} ms",
         docs.len(),
         offset,
-        limit
+        limit,
+        elapsed.as_millis(),
     );
 
     (cnt, next_cursor_mark)
-}
-
-async fn start_tasks_v4(max_movies: usize, offset: usize, limit: usize, engine: Engine) {
-    let mut movies_processed = 0;
-    let mut next_cursor_mark = Some("*".to_string());
-
-    let mut limit = limit;
-
-    while movies_processed < max_movies {
-        info!("limit {}, offset {}", limit, offset,);
-
-        // do stuff
-
-        let (cnt_movies, n) =
-            search_and_write_to_index_v4(offset, limit, next_cursor_mark, engine.clone()).await;
-        next_cursor_mark = n;
-        limit += cnt_movies;
-        movies_processed += cnt_movies;
-    }
 }
 
 pub async fn search_movies_v4(
@@ -113,23 +133,18 @@ pub async fn search_movies_v4(
         offset: offset as u32,
         limit: limit as u32,
         sort: vec!["tconst:asc".to_string()],
-        next_cursor_mark,
+        next_cursor_mark: next_cursor_mark.clone(),
     };
 
     let message = format!(
-        "start search_movies().  offset {}, limit {}, sort {:?}, engine: {}",
+        "start search_movies().  offset {}, limit {}, sort {:?}, engine: {},   next_cursor_mark {:?}",
         offset,
         limit,
         &search_request.sort.clone(),
-        engine.to_string()
+        engine.to_string(),
+        next_cursor_mark,
     );
-    info!("message {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-    .await;
+    info!("{}", &message);
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -153,7 +168,7 @@ pub async fn search_movies_v4(
         .expect("expected a list of Movies");
 
     let message = format!(
-        "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
+        "XXXx end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
         &search_request.sort.clone(),
@@ -253,20 +268,12 @@ pub async fn convert_to_search_index_doc_v4(
                 year: m.start_year,
             };
             docs.push(doc);
-
-            info!(
-                "movies_processed {}, page_size {}, movies.len() {},  docs.len() {}",
-                movies_processed,
-                page_size,
-                movies.len(),
-                docs.len()
-            );
         }
         movies_processed += page_size;
     }
 
     info!(
-        "created {}  docs from a vec of {} movies",
+        "docs_created.  created {} docs from a vec of {} movies",
         docs.len(),
         movies.len()
     );
