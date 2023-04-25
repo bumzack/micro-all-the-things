@@ -19,7 +19,9 @@ jquery(document).ready(() => {
             event.preventDefault();
             const txt = jquery("#searchMovie").val() as string;
             console.log(`return pressed     ${txt}  `);
-            const url = "http://proxy.proxythingi.at/rust/solr/search"
+            const url_prod = "http://proxy.proxythingi.at/rust/meili/search"
+            const url_local = "http://localhost:18600/api/v1/solr/article"
+            const url = url_prod;
 
             const customer: SearchCustomer = {
                 customer_id: 1,
@@ -29,7 +31,7 @@ jquery(document).ready(() => {
             const req: SearchArticleRequest = {
                 q: txt,
                 offset: 0,
-                limit: 5,
+                limit: 10,
                 customer: customer,
             };
 
@@ -75,12 +77,17 @@ jquery(document).ready(() => {
                     credentials: "same-origin", // include, *same-origin, omit
                     headers: {
                         "Content-Type": "application/json",
-                        'Access-Control-Expose-Headers': 'x-duration,x-provided-by'
+                     //   "Access-Control-Expose-Headers": "x-duration,x-provided-by,x-initiated-by,x-processed-by"
+                        "Access-Control-Expose-Headers":"*",
                     },
-                    redirect: "follow", // manual, *follow, error
-                    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                    // redirect: "follow", // manual, *follow, error
+                    // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                     body: JSON.stringify(data), // body data type must match "Content-Type" header
                 });
+                for (const [h1, h2] of response.headers) {
+                    console.log(h1 + ': ' + h2);
+                }
+
                 return [await response.json(), response.headers]; // parses JSON response into native JavaScript objects
             }
 
@@ -94,12 +101,22 @@ jquery(document).ready(() => {
 
                 const dur = headers.get("x-duration");
                 const provided_by = headers.get("x-provided-by");
-                console.log(`proxythingi backend  ${provided_by},  duration  ${dur} `);
+                const initiated_by = headers.get("x-initiated-by");
+                const processed_by = headers.get("x-processed-by");
+
+                jquery("#dur").text(dur);
+                jquery("#provided_by").text(provided_by);
+                jquery("#initiated_by").text(initiated_by);
+                jquery("#processed_by").text(processed_by);
+
+
+                console.log(`proxythingi backend  ${provided_by},  duration  ${dur}    initiated_by  ${initiated_by}   processed_by  ${processed_by} `);
 
                 const movies = data as SearchArticleResponse;
                 console.log(`movies.len ${movies.articles.length} `);
 
                 jquery("#search_results").empty();
+                jquery("#search_results").text(`${movies.articles.length} movies found`);
 
                 movies.articles.forEach(a => {
                     const elem = article_template(a);
@@ -115,6 +132,16 @@ const article_template = (article: ArticleSearchResult): string => {
     let titles = "";
     if (article.article.titles != undefined) {
         titles = "Titles: " + article.article.titles.join(" / ");
+    }
+
+    let primary_title = "";
+    if (article.article.primary_title != undefined) {
+        primary_title = article.article.primary_title;
+    }
+
+    let original_title = "";
+    if (article.article.original_title != undefined) {
+        original_title = article.article.original_title;
     }
 
     let characters = "";
@@ -148,11 +175,14 @@ const article_template = (article: ArticleSearchResult): string => {
         <div class="col">
             <div class="card h-100">
                  <div class="card-body">
-                    <h5 class="card-title">${titles}</h5>
-                    <p class="card-text">${act}</p>
-                    <p class="card-text">${characters}</p>
-                    <p class="card-text">${directors}</p>
-                    <p class="card-text">${writers}</p>
+                    <h5 class="card-title">original title${original_title}</h5>
+                    <h5 class="card-title">primary title${primary_title}</h5>
+                    <p class="card-body">${titles}</p>
+                    <p class="card-body">${act}</p>
+                    <p class="card-body">${characters}</p>
+                    <p class="card-body">${directors}</p>
+                    <p class="card-body">${writers}</p>
+                    <p class="card-body">ttconst ${article.article.tconst}</p>
                  </div>
                  <div class="card-footer">
                     <div class="row row-cols-2 row-cols-md-2 g-6">
@@ -167,7 +197,7 @@ const article_template = (article: ArticleSearchResult): string => {
         </div>
     </div>
     `
-;
+        ;
 
 }
 export {};
