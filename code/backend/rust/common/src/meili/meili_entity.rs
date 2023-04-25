@@ -156,7 +156,7 @@ pub mod meili_entity_stuff {
                     || code == StatusCode::ACCEPTED
                     || code == StatusCode::CREATED
                 {
-                    error!("meili_search_searchindex got a OK; ACCEPTED or CREATE response");
+                    info!("meili_search_searchindex got a OK; ACCEPTED or CREATE response");
                     let result = r.json::<MeiliSearchResult<T>>().await;
                     match result {
                         Ok(r) => {
