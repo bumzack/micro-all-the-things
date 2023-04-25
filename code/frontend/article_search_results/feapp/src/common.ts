@@ -12,20 +12,21 @@ export interface SearchIndexDoc {
     characters?: Array<string>,
     title_type?: Array<string>,
     year?: number,
-};
+    primary_title?: string,
+    original_title?: string,
+}
 
 
 export interface ArticleSearchResult {
     article: SearchIndexDoc,
     price: number,
     customer_price?: number,
-};
+}
 
 export interface SearchArticleResponse {
     articles?: Array<ArticleSearchResult>,
     facets?: IndexDocFacetDistribution,
 }
-
 
 export interface IndexDocFacetDistribution {
     actors?: Map<String, Map<String, number>>,
