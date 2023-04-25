@@ -71,7 +71,8 @@ pub mod meili_http_stuff {
             hits_per_page: None,
             page: None,
             filter,
-            facets,
+            // facets,
+            facets: None,
             attributes_to_retrieve: None,
             attributes_to_crop: None,
             crop_length: None,
@@ -95,6 +96,8 @@ pub mod meili_http_stuff {
             entity.to_string(),
             &url
         );
+
+        info!("meili_search  request struct {:?}", &req);
 
         let response = client
             .post(&url)
