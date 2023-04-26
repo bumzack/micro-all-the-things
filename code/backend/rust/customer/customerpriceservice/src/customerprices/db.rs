@@ -38,6 +38,34 @@ pub mod db_logging {
         Ok(entry)
     }
 
+    pub async fn get_customerprices(
+        pool: Pool,
+        customer_id: &String,
+    ) -> super::Result<Vec<CustomerPriceEntry>> {
+        let client = pool.get().await.unwrap();
+
+        let query = format!(
+            "SELECT * FROM {}  WHERE customer_id = {}    ",
+            TABLE_CUSTOMER_PRICE, customer_id,
+        );
+
+        info!("SELECT query  {}", &query);
+
+        // TODO
+        //  oh boy, that's beyond ugly
+        let entries = client.query(&query, &[]).await.map_err(|e| {
+            error!("error rejection {:?}", e);
+            reject::not_found()
+        })?;
+
+        let entries: Vec<CustomerPriceEntry> = entries
+            .iter()
+            .map(|r| CustomerPriceEntry::from(r))
+            .collect();
+
+        Ok(entries)
+    }
+
     pub async fn insert_price_entry(
         pool: Pool,
         req: AddCustomerPriceEntry,

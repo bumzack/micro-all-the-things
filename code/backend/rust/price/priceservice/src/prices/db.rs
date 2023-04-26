@@ -8,7 +8,7 @@ pub mod db_prices {
     use warp::reject;
 
     use common::logging::logging::DivideByZero;
-    use common::models::prices::{AddPriceEntry, price_entry_from_row, PriceEntry};
+    use common::models::prices::{price_entry_from_row, AddPriceEntry, PriceEntry};
 
     use crate::db::db::TABLE_PRICE;
 
@@ -27,7 +27,7 @@ pub mod db_prices {
         let data = client.query_one(&query, &[]).await.map_err(|e| {
             // TODO : differentiate between errors and 404
             info!(
-                "error in query one. (can be a notfoudn too, not only a hard error {:?}",
+                "error in query one. (can be a notfound too, not only a hard error {:?}",
                 e
             );
             // reject::custom(DivideByZero)
@@ -36,6 +36,34 @@ pub mod db_prices {
 
         let entry = price_entry_from_row(&data);
         Ok(entry)
+    }
+
+    pub async fn get_prices(pool: Pool, tconst: &Vec<String>) -> super::Result<Vec<PriceEntry>> {
+        let client = pool.get().await.unwrap();
+
+        let t: Vec<String> = tconst.iter().map(|t| format!("'{}'", t.clone())).collect();
+        let t = t.join(",");
+        let query = format!(
+            "SELECT * FROM {}  WHERE movie_tconst IN ({}) ",
+            TABLE_PRICE, t
+        );
+
+        info!("SELECT query  {}", &query);
+
+        // TODO
+        // oh boy, that's beyond ugly
+        let data = client.query(&query, &[]).await.map_err(|e| {
+            // TODO : differentiate between errors and 404
+            info!(
+                "error in query one. (can be a notfoudn too, not only a hard error {:?}",
+                e
+            );
+            // reject::custom(DivideByZero)
+            reject::not_found()
+        })?;
+
+        let entries: Vec<PriceEntry> = data.iter().map(|r| price_entry_from_row(r)).collect();
+        Ok(entries)
     }
 
     pub async fn insert_price_entry(pool: Pool, entry: AddPriceEntry) -> super::Result<PriceEntry> {

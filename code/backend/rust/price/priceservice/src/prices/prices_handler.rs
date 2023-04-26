@@ -21,9 +21,9 @@ pub mod handlers_price {
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_tracing_headers, get_trace_infos,
     };
-    use common::models::prices::AddPriceEntry;
+    use common::models::prices::{AddPriceEntry, SearchPricesRequest};
 
-    use crate::prices::db::db_prices::{get_price, insert_price_entry};
+    use crate::prices::db::db_prices::{get_price, get_prices, insert_price_entry};
     use crate::prices::prices_handler::search_movies;
 
     const SERVICE_NAME: &str = "Price Service";
@@ -50,6 +50,46 @@ pub mod handlers_price {
 
         info!("found a price for tconst {}:  {:?}", &tconst, &price_entry);
         let msg = format!("found a price for tconst {}:  {:?}", &tconst, &price_entry);
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(price_entry, headers);
+
+        Ok(response)
+    }
+
+    pub async fn read_price_entries(
+        req: SearchPricesRequest,
+        pool: Pool,
+        headers: HeaderMap,
+    ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
+        info!(
+            "reading price entry for movie titles in request: {:?}",
+            &req
+        );
+
+        let price_entry = get_prices(pool, &req.movie_tconst).await.map_err(|e| {
+            error!("error this can be a 404 too {:?}", e);
+            reject::not_found()
+        })?;
+
+        let msg = format!(
+            "found {} prices for {} movie_tconsts",
+            price_entry.len(),
+            &req.movie_tconst.len()
+        );
 
         let headers = build_tracing_headers(
             &start_total,
@@ -151,7 +191,7 @@ async fn search_movies(
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -199,7 +239,7 @@ async fn search_movies(
         "INFO".to_string(),
         &message,
     )
-        .await;
+    .await;
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     (paginated_result.movies, paginated_result.next_cursor_mark)

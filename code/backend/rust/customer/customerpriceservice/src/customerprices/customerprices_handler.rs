@@ -14,10 +14,58 @@ pub mod filters_customer_price {
     use common::models::customer::Customer;
     use common::models::customer_prices::AddCustomerPriceEntry;
 
+    use crate::customerprices::db::db_logging::{
+        get_customerprice, get_customerprices, insert_price_entry,
+    };
     use crate::{CLIENT, CONFIG};
-    use crate::customerprices::db::db_logging::{get_customerprice, insert_price_entry};
 
     const SERVICE_NAME: &str = "CustomerPrice Service";
+
+    pub async fn read_customerprice_entries(
+        pool: Pool,
+        customer_id: String,
+        headers: HeaderMap,
+    ) -> Result<impl Reply, Rejection> {
+        let start_total = Instant::now();
+
+        let (initiated_by, uuid, processed_by) =
+            get_trace_infos(&headers, SERVICE_NAME.to_string());
+
+        info!(
+            "reading customerprices entries. customer_id  {:?} ",
+            &customer_id,
+        );
+
+        let customer_price_entries = get_customerprices(pool, &customer_id)
+            .await
+            // TODO fix CustomError
+            .map_err(|e| {
+                error!("error rejection {:?}", e);
+                reject::not_found()
+            })?;
+
+        info!(
+            "found  customerprices for  customer_id {:?}  {:?}",
+            &customer_id, &customer_price_entries
+        );
+        let msg = format!(
+            "found customer prices found for customer id {}",
+            customer_id
+        );
+
+        let headers = build_tracing_headers(
+            &start_total,
+            &SERVICE_NAME.to_string(),
+            &initiated_by,
+            &uuid,
+            &processed_by,
+            &msg,
+        );
+
+        let response = build_response_from_json(customer_price_entries, headers);
+
+        Ok(response)
+    }
 
     pub async fn insert_customer_price_handler(
         pool: Pool,
@@ -206,7 +254,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
 
         let response = CLIENT.get(search_customer).send().await;
 
@@ -238,7 +286,7 @@ pub mod filters_customer_price {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         info!(
             ".rust_customerpriceservice_insert_dummy_data search_customers finished successfully"
         );
