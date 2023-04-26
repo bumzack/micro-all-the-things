@@ -45,7 +45,7 @@ pub mod handler_search_article {
             uuid,
             &new_processed_by,
         )
-            .await;
+        .await;
         new_processed_by = n;
 
         info!(
@@ -95,7 +95,7 @@ pub mod handler_search_article {
                             uuid,
                             &new_processed_by,
                         )
-                            .await;
+                        .await;
 
                         info!(
                             "new_processed_by  after  get_movie_customerprice. new_processed_by  {}",

@@ -12,6 +12,7 @@ mod search_article_handler;
 mod search_article_routes;
 mod search_helper;
 mod search_helper_prices;
+mod search_article_handler_v2;
 
 lazy_static::lazy_static! {
     static ref CLIENT: reqwest::Client = reqwest::Client::new();
