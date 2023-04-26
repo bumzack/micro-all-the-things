@@ -205,8 +205,8 @@ pub mod search_helper {
         processed_by: &String,
     ) -> (Option<Vec<CustomerPriceEntry>>, String) {
         let search_customerprices: String = CONFIG
-            .get("search_customerprices")
-            .expect("expected search_customerprices GET request URL");
+            .get("search_movie_customerprices")
+            .expect("expected search_movie_customerprices GET request URL");
 
         let search_customerprices = search_customerprices.replace(":customer_id", &id.to_string());
 

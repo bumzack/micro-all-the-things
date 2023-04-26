@@ -19,9 +19,9 @@ jquery(document).ready(() => {
             event.preventDefault();
             const txt = jquery("#searchMovie").val() as string;
             console.log(`return pressed     ${txt}  `);
-            const url_prod = "http://proxy.proxythingi.at/rust/meili/search"
+            const url_prod = "http://proxy.proxythingi.at/rust/solr/search"
             const url_local = "http://localhost:18600/api/v2/solr/article"
-            const url = url_local;
+            const url = url_prod;
 
             const customer: SearchCustomer = {
                 customer_id: 1,
