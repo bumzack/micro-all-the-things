@@ -9,7 +9,7 @@ pub struct AddPriceEntry {
     pub amount: f32,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct PriceEntry {
     pub id: i32,
     pub movie_tconst: String,
@@ -24,4 +24,9 @@ pub fn price_entry_from_row(r: &Row) -> PriceEntry {
         amount: r.get(2),
         created: Some(r.get(3)),
     }
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SearchPricesRequest {
+    pub movie_tconst: Vec<String>,
 }

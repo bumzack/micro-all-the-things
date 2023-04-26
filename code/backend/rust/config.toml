@@ -23,7 +23,10 @@ customer_logout = "http://localhost:18982/api/v1/authentication/logout"
 customer_authenticated = "http://localhost:18982/api/v1/authenticated/:customer_id"
 
 search_movie_price = "http://localhost:18800/api/v1/price/:tconst"
+search_movie_prices = "http://localhost:18800/api/v2/prices"
+
 search_movie_customerprice = "http://localhost:18981/api/v1/customerprice/:customer_id/:year"
+search_movie_customerprices = "http://localhost:18981/api/v1/customerprices/:customer_id"
 
 
 # logging service
