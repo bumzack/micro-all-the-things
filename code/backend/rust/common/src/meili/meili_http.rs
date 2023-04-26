@@ -13,7 +13,7 @@ pub mod meili_http_stuff {
     pub(crate) async fn meili_search_http(
         entity: Entity,
         filters: Option<HashMap<String, Vec<String>>>,
-        facets: Option<Vec<String>>,
+        _facets: Option<Vec<String>>,
         search_text: Option<Vec<(String, String)>>,
         sort: Option<Vec<(String, bool)>>,
         limit: Option<u32>,
