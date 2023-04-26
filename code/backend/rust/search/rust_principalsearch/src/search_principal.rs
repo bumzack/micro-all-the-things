@@ -1,7 +1,6 @@
 use std::convert::Infallible;
 use std::time::Instant;
 
-use log::info;
 use reqwest::header::HeaderMap;
 use reqwest::Client;
 use warp::Reply;
