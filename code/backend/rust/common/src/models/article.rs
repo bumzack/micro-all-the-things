@@ -23,6 +23,7 @@ pub struct SearchArticleRequest {
 pub struct ArticleSearchResult {
     pub article: SearchIndexDoc,
     pub price: f32,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub customer_price: Option<f32>,
 }
 

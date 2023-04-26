@@ -22,7 +22,7 @@ in /etc/security eintragen und pam dingsdi auch
 ```
 
 ```
- curl  -vv   http://meilisearch01.bumzack.at/tasks/1131251    -H 'Authorization: Bearer 1234567890123456'    | jq
+ curl  -vv   http://meilisearch01.bumzack.at/tasks/9575    -H 'Authorization: Bearer 1234567890123456'    | jq
 ```
 
 ## read
@@ -51,7 +51,11 @@ in /etc/security eintragen und pam dingsdi auch
   curl  -X PUT -d '[  "tconst"  ]'                  http://meilisearch01.bumzack.at/indexes/crew/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "tconst", "nconst" ]'          http://meilisearch01.bumzack.at/indexes/principal/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
   curl  -X PUT -d '[ "tconst"]'                     http://meilisearch01.bumzack.at/indexes/rating/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
-  curl  -X PUT -d '[ "original_title","primary_title","titles", "actors", "directors", "writers", "runtime_minutes", "adult", "genres", "characters", "title_type", "year"]'                     http://meilisearch01.bumzack.at/indexes/searchindex/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+  curl  -X PUT -d '[ "titles", "actors", "directors", "writers", "runtime_minutes", "adult", "genres", "characters", "title_type", "year"]'    http://meilisearch01.bumzack.at/indexes/searchindex/settings/filterable-attributes    -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+
+
+  curl    http://meilisearch01.bumzack.at/indexes/searchindex/settings/filterable-attributes       -H 'Authorization: Bearer 1234567890123456'    | jq
+
 ```
 
 ## set sortable attributes
@@ -204,6 +208,16 @@ curl  -vvvv    -X POST   http://localhost:18320/api/v1/solr/searchindex/search  
 
 ```
 curl    -vvvv    -X POST -d '{"facets":["genres","actors","directors"],"hitsPerPage":2,"limit":2,"offset":0,"q":"Terminator","sort":null}'          http://meilisearch01.bumzack.at/indexes/searchindex/search     -H 'Content-Type: application/json'     -H 'Authorization: Bearer 1234567890123456'    | jq
+```
+
+## Meili facets
+
+```
+curl  -vvvv    -X POST   http://localhost:18320/api/v1/meili/searchindex/search    -H 'Content-Type: application/json'  -d '{ "q" : "Terminator" ,  "facets": ["genres"]  }'  | jq
+
+
+[2023-04-26T22:35:57Z INFO  common::meili::meili_http::meili_http_stuff] meili_search  request struct MeiliSearchRequest { q: "Terminator", offset: Some(0), limit: Some(2), hits_per_page: None, page: None, filter: None, facets: Some(["genres"]), attributes_to_retrieve: None, attributes_to_crop: None, crop_length: None, crop_marker: None, attributes_to_highlight: None, highlight_pre_tag: None, highlight_post_tag: None, show_matches_position: None, sort: None, matching_strategy: None }
+
 ```
 
 ## User login and search

@@ -53,11 +53,12 @@ pub struct SearchPaginatedRequest {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct IndexDocFacetDistribution {
-    pub actors: Option<HashMap<String, HashMap<String, usize>>>,
-    pub directors: Option<HashMap<String, HashMap<String, usize>>>,
-    pub genres: Option<HashMap<String, HashMap<String, usize>>>,
-    pub titles: Option<HashMap<String, HashMap<String, usize>>>,
-    pub characters: Option<HashMap<String, HashMap<String, usize>>>,
+    pub actors: Option<HashMap<String, usize>>,
+    pub directors: Option<HashMap<String, usize>>,
+    pub genres: Option<HashMap<String, usize>>,
+    pub titles: Option<HashMap<String, usize>>,
+    pub characters: Option<HashMap<String, usize>>,
+    pub title_type: Option<HashMap<String, usize>>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
