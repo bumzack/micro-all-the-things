@@ -55,7 +55,7 @@ pub mod filters_logging {
             );
 
         let server1 = warp::path!("api" / "v1" / "customerprices" / String);
-        let customerprice_get = server1
+        let customerprices_get = server1
             .and(with_db(pool.clone()))
             .and(warp::get())
             .and(headers_cloned())
@@ -67,6 +67,7 @@ pub mod filters_logging {
         customerprice_get
             .or(customerprice_insert)
             .or(insert_dummy_data)
+            .or(customerprices_get)
     }
 
     fn json_body_add_customer_price(
