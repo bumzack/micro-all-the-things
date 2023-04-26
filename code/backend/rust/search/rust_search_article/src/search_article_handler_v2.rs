@@ -108,7 +108,8 @@ pub mod handler_search_article_v2 {
                 }
             }
 
-            let price = movie_price.map(|p| p.amount).unwrap();
+            let price = movie_price.map_or(0.0, |p| p.amount);
+
             // oh boy
             let customer_price = customer_price
                 .map(|cp| (100.0 - cp.discount) * price)

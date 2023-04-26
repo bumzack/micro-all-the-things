@@ -15,8 +15,8 @@ pub mod solr_entity_stuff {
         filter_values: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let mut filters = HashMap::new();
         filters.insert(filter_field, filter_values);
@@ -76,8 +76,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> Vec<T>
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -207,8 +207,8 @@ pub mod solr_entity_stuff {
         facets: Vec<String>,
         client: &Client,
     ) -> (Vec<T>, Option<FacetCounts>)
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let search_text_movie = vec![
             ("tconst".to_string(), search_text.clone()),
@@ -349,8 +349,8 @@ pub mod solr_entity_stuff {
         cursor_mark: Option<String>,
         client: &Client,
     ) -> (Vec<T>, Option<String>)
-        where
-            T: for<'de> Deserialize<'de> + Serialize,
+    where
+        T: for<'de> Deserialize<'de> + Serialize,
     {
         let sort = vec![("id".to_string(), true)];
         let response = solr_search_http(

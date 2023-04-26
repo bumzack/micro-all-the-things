@@ -13,7 +13,7 @@ pub mod meili_http_stuff {
     pub(crate) async fn meili_search_http(
         entity: Entity,
         filters: Option<HashMap<String, Vec<String>>>,
-        _facets: Option<Vec<String>>,
+        facets: Option<Vec<String>>,
         search_text: Option<Vec<(String, String)>>,
         sort: Option<Vec<(String, bool)>>,
         limit: Option<u32>,
@@ -71,8 +71,7 @@ pub mod meili_http_stuff {
             hits_per_page: None,
             page: None,
             filter,
-            // facets,
-            facets: None,
+            facets,
             attributes_to_retrieve: None,
             attributes_to_crop: None,
             crop_length: None,

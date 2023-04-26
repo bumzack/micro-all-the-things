@@ -165,7 +165,7 @@ const article_template = (article: ArticleSearchResult): string => {
     }
 
     let price: string;
-    if (article.customer_price !== undefined) {
+    if (article.customer_price !== undefined && article.customer_price !== null) {
         price = `SRP € <sr>${article.price.toFixed(2)}</sr>, your price: € ${article.customer_price.toFixed(2)}`;
     } else {
         price = `SRP € ${article.price} `;
