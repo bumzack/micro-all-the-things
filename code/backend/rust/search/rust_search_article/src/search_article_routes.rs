@@ -131,11 +131,12 @@ pub mod mod_search_article_routes {
             &processed_by_new
         );
 
-        let msg = format!(
-            "v2 found {} articles",
-            &search_article_response.articles.as_ref().unwrap().len()
-        );
+        let len = match search_article_response.articles.as_ref() {
+            Some(a) => a.len() as i32,
+            None => -1,
+        };
 
+        let msg = format!("v2 found {} articles", len);
         let headers = build_tracing_headers(
             &start_total,
             &SERVICE_NAME.to_string(),
