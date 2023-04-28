@@ -106,9 +106,8 @@ pub mod filters_search_search_index {
         };
 
         let msg = format!(
-            "found {} movies and {:?} facets using {:?}",
+            "found {} movies  using {:?}",
             search_result.movies.len(),
-            search_result.facets,
             &engine
         );
         let headers = build_tracing_headers(
