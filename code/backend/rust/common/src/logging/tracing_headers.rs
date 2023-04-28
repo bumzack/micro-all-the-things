@@ -7,8 +7,8 @@ pub mod tracing_headers_stuff {
     use serde::Serialize;
     use serde_json::json;
     use uuid::Uuid;
-    use warp::Reply;
     use warp::reply::Response;
+    use warp::Reply;
 
     pub const HEADER_X_INITIATED_BY: &str = "X-initiated-by";
     pub const HEADER_X_PROCESSED_BY: &str = "X-processed-by";
@@ -78,9 +78,9 @@ pub mod tracing_headers_stuff {
         headers.insert(HEADER_X_UUID, HeaderValue::from_str(&uuid).unwrap());
 
         let new_x_processed_by = format!(
-            " {}: dur {:?} micros # {} || {}",
+            " {}: dur {:?} ms # {} ### {}",
             service_name,
-            duration_total.as_micros(),
+            duration_total.as_millis(),
             &msg,
             processed_by,
         );
