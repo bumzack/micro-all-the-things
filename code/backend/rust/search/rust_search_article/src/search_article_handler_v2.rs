@@ -172,8 +172,8 @@ pub mod handler_search_article_v2 {
                 let _ = movie_prices.insert(p.movie_tconst.clone(), (*p).clone());
             });
 
-            movies_processed += prices.len();
-            idx += prices.len();
+            movies_processed += page_size;
+            idx += page_size;
         }
 
         info!(
