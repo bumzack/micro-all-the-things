@@ -8,11 +8,10 @@ pub mod handler_authentication {
     use log::{error, info};
     use reqwest::header::HeaderMap;
     use sha2::Sha384;
-    use warp::{reject, Rejection, Reply};
     use warp::http::StatusCode;
+    use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
-    use common::logging::logging_service_client::logging_service;
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_response_from_json_with_status, build_tracing_headers,
         get_trace_infos, HEADER_X_INITIATED_BY, HEADER_X_PROCESSED_BY, HEADER_X_UUID,
@@ -20,11 +19,11 @@ pub mod handler_authentication {
     use common::models::authentication::{LogInRequest, LogOutRequest};
     use common::models::customer::Customer;
 
-    use crate::{CLIENT, CONFIG};
     use crate::authentication::db::db_logging::{
         find_authentication, insert_authentication, update_authentication_login,
         update_authentication_logout,
     };
+    use crate::{CLIENT, CONFIG};
 
     const SERVICE_NAME: &str = "authenticated_service";
 
@@ -300,8 +299,6 @@ pub mod handler_authentication {
             &email, &search_customer,
         );
         info!("message {}", &message);
-        logging_service::log_entry(" search_customer".to_string(), "INFO".to_string(), &message)
-            .await;
 
         let response = CLIENT
             .get(search_customer)

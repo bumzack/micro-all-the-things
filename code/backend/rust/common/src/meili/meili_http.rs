@@ -7,7 +7,6 @@ pub mod meili_http_stuff {
 
     use crate::entity::entity::{Engine, Entity};
     use crate::helper::dump_response_status;
-    use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::meili_models::MeiliSearchRequest;
 
     pub(crate) async fn meili_search_http(
@@ -193,7 +192,6 @@ pub mod meili_http_stuff {
                         &index,
                         &b
                     );
-                    log_error(msg).await;
                 }
             }
             Err(e) => {
@@ -203,7 +201,6 @@ pub mod meili_http_stuff {
                     &entity.to_string(),
                     e
                 );
-                log_error(msg).await;
             }
         }
     }

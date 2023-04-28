@@ -8,7 +8,6 @@ pub mod filters_search_search_index {
     use warp::Filter;
 
     use common::entity::entity::{Engine, Entity};
-    use common::logging::logging_service_client::logging_service;
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_tracing_headers, get_trace_infos,
     };
@@ -64,13 +63,6 @@ pub mod filters_search_search_index {
             "start search_index(). search_text '{}', offset {}, limit {}, engine {:?}",
             req.q, req.offset, req.limit, engine
         );
-
-        logging_service::log_entry(
-            "rust_search_search_index".to_string(),
-            "INFO".to_string(),
-            &msg,
-        )
-        .await;
 
         let facets = vec![
             "genres".to_string(),
