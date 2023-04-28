@@ -70,7 +70,7 @@ pub mod filters_search_search_index {
             "directors".to_string(),
             "titles".to_string(),
             "characters".to_string(),
-            "title_type".to_string(),
+            //           "title_type".to_string(),
         ];
 
         let search_result = match engine {
