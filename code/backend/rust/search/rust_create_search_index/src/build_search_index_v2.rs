@@ -7,16 +7,13 @@ use tokio::sync::mpsc::UnboundedSender;
 use tokio::task::JoinHandle;
 
 use common::entity::entity::{Engine, Entity};
-use common::logging::logging_service_client::logging_service::{
-    log_build_stats, log_docs_processed, log_end, log_start, log_task_end, log_task_error,
-};
 use common::meili::meili_http::meili_http_stuff::meili_update_http;
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
-use crate::CLIENT;
-use crate::pagination_manager::{ManagerCommand, start_config_manager, WorkerData};
 use crate::pagination_manager::ManagerCommand::{WorkerNoMoreItemsFound, WorkerReady};
+use crate::pagination_manager::{start_config_manager, ManagerCommand, WorkerData};
+use crate::CLIENT;
 
 pub async fn build_index_v2(
     offset: u32,
@@ -29,11 +26,7 @@ pub async fn build_index_v2(
     let num_cpus = num_cpus::get();
     let num_tasks = num_cpus * multiplier as usize;
 
-    log_build_stats(Engine::Solr, num_tasks).await;
-
     let tasks = start_tasks(num_tasks, manager_sender);
-
-    log_start(offset, limit).await;
 
     let mut total_movies_processed = 0;
     for t in tasks {
@@ -44,11 +37,9 @@ pub async fn build_index_v2(
                     "worker {} ended successfully and processed {} items",
                     id, cnt
                 );
-                log_task_end("worker".to_string(), id as i32, cnt as i32).await;
             }
             Err(e) => {
                 error!("worker  ended with an error  {:?}", e);
-                log_task_error("worker".to_string(), e.to_string()).await;
             }
         }
     }
@@ -56,15 +47,13 @@ pub async fn build_index_v2(
     match handle_config_manager.await {
         Ok(msg) => {
             info!("pagination manager says.  '{}'", msg);
-            log_task_end("pagination manager".to_string(), -1, -1).await;
         }
         Err(e) => {
             error!("pagination manager   ended with an error  {:?}", e);
-            log_task_error("pagination manager".to_string(), e.to_string()).await;
         }
     }
 
-    let message = log_end(total_movies_processed).await;
+    let message = "done".to_string();
     info!("done {}", &message);
     Ok(warp::reply::json(&message))
 }
@@ -80,8 +69,6 @@ async fn search_and_write_to_index(offset: u32, limit: u32) -> usize {
     convert_to_search_index_doc(movies, &mut docs, Engine::Meili).await;
 
     let docs_json = json!(&docs).to_string();
-
-    log_docs_processed(docs.len(), offset, limit).await;
 
     info!(
         "starting update request for  {} docs. offset {}, limit {}",

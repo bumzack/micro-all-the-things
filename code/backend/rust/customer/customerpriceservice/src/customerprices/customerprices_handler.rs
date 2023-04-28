@@ -7,7 +7,6 @@ pub mod filters_customer_price {
     use warp::{reject, Rejection, Reply};
 
     use common::logging::logging::DivideByZero;
-    use common::logging::logging_service_client::logging_service;
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_tracing_headers, get_trace_infos,
     };
@@ -249,12 +248,6 @@ pub mod filters_customer_price {
             search_customer,
         );
         info!("message {}", &message);
-        logging_service::log_entry(
-            " rust_customerpriceservice_insert_dummy_data".to_string(),
-            "INFO".to_string(),
-            &message,
-        )
-        .await;
 
         let response = CLIENT.get(search_customer).send().await;
 
@@ -281,12 +274,7 @@ pub mod filters_customer_price {
             customers.len()
         );
         info!("message {}", &message);
-        logging_service::log_entry(
-            " rust_customerpriceservice_insert_dummy_data".to_string(),
-            "INFO".to_string(),
-            &message,
-        )
-        .await;
+
         info!(
             ".rust_customerpriceservice_insert_dummy_data search_customers finished successfully"
         );
