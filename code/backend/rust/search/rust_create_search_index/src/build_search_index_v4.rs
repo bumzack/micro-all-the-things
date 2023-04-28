@@ -8,7 +8,6 @@ use warp::http::HeaderMap;
 
 use common::entity::entity::{Engine, Entity};
 use common::helper::dump_response_status;
-use common::logging::logging_service_client::logging_service;
 use common::meili::meili_http::meili_http_stuff::meili_update_http;
 use common::models::movie::{Movie, MoviePaginationResult};
 use common::models::person::{Person, SearchPersonList, SearchPrincipalList};
@@ -16,8 +15,8 @@ use common::models::principal::Principal;
 use common::models::search_doc::{SearchIndexDoc, SearchPaginatedRequest};
 use common::solr::solr_http::mod_solr_http::solr_update_http;
 
-use crate::{CLIENT, CONFIG};
 use crate::build_search_common::prepare_for_request;
+use crate::{CLIENT, CONFIG};
 
 pub async fn build_index_v4(
     engine: Engine,
@@ -33,7 +32,7 @@ pub async fn build_index_v4(
         limit as usize,
         engine.clone(),
     )
-        .await;
+    .await;
 
     let message = "processed stuff ".to_string();
     info!("done {}", &message);
@@ -175,12 +174,6 @@ pub async fn search_movies_v4(
         movies_paginated_result.movies.len(),
         movies_paginated_result.next_cursor_mark
     );
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
 
     movies_paginated_result
 }

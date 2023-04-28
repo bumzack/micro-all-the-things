@@ -2,7 +2,7 @@ use warp::Rejection;
 
 pub type Result<T> = std::result::Result<T, Rejection>;
 
-pub mod db_logging {
+pub mod db_customer {
     use deadpool_postgres::Pool;
     use log::{error, info};
     use warp::reject;

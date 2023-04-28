@@ -33,7 +33,7 @@ pub mod logging_service {
         };
     }
 
-    pub async fn log_entry(service_id: String, log_type: String, message: &String) {
+    async fn log_entry(service_id: String, log_type: String, message: &String) {
         let add_log_entry = AddLogEntry {
             service_id: service_id.clone(),
             log_type: log_type.clone(),
@@ -58,7 +58,7 @@ pub mod logging_service {
         };
     }
 
-    pub async fn log_error(msg: String) {
+    async fn log_error(msg: String) {
         let msg = format!(
             "build_index_v3.exec_meilisearch_update. request not successful {}",
             msg,
@@ -69,10 +69,10 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
-    pub async fn log_docs_processed(num_docs: usize, offset: u32, limit: u32) {
+    async fn log_docs_processed(num_docs: usize, offset: u32, limit: u32) {
         let message = format!(
             "sending a list of docs to the search index.  {} docs. offset {}, limit {}",
             num_docs, offset, limit
@@ -84,10 +84,10 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
     }
 
-    pub async fn log_end(total_movies_processed: usize) -> String {
+    async fn log_end(total_movies_processed: usize) -> String {
         let message = format!(
             "build_index_v3.finished. processed {} movies ",
             total_movies_processed
@@ -98,11 +98,11 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         message
     }
 
-    pub async fn log_start(offset: u32, limit: u32) {
+    async fn log_start(offset: u32, limit: u32) {
         let msg = format!(
             "build_index_v3.start. start offset {}, start limit {}",
             offset, limit
@@ -112,10 +112,10 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
-    pub async fn log_build_stats(engine: Engine, num_tasks: usize) {
+    async fn log_build_stats(engine: Engine, num_tasks: usize) {
         let msg = format!(
             "build_index_v3.stats. engine  {:?}.  total_tasks created {}",
             engine, num_tasks
@@ -126,10 +126,10 @@ pub mod logging_service {
             "INFO".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
-    pub async fn log_task_error(name: String, e: String) {
+    async fn log_task_error(name: String, e: String) {
         let msg = format!(
             "build_index_v3.worker_error. worker {} crashed with error {}",
             name, e
@@ -140,10 +140,10 @@ pub mod logging_service {
             "ERROR".to_string(),
             &msg,
         )
-            .await;
+        .await;
     }
 
-    pub async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
+    async fn log_task_end(name: String, id: i32, cnt_movies: i32) -> String {
         let message = format!(
             "build_index_v3()  finished task {} with {} and processed {} movies ",
             name, id, cnt_movies
@@ -154,11 +154,11 @@ pub mod logging_service {
             "INFO".to_string(),
             &message,
         )
-            .await;
+        .await;
         message
     }
 
-    pub async fn log_external_service_error(
+    async fn log_external_service_error(
         msg1: &String,
         message: &String,
         response: &Result<Response, Error>,
@@ -181,7 +181,7 @@ pub mod logging_service {
                         "ERROR".to_string(),
                         message,
                     )
-                        .await;
+                    .await;
                 }
             }
             Err(e) => error!("error in request to meilisearch {:?}", e),

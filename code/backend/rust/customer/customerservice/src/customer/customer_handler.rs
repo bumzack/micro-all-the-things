@@ -9,8 +9,6 @@ pub mod handler_customer {
 
     use common::entity::entity::Engine;
     use common::logging::logging::DivideByZero;
-    use common::logging::logging_service_client::logging_service;
-    use common::logging::logging_service_client::logging_service::log_external_service_error;
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_tracing_headers, get_trace_infos,
     };
@@ -18,8 +16,10 @@ pub mod handler_customer {
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
+    use crate::customer::db::db_customer::{
+        get_customer, get_customers_paginated, insert_customer,
+    };
     use crate::{CLIENT, CONFIG};
-    use crate::customer::db::db_logging::{get_customer, get_customers_paginated, insert_customer};
 
     const SERVICE_NAME: &str = "Customer Service";
 
@@ -223,12 +223,6 @@ pub mod handler_customer {
             engine.to_string()
         );
         info!("message {}", &message);
-        logging_service::log_entry(
-            " rust_customerservice_insert_dummy_data".to_string(),
-            "INFO".to_string(),
-            &message,
-        )
-            .await;
 
         info!("search person POST URL {}", &search_person);
         let json = json!(&search_request);
@@ -241,7 +235,6 @@ pub mod handler_customer {
             &search_request.sort.clone()
         );
         let msg = "search for persons paginated search request".to_string();
-        log_external_service_error(&msg, &message, &response).await;
 
         if response.is_err() {
             error!(
@@ -270,12 +263,7 @@ pub mod handler_customer {
             persons.len()
         );
         info!("message {}", &message);
-        logging_service::log_entry(
-            " rust_customerservice_insert_dummy_data".to_string(),
-            "INFO".to_string(),
-            &message,
-        )
-            .await;
+
         info!("rust_customerservice_insert_dummy_data search_persons finished successfully");
 
         persons

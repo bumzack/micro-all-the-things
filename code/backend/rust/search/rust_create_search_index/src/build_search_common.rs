@@ -5,7 +5,6 @@ use serde_json::json;
 
 use common::entity::entity::Engine;
 use common::helper::dump_response_status;
-use common::logging::logging_service_client::logging_service;
 use common::models::movie::{Movie, MoviePaginationResult};
 use common::models::person::{Person, SearchPersonList};
 use common::models::principal::Principal;
@@ -209,12 +208,6 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         engine.to_string()
     );
     info!("message {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
 
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
@@ -250,12 +243,6 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         movies_paginated_result.movies.len(),
         movies_paginated_result.next_cursor_mark
     );
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
 
     movies_paginated_result.movies
 }
@@ -271,12 +258,6 @@ async fn search_principal(tconst: &String, engine: Engine) -> Vec<Principal> {
 
     let message = format!("start search_principal().  url {}", url);
     info!("message {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
 
     let response = CLIENT.get(&url).send().await;
 

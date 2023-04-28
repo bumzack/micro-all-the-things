@@ -6,7 +6,6 @@ pub mod mod_solr_http {
 
     use crate::entity::entity::{Engine, Entity};
     use crate::helper::dump_response_status;
-    use crate::logging::logging_service_client::logging_service::log_error;
     use crate::solr::SOLR_DEFAULT_LIMIT;
 
     pub(crate) async fn solr_search_http(
@@ -187,7 +186,6 @@ pub mod mod_solr_http {
                         &index,
                         &b
                     );
-                    log_error(msg).await;
                 }
             }
             Err(e) => {
@@ -197,7 +195,6 @@ pub mod mod_solr_http {
                     &entity.to_string(),
                     e
                 );
-                log_error(msg).await;
             }
         }
     }

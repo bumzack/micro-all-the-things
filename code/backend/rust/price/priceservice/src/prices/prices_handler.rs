@@ -2,8 +2,6 @@ use log::{error, info};
 use serde_json::json;
 
 use common::entity::entity::Engine;
-use common::logging::logging_service_client::logging_service;
-use common::logging::logging_service_client::logging_service::log_external_service_error;
 use common::models::movie::{Movie, MoviePaginationResult};
 use common::models::search_doc::SearchPaginatedRequest;
 
@@ -186,12 +184,6 @@ async fn search_movies(
         engine.to_string()
     );
     info!("message {}", &message);
-    logging_service::log_entry(
-        " rust_priceservice_insert_dummy_data".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-    .await;
 
     info!("search movie URL {}", &search_movie);
     let json = json!(&search_request);
@@ -204,7 +196,6 @@ async fn search_movies(
         &search_request.sort.clone()
     );
     let msg = "search for movies paginated search request".to_string();
-    log_external_service_error(&msg, &message, &response).await;
 
     if response.is_err() {
         error!(
@@ -234,12 +225,7 @@ async fn search_movies(
         paginated_result.next_cursor_mark,
     );
     info!("message {}", &message);
-    logging_service::log_entry(
-        " rust_priceservice_insert_dummy_data".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-    .await;
+
     info!(".rust_priceservice_insert_dummy_datasearch_movies finished successfully");
 
     (paginated_result.movies, paginated_result.next_cursor_mark)
