@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3036:3036"
+      - "18300:18300"
+      - "18400:18400"
+    depends_on:
+      - postgres
+      - mariadb
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: example_password
+      POSTGRES_USER: example_user
+      POSTGRES_DB: example_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres-dump.sql:/docker-entrypoint-initdb.d/postgres-dump.sql
+    command: ["postgres", "-c", "max_connections=300"]
+  mariadb:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: example_password
+      MYSQL_DATABASE: example_db
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./mariadb-dump.sql:/docker-entrypoint-initdb.d/mariadb-dump.sql
+
+volumes:
+  postgres_data:
+  mariadb_data:
+
+
+

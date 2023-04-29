@@ -1,0 +1,636 @@
+{
+  "name": "hybris",
+  "version": 7.5,
+  "uniqueKey": "id",
+  "similarity": {
+    "class": "solr.SchemaSimilarityFactory"
+  },
+  "fieldTypes": [
+    {
+      "name": "boolean",
+      "class": "solr.BoolField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "date",
+      "class": "solr.DatePointField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "double",
+      "class": "solr.DoublePointField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "float",
+      "class": "solr.FloatPointField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "int",
+      "class": "solr.IntPointField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "long",
+      "class": "solr.LongPointField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "sortabletext",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "sortMissingLast": true,
+      "analyzer": {
+        "tokenizer": {
+          "class": "solr.KeywordTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.TrimFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "string",
+      "class": "solr.StrField",
+      "sortMissingLast": true,
+      "docValues": true
+    },
+    {
+      "name": "text",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.SynonymGraphFilterFactory",
+            "expand": "true",
+            "ignoreCase": "true",
+            "synonyms": "synonyms.txt"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_de",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "lang/stopwords_de.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.KeywordMarkerFilterFactory",
+            "protected": "protwords.txt"
+          },
+          {
+            "class": "solr.GermanStemFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "lang/stopwords_de.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.SynonymGraphFilterFactory",
+            "expand": "true",
+            "ignoreCase": "true",
+            "synonyms": "synonyms.txt"
+          },
+          {
+            "class": "solr.ManagedSynonymGraphFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.KeywordMarkerFilterFactory",
+            "protected": "protwords.txt"
+          },
+          {
+            "class": "solr.GermanStemFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_en",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.KeywordMarkerFilterFactory",
+            "protected": "protwords.txt"
+          },
+          {
+            "class": "solr.PorterStemFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.EnglishPossessiveFilterFactory"
+          },
+          {
+            "class": "solr.ManagedSynonymGraphFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.KeywordMarkerFilterFactory",
+            "protected": "protwords.txt"
+          },
+          {
+            "class": "solr.PorterStemFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_spell",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.SynonymGraphFilterFactory",
+            "expand": "true",
+            "ignoreCase": "true",
+            "synonyms": "synonyms.txt"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_spell_de",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ManagedSynonymGraphFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "de"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_spell_en",
+      "class": "solr.TextField",
+      "positionIncrementGap": "100",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.ManagedSynonymGraphFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.ManagedStopFilterFactory",
+            "managed": "en"
+          },
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    }
+  ],
+  "fields": [
+    {
+      "name": "_version_",
+      "type": "long",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "autosuggest",
+      "type": "text_spell",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "autosuggest_de",
+      "type": "text_spell_de",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "autosuggest_en",
+      "type": "text_spell_en",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "catalogId",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "catalogVersion",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "indexOperationId",
+      "type": "long",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "pk",
+      "type": "long",
+      "multiValued": false,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "spellcheck",
+      "type": "text_spell",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "spellcheck_de",
+      "type": "text_spell_de",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "spellcheck_en",
+      "type": "text_spell_en",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    }
+  ],
+  "dynamicFields": [
+    {
+      "name": "*_sortabletext_mv",
+      "type": "sortabletext",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_sortabletext",
+      "type": "sortabletext",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_boolean_mv",
+      "type": "boolean",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text_en_mv",
+      "type": "text_en",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text_de_mv",
+      "type": "text_de",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_double_mv",
+      "type": "double",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_string_mv",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_float_mv",
+      "type": "float",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_boolean",
+      "type": "boolean",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_long_mv",
+      "type": "long",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_date_mv",
+      "type": "date",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text_mv",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text_en",
+      "type": "text_en",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text_de",
+      "type": "text_de",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_int_mv",
+      "type": "int",
+      "multiValued": true,
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_double",
+      "type": "double",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_string",
+      "type": "string",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_float",
+      "type": "float",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_long",
+      "type": "long",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_date",
+      "type": "date",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_text",
+      "type": "text",
+      "indexed": true,
+      "stored": true
+    },
+    {
+      "name": "*_int",
+      "type": "int",
+      "indexed": true,
+      "stored": true
+    }
+  ],
+  "copyFields": [
+    {
+      "source": "autosuggest",
+      "dest": "autosuggest_de"
+    },
+    {
+      "source": "autosuggest",
+      "dest": "autosuggest_en"
+    },
+    {
+      "source": "spellcheck",
+      "dest": "spellcheck_de"
+    },
+    {
+      "source": "spellcheck",
+      "dest": "spellcheck_en"
+    }
+  ]
+}
