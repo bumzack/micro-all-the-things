@@ -11,7 +11,7 @@ public class WebClientFactory {
         // empty on purpose
     }
 
-    public static WebClient getClient(final String url ) {
+    public static WebClient getClient(final String url) {
         if (isNull(client)) {
             client = WebClient
                     .builder()

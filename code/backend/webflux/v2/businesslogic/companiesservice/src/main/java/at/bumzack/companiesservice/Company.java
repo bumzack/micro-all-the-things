@@ -4,7 +4,6 @@ import org.apache.logging.log4j.message.AsynchronouslyFormattable;
 
 import java.io.Serializable;
 
-@Table("Company")
 public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;

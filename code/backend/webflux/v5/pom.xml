@@ -8,6 +8,10 @@
         <module>common-v5</module>
         <module>search/webflux_search_search_index</module>
         <module>search/webflux_search_article</module>
+        <module>customer/webflux_authentication_service</module>
+        <module>customer/webflux_customer_service</module>
+        <module>customer/webflux_customerprice_service</module>
+        <module>price/webflux_price_service</module>
     </modules>
 
     <parent>

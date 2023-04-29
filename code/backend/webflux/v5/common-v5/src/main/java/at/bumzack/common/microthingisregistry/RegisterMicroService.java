@@ -16,7 +16,9 @@ import reactor.util.Loggers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.*;
+import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_FIND_BY_NAME;
+import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_POST;
+import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_TECHNOLOGY_BY_NAME;
 
 
 @Service
@@ -74,14 +76,37 @@ public class RegisterMicroService {
                                 return clientResponse.bodyToMono(String.class);
                             }
                         })
-                        //.flatMap(be -> updateOpenApiClient())
+                        .flatMap(be -> updateOpenApiClient())
                         .subscribe(s -> {
                             LOG.info("run ended with {}", s);
                         });
             }
 
             private Mono<String> updateOpenApiClient() {
-                return Mono.just("updating sometime later");
+                final var url = getOpenApiUrl();
+                final WebClient webClient = WebClient.create(url);
+
+                return webClient
+                        .get()
+                        .accept(MediaType.APPLICATION_JSON)
+                        .exchange()
+                        .flatMap(response -> response.bodyToMono(String.class))
+                        .flatMap(openapiJson -> {
+                            final UpdateOpenApi api = new UpdateOpenApi(openapiJson);
+
+                            final var updateUrl = URL_BACKEND_POST + "/" + micrsoserviceId;
+
+                            final WebClient webClient2 = WebClient.create(updateUrl);
+                            LOG.info("update URL:  {}  ", updateUrl);
+
+                            return webClient2
+                                    .put()
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .body(BodyInserters.fromValue(api))
+                                    .retrieve()
+                                    .bodyToMono(String.class)
+                                    .doOnError(e -> LOG.error("error calling microservicesthings  {}", e.getMessage()));
+                        });
             }
 
             private Mono<String> registerMicroService() {
@@ -118,7 +143,7 @@ public class RegisterMicroService {
                 final var be = new NewBackend();
                 be.setLocalRepoPath(localRepoPath);
                 be.setMicroserviceId(micrsoserviceId);
-                final var openapi = StringUtils.join("http://", serverHost, ":", serverPort, "/", openApiPath);
+                final String openapi = getOpenApiUrl();
                 LOG.info("made openapimatch " + openapi);
                 be.setOpenapiUrl(openapi);
                 final var serviceUri = StringUtils.join("http://", serverHost, ":", serverPort);
@@ -130,5 +155,9 @@ public class RegisterMicroService {
                 return be;
             }
         };
+    }
+
+    private String getOpenApiUrl() {
+        return StringUtils.join("http://", serverHost, ":", serverPort, "/", openApiPath);
     }
 }

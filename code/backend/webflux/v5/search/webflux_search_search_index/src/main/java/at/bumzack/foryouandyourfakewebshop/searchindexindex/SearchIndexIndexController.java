@@ -50,28 +50,30 @@ public class SearchIndexIndexController {
         return request.bodyToMono(SearchMovieIndexRequest.class)
                 .flatMap(req -> {
                     if (nonNull(req.q())) {
+                        LOG.info("search term found");
                         return solrService.searchByText(req.q(), req.limit(), req.offset(), TYPE_REF_SEARCH_DOC)
                                 .flatMap(this::extractSearchDocList);
                     }
+                    LOG.info("no term found provided");
                     return ServerResponse.status(HttpStatus.NOT_FOUND).body(BodyInserters.fromValue("not found"));
                 });
     }
 
     private Mono<ServerResponse> extractSearchDocList(final SolrResponse<SearchDoc> res) {
-        final var result = new SearchResult<SearchDoc>();
         LOG.info("solr response {}", res);
         if (nonNull(res.getResponse())) {
-            result.setItems(res.getResponse().getDocs());
+            LOG.info("setting docs with {} items on SearchResult", res.getResponse().getDocs().size());
+            final var result = new MovieSearchResult(res.getResponse().getDocs());
             return ServerResponse.ok().body(BodyInserters.fromValue(result));
         }
+        LOG.info("returning 404");
         return ServerResponse.notFound().build();
     }
-
 
     @RouterOperations({
             @RouterOperation(path = "/solr/v1/solr/searchindex/search",
                     method = POST,
-                    operation = @Operation(operationId = "searchArticle",
+                    operation = @Operation(operationId = "searchDocs",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = SearchMovieIndexRequest.class))),
                             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = MovieSearchResult.class))),
                             })

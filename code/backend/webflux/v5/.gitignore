@@ -1,0 +1,10 @@
+target
+generated
+scripts/*.json
+
+generated-clients
+apiclientpackage
+apiclientprefix
+
+openapi-cli.jar
+
