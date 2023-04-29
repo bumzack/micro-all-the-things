@@ -4,6 +4,7 @@ use serde::Serialize;
 use tokio_postgres::Row;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AddCustomerPriceEntry {
     pub customer_id: i32,
     pub start_year: i32,
@@ -12,6 +13,7 @@ pub struct AddCustomerPriceEntry {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CustomerPriceEntry {
     pub id: i32,
     pub customer_id: i32,

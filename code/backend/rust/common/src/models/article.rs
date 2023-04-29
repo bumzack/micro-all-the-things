@@ -6,12 +6,14 @@ use serde::Serialize;
 use crate::models::search_doc::{IndexDocFacetDistribution, SearchIndexDoc};
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchCustomer {
     pub customer_id: Option<i32>,
     pub jwt: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchArticleRequest {
     pub q: String,
     pub offset: u32,
@@ -20,6 +22,7 @@ pub struct SearchArticleRequest {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ArticleSearchResult {
     pub article: SearchIndexDoc,
     pub price: f32,
@@ -28,6 +31,7 @@ pub struct ArticleSearchResult {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchArticleResponse {
     pub articles: Option<Vec<ArticleSearchResult>>,
     pub facets: Option<IndexDocFacetDistribution>,
