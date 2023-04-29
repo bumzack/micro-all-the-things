@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "@parcel/transformer-typescript-tsc": "^2.8.3",
+    "@types/jquery": "^3.5.16",
     "parcel": "^2.8.3",
     "typescript": "5.0.4"
   },

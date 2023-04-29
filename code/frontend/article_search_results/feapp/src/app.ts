@@ -20,6 +20,15 @@ jquery(document).ready(() => {
             const txt = jquery("#searchMovie").val() as string;
             console.log(`return pressed     ${txt}  `);
             const url_prod = "http://proxy.proxythingi.at/webflux/solr/search"
+
+            // rust
+            // const url_prod = "http://search.rust.bumzack.at/api/v1/solr/article"
+            // const url_prod = "http://search.rust.bumzack.at/api/v1/meili/article"
+
+            // webflux
+            // const url_prod = "http://search.webflux.bumzack.at/api/v1/solr/article"
+
+
             const url_local = "http://localhost:18600/api/v2/solr/article"
             const url = url_prod;
 

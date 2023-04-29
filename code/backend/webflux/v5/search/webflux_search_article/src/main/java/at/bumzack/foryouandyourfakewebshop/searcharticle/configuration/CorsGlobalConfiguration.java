@@ -16,8 +16,30 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
     public void addCorsMappings(final CorsRegistry corsRegistry) {
         LOG.info("cors !!!");
         corsRegistry.addMapping("/**")
-                .allowedOrigins("http://www.bumzack.at", "http://www.bumzack.at:3000", "http://localhost:3000", "http://locahost:3001", "http://localhost:3002")
-                .allowedMethods("POST", "GET", "PUT")
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .allowedHeaders( "User-Agent",
+                        "Sec-Fetch-Mode",
+                        "Referer",
+                        "Origin",
+                        "content-type",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers",
+                        "Access-Control-Allow-Headers",
+                        "Access-Control-Allow-Methods",
+                        "Access-Control-Allow-Origin",
+                        "Access-Control-Expose-Headers",
+                        "Access-Control-Request-Headers",
+                        "Access-Control-Request-Methods",
+                        "Accept-Encoding",
+                        "Accept-Language",
+                        "Accept-Post",
+                        "Access-Control-Allow-Credentials",
+                        "keep-alive",
+                        "x-duration",
+                        "x-provided-by",
+                        "x-initiated-by",
+                        "x-processed-by")
                 .maxAge(3600);
     }
 }

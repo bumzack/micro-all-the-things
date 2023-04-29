@@ -261,4 +261,3 @@ curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Ty
 ```
 curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Brianna", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1203, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9 " }   }' | jq
 ```
-
