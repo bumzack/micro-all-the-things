@@ -23,12 +23,9 @@ public class SolrRequestBuilder {
 
     private static final String AMPERSAND = "&";
     private static final String SLASH = "/";
+    private static final String SOLR = "solr";
     private final List<String> responseFields = new ArrayList<>();
     private final List<String> queryField = new ArrayList<>();
-
-    private static final String SOLR = "solr";
-
-
     private String solrHost = "localhost";
 
     @Value("${solr.port}")
@@ -72,7 +69,7 @@ public class SolrRequestBuilder {
     }
 
     public SolrRequestBuilder setPort(final String port) {
-        this.solrPort =Integer.parseInt( port);
+        this.solrPort = Integer.parseInt(port);
         return this;
     }
 
@@ -103,7 +100,7 @@ public class SolrRequestBuilder {
         LOG.info("solrPort       {}\n", solrPort);
         LOG.info("host            {}\n", host);
 
-        final var url = Stream.of(host, SOLR, "/",core, command)
+        final var url = Stream.of(host, SOLR, "/", core, command)
                 .filter(Objects::nonNull)
                 .collect(Collectors.joining(SLASH));
 
