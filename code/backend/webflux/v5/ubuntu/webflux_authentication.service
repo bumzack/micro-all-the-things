@@ -1,5 +1,5 @@
 [Unit]
-Description=WebFlux Price Service
+Description=WebFlux Authentication Service
 ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/webflux/v5/customer/webflux_authentication_service
 
 After=network.target
@@ -13,8 +13,7 @@ LimitNOFILE=1024
 Restart=on-failure
 RestartSec=10
 WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/webflux/v5/customer/webflux_authentication_service
-ExecStart=mvn spring-boot:run
-
+ExecStart=java -jar ./target/webflux-authentication-service-0.0.1-SNAPSHOT.jar
 
 # make sure log directory exists and owned by syslog
 ExecStartPre=/bin/mkdir -p /var/log/webflux_authentication_service
