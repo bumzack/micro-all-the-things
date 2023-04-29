@@ -39,3 +39,7 @@ curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-T
 
 
 
+## WebFlux Java Solr
+
+curl  -vv -X POST   http://localhost:8600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 50, "customer" : {  "customerId": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9" }   }' | jq
+
