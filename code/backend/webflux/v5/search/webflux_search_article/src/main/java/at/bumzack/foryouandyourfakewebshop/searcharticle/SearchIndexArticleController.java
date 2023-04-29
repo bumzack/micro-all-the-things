@@ -150,7 +150,7 @@ public class SearchIndexArticleController {
     }
 
     @RouterOperations({
-            @RouterOperation(path = "/solr/v1/solr/article",
+            @RouterOperation(path = "/api/v1/solr/article",
                     method = POST,
                     operation = @Operation(operationId = "searchArticle",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = SearchArticleRequest.class))),
@@ -162,7 +162,7 @@ public class SearchIndexArticleController {
     @Bean
     public RouterFunction<ServerResponse> articleSearch() {
         return route()
-                .nest(RequestPredicates.path("/solr/v1/solr/"),
+                .nest(RequestPredicates.path("/api/v1/solr/"),
                         builder -> builder
                                 .POST("article", this::searchArticles)
                                 .build())

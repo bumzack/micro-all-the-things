@@ -36,6 +36,7 @@ pub struct SearchIndexDoc {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchMovieIndexRequest {
     pub q: String,
     pub offset: u32,
@@ -43,6 +44,7 @@ pub struct SearchMovieIndexRequest {
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchPaginatedRequest {
     pub q: String,
     pub offset: u32,
@@ -52,6 +54,7 @@ pub struct SearchPaginatedRequest {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct IndexDocFacetDistribution {
     pub actors: Option<HashMap<String, usize>>,
     pub directors: Option<HashMap<String, usize>>,
@@ -62,6 +65,7 @@ pub struct IndexDocFacetDistribution {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct MovieSearchResult {
     pub movies: Vec<SearchIndexDoc>,
     pub facets: Option<IndexDocFacetDistribution>,

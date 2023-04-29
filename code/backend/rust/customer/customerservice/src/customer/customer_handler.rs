@@ -16,10 +16,10 @@ pub mod handler_customer {
     use common::models::person::Person;
     use common::models::search_doc::SearchPaginatedRequest;
 
+    use crate::{CLIENT, CONFIG};
     use crate::customer::db::db_customer::{
         get_customer, get_customers_paginated, insert_customer,
     };
-    use crate::{CLIENT, CONFIG};
 
     const SERVICE_NAME: &str = "Customer Service";
 

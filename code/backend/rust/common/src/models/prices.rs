@@ -4,12 +4,14 @@ use serde::Serialize;
 use tokio_postgres::Row;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AddPriceEntry {
     pub movie_tconst: String,
     pub amount: f32,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct PriceEntry {
     pub id: i32,
     pub movie_tconst: String,
@@ -27,6 +29,7 @@ pub fn price_entry_from_row(r: &Row) -> PriceEntry {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SearchPricesRequest {
     pub movie_tconst: Vec<String>,
 }
