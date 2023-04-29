@@ -56,6 +56,9 @@ public class SearchIndexArticleController {
 
     @NonNull
     public Mono<ServerResponse> searchArticles(final ServerRequest request) throws WebClientResponseException {
+        request.headers().asHttpHeaders().forEach((k,v)-> {
+            LOG.info("{} -> {}", k,v);
+        });
         final ApiClient apiClient = new ApiClient();
         final DefaultApi api = new DefaultApi(apiClient);
         return request.bodyToMono(SearchArticleRequest.class)
@@ -99,7 +102,7 @@ public class SearchIndexArticleController {
                     final Map<String, PriceEntry> moviePrices = priceEntries
                             .stream()
                             .map(priceEntry -> Map.entry(priceEntry.getMovieTconst(), priceEntry))
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (m1, m2) -> m1));
                     final List<CustomerPriceEntry> customerprices = getCustPrices(auth).collectList().block();
 
                     final List<ArticleSearchResult> articles = movies.stream().map(m -> {

@@ -1,0 +1,26 @@
+[Unit]
+Description=Java8 Price Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/java8/v5/price/java8_price_service
+
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/java8/v5/price/java8_price_service
+ExecStart=java -jar ./target/java8-price-service-0.0.1-SNAPSHOT.jar
+
+
+# make sure log directory exists and owned by syslog
+ExecStartPre=/bin/mkdir -p /var/log/java8_price_service
+ExecStartPre=/bin/chown syslog:adm /var/log/java8_price_service
+ExecStartPre=/bin/chmod 755 /var/log/java8_price_service
+SyslogIdentifier=java8_price_service
+
+[Install]
+WantedBy=multi-user.target

@@ -25,6 +25,7 @@ import reactor.util.Logger;
 import reactor.util.Loggers;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
@@ -56,7 +57,7 @@ public class CustomerPriceServiceController {
 
     @RouterOperations({
             @RouterOperation(path = "/api/v1/customerprices/{customerId}",
-                    method = POST,
+                    method = GET,
                     operation = @Operation(operationId = "customerPrices",
                             parameters = {@Parameter(in = ParameterIn.PATH, name = "customerId", description = "Customer ID", schema  = @Schema(implementation = Long.class))
                             },
@@ -68,9 +69,9 @@ public class CustomerPriceServiceController {
     @Bean
     public RouterFunction<ServerResponse> solrRoutes() {
         return route()
-                .nest(RequestPredicates.path("/api/v1/"),
+                .nest(RequestPredicates.path("/api/v1"),
                         builder -> builder
-                                .POST("customerprices/{customerId}", this::customerPrices)
+                                .GET("/customerprices/{customerId}", this::customerPrices)
                                 .build())
                 .build();
     }
