@@ -19,7 +19,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres-dump.sql:/docker-entrypoint-initdb.d/postgres-dump.sql
-    command: ["postgres", "-c", "max_connections=300"]
+    command: [ "postgres", "-c", "max_connections=300" ]
   mariadb:
     image: mariadb:11
     environment:
