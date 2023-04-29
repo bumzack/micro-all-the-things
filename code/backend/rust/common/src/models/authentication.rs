@@ -4,17 +4,20 @@ use serde::Serialize;
 use tokio_postgres::Row;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LogInRequest {
     pub email: String,
     pub password: String,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LogOutRequest {
     pub customer_id: i32,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AuthenticationEntry {
     pub id: i32,
     pub customer_id: i32,
@@ -38,6 +41,7 @@ impl From<&Row> for AuthenticationEntry {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AuthenticatedCustomer {
     pub customer_id: i32,
     pub jwt: String,
