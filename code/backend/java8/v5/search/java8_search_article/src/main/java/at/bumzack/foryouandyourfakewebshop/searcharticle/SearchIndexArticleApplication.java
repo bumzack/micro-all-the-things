@@ -28,8 +28,33 @@ public class SearchIndexArticleApplication {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("*").allowedOrigins("*").allowedMethods("*");
+            public void addCorsMappings(final CorsRegistry registry) {
+                registry
+                        .addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("*")
+                        .allowedHeaders("User-Agent",
+                                "Sec-Fetch-Mode",
+                                "Referer",
+                                "Origin",
+                                "content-type",
+                                "Access-Control-Request-Method",
+                                "Access-Control-Request-Headers",
+                                "Access-Control-Allow-Headers",
+                                "Access-Control-Allow-Methods",
+                                "Access-Control-Allow-Origin",
+                                "Access-Control-Expose-Headers",
+                                "Access-Control-Request-Headers",
+                                "Access-Control-Request-Methods",
+                                "Accept-Encoding",
+                                "Accept-Language",
+                                "Accept-Post",
+                                "Access-Control-Allow-Credentials",
+                                "keep-alive",
+                                "x-duration",
+                                "x-provided-by",
+                                "x-initiated-by",
+                                "x-processed-by");
             }
         };
     }
