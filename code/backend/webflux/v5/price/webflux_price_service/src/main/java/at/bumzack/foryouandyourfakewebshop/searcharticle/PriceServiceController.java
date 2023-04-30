@@ -70,7 +70,7 @@ public class PriceServiceController {
             @RouterOperation(path = "/api/v1/price/{tconst}",
                     method = GET,
                     operation = @Operation(operationId = "getPriceForMovie",
-                            parameters = {@Parameter(in = ParameterIn.PATH, name = "tconst", description = "Movie tconst ID", schema  = @Schema(implementation = String.class))
+                            parameters = {@Parameter(in = ParameterIn.PATH, name = "tconst", description = "Movie tconst ID", schema = @Schema(implementation = String.class))
                             }, responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PriceEntry.class))),
                     })
             ),

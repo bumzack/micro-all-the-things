@@ -92,7 +92,7 @@ public class AuthenticationServiceController {
                                     .log("authenticationRepository.findByCustomerId()")
                                     .flatMap(authenticationEntry -> {
                                         LOG.info("returning an  authenticationEntry   for customer id {},  authENtry {} " + customer.getId(), authenticationEntry);
-                                       //  authenticationEntry.setJwt("hahahahaa");
+                                        //  authenticationEntry.setJwt("hahahahaa");
                                         return ServerResponse.status(HttpStatus.OK).body(BodyInserters.fromValue(authenticationEntry));
                                     })
                                     .log("serverrepsonse 200 because there exists already an authenticationEntry")
@@ -121,7 +121,7 @@ public class AuthenticationServiceController {
             final var entry = new AuthenticationEntry();
             entry.setLoggedIn(LocalDateTime.now());
             entry.setJwt(jwt);
-           //  entry.setJwt("new entry");
+            //  entry.setJwt("new entry");
             entry.setCustomerId(customer.getId());
             LOG.info("customer email and password are matching. logging user in {}", entry);
             return authenticationRepository.save(entry)
@@ -202,7 +202,7 @@ public class AuthenticationServiceController {
             @RouterOperation(path = "/api/v1/authenticated/{customerId}",
                     method = GET,
                     operation = @Operation(operationId = "loggedin",
-                            parameters = {@Parameter(in = ParameterIn.PATH, name = "customerId", description = "Customer ID", schema  = @Schema(implementation = Long.class))
+                            parameters = {@Parameter(in = ParameterIn.PATH, name = "customerId", description = "Customer ID", schema = @Schema(implementation = Long.class))
                             },
                             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AuthenticationEntry.class))),
                             })

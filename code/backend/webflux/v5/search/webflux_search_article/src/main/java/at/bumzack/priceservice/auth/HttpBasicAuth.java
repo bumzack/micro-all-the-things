@@ -1,11 +1,10 @@
 package at.bumzack.priceservice.auth;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.MultiValueMap;
+
+import java.nio.charset.StandardCharsets;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:20.403886+02:00[Europe/Vienna]")
 public class HttpBasicAuth implements Authentication {

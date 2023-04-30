@@ -56,8 +56,8 @@ public class SearchIndexArticleController {
 
     @NonNull
     public Mono<ServerResponse> searchArticles(final ServerRequest request) throws WebClientResponseException {
-        request.headers().asHttpHeaders().forEach((k,v)-> {
-            LOG.info("{} -> {}", k,v);
+        request.headers().asHttpHeaders().forEach((k, v) -> {
+            LOG.info("{} -> {}", k, v);
         });
         final ApiClient apiClient = new ApiClient();
         final DefaultApi api = new DefaultApi(apiClient);

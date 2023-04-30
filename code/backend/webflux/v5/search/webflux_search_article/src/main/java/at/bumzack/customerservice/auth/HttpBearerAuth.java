@@ -1,10 +1,6 @@
 package at.bumzack.customerservice.auth;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.Base64Utils;
 import org.springframework.util.MultiValueMap;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:15.937735+02:00[Europe/Vienna]")
@@ -14,6 +10,10 @@ public class HttpBearerAuth implements Authentication {
 
     public HttpBearerAuth(String scheme) {
         this.scheme = scheme;
+    }
+
+    private static String upperCaseBearer(String scheme) {
+        return ("bearer".equalsIgnoreCase(scheme)) ? "Bearer" : scheme;
     }
 
     public String getBearerToken() {
@@ -30,10 +30,6 @@ public class HttpBearerAuth implements Authentication {
             return;
         }
         headerParams.add(HttpHeaders.AUTHORIZATION, (scheme != null ? upperCaseBearer(scheme) + " " : "") + bearerToken);
-    }
-
-    private static String upperCaseBearer(String scheme) {
-        return ("bearer".equalsIgnoreCase(scheme)) ? "Bearer" : scheme;
     }
 
 }
