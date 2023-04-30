@@ -1,10 +1,9 @@
 package at.bumzack.foryouandyourfakewebshop.searchindexindex.model;
 
 import java.util.List;
-import java.util.Objects;
 
-public   class MovieSearchResult {
-    private   List<SearchDoc> movies;
+public class MovieSearchResult {
+    private List<SearchDoc> movies;
 
     public MovieSearchResult() {
     }

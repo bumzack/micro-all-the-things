@@ -1,30 +1,24 @@
 package at.bumzack.customerservice.api;
 
 import at.bumzack.customerservice.ApiClient;
-
 import at.bumzack.customerservice.model.AddCustomerRequest;
 import at.bumzack.customerservice.model.Customer;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.Flux;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:15.937735+02:00[Europe/Vienna]")
 public class DefaultApi {
@@ -48,9 +42,8 @@ public class DefaultApi {
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param addCustomerRequest The addCustomerRequest parameter
      * @return Customer
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -65,49 +58,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return apiClient.invokeAPI("/api/v1/customer", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param addCustomerRequest The addCustomerRequest parameter
      * @return Customer
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<Customer> addCustomer(AddCustomerRequest addCustomerRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return addCustomerRequestCreation(addCustomerRequest).bodyToMono(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param addCustomerRequest The addCustomerRequest parameter
      * @return ResponseEntity&lt;Customer&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<Customer>> addCustomerWithHttpInfo(AddCustomerRequest addCustomerRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return addCustomerRequestCreation(addCustomerRequest).toEntity(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param addCustomerRequest The addCustomerRequest parameter
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -115,10 +108,10 @@ public class DefaultApi {
     public ResponseSpec addCustomerWithResponseSpec(AddCustomerRequest addCustomerRequest) throws WebClientResponseException {
         return addCustomerRequestCreation(addCustomerRequest);
     }
+
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param email Email address of customer
      * @return Customer
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -139,49 +132,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return apiClient.invokeAPI("/api/v1/customer/{email}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param email Email address of customer
      * @return Customer
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<Customer> getCustomer(String email) throws WebClientResponseException {
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return getCustomerRequestCreation(email).bodyToMono(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param email Email address of customer
      * @return ResponseEntity&lt;Customer&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<Customer>> getCustomerWithHttpInfo(String email) throws WebClientResponseException {
-        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {};
+        ParameterizedTypeReference<Customer> localVarReturnType = new ParameterizedTypeReference<Customer>() {
+        };
         return getCustomerRequestCreation(email).toEntity(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param email Email address of customer
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API

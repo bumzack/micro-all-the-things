@@ -1,10 +1,12 @@
 package at.bumzack.foryouandyourfakewebshop.searcharticle.model;
 
 import java.util.List;
-import java.util.Objects;
 
-public   class IndexDocFacetDistribution {
-    private   List<String> actors;
+public class IndexDocFacetDistribution {
+    private List<String> actors;
+
+    public IndexDocFacetDistribution() {
+    }
 
     @Override
     public String toString() {
@@ -19,9 +21,6 @@ public   class IndexDocFacetDistribution {
 
     public void setActors(final List<String> actors) {
         this.actors = actors;
-    }
-
-    public IndexDocFacetDistribution() {
     }
 }
 

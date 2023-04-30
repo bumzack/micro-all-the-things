@@ -3,7 +3,7 @@ package at.bumzack.customerpriceservice.auth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:12.132363+02:00[Europe/Vienna]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-30T02:11:33.492992+02:00[Europe/Vienna]")
 public class ApiKeyAuth implements Authentication {
     private final String location;
     private final String paramName;

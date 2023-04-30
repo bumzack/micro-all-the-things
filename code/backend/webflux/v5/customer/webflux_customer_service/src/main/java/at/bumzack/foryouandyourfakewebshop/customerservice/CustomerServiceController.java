@@ -78,7 +78,7 @@ public class CustomerServiceController {
             @RouterOperation(path = "/api/v1/customer/{email}",
                     method = GET,
                     operation = @Operation(operationId = "getCustomer",
-                            parameters = {@Parameter(in = ParameterIn.PATH, name = "email", description = "Email address of customer", schema  = @Schema(implementation = String.class))
+                            parameters = {@Parameter(in = ParameterIn.PATH, name = "email", description = "Email address of customer", schema = @Schema(implementation = String.class))
                             },
                             responses = {@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Customer.class))),
                             })

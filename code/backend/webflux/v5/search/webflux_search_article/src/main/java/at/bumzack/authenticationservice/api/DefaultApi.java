@@ -1,31 +1,25 @@
 package at.bumzack.authenticationservice.api;
 
 import at.bumzack.authenticationservice.ApiClient;
-
 import at.bumzack.authenticationservice.model.AuthenticationEntry;
 import at.bumzack.authenticationservice.model.LogInRequest;
 import at.bumzack.authenticationservice.model.LogOutRequest;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.Flux;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:02.276511+02:00[Europe/Vienna]")
 public class DefaultApi {
@@ -49,9 +43,8 @@ public class DefaultApi {
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -72,49 +65,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return apiClient.invokeAPI("/api/v1/authenticated/{customerId}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<AuthenticationEntry> loggedin(Long customerId) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return loggedinRequestCreation(customerId).bodyToMono(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return ResponseEntity&lt;AuthenticationEntry&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<AuthenticationEntry>> loggedinWithHttpInfo(Long customerId) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return loggedinRequestCreation(customerId).toEntity(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -122,10 +115,10 @@ public class DefaultApi {
     public ResponseSpec loggedinWithResponseSpec(Long customerId) throws WebClientResponseException {
         return loggedinRequestCreation(customerId);
     }
+
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logInRequest The logInRequest parameter
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -140,49 +133,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return apiClient.invokeAPI("/api/v1/authentication/login", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logInRequest The logInRequest parameter
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<AuthenticationEntry> login(LogInRequest logInRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return loginRequestCreation(logInRequest).bodyToMono(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logInRequest The logInRequest parameter
      * @return ResponseEntity&lt;AuthenticationEntry&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<AuthenticationEntry>> loginWithHttpInfo(LogInRequest logInRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return loginRequestCreation(logInRequest).toEntity(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logInRequest The logInRequest parameter
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -190,10 +183,10 @@ public class DefaultApi {
     public ResponseSpec loginWithResponseSpec(LogInRequest logInRequest) throws WebClientResponseException {
         return loginRequestCreation(logInRequest);
     }
+
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logOutRequest The logOutRequest parameter
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -208,49 +201,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return apiClient.invokeAPI("/api/v1/authentication/logout", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logOutRequest The logOutRequest parameter
      * @return AuthenticationEntry
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<AuthenticationEntry> logout(LogOutRequest logOutRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return logoutRequestCreation(logOutRequest).bodyToMono(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logOutRequest The logOutRequest parameter
      * @return ResponseEntity&lt;AuthenticationEntry&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<AuthenticationEntry>> logoutWithHttpInfo(LogOutRequest logOutRequest) throws WebClientResponseException {
-        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {};
+        ParameterizedTypeReference<AuthenticationEntry> localVarReturnType = new ParameterizedTypeReference<AuthenticationEntry>() {
+        };
         return logoutRequestCreation(logOutRequest).toEntity(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param logOutRequest The logOutRequest parameter
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
