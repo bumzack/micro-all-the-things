@@ -25,7 +25,6 @@ import java.util.List;
 
 import static java.util.Objects.nonNull;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController("Java8CustomerPriceServiceController")

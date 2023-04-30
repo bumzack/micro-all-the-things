@@ -18,7 +18,7 @@ public class CorsGlobalConfiguration implements WebFluxConfigurer {
         corsRegistry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
-                .allowedHeaders( "User-Agent",
+                .allowedHeaders("User-Agent",
                         "Sec-Fetch-Mode",
                         "Referer",
                         "Origin",

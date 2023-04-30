@@ -26,7 +26,6 @@ import reactor.util.Loggers;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 
@@ -59,7 +58,7 @@ public class CustomerPriceServiceController {
             @RouterOperation(path = "/api/v1/customerprices/{customerId}",
                     method = GET,
                     operation = @Operation(operationId = "customerPrices",
-                            parameters = {@Parameter(in = ParameterIn.PATH, name = "customerId", description = "Customer ID", schema  = @Schema(implementation = Long.class))
+                            parameters = {@Parameter(in = ParameterIn.PATH, name = "customerId", description = "Customer ID", schema = @Schema(implementation = Long.class))
                             },
                             responses = {@ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CustomerPriceEntry.class)))),
                             })

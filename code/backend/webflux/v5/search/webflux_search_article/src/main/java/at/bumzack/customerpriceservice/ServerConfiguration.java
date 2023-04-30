@@ -31,7 +31,7 @@ public class ServerConfiguration {
         String url = this.URL;
 
         // go through variables and replace placeholders
-        for (Map.Entry<String, ServerVariable> variable: this.variables.entrySet()) {
+        for (Map.Entry<String, ServerVariable> variable : this.variables.entrySet()) {
             String name = variable.getKey();
             ServerVariable serverVariable = variable.getValue();
             String value = serverVariable.defaultValue;

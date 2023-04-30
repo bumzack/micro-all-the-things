@@ -1,31 +1,26 @@
 package at.bumzack.customerpriceservice.api;
 
 import at.bumzack.customerpriceservice.ApiClient;
-
 import at.bumzack.customerpriceservice.model.CustomerPriceEntry;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import reactor.core.publisher.Mono;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-29T15:35:12.132363+02:00[Europe/Vienna]")
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-04-30T02:11:33.492992+02:00[Europe/Vienna]")
 public class DefaultApi {
     private ApiClient apiClient;
 
@@ -47,9 +42,8 @@ public class DefaultApi {
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return List&lt;CustomerPriceEntry&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
@@ -70,49 +64,49 @@ public class DefaultApi {
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<String, String>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] localVarAccepts = { 
-            "*/*"
+        final String[] localVarAccepts = {
+                "*/*"
         };
         final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        final String[] localVarContentTypes = { };
+        final String[] localVarContentTypes = {};
         final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[]{};
 
-        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {};
-        return apiClient.invokeAPI("/api/v1/customerprices/{customerId}", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {
+        };
+        return apiClient.invokeAPI("/api/v1/customerprices/{customerId}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return List&lt;CustomerPriceEntry&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Flux<CustomerPriceEntry> customerPrices(Long customerId) throws WebClientResponseException {
-        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {};
+        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {
+        };
         return customerPricesRequestCreation(customerId).bodyToFlux(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return ResponseEntity&lt;List&lt;CustomerPriceEntry&gt;&gt;
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API
      */
     public Mono<ResponseEntity<List<CustomerPriceEntry>>> customerPricesWithHttpInfo(Long customerId) throws WebClientResponseException {
-        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {};
+        ParameterizedTypeReference<CustomerPriceEntry> localVarReturnType = new ParameterizedTypeReference<CustomerPriceEntry>() {
+        };
         return customerPricesRequestCreation(customerId).toEntityList(localVarReturnType);
     }
 
     /**
-     * 
-     * 
      * <p><b>200</b> - OK
+     *
      * @param customerId Customer ID
      * @return ResponseSpec
      * @throws WebClientResponseException if an error occurs while attempting to invoke the API

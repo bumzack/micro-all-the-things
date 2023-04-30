@@ -1,6 +1,5 @@
 package at.bumzack.foryouandyourfakewebshop.searchindexindex;
 
-import at.bumzack.common.search.SearchResult;
 import at.bumzack.common.solr.SolrResponse;
 import at.bumzack.foryouandyourfakewebshop.searchindexindex.model.MovieSearchResult;
 import at.bumzack.foryouandyourfakewebshop.searchindexindex.model.SearchDoc;

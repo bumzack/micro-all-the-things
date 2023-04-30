@@ -118,14 +118,14 @@ public class Java8AuthenticationServiceController {
         return ResponseEntity.notFound().build();
     }
 
-    private ResponseEntity<AuthenticationEntry> login(   AuthenticationEntry    auth,final Customer customer) {
+    private ResponseEntity<AuthenticationEntry> login(AuthenticationEntry auth, final Customer customer) {
         if (isNull(auth)) {
             final var jwt = getToken(customer.getEmail());
             final var newAuth = new AuthenticationEntry();
 
-           newAuth.setJwt(jwt);
-           newAuth.setCustomerId(customer.getId());
-           newAuth.setLoggedIn(LocalDateTime.now());
+            newAuth.setJwt(jwt);
+            newAuth.setCustomerId(customer.getId());
+            newAuth.setLoggedIn(LocalDateTime.now());
 
             final var loggedIn = authenticationRepository.save(newAuth);
             LOG.info("login. customer successfully    logged in with email/pw  {}", loggedIn);
