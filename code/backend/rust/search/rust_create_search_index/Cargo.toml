@@ -7,14 +7,14 @@ edition = "2021"
 
 [dependencies]
 warp = "0.3.5"
-dotenvy = "0.15"
+dotenvy = "0.15.7"
 tokio = { version = "1.28.0", features = ["full"] }
 reqwest = { version = "0.11.16", features = ["json", "stream"] }
 common = { path = "../../common" }
-serde = { version = "1.0.158", features = ["derive"] }
-serde_json = "1.0.94"
+serde = { version = "1.0.160", features = ["derive"] }
+serde_json = "1.0.96"
 serde_urlencoded = "0.7.1"
-serde_derive = "1.0.155"
+serde_derive = "1.0.160"
 lazy_static = "1.4.0"
 config = "0.13.3"
 num_cpus = "1.15.0"
@@ -24,4 +24,4 @@ pretty_env_logger = "0.4.0"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
-futures = "0.3.27"
+futures = "0.3.28"
