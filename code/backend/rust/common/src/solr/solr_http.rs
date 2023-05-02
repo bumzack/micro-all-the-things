@@ -180,7 +180,7 @@ pub mod mod_solr_http {
                         "solr request != OK AND != CREATED  != ACCEPTED. response body {:?}",
                         &b
                     );
-                    let msg = format!(
+                    let _msg = format!(
                         "exec_solr_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
                         &entity.to_string(),
                         &index,
@@ -190,7 +190,7 @@ pub mod mod_solr_http {
             }
             Err(e) => {
                 info!("solr request error in request to solr {:?}", e);
-                let msg = format!(
+                let _msg = format!(
                     "exec_solr_update returned an error. inserting entity {}. error: {}",
                     &entity.to_string(),
                     e

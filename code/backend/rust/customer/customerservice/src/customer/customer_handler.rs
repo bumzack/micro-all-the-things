@@ -228,13 +228,13 @@ pub mod handler_customer {
         let json = json!(&search_request);
         let response = CLIENT.post(search_person).json(&json).send().await;
 
-        let message = format!(
+        let _message = format!(
             "error rust_customerservice_insert_dummy_data. search_persons(). offset {}, limit {}, sort {:?}.",
             offset,
             limit,
             &search_request.sort.clone()
         );
-        let msg = "search for persons paginated search request".to_string();
+        let _msg = "search for persons paginated search request".to_string();
 
         if response.is_err() {
             error!(
