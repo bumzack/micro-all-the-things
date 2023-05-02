@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 warp = "0.3.4"
 dotenvy = "0.15"
-tokio = { version = "1.26.0", features = ["full"] }
+tokio = { version = "1.28.0", features = ["full"] }
 reqwest = { version = "0.11.16", features = ["json", "stream"] }
 common = { path = "../../common" }
 serde = { version = "1.0.158", features = ["derive"] }
@@ -21,5 +21,5 @@ log = "0.4.17"
 pretty_env_logger = "0.4"
 
 [dev-dependencies]
-tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.28", features = ["macros", "rt"] }
 futures = "0.3.27"

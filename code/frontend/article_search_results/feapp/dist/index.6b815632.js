@@ -596,7 +596,7 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             const txt = (0, _jqueryDefault.default)("#searchMovie").val();
             console.log(`return pressed     ${txt}  `);
             const url_prod = "http://proxy.proxythingi.at/rust/meili/search";
-            const url_local = "http://localhost:18600/api/v1/solr/article";
+            const url_local = "http://localhost:18600/api/v2/solr/article";
             const url = url_prod;
             const customer = {
                 customer_id: 1,
@@ -605,7 +605,7 @@ window.$ = window.jQuery = (0, _jqueryDefault.default);
             const req = {
                 q: txt,
                 offset: 0,
-                limit: 10,
+                limit: 25,
                 customer: customer
             };
             console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
@@ -703,7 +703,7 @@ const article_template = (article)=>{
     let directors = "";
     if (article.article.directors != undefined) directors = "Directors: " + article.article.directors.join(" / ");
     let price;
-    if (article.customer_price !== undefined) price = `SRP € <sr>${article.price.toFixed(2)}</sr>, your price: € ${article.customer_price.toFixed(2)}`;
+    if (article.customer_price !== undefined && article.customer_price !== null) price = `SRP € <sr>${article.price.toFixed(2)}</sr>, your price: € ${article.customer_price.toFixed(2)}`;
     else price = `SRP € ${article.price} `;
     return `   
         <div class="col">
