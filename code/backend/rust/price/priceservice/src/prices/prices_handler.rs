@@ -189,13 +189,13 @@ async fn search_movies(
     let json = json!(&search_request);
     let response = CLIENT.post(search_movie).json(&json).send().await;
 
-    let message = format!(
+    let _message = format!(
         "error rust_priceservice_insert_dummy_data.search_movies(). offset {}, limit {}, sort {:?}.",
         offset,
         limit,
         &search_request.sort.clone()
     );
-    let msg = "search for movies paginated search request".to_string();
+    let _msg = "search for movies paginated search request".to_string();
 
     if response.is_err() {
         error!(

@@ -186,7 +186,7 @@ pub mod meili_http_stuff {
                     );
                     info!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
 
-                    let msg = format!(
+                    let _msg = format!(
                         "exec_meilisearch_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
                         &entity.to_string(),
                         &index,
@@ -196,7 +196,7 @@ pub mod meili_http_stuff {
             }
             Err(e) => {
                 info!("error in request to meilisearch {:?}", e);
-                let msg = format!(
+                let _msg = format!(
                     "exec_meilisearch_update returned an error. inserting entity {}. error: {}",
                     &entity.to_string(),
                     e
