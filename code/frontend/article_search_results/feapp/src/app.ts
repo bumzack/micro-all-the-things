@@ -19,9 +19,23 @@ jquery(document).ready(() => {
             event.preventDefault();
             const txt = jquery("#searchMovie").val() as string;
             console.log(`return pressed     ${txt}  `);
-            const url_prod = "http://proxy.proxythingi.at/rust/meili/search"
+
+            const url_prod_webflux = "http://proxy.proxythingi.at/webflux/solr/search"
+            const url_prod_java8 = "http://proxy.proxythingi.at/java8/solr/search"
+
+            const url_java8= "http://search.java8.bumzack.at/api/v1/solr/article"
+            const url_webflux= "http://search.webflux.bumzack.at/api/v1/solr/article"
+
+            // rust
+            // const url_prod = "http://search.rust.bumzack.at/api/v1/solr/article"
+            // const url_prod = "http://search.rust.bumzack.at/api/v1/meili/article"
+
+            // webflux
+            // const url_prod = "http://search.webflux.bumzack.at/api/v1/solr/article"
+
+
             const url_local = "http://localhost:18600/api/v2/solr/article"
-            const url = url_prod;
+            const url = url_prod_java8;
 
             const customer: SearchCustomer = {
                 customer_id: 1,

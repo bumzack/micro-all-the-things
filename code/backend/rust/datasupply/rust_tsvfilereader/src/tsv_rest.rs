@@ -39,7 +39,7 @@ mod handlers_tsv {
     pub async fn post_tsv_request(
         tsv_request: TsvFileImportRequest,
     ) -> Result<impl warp::Reply, Infallible> {
-        let msg = format!(
+        let _msg = format!(
             "start post_tsv_request. tsvFileImportRequest. entity {:?}, start {}, end {}, page_size {}",
             &tsv_request.tsv_type.clone(), tsv_request.start, tsv_request.end, tsv_request.page_size
         );
@@ -66,7 +66,7 @@ mod handlers_tsv {
         let file = match file {
             Ok(f) => f,
             Err(err) => {
-                let msg = format!(
+                let _msg = format!(
                     "error in post_tsv_request. can't open file  {:?}. error  {:?}",
                     &filename, err
                 );
@@ -174,7 +174,7 @@ mod handlers_tsv {
                 }
                 Err(e) => {
                     info!("error in request {:?}", e);
-                    let msg = format!(
+                    let _msg = format!(
                         "error in post_tsv_request. calling URL {:?} resulted in error  {:?}",
                         &request_url, e
                     );
@@ -183,7 +183,7 @@ mod handlers_tsv {
 
             info!("processed batch {} for type {:?}", batches, &t);
 
-            let msg = format!(
+            let _msg = format!(
                 "start post_tsv_request. processed {} batches for entity {:?}",
                 batches, &t
             );
@@ -192,7 +192,7 @@ mod handlers_tsv {
         }
         info!("processed lines {}", current_line);
 
-        let msg = format!(
+        let _msg = format!(
             "end post_tsv_request. processed {:?} batches of entity {:?}",
             batches, &t
         );

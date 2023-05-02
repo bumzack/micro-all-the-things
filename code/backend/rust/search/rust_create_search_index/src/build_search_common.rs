@@ -235,7 +235,7 @@ pub async fn search_movies(limit: u32, offset: u32, engine: Engine) -> Vec<Movie
         .await
         .expect("expected a list of Movies");
 
-    let message = format!(
+    let _message = format!(
         "end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
