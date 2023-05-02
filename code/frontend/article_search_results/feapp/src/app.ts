@@ -45,7 +45,7 @@ jquery(document).ready(() => {
             const req: SearchArticleRequest = {
                 q: txt,
                 offset: 0,
-                limit: 10,
+                limit: 25,
                 customer: customer,
             };
 
@@ -210,8 +210,7 @@ const article_template = (article: ArticleSearchResult): string => {
             </div>
         </div>
     </div>
-    `
-        ;
+    `;
 
 }
 export {};

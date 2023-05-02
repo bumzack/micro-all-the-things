@@ -560,86 +560,182 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jquery = require("jquery");
 var _jqueryDefault = parcelHelpers.interopDefault(_jquery);
-var _const = require("../../../common/const");
+var __awaiter = undefined && undefined.__awaiter || function(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 window.$ = window.jQuery = (0, _jqueryDefault.default);
-class SearchComp extends HTMLElement {
-    constructor(){
-        super();
-        console.log("search app constructor called");
-    }
-    createSearchApp() {
-        return `<input id="searchtext"  type="search" class="form-control" placeholder="Search..." aria-label="Search"/>`;
-    }
-    connectedCallback() {
-        console.log("search app callback");
-        this.innerHTML += this.createSearchApp();
-        const txt = document.getElementById("searchtext");
-        $("#searchtext").keydown((event)=>{
-            if (event.key === "Enter") // @ts-ignore
-            {
-                if (txt.value != null) {
-                    // @ts-ignore
-                    console.log("sending custom event with  search text: '", txt.value, "'");
-                    document.getElementById((0, _const.ID_SEARCH_RESULT_APP)).dispatchEvent(new CustomEvent((0, _const.DO_SEARCH_EVENT), {
-                        detail: {
-                            "searchText": txt.value
-                        }
-                    }));
-                }
+(0, _jqueryDefault.default)(document).ready(()=>{
+    console.log("yo");
+    (0, _jqueryDefault.default)("#searchMovie").keydown((event)=>{
+        if (event.which == 13) {
+            event.preventDefault();
+            const txt = (0, _jqueryDefault.default)("#searchMovie").val();
+            console.log(`return pressed     ${txt}  `);
+            const url_prod = "http://proxy.proxythingi.at/rust/meili/search";
+            const url_local = "http://localhost:18600/api/v2/solr/article";
+            const url = url_prod;
+            const customer = {
+                customer_id: 1,
+                jwt: "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9"
+            };
+            const req = {
+                q: txt,
+                offset: 0,
+                limit: 25,
+                customer: customer
+            };
+            console.log(`sending request  to url ${url}. req  ${JSON.stringify(req, null, 4)} `);
+            // funny stuff demo
+            // var ajxReq = jquery.ajax(url, {
+            //     type: "POST",
+            //     data: JSON.stringify(req),
+            //     contentType: 'application/json',
+            //     dataType: 'json',
+            //     timeout: 300,
+            //     success: function (data, status) {
+            //         console.log(`status   ${JSON.stringify(status)}`);
+            //         const movies = data as SearchArticleResponse;
+            //         console.log(`movies  ${JSON.stringify(movies, null, 4)} `);
+            //
+            //         if (movies.articles !== undefined) {
+            //             if (movies.articles.length > 0) {
+            //                 jquery("#search_results").innerHTML("no movies found");
+            //             } else {
+            //                 jquery("#search_results").innerHTML(`found ${movies.articles.length} movies`);
+            //             }
+            //         } else {
+            //             jquery("#search_results").text(`ups - got an empty result`);
+            //         }
+            //     },
+            //     fail: function (e) {
+            //         console.error(`fail error requesting the movies. ${e}`);
+            //     },
+            //
+            // });
+            //
+            // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+            function postData(url = "", data = {}) {
+                return __awaiter(this, void 0, void 0, function*() {
+                    // Default options are marked with *
+                    const response = yield fetch(url, {
+                        method: "POST",
+                        mode: "cors",
+                        cache: "no-cache",
+                        credentials: "same-origin",
+                        headers: {
+                            "Content-Type": "application/json",
+                            //   "Access-Control-Expose-Headers": "x-duration,x-provided-by,x-initiated-by,x-processed-by"
+                            "Access-Control-Expose-Headers": "*"
+                        },
+                        // redirect: "follow", // manual, *follow, error
+                        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                        body: JSON.stringify(data)
+                    });
+                    for (const [h1, h2] of response.headers)console.log(h1 + ": " + h2);
+                    return [
+                        (yield response.json()),
+                        response.headers
+                    ]; // parses JSON response into native JavaScript objects
+                });
             }
-        });
-    }
-}
-window.customElements.define("search-comp", SearchComp);
-
-},{"../../../common/const":"1si8k","jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1si8k":[function(require,module,exports) {
-// Custom Event names
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "DO_SEARCH_EVENT", ()=>DO_SEARCH_EVENT);
-parcelHelpers.export(exports, "DO_CATEGORY_FILTER", ()=>DO_CATEGORY_FILTER);
-parcelHelpers.export(exports, "ID_SEARCH_RESULT_APP", ()=>ID_SEARCH_RESULT_APP);
-parcelHelpers.export(exports, "TAG_CATEGORY_CODE", ()=>TAG_CATEGORY_CODE);
-parcelHelpers.export(exports, "TAG_CATEGORY_DEPTH", ()=>TAG_CATEGORY_DEPTH);
-var DO_SEARCH_EVENT = "doSearch";
-var DO_CATEGORY_FILTER = "doCategoryFilter";
-var ID_SEARCH_RESULT_APP = "search-result-app";
-var TAG_CATEGORY_CODE = "categorycode";
-var TAG_CATEGORY_DEPTH = "depth";
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
+            postData(url, req).then(([data, headers])=>{
+                console.log(data); // JSON data parsed by `data.json()` call
+                console.log(headers); // JSON data parsed by `data.json()` call
+                for (const header of headers.entries())console.log(header[0] + ": " + header[1]);
+                const dur = headers.get("x-duration");
+                const provided_by = headers.get("x-provided-by");
+                const initiated_by = headers.get("x-initiated-by");
+                const processed_by = headers.get("x-processed-by");
+                (0, _jqueryDefault.default)("#dur").text(dur);
+                (0, _jqueryDefault.default)("#provided_by").text(provided_by);
+                (0, _jqueryDefault.default)("#initiated_by").text(initiated_by);
+                (0, _jqueryDefault.default)("#processed_by").text(processed_by);
+                console.log(`proxythingi backend  ${provided_by},  duration  ${dur}    initiated_by  ${initiated_by}   processed_by  ${processed_by} `);
+                const movies = data;
+                console.log(`movies.len ${movies.articles.length} `);
+                (0, _jqueryDefault.default)("#search_results").empty();
+                (0, _jqueryDefault.default)("#search_results").text(`${movies.articles.length} movies found`);
+                movies.articles.forEach((a)=>{
+                    const elem = article_template(a);
+                    (0, _jqueryDefault.default)("#search_results").append(elem);
+                });
+            });
+        }
     });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
+});
+const article_template = (article)=>{
+    let titles = "";
+    if (article.article.titles != undefined) titles = "Titles: " + article.article.titles.join(" / ");
+    let primary_title = "";
+    if (article.article.primary_title != undefined) primary_title = article.article.primary_title;
+    let original_title = "";
+    if (article.article.original_title != undefined) original_title = article.article.original_title;
+    let characters = "";
+    if (article.article.characters != undefined) characters = "Characters: " + article.article.characters.join(" / ");
+    let act = "";
+    if (article.article.actors != undefined) act = "Actors: " + article.article.actors.join(" / ");
+    let writers = "";
+    if (article.article.writers != undefined) writers = "Writers: " + article.article.writers.join(" / ");
+    let directors = "";
+    if (article.article.directors != undefined) directors = "Directors: " + article.article.directors.join(" / ");
+    let price;
+    if (article.customer_price !== undefined && article.customer_price !== null) price = `SRP € <sr>${article.price.toFixed(2)}</sr>, your price: € ${article.customer_price.toFixed(2)}`;
+    else price = `SRP € ${article.price} `;
+    return `   
+        <div class="col">
+            <div class="card h-100">
+                 <div class="card-body">
+                    <h5 class="card-title">original title${original_title}</h5>
+                    <h5 class="card-title">primary title${primary_title}</h5>
+                    <p class="card-body">${titles}</p>
+                    <p class="card-body">${act}</p>
+                    <p class="card-body">${characters}</p>
+                    <p class="card-body">${directors}</p>
+                    <p class="card-body">${writers}</p>
+                    <p class="card-body">ttconst ${article.article.tconst}</p>
+                 </div>
+                 <div class="card-footer">
+                    <div class="row row-cols-2 row-cols-md-2 g-6">
+                       <div class="col">
+                            ${price}
+                        </div>
+                    <div class="col">
+                        <a href="#" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    `;
 };
 
-},{}],"hgMhh":[function(require,module,exports) {
+},{"jquery":"hgMhh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hgMhh":[function(require,module,exports) {
 /*!
- * jQuery JavaScript Library v3.6.3
+ * jQuery JavaScript Library v3.6.4
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -649,7 +745,7 @@ exports.export = function(dest, destName, get) {
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2022-12-20T21:28Z
+ * Date: 2023-03-08T15:28Z
  */ (function(global, factory) {
     "use strict";
     if (typeof module.exports === "object") // For CommonJS and CommonJS-like environments where a proper `window`
@@ -734,7 +830,7 @@ exports.export = function(dest, destName, get) {
     }
     /* global Symbol */ // Defining this global in .eslintrc.json would create a danger of using the global
     // unguarded in another place, it seems safer to define global only for this module
-    var version = "3.6.3", // Define a local copy of jQuery
+    var version = "3.6.4", // Define a local copy of jQuery
     jQuery = function(selector, context) {
         // The jQuery object is actually just the init constructor 'enhanced'
         // Need init if jQuery is called (just allow error to be thrown if not included)
@@ -967,14 +1063,14 @@ exports.export = function(dest, destName, get) {
         return type === "array" || length === 0 || typeof length === "number" && length > 0 && length - 1 in obj;
     }
     var Sizzle = /*!
- * Sizzle CSS Selector Engine v2.3.9
+ * Sizzle CSS Selector Engine v2.3.10
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://js.foundation/
  *
- * Date: 2022-12-19
+ * Date: 2023-02-14
  */ function(window1) {
         var i, support, Expr, getText, isXML, tokenize, compile, select, outermostContext, sortInput, hasDuplicate, // Local document vars
         setDocument, document, docElem, documentIsHTML, rbuggyQSA, rbuggyMatches, matches, contains, // Instance-specific data
@@ -1002,7 +1098,7 @@ exports.export = function(dest, destName, get) {
         "('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" + // 2. simple (capture 6)
         "((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" + // 3. anything else (capture 2)
         ".*" + ")\\)|)", // Leading and non-escaped trailing whitespace, capturing some non-whitespace characters preceding the latter
-        rwhitespace = new RegExp(whitespace + "+", "g"), rtrim = new RegExp("^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g"), rcomma = new RegExp("^" + whitespace + "*," + whitespace + "*"), rcombinators = new RegExp("^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*"), rdescend = new RegExp(whitespace + "|>"), rpseudo = new RegExp(pseudos), ridentifier = new RegExp("^" + identifier + "$"), matchExpr = {
+        rwhitespace = new RegExp(whitespace + "+", "g"), rtrim = new RegExp("^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g"), rcomma = new RegExp("^" + whitespace + "*," + whitespace + "*"), rleadingCombinator = new RegExp("^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*"), rdescend = new RegExp(whitespace + "|>"), rpseudo = new RegExp(pseudos), ridentifier = new RegExp("^" + identifier + "$"), matchExpr = {
             "ID": new RegExp("^#(" + identifier + ")"),
             "CLASS": new RegExp("^\\.(" + identifier + ")"),
             "TAG": new RegExp("^(" + identifier + "|[*])"),
@@ -1127,7 +1223,7 @@ exports.export = function(dest, destName, get) {
                         // The technique has to be used as well when a leading combinator is used
                         // as such selectors are not recognized by querySelectorAll.
                         // Thanks to Andrew Dupont for this technique.
-                        if (nodeType === 1 && (rdescend.test(selector) || rcombinators.test(selector))) {
+                        if (nodeType === 1 && (rdescend.test(selector) || rleadingCombinator.test(selector))) {
                             // Expand context for sibling selectors
                             newContext = rsibling.test(selector) && testContext(context.parentNode) || context;
                             // We can use :scope instead of the ID hack if the browser
@@ -1144,20 +1240,6 @@ exports.export = function(dest, destName, get) {
                             newSelector = groups.join(",");
                         }
                         try {
-                            // `qSA` may not throw for unrecognized parts using forgiving parsing:
-                            // https://drafts.csswg.org/selectors/#forgiving-selector
-                            // like the `:has()` pseudo-class:
-                            // https://drafts.csswg.org/selectors/#relational
-                            // `CSS.supports` is still expected to return `false` then:
-                            // https://drafts.csswg.org/css-conditional-4/#typedef-supports-selector-fn
-                            // https://drafts.csswg.org/css-conditional-4/#dfn-support-selector
-                            if (support.cssSupportsSelector && // eslint-disable-next-line no-undef
-                            !CSS.supports("selector(:is(" + newSelector + "))")) // Support: IE 11+
-                            // Throw to get to the same code path as an error directly in qSA.
-                            // Note: once we only support browser supporting
-                            // `CSS.supports('selector(...)')`, we can most likely drop
-                            // the `try-catch`. IE doesn't implement the API.
-                            throw new Error();
                             push.apply(results, newContext.querySelectorAll(newSelector));
                             return results;
                         } catch (qsaError) {
@@ -1356,22 +1438,23 @@ exports.export = function(dest, destName, get) {
                 docElem.appendChild(el).appendChild(document.createElement("div"));
                 return typeof el.querySelectorAll !== "undefined" && !el.querySelectorAll(":scope fieldset div").length;
             });
-            // Support: Chrome 105+, Firefox 104+, Safari 15.4+
-            // Make sure forgiving mode is not used in `CSS.supports( "selector(...)" )`.
-            //
-            // `:is()` uses a forgiving selector list as an argument and is widely
-            // implemented, so it's a good one to test against.
-            support.cssSupportsSelector = assert(function() {
-                /* eslint-disable no-undef */ return CSS.supports("selector(*)") && // Support: Firefox 78-81 only
-                // In old Firefox, `:is()` didn't use forgiving parsing. In that case,
-                // fail this test as there's no selector to test against that.
-                // `CSS.supports` uses unforgiving parsing
-                document.querySelectorAll(":is(:jqfake)") && // `*` is needed as Safari & newer Chrome implemented something in between
-                // for `:has()` - it throws in `qSA` if it only contains an unsupported
-                // argument but multiple ones, one of which is supported, are fine.
-                // We want to play safe in case `:is()` gets the same treatment.
-                !CSS.supports("selector(:is(*,:jqfake))");
-            /* eslint-enable */ });
+            // Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+            // Make sure the the `:has()` argument is parsed unforgivingly.
+            // We include `*` in the test to detect buggy implementations that are
+            // _selectively_ forgiving (specifically when the list includes at least
+            // one valid selector).
+            // Note that we treat complete lack of support for `:has()` as if it were
+            // spec-compliant support, which is fine because use of `:has()` in such
+            // environments will fail in the qSA path and fall back to jQuery traversal
+            // anyway.
+            support.cssHas = assert(function() {
+                try {
+                    document.querySelector(":has(*,:jqfake)");
+                    return false;
+                } catch (e) {
+                    return true;
+                }
+            });
             /* Attributes
 	---------------------------------------------------------------------- */ // Support: IE<8
             // Verify that getAttribute really returns attributes and not properties
@@ -1548,12 +1631,12 @@ exports.export = function(dest, destName, get) {
                 matches.call(el, "[s!='']:x");
                 rbuggyMatches.push("!=", pseudos);
             });
-            if (!support.cssSupportsSelector) // Support: Chrome 105+, Safari 15.4+
-            // `:has()` uses a forgiving selector list as an argument so our regular
-            // `try-catch` mechanism fails to catch `:has()` with arguments not supported
-            // natively like `:has(:contains("Foo"))`. Where supported & spec-compliant,
-            // we now use `CSS.supports("selector(:is(SELECTOR_TO_BE_TESTED))")`, but
-            // outside that we mark `:has` as buggy.
+            if (!support.cssHas) // Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+            // Our regular `try-catch` mechanism fails to detect natively-unsupported
+            // pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
+            // in browsers that parse the `:has()` argument as a forgiving selector list.
+            // https://drafts.csswg.org/selectors/#relational now requires the argument
+            // to be parsed unforgivingly, but browsers have not yet fully adjusted.
             rbuggyQSA.push(":has");
             rbuggyQSA = rbuggyQSA.length && new RegExp(rbuggyQSA.join("|"));
             rbuggyMatches = rbuggyMatches.length && new RegExp(rbuggyMatches.join("|"));
@@ -2113,7 +2196,7 @@ exports.export = function(dest, destName, get) {
                 }
                 matched = false;
                 // Combinators
-                if (match = rcombinators.exec(soFar)) {
+                if (match = rleadingCombinator.exec(soFar)) {
                     matched = match.shift();
                     tokens.push({
                         value: matched,
@@ -7474,6 +7557,36 @@ exports.export = function(dest, destName, get) {
     return jQuery;
 });
 
-},{}]},["lSgxL","kuM8f"], "kuM8f", "parcelRequire716c")
+},{}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
-//# sourceMappingURL=index.js.map.map
+},{}]},["lSgxL","kuM8f"], "kuM8f", "parcelRequire8316")
+
+//# sourceMappingURL=index.6b815632.js.map
