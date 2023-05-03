@@ -3,9 +3,9 @@ pub mod filters_search_search_index {
     use std::time::Instant;
 
     use log::info;
-    use warp::Filter;
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;
+    use warp::Filter;
 
     use common::entity::entity::{Engine, Entity};
     use common::logging::tracing_headers::tracing_headers_stuff::{
@@ -19,7 +19,8 @@ pub mod filters_search_search_index {
 
     const SERVICE_NAME: &str = "Search Index Service";
 
-    pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
+    pub fn search_index_route(
+    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
         let server = warp::path!("api" / "v1" / "meili" / "searchindex" / "search");
         let search_meili = server
             .and(warp::post())
@@ -43,7 +44,8 @@ pub mod filters_search_search_index {
         search_meili.or(search_solr)
     }
 
-    fn search_index_request() -> impl Filter<Extract=(SearchMovieIndexRequest, ), Error=warp::Rejection> + Clone {
+    fn search_index_request(
+    ) -> impl Filter<Extract = (SearchMovieIndexRequest,), Error = warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
