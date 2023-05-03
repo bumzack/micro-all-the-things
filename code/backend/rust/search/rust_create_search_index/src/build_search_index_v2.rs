@@ -53,7 +53,7 @@ pub async fn build_index_v2(
         }
     }
 
-    let message = "done".to_string();
+    let message = format!("{} movies processed. done.", total_movies_processed).to_string();
     info!("done {}", &message);
     Ok(warp::reply::json(&message))
 }
