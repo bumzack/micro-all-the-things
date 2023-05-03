@@ -1,0 +1,27 @@
+[Unit]
+Description=Java8 SearchIndex Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/java8/v5/search/java8_search_search_index
+
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/java8/v5/search/java8_search_search_index
+ExecStart=java -jar ./target/java8-search-search-index-0.0.1-SNAPSHOT.jar
+
+
+
+# make sure log directory exists and owned by syslog
+ExecStartPre=/bin/mkdir -p /var/log/java8_search_search_index
+ExecStartPre=/bin/chown syslog:adm /var/log/java8_search_search_index
+ExecStartPre=/bin/chmod 755 /var/log/java8_search_search_index
+SyslogIdentifier=java8_search_search_index
+
+[Install]
+WantedBy=multi-user.target

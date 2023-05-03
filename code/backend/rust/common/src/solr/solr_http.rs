@@ -6,7 +6,6 @@ pub mod mod_solr_http {
 
     use crate::entity::entity::{Engine, Entity};
     use crate::helper::dump_response_status;
-    use crate::logging::logging_service_client::logging_service::log_error;
     use crate::solr::SOLR_DEFAULT_LIMIT;
 
     pub(crate) async fn solr_search_http(
@@ -181,23 +180,21 @@ pub mod mod_solr_http {
                         "solr request != OK AND != CREATED  != ACCEPTED. response body {:?}",
                         &b
                     );
-                    let msg = format!(
+                    let _msg = format!(
                         "exec_solr_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
                         &entity.to_string(),
                         &index,
                         &b
                     );
-                    log_error(msg).await;
                 }
             }
             Err(e) => {
                 info!("solr request error in request to solr {:?}", e);
-                let msg = format!(
+                let _msg = format!(
                     "exec_solr_update returned an error. inserting entity {}. error: {}",
                     &entity.to_string(),
                     e
                 );
-                log_error(msg).await;
             }
         }
     }

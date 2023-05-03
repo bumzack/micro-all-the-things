@@ -4,7 +4,6 @@ use log::info;
 use serde_json::json;
 
 use common::entity::entity::{Engine, Entity};
-use common::logging::logging_service_client::logging_service;
 use common::meili::meili_http::meili_http_stuff::meili_update_http;
 
 use crate::build_search_common::{convert_to_search_index_doc, search_movies};
@@ -17,16 +16,10 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
     let total_cnt_movies = 9_728_300;
     let mut cnt_movies = 0;
 
-    let msg = format!(
+    let _msg = format!(
         "start build_index(). offset {}, limit {}, total_cnt_movies {}",
         offset, limit, total_cnt_movies
     );
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &msg,
-    )
-        .await;
 
     while cnt_movies < total_cnt_movies {
         let movies = search_movies(limit, offset, Engine::Meili).await;
@@ -46,13 +39,6 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
         );
         info!("{}", &message);
 
-        logging_service::log_entry(
-            "rust_create_search_index".to_string(),
-            "INFO".to_string(),
-            &message,
-        )
-            .await;
-
         info!("starting update request for  {} docs", docs.len());
         meili_update_http(&Entity::SEARCHINDEX, &CLIENT, docs_json).await;
         info!(
@@ -65,12 +51,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
 
     let message = format!("finished build_index(). processed {} movies ", cnt_movies);
     info!("res {}", &message);
-    logging_service::log_entry(
-        "rust_create_search_index".to_string(),
-        "INFO".to_string(),
-        &message,
-    )
-        .await;
+
     info!("done {}", &message);
     Ok(warp::reply::json(&message))
 }

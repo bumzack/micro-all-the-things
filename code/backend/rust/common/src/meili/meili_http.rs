@@ -7,7 +7,6 @@ pub mod meili_http_stuff {
 
     use crate::entity::entity::{Engine, Entity};
     use crate::helper::dump_response_status;
-    use crate::logging::logging_service_client::logging_service::log_error;
     use crate::meili::meili_models::MeiliSearchRequest;
 
     pub(crate) async fn meili_search_http(
@@ -187,23 +186,21 @@ pub mod meili_http_stuff {
                     );
                     info!("meilisearch request != OK AND != CREATED AND != ACCEPTED. response body {:?}", &b);
 
-                    let msg = format!(
+                    let _msg = format!(
                         "exec_meilisearch_update request != OK AND != CREATED AND != ACCEPTED. entity {}, url '{}'  body: '{:?}'",
                         &entity.to_string(),
                         &index,
                         &b
                     );
-                    log_error(msg).await;
                 }
             }
             Err(e) => {
                 info!("error in request to meilisearch {:?}", e);
-                let msg = format!(
+                let _msg = format!(
                     "exec_meilisearch_update returned an error. inserting entity {}. error: {}",
                     &entity.to_string(),
                     e
                 );
-                log_error(msg).await;
             }
         }
     }

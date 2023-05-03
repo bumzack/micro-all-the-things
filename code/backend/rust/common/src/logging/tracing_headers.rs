@@ -78,9 +78,9 @@ pub mod tracing_headers_stuff {
         headers.insert(HEADER_X_UUID, HeaderValue::from_str(&uuid).unwrap());
 
         let new_x_processed_by = format!(
-            " {}: dur {:?} micros # {} || {}",
+            " {}: dur {:?} ms # {} ### {}",
             service_name,
-            duration_total.as_micros(),
+            duration_total.as_millis(),
             &msg,
             processed_by,
         );

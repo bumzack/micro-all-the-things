@@ -3,12 +3,11 @@ pub mod filters_search_search_index {
     use std::time::Instant;
 
     use log::info;
+    use warp::Filter;
     use warp::header::headers_cloned;
     use warp::hyper::HeaderMap;
-    use warp::Filter;
 
     use common::entity::entity::{Engine, Entity};
-    use common::logging::logging_service_client::logging_service;
     use common::logging::tracing_headers::tracing_headers_stuff::{
         build_response_from_json, build_tracing_headers, get_trace_infos,
     };
@@ -20,8 +19,7 @@ pub mod filters_search_search_index {
 
     const SERVICE_NAME: &str = "Search Index Service";
 
-    pub fn search_index_route(
-    ) -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+    pub fn search_index_route() -> impl Filter<Extract=(impl warp::Reply, ), Error=warp::Rejection> + Clone {
         let server = warp::path!("api" / "v1" / "meili" / "searchindex" / "search");
         let search_meili = server
             .and(warp::post())
@@ -45,8 +43,7 @@ pub mod filters_search_search_index {
         search_meili.or(search_solr)
     }
 
-    fn search_index_request(
-    ) -> impl Filter<Extract = (SearchMovieIndexRequest,), Error = warp::Rejection> + Clone {
+    fn search_index_request() -> impl Filter<Extract=(SearchMovieIndexRequest, ), Error=warp::Rejection> + Clone {
         warp::body::content_length_limit(1024 * 16).and(warp::body::json())
     }
 
@@ -60,17 +57,10 @@ pub mod filters_search_search_index {
         let (initiated_by, uuid, processed_by) =
             get_trace_infos(&headers, SERVICE_NAME.to_string());
 
-        let msg = format!(
+        let _msg = format!(
             "start search_index(). search_text '{}', offset {}, limit {}, engine {:?}",
             req.q, req.offset, req.limit, engine
         );
-
-        logging_service::log_entry(
-            "rust_search_search_index".to_string(),
-            "INFO".to_string(),
-            &msg,
-        )
-        .await;
 
         let facets = vec![
             "genres".to_string(),
@@ -78,7 +68,7 @@ pub mod filters_search_search_index {
             "directors".to_string(),
             "titles".to_string(),
             "characters".to_string(),
-            "title_type".to_string(),
+            //           "title_type".to_string(),
         ];
 
         let search_result = match engine {
@@ -114,9 +104,8 @@ pub mod filters_search_search_index {
         };
 
         let msg = format!(
-            "found {} movies and {:?} facets using {:?}",
+            "found {} movies  using {:?}",
             search_result.movies.len(),
-            search_result.facets,
             &engine
         );
         let headers = build_tracing_headers(

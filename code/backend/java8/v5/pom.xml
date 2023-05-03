@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>java8-common-v5</module>
+        <module>search/java8_search_search_index</module>
+        <module>search/java8_search_article</module>
+        <module>customer/java8_authentication_service</module>
+        <module>customer/java8_customer_service</module>
+        <module>customer/java8_customerprice_service</module>
+        <module>price/java8_price_service</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>at.bumzack.foryouanyourfakewebshop</groupId>
+    <artifactId>at-foryouanyourfakewebshop</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>at-foryouanyourfakewebshop</name>
+
+    <description>at-foryouanyourfakewebshop</description>
+
+    <properties>
+        <java.version>19</java.version>
+        <springdoc-openapi-ui.version>2.0.2</springdoc-openapi-ui.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--            </plugin>-->
+
+    <!--        </plugins>-->
+    <!--    </build>-->
+
+</project>

@@ -4,6 +4,7 @@ use serde::Serialize;
 use tokio_postgres::Row;
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AddCustomer {
     pub first_name: String,
     pub last_name: String,
@@ -12,6 +13,7 @@ pub struct AddCustomer {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Customer {
     pub id: i32,
     pub first_name: String,
