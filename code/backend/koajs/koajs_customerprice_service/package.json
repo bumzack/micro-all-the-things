@@ -1,0 +1,20 @@
+{
+  "name": "koajs-customerprice-service",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@koa/cors": "^4.0.0",
+    "@types/koa": "^2.13.6",
+    "dotenv": "^16.0.3",
+    "koa": "^2.14.2",
+    "koa-static": "^5.0.0"
+  },
+  "scripts": {
+    "run": "tsc && node index.js"
+  },
+  "dependencies": {
+    "tsc": "^2.0.4",
+    "typescript": "^5.0.4"
+  },
+  "module": "node"
+}

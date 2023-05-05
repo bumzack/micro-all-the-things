@@ -1,0 +1,7 @@
+{
+  "PGHOST": "localhost",
+  "PGUSER": "bumzack",
+  "PGPASSWORD": "bumzack",
+  "PGDATABASE": "bumzack",
+  "PGPORT" : 5432
+}
