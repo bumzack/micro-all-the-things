@@ -121,5 +121,7 @@ curl -X POST -H 'Content-type:application/json' --data-binary '{
   "add-field":{   "name":"titleType",           "type":"string",        "stored":true,      indexed:"true",     "multiValued":false     },
   "add-field":{   "name":"runtimeMinutes",      "type":"pint",          "stored":true,      indexed:"true",     "multiValued":false     }
   "add-field":{   "name":"year",                "type":"pint",          "stored":true,      indexed:"true",     "multiValued":false     }
+   "add-field":{   "name":"primary_title",          "type":"string",        "stored":true,      indexed:"true",     "multiValued":true      },
+  "add-field":{   "name":"original_title",          "type":"string",        "stored":true,      indexed:"true",     "multiValued":true      },
 
 }' http://localhost:8984/solr/searchindex/schema

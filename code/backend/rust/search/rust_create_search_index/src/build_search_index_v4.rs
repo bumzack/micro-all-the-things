@@ -166,7 +166,7 @@ pub async fn search_movies_v4(
         .await
         .expect("expected a list of Movies");
 
-    let message = format!(
+    let _message = format!(
         "XXXx end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,
@@ -184,7 +184,7 @@ pub async fn convert_to_search_index_doc_v4(
 ) -> Vec<SearchIndexDoc> {
     let mut docs = vec![];
 
-    let page_size = 50;
+    let page_size = 100;
     let mut movies_processed = 0;
     let mut end_index;
     info!("movies.len() {} ", movies.len());

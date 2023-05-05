@@ -16,7 +16,7 @@ pub async fn build_index_v1() -> Result<impl warp::Reply, Infallible> {
     let total_cnt_movies = 9_728_300;
     let mut cnt_movies = 0;
 
-    let msg = format!(
+    let _msg = format!(
         "start build_index(). offset {}, limit {}, total_cnt_movies {}",
         offset, limit, total_cnt_movies
     );

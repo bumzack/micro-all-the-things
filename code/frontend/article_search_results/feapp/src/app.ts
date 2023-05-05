@@ -23,8 +23,8 @@ jquery(document).ready(() => {
             const url_prod_webflux = "http://proxy.proxythingi.at/webflux/solr/search"
             const url_prod_java8 = "http://proxy.proxythingi.at/java8/solr/search"
 
-            const url_java8= "http://search.java8.bumzack.at/api/v1/solr/article"
-            const url_webflux= "http://search.webflux.bumzack.at/api/v1/solr/article"
+            const url_java8 = "http://search.java8.bumzack.at/api/v1/solr/article"
+            const url_webflux = "http://search.webflux.bumzack.at/api/v1/solr/article"
 
             // rust
             // const url_prod = "http://search.rust.bumzack.at/api/v1/solr/article"
@@ -45,7 +45,7 @@ jquery(document).ready(() => {
             const req: SearchArticleRequest = {
                 q: txt,
                 offset: 0,
-                limit: 10,
+                limit: 25,
                 customer: customer,
             };
 
@@ -91,8 +91,8 @@ jquery(document).ready(() => {
                     credentials: "same-origin", // include, *same-origin, omit
                     headers: {
                         "Content-Type": "application/json",
-                     //   "Access-Control-Expose-Headers": "x-duration,x-provided-by,x-initiated-by,x-processed-by"
-                        "Access-Control-Expose-Headers":"*",
+                        //   "Access-Control-Expose-Headers": "x-duration,x-provided-by,x-initiated-by,x-processed-by"
+                        "Access-Control-Expose-Headers": "*",
                     },
                     // redirect: "follow", // manual, *follow, error
                     // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -210,8 +210,7 @@ const article_template = (article: ArticleSearchResult): string => {
             </div>
         </div>
     </div>
-    `
-        ;
+    `;
 
 }
 export {};
