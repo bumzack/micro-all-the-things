@@ -1,6 +1,6 @@
 #!/bin/bash
 
-JSON=java8_search_search_index.json
+JSON=webflux_search_search_index.json
 
 curl localhost:3030/api/backend/webflux_search_search_index | jq >service.json
 curl localhost:3030/api/backend/apiclientprefix/webflux_search_search_index >apiclientprefix
