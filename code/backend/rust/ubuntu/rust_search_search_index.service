@@ -1,5 +1,5 @@
 [Unit]
-Description=Rust Create Search Index Service
+Description=Rust Search Search Index Service
 ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/search/rust_search_search_index
 After=network.target
 

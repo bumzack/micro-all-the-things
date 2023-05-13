@@ -1,5 +1,5 @@
 [Unit]
-Description=Rust Price Service
+Description=Rust Authentication Service
 ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/customer/authenticationservice
 
 After=network.target
