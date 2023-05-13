@@ -98,7 +98,7 @@ public class SolrRequestBuilder {
         final var host = StringUtils.join("http://", solrHost, ":", solrPort, "/");
         LOG.info("solrHost       {}\n", solrHost);
         LOG.info("solrPort       {}\n", solrPort);
-        LOG.info("host            {}\n", host);
+        LOG.info("host           {}\n", host);
 
         final var url = Stream.of(host, SOLR, "/", core, command)
                 .filter(Objects::nonNull)
