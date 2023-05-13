@@ -56,14 +56,14 @@ router.post('/api/v1/solr/article', async (ctx: Koa.Context, next: Koa.Next) => 
                     const customer_price = customer_prices.find(p => {
                         return (p.startYear as number) <= (m.year as number) && (m.year as number) <= (p.endYear as number);
                     });
-                    if (customer_price !== undefined) {
+                    if (customer_price !== undefined && p.amount !== undefined)  {
                         cp = (100.0 - (customer_price.discount as number)) * (p.amount as number) / 100;
                     }
                 }
 
                 const entry: ArticleSearchResult = {
                     article: m,
-                    price: p.amount,
+                    price: p?.amount,
                     customerPrice: cp,
                 };
                 res.push(entry);

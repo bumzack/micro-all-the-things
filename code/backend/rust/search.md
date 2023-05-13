@@ -263,12 +263,19 @@ curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-T
 ```
 
 
+## other technologies
 
+```
+curl  -vvvv    -X POST   http://localhost:58320/api/v1/solr/searchindex/search    -H 'Content-Type: application/json'  -d '{ "q" : "Carmencita", "offset" : 0, "limit" : 2  }'  | jq
+```
 
-curl  -vvvv    -X POST   http://localhost:58320/api/v1/solr/searchindex/search    -H 'Content-Type: application/json'  -d '{ "q" : "Terminator", "offset" : 0, "limit" : 2  }'  | jq
+```
+curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Carmencita", "offset" : 0, "limit": 5, "customer" : {  "customerId": 1, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9-" }   }' | jq
+```
 
-
-curl  -vv -X POST   http://localhost:58600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 5, "customer" : {  "customerId": 1203, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9-" }   }' | jq
+```
+curl  -vv -X POST   http://localhost:58600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Carmencita", "offset" : 0, "limit": 5, "customer" : {  "customerId": 1203, "jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIwMywiZW1haWwiOiJidW16YWNrQGJ1bXphY2suYXQiLCJwYXNzd29yZCI6IjEyMyIsImNyZWF0ZWQiOiIyMDIzLTA0LTExVDE4OjA2OjU0LjUwM1oiLCJpYXQiOjE2ODQwMTU2NjF9.oLFZJfFT1ryD9QbIJm800S0ExvIAPYkMNRuzsvstji8" }   }' | jq
+```
 
 
  
