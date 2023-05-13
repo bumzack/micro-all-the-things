@@ -1,0 +1,16 @@
+{
+  "id": 18,
+  "openapiclient": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"Price Service\",\"description\":\"Price Service\",\"version\":\"1.0\"},\"servers\":[{\"url\":\"http://localhost:8800\",\"description\":\"Price Service\"}],\"paths\":{\"/api/v1/price/{tconst}\":{\"get\":{\"operationId\":\"getPriceForMovie\",\"parameters\":[{\"name\":\"tconst\",\"in\":\"path\",\"description\":\"Movie tconst ID\",\"required\":true,\"schema\":{\"type\":\"string\"}}],\"responses\":{\"200\":{\"description\":\"OK\",\"content\":{\"*/*\":{\"schema\":{\"$ref\":\"#/components/schemas/PriceEntry\"}}}}}}},\"/api/v2/prices\":{\"post\":{\"operationId\":\"getPricesForMovies\",\"requestBody\":{\"content\":{\"*/*\":{\"schema\":{\"$ref\":\"#/components/schemas/SearchPricesRequest\"}}}},\"responses\":{\"200\":{\"description\":\"OK\",\"content\":{\"*/*\":{\"schema\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/components/schemas/PriceEntry\"}}}}}}}}},\"components\":{\"schemas\":{\"PriceEntry\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"format\":\"int64\"},\"movieTconst\":{\"type\":\"string\"},\"amount\":{\"type\":\"number\",\"format\":\"double\"},\"created\":{\"type\":\"string\",\"format\":\"date-time\"}}},\"SearchPricesRequest\":{\"type\":\"object\",\"properties\":{\"movieTconst\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}}}}}}",
+  "service_url": "http://127.0.0.1:8800",
+  "openapi_url": "http://127.0.0.1:8800/v3/api-docs",
+  "local_repo_path": "/code/backend/webflux/v5/price/webflux_price_service",
+  "host_id": null,
+  "microservice_id": "webflux_price_service",
+  "technology_id": 1,
+  "publish_as_frontend_package": false,
+  "api_client_prefix": "PriceService",
+  "api_client_package": "at.bumzack.priceservice",
+  "version_major": 0,
+  "version_minor": 0,
+  "version_patch": 0
+}

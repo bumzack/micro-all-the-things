@@ -56,5 +56,27 @@ curl  -vv  -X POST  http://localhost:18981/api/v1/customerprice/   -H 'Content-T
 curl  -vv    http://localhost:18981/api/v1/customerprice/insertdummydata/0/10/100   
 ``` 
 
-tt12087758
 
+
+
+### is customer logged in
+
+```
+curl -vvv    http://localhost:58982/api/v1/customer    -H 'Content-Type: application/json' -d '{ "first_name" : "23bum", "last_name" : "23zack", "email" : "bumzack23@bumzack23.at", "password" : "123"  }' | jq
+
+```
+```
+curl -vvv    http://localhost:58982/api/v1/authenticated/1
+```
+
+```
+curl  -vv -X POST   http://localhost:58982/api/v1/authentication/login    -H 'Content-Type: application/json' -d '{ "email" : "bumzack@bumzack.at", "password" : "123" }' | jq
+```
+
+
+
+
+curl  -vv  http://localhost:58800/api/v1/price/tt5370708   | jq
+
+
+curl -vvv -X POST   http://localhost:58800/api/v2/prices    -H 'Content-Type: application/json' -d '{ "movieTconst" : [ "tt5370708"] }' | jq

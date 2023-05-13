@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Solr Search Article Service",
+    "description": "Solr Search Article Service",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8600",
+      "description": "Solr Search Article Service"
+    }
+  ],
+  "paths": {
+    "/api/v1/solr/article": {
+      "post": {
+        "operationId": "searchArticle",
+        "requestBody": {
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchArticleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchArticleResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchArticleRequest": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/SearchCustomer"
+          }
+        }
+      },
+      "SearchCustomer": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "jwt": {
+            "type": "string"
+          }
+        }
+      },
+      "ArticleSearchResult": {
+        "type": "object",
+        "properties": {
+          "article": {
+            "$ref": "#/components/schemas/SearchDoc"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "customerPrice": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "SearchArticleResponse": {
+        "type": "object",
+        "properties": {
+          "articles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArticleSearchResult"
+            }
+          }
+        }
+      },
+      "SearchDoc": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tconst": {
+            "type": "string"
+          },
+          "titles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "directors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "runtimeMinutes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adult": {
+            "type": "boolean"
+          },
+          "titleType": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

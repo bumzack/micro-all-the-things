@@ -36,7 +36,7 @@ export interface IndexDocFacetDistribution {
 }
 
 export interface SearchCustomer {
-    customer_id?: number,
+    customerId?: number,
     jwt?: string,
 }
 

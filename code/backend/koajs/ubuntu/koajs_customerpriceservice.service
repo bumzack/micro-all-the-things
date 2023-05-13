@@ -1,0 +1,28 @@
+[Unit]
+Description=KosJS Customer Price Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/koajs/koajs_customerprice_service
+
+
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+startLimitIntervalSec=60
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/koajs/koajs_customerprice_service
+ExecStart=node build/index.js
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/koajs_customerprice_service
+ExecStartPre=/bin/chown syslog:adm /var/log/koajs_customerprice_service
+ExecStartPre=/bin/chmod 755 /var/log/koajs_customerprice_service
+SyslogIdentifier=koajs_customerprice_service
+
+[Install]
+WantedBy=multi-user.target

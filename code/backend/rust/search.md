@@ -261,3 +261,14 @@ curl  -vv -X POST   http://localhost:18600/api/v1/solr/article    -H 'Content-Ty
 ```
 curl  -vv -X POST   http://localhost:18600/api/v1/meili/article    -H 'Content-Type: application/json' -d '{ "q" : "Brianna", "offset" : 0, "limit": 50, "customer" : {  "customer_id": 1203, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9 " }   }' | jq
 ```
+
+
+
+
+curl  -vvvv    -X POST   http://localhost:58320/api/v1/solr/searchindex/search    -H 'Content-Type: application/json'  -d '{ "q" : "Terminator", "offset" : 0, "limit" : 2  }'  | jq
+
+
+curl  -vv -X POST   http://localhost:58600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Terminator", "offset" : 0, "limit": 5, "customer" : {  "customerId": 1203, "jwt" : "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEyMDMifQ.ocxe2Kt7LgX-R2BAcaR50nKN1-ldnqDzmuU0tUhzBiwS8cNoldLpx2Sx4hMAR_9-" }   }' | jq
+
+
+ 
