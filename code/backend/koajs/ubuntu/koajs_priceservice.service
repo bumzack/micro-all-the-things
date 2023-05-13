@@ -1,6 +1,6 @@
 [Unit]
-Description=Rust Price Service
-ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/price/priceservice
+Description=KoaJS Price Service
+ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/koajs/koajs_price_service
 
 After=network.target
 
@@ -13,15 +13,15 @@ LimitNOFILE=1024
 Restart=on-failure
 RestartSec=10
 startLimitIntervalSec=60
-WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/rust/price/priceservice
-ExecStart=/home/bumzack/micro-all-the-things/code/backend/rust/target/release/priceservice
+WorkingDirectory=/home/bumzack/micro-all-the-things/code/backend/koajs/koajs_price_service
+ExecStart=node build/index.js
 
 # make sure log directory exists and owned by syslog
 PermissionsStartOnly=true
-ExecStartPre=/bin/mkdir -p /var/log/rust_priceservice
-ExecStartPre=/bin/chown syslog:adm /var/log/rust_priceservice
-ExecStartPre=/bin/chmod 755 /var/log/rust_priceservice
-SyslogIdentifier=rust_priceservice
+ExecStartPre=/bin/mkdir -p /var/log/koajs_price_service
+ExecStartPre=/bin/chown syslog:adm /var/log/koajs_price_service
+ExecStartPre=/bin/chmod 755 /var/log/koajs_price_service
+SyslogIdentifier=koajs_price_service
 
 [Install]
 WantedBy=multi-user.target
