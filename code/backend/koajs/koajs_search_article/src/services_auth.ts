@@ -17,6 +17,7 @@ export const is_authenticated = async (customer_id: number): Promise<Authenticat
     let req: LoggedinRequest = {
         customerId: customer_id,
     }
+    console.log(`authentication request    ${JSON.stringify(req, null, 4)}`);
     return await api.loggedin(req)
         .then(r => {
             return r;
