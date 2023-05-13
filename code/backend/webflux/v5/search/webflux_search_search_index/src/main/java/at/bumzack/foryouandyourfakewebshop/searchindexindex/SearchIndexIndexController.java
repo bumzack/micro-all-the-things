@@ -70,7 +70,7 @@ public class SearchIndexIndexController {
     }
 
     @RouterOperations({
-            @RouterOperation(path = "/solr/v1/solr/searchindex/search",
+            @RouterOperation(path = "/api/v1/solr/searchindex/search",
                     method = POST,
                     operation = @Operation(operationId = "searchDocs",
                             requestBody = @RequestBody(content = @Content(schema = @Schema(implementation = SearchMovieIndexRequest.class))),
@@ -82,7 +82,7 @@ public class SearchIndexIndexController {
     @Bean
     public RouterFunction<ServerResponse> solrRoutes() {
         return route()
-                .nest(RequestPredicates.path("/solr/v1/solr/searchindex/"),
+                .nest(RequestPredicates.path("/api/v1/solr/searchindex/"),
                         builder -> builder
                                 .POST("search", this::searchIndex)
                                 .build())

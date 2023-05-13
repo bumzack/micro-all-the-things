@@ -59,7 +59,7 @@ pub mod filters_search_search_index {
         let (initiated_by, uuid, processed_by) =
             get_trace_infos(&headers, SERVICE_NAME.to_string());
 
-        let msg = format!(
+        let _msg = format!(
             "start search_index(). search_text '{}', offset {}, limit {}, engine {:?}",
             req.q, req.offset, req.limit, engine
         );

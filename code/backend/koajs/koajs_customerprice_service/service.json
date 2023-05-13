@@ -1,0 +1,16 @@
+{
+  "id": 17,
+  "openapiclient": "{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"CustomerPrice Service\",\"description\":\"CustomerPrice Service\",\"version\":\"1.0\"},\"servers\":[{\"url\":\"http://localhost:8981\",\"description\":\"CustomerPrice Service\"}],\"paths\":{\"/api/v1/customerprices/{customerId}\":{\"get\":{\"operationId\":\"customerPrices\",\"parameters\":[{\"name\":\"customerId\",\"in\":\"path\",\"description\":\"Customer ID\",\"required\":true,\"schema\":{\"type\":\"integer\",\"format\":\"int64\"}}],\"responses\":{\"200\":{\"description\":\"OK\",\"content\":{\"*/*\":{\"schema\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/components/schemas/CustomerPriceEntry\"}}}}}}}}},\"components\":{\"schemas\":{\"CustomerPriceEntry\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"integer\",\"format\":\"int64\"},\"customerId\":{\"type\":\"integer\",\"format\":\"int64\"},\"discount\":{\"type\":\"number\",\"format\":\"double\"},\"startYear\":{\"type\":\"integer\",\"format\":\"int32\"},\"endYear\":{\"type\":\"integer\",\"format\":\"int32\"},\"created\":{\"type\":\"string\",\"format\":\"date-time\"}}}}}}",
+  "service_url": "http://127.0.0.1:8981",
+  "openapi_url": "http://127.0.0.1:8981/v3/api-docs",
+  "local_repo_path": "/code/backendwebflux/v5/search/webflux_customerprice_service",
+  "host_id": null,
+  "microservice_id": "webflux_customerprice_service",
+  "technology_id": 1,
+  "publish_as_frontend_package": false,
+  "api_client_prefix": "CustomerPriceClient",
+  "api_client_package": "at.bumzack.customer.customerprice",
+  "version_major": 0,
+  "version_minor": 0,
+  "version_patch": 0
+}

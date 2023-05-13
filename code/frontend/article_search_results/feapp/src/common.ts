@@ -1,4 +1,3 @@
-
 export interface SearchIndexDoc {
     id: string,
     tconst: string,
@@ -37,7 +36,7 @@ export interface IndexDocFacetDistribution {
 }
 
 export interface SearchCustomer {
-    customer_id?: number,
+    customerId?: number,
     jwt?: string,
 }
 

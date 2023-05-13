@@ -6,12 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-warp = "0.3.4"
-tokio = { version = "1.26.0", features = ["full"] }
-serde = { version = "1.0.158", features = ["derive"] }
-serde_json = "1.0.94"
+warp = "0.3.5"
+tokio = { version = "1.28.0", features = ["full"] }
+serde = { version = "1.0.160", features = ["derive"] }
+serde_json = "1.0.96"
 serde_urlencoded = "0.7.1"
-serde_derive = "1.0.155"
+serde_derive = "1.0.160"
 lazy_static = "1.4.0"
 config = "0.13.3"
 deadpool-postgres = "0.10.5"
@@ -23,4 +23,4 @@ log = "0.4"
 
 [dev-dependencies]
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
-futures = "0.3.27"
+futures = "0.3.28"

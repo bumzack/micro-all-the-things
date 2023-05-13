@@ -166,7 +166,7 @@ pub async fn search_movies_v4(
         .await
         .expect("expected a list of Movies");
 
-    let message = format!(
+    let _message = format!(
         "XXXx end search_movies().  offset {}, limit {}, sort {:?}. {} movies found. next_cursor_mark {:?} ",
         offset,
         limit,

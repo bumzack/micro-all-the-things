@@ -1,0 +1,11 @@
+.openapi-generator-ignore
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/ArticleSearchResult.ts
+models/SearchArticleRequest.ts
+models/SearchArticleResponse.ts
+models/SearchCustomer.ts
+models/SearchDoc.ts
+models/index.ts
+runtime.ts

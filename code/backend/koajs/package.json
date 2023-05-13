@@ -1,0 +1,17 @@
+{
+  "name": "foryouandyourfakewebshop-koa-edition",
+  "workspaces": [
+    "koajs_authentication_service",
+    "koajs_customer_service",
+    "koajs_customerprice_service",
+    "koajs_price_service",
+    "koajs_search_article",
+    "koajs_search_search_index"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
