@@ -1,32 +1,27 @@
 {
-  "name": "koajs-customer-service",
-  "version": "0.0.1",
+  "name": "koajs_customer_service",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "run": "tsc && node dist/index.js"
-  },
-  "devDependencies": {
-    "@koa/cors": "^4.0.0",
-    "@types/koa": "^2.13.6",
-    "@types/pg": "^0.0.32",
-    "@types/koa-bodyparser": "^4.3.10",
-    "@types/koa-json": "^2.0.20",
-    "@types/koa-logger": "^3.1.2",
-    "@types/koa-router": "^7.4.4",
-    "dotenv": "^16.0.3"
+    "start": "../node_modules/.bin/tsnd --respawn server.ts",
+    "build": "../node_modules/.bin/tsc -b tsconfig.json",
+    "start:dev": "npx nodemon"
   },
   "dependencies": {
     "koa": "^2.14.2",
-    "koa-bodyparser": "^4.4.0",
-    "koa-response-time": "^2.1.0",
-    "koa-json": "^2.0.2",
+    "koa-body": "^6.0.1",
     "koa-logger": "^3.2.1",
     "koa-router": "^12.0.0",
-    "koa-static": "^5.0.0",
-    "koa-cors": "0.0.16",
-    "nodemon": "^2.0.22",
     "pg": "^8.10.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "pg-pool": "^3.6.0"
   },
-  "module": "node"
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/koa": "^2.13.6",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^20.1.4",
+    "@types/koa-logger": "3.1.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.4"
+  }
 }

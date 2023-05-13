@@ -27,18 +27,19 @@ jquery(document).ready(() => {
             const url_webflux = "http://search.webflux.bumzack.at/api/v1/solr/article"
 
             // rust
-            // const url_prod = "http://search.rust.bumzack.at/api/v1/solr/article"
-            // const url_prod = "http://search.rust.bumzack.at/api/v1/meili/article"
+            const url_rust_solr = "http://search.rust.bumzack.at/api/v1/solr/article"
+            const url_rust_meil = "http://search.rust.bumzack.at/api/v1/meili/article"
 
             // webflux
             // const url_prod = "http://search.webflux.bumzack.at/api/v1/solr/article"
 
 
             const url_local = "http://localhost:18600/api/v2/solr/article"
-            const url = url_prod_java8;
+           
+            const url = url_rust_meil;
 
             const customer: SearchCustomer = {
-                customer_id: 1,
+                customerId: 1,
                 jwt: "eyJhbGciOiJIUzM4NCJ9.eyJjdXN0b21lcl9pZCI6IjEifQ.ygrMNXNsg00VwM6u0mk_WlUZvYKlVYDCgOi7trRnw3MrcEnwu-zIp-JbNCYqNlp9",
             };
 

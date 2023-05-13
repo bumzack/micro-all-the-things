@@ -1,6 +1,5 @@
 # Effing experiernce
 
-
 install node from pkg, not brew, otherwise npm isntall -g requires root rights
 
 first install typescript compiler globally

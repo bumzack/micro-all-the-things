@@ -275,7 +275,7 @@ pub mod handler_authentication {
                 }
             }
             Err(e) => {
-                info!("error cant find customer entry {:?}", e);
+                info!("error can't find customer entry {:?}", e);
                 Err(reject::not_found())
             }
         }
