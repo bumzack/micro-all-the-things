@@ -1,5 +1,5 @@
 [Unit]
-Description=Rust Create Search Article Service
+Description=Rust Search Article Service
 ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/search/rust_search_article
 After=network.target
 

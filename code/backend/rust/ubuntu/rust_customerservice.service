@@ -1,5 +1,5 @@
 [Unit]
-Description=Rust Price Service
+Description=Rust Customer Service
 ConditionPathExists=/home/bumzack/micro-all-the-things/code/backend/rust/customer/customerservice
 
 
