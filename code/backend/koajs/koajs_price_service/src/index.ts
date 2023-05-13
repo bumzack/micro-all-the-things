@@ -6,7 +6,6 @@ import * as db from './db';
 import * as dotenv from "dotenv";
 import {PriceEntry, SearchPricesRequest} from "./generated-clients";
 
-
 const router = new Router();
 const app = new Koa();
 
@@ -15,13 +14,9 @@ app.use(koaBody());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-
 dotenv.config()
 
 const port = process.env.PORT || 5000
-
-
-const secret = process.env.JWTSECRET || "fallbacksecret"
 
 router.get("/api/v1/price/:tconst", async (ctx: Koa.Context, next: Koa.Next) => {
     const client = await db.pool.connect();
