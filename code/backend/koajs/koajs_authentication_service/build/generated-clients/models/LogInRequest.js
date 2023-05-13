@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.LogInRequestToJSON = exports.LogInRequestFromJSONTyped = exports.LogInRequestFromJSON = exports.instanceOfLogInRequest = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the LogInRequest interface.
  */
@@ -23,15 +22,11 @@ function instanceOfLogInRequest(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfLogInRequest = instanceOfLogInRequest;
-
 function LogInRequestFromJSON(json) {
     return LogInRequestFromJSONTyped(json, false);
 }
-
 exports.LogInRequestFromJSON = LogInRequestFromJSON;
-
 function LogInRequestFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -41,9 +36,7 @@ function LogInRequestFromJSONTyped(json, ignoreDiscriminator) {
         'password': !(0, runtime_1.exists)(json, 'password') ? undefined : json['password'],
     };
 }
-
 exports.LogInRequestFromJSONTyped = LogInRequestFromJSONTyped;
-
 function LogInRequestToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -56,6 +49,5 @@ function LogInRequestToJSON(value) {
         'password': value.password,
     };
 }
-
 exports.LogInRequestToJSON = LogInRequestToJSON;
 //# sourceMappingURL=LogInRequest.js.map

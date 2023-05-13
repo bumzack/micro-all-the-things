@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.PriceEntryToJSON = exports.PriceEntryFromJSONTyped = exports.PriceEntryFromJSON = exports.instanceOfPriceEntry = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the PriceEntry interface.
  */
@@ -23,15 +22,11 @@ function instanceOfPriceEntry(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfPriceEntry = instanceOfPriceEntry;
-
 function PriceEntryFromJSON(json) {
     return PriceEntryFromJSONTyped(json, false);
 }
-
 exports.PriceEntryFromJSON = PriceEntryFromJSON;
-
 function PriceEntryFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -43,9 +38,7 @@ function PriceEntryFromJSONTyped(json, ignoreDiscriminator) {
         'created': !(0, runtime_1.exists)(json, 'created') ? undefined : (new Date(json['created'])),
     };
 }
-
 exports.PriceEntryFromJSONTyped = PriceEntryFromJSONTyped;
-
 function PriceEntryToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -60,6 +53,5 @@ function PriceEntryToJSON(value) {
         'created': value.created === undefined ? undefined : (value.created.toISOString()),
     };
 }
-
 exports.PriceEntryToJSON = PriceEntryToJSON;
 //# sourceMappingURL=PriceEntry.js.map

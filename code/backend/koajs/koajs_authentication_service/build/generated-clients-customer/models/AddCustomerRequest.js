@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddCustomerRequestToJSON = exports.AddCustomerRequestFromJSONTyped = exports.AddCustomerRequestFromJSON = exports.instanceOfAddCustomerRequest = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the AddCustomerRequest interface.
  */
@@ -23,15 +22,11 @@ function instanceOfAddCustomerRequest(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfAddCustomerRequest = instanceOfAddCustomerRequest;
-
 function AddCustomerRequestFromJSON(json) {
     return AddCustomerRequestFromJSONTyped(json, false);
 }
-
 exports.AddCustomerRequestFromJSON = AddCustomerRequestFromJSON;
-
 function AddCustomerRequestFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -43,9 +38,7 @@ function AddCustomerRequestFromJSONTyped(json, ignoreDiscriminator) {
         'password': !(0, runtime_1.exists)(json, 'password') ? undefined : json['password'],
     };
 }
-
 exports.AddCustomerRequestFromJSONTyped = AddCustomerRequestFromJSONTyped;
-
 function AddCustomerRequestToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -60,6 +53,5 @@ function AddCustomerRequestToJSON(value) {
         'password': value.password,
     };
 }
-
 exports.AddCustomerRequestToJSON = AddCustomerRequestToJSON;
 //# sourceMappingURL=AddCustomerRequest.js.map

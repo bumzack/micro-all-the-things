@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchDocToJSON = exports.SearchDocFromJSONTyped = exports.SearchDocFromJSON = exports.instanceOfSearchDoc = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the SearchDoc interface.
  */
@@ -23,15 +22,11 @@ function instanceOfSearchDoc(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfSearchDoc = instanceOfSearchDoc;
-
 function SearchDocFromJSON(json) {
     return SearchDocFromJSONTyped(json, false);
 }
-
 exports.SearchDocFromJSON = SearchDocFromJSON;
-
 function SearchDocFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -50,9 +45,7 @@ function SearchDocFromJSONTyped(json, ignoreDiscriminator) {
         'titleType': !(0, runtime_1.exists)(json, 'titleType') ? undefined : json['titleType'],
     };
 }
-
 exports.SearchDocFromJSONTyped = SearchDocFromJSONTyped;
-
 function SearchDocToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -74,6 +67,5 @@ function SearchDocToJSON(value) {
         'titleType': value.titleType,
     };
 }
-
 exports.SearchDocToJSON = SearchDocToJSON;
 //# sourceMappingURL=SearchDoc.js.map

@@ -1,22 +1,18 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function (o, m, k, k2) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = {
-            enumerable: true, get: function () {
-                return m[k];
-            }
-        };
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
-}) : (function (o, m, k, k2) {
+}) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
 }));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function (o, v) {
-    Object.defineProperty(o, "default", {enumerable: true, value: v});
-}) : function (o, v) {
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
     o["default"] = v;
 });
 var __importStar = (this && this.__importStar) || function (mod) {
@@ -27,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : {"default": mod};
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
 const koa_body_1 = __importDefault(require("koa-body"));
 const koa_1 = __importDefault(require("koa"));
@@ -44,7 +40,6 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 dotenv.config();
 const port = process.env.PORT || 5000;
-const secret = process.env.JWTSECRET || "fallbacksecret";
 router.get("/api/v1/price/:tconst", async (ctx, next) => {
     const client = await db.pool.connect();
     //  const loggedin = ctx.request.body as LoggedinRequest;
@@ -56,10 +51,12 @@ router.get("/api/v1/price/:tconst", async (ctx, next) => {
         console.log(`got price entries: ${JSON.stringify(prices, null, 4)}`);
         if (prices.length == 1) {
             ctx.body = JSON.stringify(prices[0]);
-        } else {
+        }
+        else {
             ctx.status = 404;
         }
-    } finally {
+    }
+    finally {
         client.release();
     }
     await next;
@@ -70,7 +67,8 @@ router.post('/api/v2/prices', async (ctx, next) => {
     console.log(`got a search_prices_request: ${JSON.stringify(search_prices_request, null, 4)}`);
     if (search_prices_request === undefined) {
         ctx.status = 404;
-    } else {
+    }
+    else {
         const client = await db.pool.connect();
         try {
             const ids = new Set();
@@ -83,7 +81,8 @@ router.post('/api/v2/prices', async (ctx, next) => {
             console.log(`response from UPDATE query  ${JSON.stringify(update_return, null, 4)}`);
             const prices = update_return.rows;
             ctx.body = JSON.stringify(prices);
-        } finally {
+        }
+        finally {
             client.release();
         }
     }

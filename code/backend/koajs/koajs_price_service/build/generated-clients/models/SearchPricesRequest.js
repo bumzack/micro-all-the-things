@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchPricesRequestToJSON = exports.SearchPricesRequestFromJSONTyped = exports.SearchPricesRequestFromJSON = exports.instanceOfSearchPricesRequest = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the SearchPricesRequest interface.
  */
@@ -23,15 +22,11 @@ function instanceOfSearchPricesRequest(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfSearchPricesRequest = instanceOfSearchPricesRequest;
-
 function SearchPricesRequestFromJSON(json) {
     return SearchPricesRequestFromJSONTyped(json, false);
 }
-
 exports.SearchPricesRequestFromJSON = SearchPricesRequestFromJSON;
-
 function SearchPricesRequestFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -40,9 +35,7 @@ function SearchPricesRequestFromJSONTyped(json, ignoreDiscriminator) {
         'movieTconst': !(0, runtime_1.exists)(json, 'movieTconst') ? undefined : json['movieTconst'],
     };
 }
-
 exports.SearchPricesRequestFromJSONTyped = SearchPricesRequestFromJSONTyped;
-
 function SearchPricesRequestToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -54,6 +47,5 @@ function SearchPricesRequestToJSON(value) {
         'movieTconst': value.movieTconst,
     };
 }
-
 exports.SearchPricesRequestToJSON = SearchPricesRequestToJSON;
 //# sourceMappingURL=SearchPricesRequest.js.map

@@ -12,11 +12,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.MovieSearchResultToJSON = exports.MovieSearchResultFromJSONTyped = exports.MovieSearchResultFromJSON = exports.instanceOfMovieSearchResult = void 0;
 const runtime_1 = require("../runtime");
 const SearchDoc_1 = require("./SearchDoc");
-
 /**
  * Check if a given object implements the MovieSearchResult interface.
  */
@@ -24,15 +23,11 @@ function instanceOfMovieSearchResult(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfMovieSearchResult = instanceOfMovieSearchResult;
-
 function MovieSearchResultFromJSON(json) {
     return MovieSearchResultFromJSONTyped(json, false);
 }
-
 exports.MovieSearchResultFromJSON = MovieSearchResultFromJSON;
-
 function MovieSearchResultFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -41,9 +36,7 @@ function MovieSearchResultFromJSONTyped(json, ignoreDiscriminator) {
         'movies': !(0, runtime_1.exists)(json, 'movies') ? undefined : (json['movies'].map(SearchDoc_1.SearchDocFromJSON)),
     };
 }
-
 exports.MovieSearchResultFromJSONTyped = MovieSearchResultFromJSONTyped;
-
 function MovieSearchResultToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -55,6 +48,5 @@ function MovieSearchResultToJSON(value) {
         'movies': value.movies === undefined ? undefined : (value.movies.map(SearchDoc_1.SearchDocToJSON)),
     };
 }
-
 exports.MovieSearchResultToJSON = MovieSearchResultToJSON;
 //# sourceMappingURL=MovieSearchResult.js.map
