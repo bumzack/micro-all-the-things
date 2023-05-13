@@ -1,7 +1,5 @@
 node_modules
-dist/bundle.js
-dist/*
-
+ 
 solr-10.0.0-SNAPSHOT/
 
 tmp
