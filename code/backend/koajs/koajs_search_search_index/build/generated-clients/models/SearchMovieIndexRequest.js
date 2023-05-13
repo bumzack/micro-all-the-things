@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.SearchMovieIndexRequestToJSON = exports.SearchMovieIndexRequestFromJSONTyped = exports.SearchMovieIndexRequestFromJSON = exports.instanceOfSearchMovieIndexRequest = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the SearchMovieIndexRequest interface.
  */
@@ -23,15 +22,11 @@ function instanceOfSearchMovieIndexRequest(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfSearchMovieIndexRequest = instanceOfSearchMovieIndexRequest;
-
 function SearchMovieIndexRequestFromJSON(json) {
     return SearchMovieIndexRequestFromJSONTyped(json, false);
 }
-
 exports.SearchMovieIndexRequestFromJSON = SearchMovieIndexRequestFromJSON;
-
 function SearchMovieIndexRequestFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -42,9 +37,7 @@ function SearchMovieIndexRequestFromJSONTyped(json, ignoreDiscriminator) {
         'limit': !(0, runtime_1.exists)(json, 'limit') ? undefined : json['limit'],
     };
 }
-
 exports.SearchMovieIndexRequestFromJSONTyped = SearchMovieIndexRequestFromJSONTyped;
-
 function SearchMovieIndexRequestToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -58,6 +51,5 @@ function SearchMovieIndexRequestToJSON(value) {
         'limit': value.limit,
     };
 }
-
 exports.SearchMovieIndexRequestToJSON = SearchMovieIndexRequestToJSON;
 //# sourceMappingURL=SearchMovieIndexRequest.js.map

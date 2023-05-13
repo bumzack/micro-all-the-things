@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomerPriceEntryToJSON = exports.CustomerPriceEntryFromJSONTyped = exports.CustomerPriceEntryFromJSON = exports.instanceOfCustomerPriceEntry = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the CustomerPriceEntry interface.
  */
@@ -23,15 +22,11 @@ function instanceOfCustomerPriceEntry(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfCustomerPriceEntry = instanceOfCustomerPriceEntry;
-
 function CustomerPriceEntryFromJSON(json) {
     return CustomerPriceEntryFromJSONTyped(json, false);
 }
-
 exports.CustomerPriceEntryFromJSON = CustomerPriceEntryFromJSON;
-
 function CustomerPriceEntryFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -45,9 +40,7 @@ function CustomerPriceEntryFromJSONTyped(json, ignoreDiscriminator) {
         'created': !(0, runtime_1.exists)(json, 'created') ? undefined : (new Date(json['created'])),
     };
 }
-
 exports.CustomerPriceEntryFromJSONTyped = CustomerPriceEntryFromJSONTyped;
-
 function CustomerPriceEntryToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -64,6 +57,5 @@ function CustomerPriceEntryToJSON(value) {
         'created': value.created === undefined ? undefined : (value.created.toISOString()),
     };
 }
-
 exports.CustomerPriceEntryToJSON = CustomerPriceEntryToJSON;
 //# sourceMappingURL=CustomerPriceEntry.js.map

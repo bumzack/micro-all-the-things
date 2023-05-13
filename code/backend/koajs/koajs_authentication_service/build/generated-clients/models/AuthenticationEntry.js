@@ -12,10 +12,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthenticationEntryToJSON = exports.AuthenticationEntryFromJSONTyped = exports.AuthenticationEntryFromJSON = exports.instanceOfAuthenticationEntry = void 0;
 const runtime_1 = require("../runtime");
-
 /**
  * Check if a given object implements the AuthenticationEntry interface.
  */
@@ -23,15 +22,11 @@ function instanceOfAuthenticationEntry(value) {
     let isInstance = true;
     return isInstance;
 }
-
 exports.instanceOfAuthenticationEntry = instanceOfAuthenticationEntry;
-
 function AuthenticationEntryFromJSON(json) {
     return AuthenticationEntryFromJSONTyped(json, false);
 }
-
 exports.AuthenticationEntryFromJSON = AuthenticationEntryFromJSON;
-
 function AuthenticationEntryFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
@@ -45,9 +40,7 @@ function AuthenticationEntryFromJSONTyped(json, ignoreDiscriminator) {
         'created': !(0, runtime_1.exists)(json, 'created') ? undefined : (new Date(json['created'])),
     };
 }
-
 exports.AuthenticationEntryFromJSONTyped = AuthenticationEntryFromJSONTyped;
-
 function AuthenticationEntryToJSON(value) {
     if (value === undefined) {
         return undefined;
@@ -64,6 +57,5 @@ function AuthenticationEntryToJSON(value) {
         'created': value.created === undefined ? undefined : (value.created.toISOString()),
     };
 }
-
 exports.AuthenticationEntryToJSON = AuthenticationEntryToJSON;
 //# sourceMappingURL=AuthenticationEntry.js.map

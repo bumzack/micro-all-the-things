@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", {value: true});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.pool = void 0;
 const Pool = require('pg-pool');
 var pool = new Pool({

@@ -72,13 +72,13 @@ router.post('/api/v1/solr/article', async (ctx, next) => {
                     const customer_price = customer_prices.find(p => {
                         return p.startYear <= m.year && m.year <= p.endYear;
                     });
-                    if (customer_price !== undefined) {
+                    if (customer_price !== undefined && p.amount !== undefined) {
                         cp = (100.0 - customer_price.discount) * p.amount / 100;
                     }
                 }
                 const entry = {
                     article: m,
-                    price: p.amount,
+                    price: p?.amount,
                     customerPrice: cp,
                 };
                 res.push(entry);
