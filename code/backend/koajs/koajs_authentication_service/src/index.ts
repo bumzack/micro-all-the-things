@@ -31,7 +31,7 @@ router.get('/api/v1/authenticated/:id', async (ctx: Koa.Context, next: Koa.Next)
 
     try {
         const result = await client.query('SELECT * FROM authentication WHERE customer_id = $1::int  AND  jwt IS NOT NULL', [id])
-        if (result.rows.length > 0) {
+        if (result.rows.length == 0) {
             ctx.status = 404
         } else {
             const authentication_entries = result.rows as Array<AuthenticationEntry>;
