@@ -46,6 +46,7 @@ const port = process.env.PORT || 5000;
 router.post('/api/v1/solr/article', async (ctx, next) => {
     const req = ctx.request.body;
     console.log(`req ${JSON.stringify(req, null, 4)}`);
+    console.log(`blalbla`);
     const res = [];
     if (req.customer !== null && req.customer?.customerId != null) {
         console.log(`got a customer and an id   ${req.customer?.customerId}`);

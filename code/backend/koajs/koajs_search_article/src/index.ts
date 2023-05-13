@@ -27,6 +27,7 @@ const port = process.env.PORT || 5000
 router.post('/api/v1/solr/article', async (ctx: Koa.Context, next: Koa.Next) => {
     const req = ctx.request.body as SearchArticleRequest;
     console.log(`req ${JSON.stringify(req, null, 4)}`);
+    console.log(`blalbla`);
     const res: Array<ArticleSearchResult> = [];
 
     if (req.customer !== null && req.customer?.customerId != null) {
