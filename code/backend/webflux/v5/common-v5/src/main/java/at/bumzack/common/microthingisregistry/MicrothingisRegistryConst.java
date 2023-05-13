@@ -1,7 +1,7 @@
 package at.bumzack.common.microthingisregistry;
 
 public class MicrothingisRegistryConst {
-    public static final String URL = "http://localhost:3030";
+    public static final String URL = "http://127.0.0.1:3030";
 
     public static final String URL_TECHNOLOGY_BY_NAME = URL + "/api/technology";
 

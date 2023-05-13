@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.util.Logger;
 import reactor.util.Loggers;
@@ -16,9 +17,7 @@ import reactor.util.Loggers;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_FIND_BY_NAME;
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_BACKEND_POST;
-import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.URL_TECHNOLOGY_BY_NAME;
+import static at.bumzack.common.microthingisregistry.MicrothingisRegistryConst.*;
 
 
 @Service
@@ -54,6 +53,10 @@ public class RegisterMicroService {
 
     @Bean
     public CommandLineRunner readFromApiServer() {
+        Hooks.onErrorDropped(error -> {
+            LOG.error("Exception happened:", error);
+        });
+
         LOG.info("readFromApiServer");
         final Path currentRelativePath = Paths.get("");
         final String blupp = currentRelativePath.toAbsolutePath().toString();
