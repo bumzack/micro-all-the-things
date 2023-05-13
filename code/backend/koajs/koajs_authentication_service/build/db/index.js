@@ -5,7 +5,7 @@ const Pool = require('pg-pool');
 var pool = new Pool({
     database: 'bumzack',
     user: 'bumzack',
-    password: 'bumzack!',
+    password: 'bumzack',
     port: 5432,
     ssl: false,
     max: 50,
