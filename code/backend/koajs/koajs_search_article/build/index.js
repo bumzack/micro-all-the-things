@@ -51,7 +51,7 @@ router.post('/api/v1/solr/article', async (ctx, next) => {
         console.log(`got a customer and an id   ${req.customer?.customerId}`);
         const auth = await (0, services_auth_1.is_authenticated)(req.customer.customerId);
         console.log(`auth    ${JSON.stringify(auth)}`);
-        const logged_in = auth.jwt != null;
+        const logged_in = auth !== undefined && auth.jwt != null;
         console.log(`logged_in    ${logged_in}`);
         let customer_prices = [];
         if (logged_in) {

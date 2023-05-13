@@ -278,4 +278,10 @@ curl  -vv -X POST   http://localhost:58600/api/v1/solr/article    -H 'Content-Ty
 ```
 
 
+```
+curl  -vv -X POST   http://localhost:58600/api/v1/solr/article    -H 'Content-Type: application/json' -d '{ "q" : "Carmencita", "offset" : 0, "limit": 5, "customer" : {  "customerId": 1203, "jwt" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIwMywiZW1haWwiOiJidW16YWNrQGJ1bXphY2suYXQiLCJwYXNzd29yZCI6IjEyMyIsImNyZWF0ZWQiOiIyMDIzLTA0LTExVDE4OjA2OjU0LjUwM1oiLCJpYXQiOjE2ODQwMTU2NjF9.oLFZJfFT1ryD9QbIJm800S0ExvIAPYkMNRuzsvstji8" }   }' | jq
+```
+
+
+
  
