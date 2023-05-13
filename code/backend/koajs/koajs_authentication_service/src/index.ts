@@ -17,11 +17,9 @@ app.use(koaBody());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-
 dotenv.config()
 
 const port = process.env.PORT || 5000
-
 
 const secret = process.env.JWTSECRET || "fallbacksecret"
 
@@ -29,6 +27,8 @@ router.get('/api/v1/authenticated/:id', async (ctx: Koa.Context, next: Koa.Next)
     const client = await db.pool.connect();
     //  const loggedin = ctx.request.body as LoggedinRequest;
     const id = ctx.params.id;
+    console.log(`authenticated?  id      ${id}`)
+
     try {
         const result = await client.query('SELECT * FROM authentication WHERE customer_id = $1::int AND  jwt IS NOT NULL', [id]);
         const authentication_entries = result.rows as Array<AuthenticationEntry>;
