@@ -11,7 +11,14 @@ const is_authenticated = async (customer_id) => {
     let req = {
         customerId: customer_id,
     };
-    return await api.loggedin(req);
+    return await api.loggedin(req)
+        .then(r => {
+        return r;
+    })
+        .catch(err => {
+        console.log("error requesting authentication ", err);
+        return undefined;
+    });
 };
 exports.is_authenticated = is_authenticated;
 //# sourceMappingURL=services_auth.js.map

@@ -7,7 +7,7 @@ import {
 } from "./generated-clients/authenticationservice";
 
 
-export const is_authenticated = async (customer_id: number): Promise<AuthenticationEntry> => {
+export const is_authenticated = async (customer_id: number): Promise<AuthenticationEntry | undefined> => {
     const configParams: ConfigurationParameters = {
         basePath: 'http://localhost:58982',
     };
@@ -17,5 +17,12 @@ export const is_authenticated = async (customer_id: number): Promise<Authenticat
     let req: LoggedinRequest = {
         customerId: customer_id,
     }
-    return await api.loggedin(req);
+    return await api.loggedin(req)
+        .then(r => {
+            return r;
+        })
+        .catch(err => {
+            console.log("error requesting authentication ", err);
+            return undefined;
+        });
 }

@@ -30,14 +30,21 @@ router.get('/api/v1/authenticated/:id', async (ctx: Koa.Context, next: Koa.Next)
     console.log(`authenticated?  id      ${id}`)
 
     try {
-        const result = await client.query('SELECT * FROM authentication WHERE customer_id = $1::int AND  jwt IS NOT NULL', [id]);
-        const authentication_entries = result.rows as Array<AuthenticationEntry>;
-        console.log(`got an authentication_entries: ${JSON.stringify(authentication_entries, null, 4)}`);
-        if (authentication_entries.length == 1) {
-            ctx.body = JSON.stringify(authentication_entries[0]);
-        } else {
+        const result = await client.query('SELECT * FROM authentication WHERE customer_id = $1::int  AND  jwt IS NOT NULL', [id])
+        if (result.rows.length > 0) {
             ctx.status = 404
+        } else {
+            const authentication_entries = result.rows as Array<AuthenticationEntry>;
+            console.log(`got an authentication_entries: ${JSON.stringify(authentication_entries, null, 4)}`);
+            if (authentication_entries.length == 1) {
+                console.log(`successful auth_entry: ${JSON.stringify(authentication_entries[0], null, 4)}`);
+                ctx.body = JSON.stringify(authentication_entries[0]);
+            } else {
+                ctx.status = 404
+            }
         }
+    } catch (e: any) {
+        console.log("error from authentication service ", e)
     } finally {
         client.release()
     }

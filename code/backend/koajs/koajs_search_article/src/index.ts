@@ -33,7 +33,7 @@ router.post('/api/v1/solr/article', async (ctx: Koa.Context, next: Koa.Next) => 
         console.log(`got a customer and an id   ${req.customer?.customerId}`)
         const auth = await is_authenticated(req.customer.customerId);
         console.log(`auth    ${JSON.stringify(auth)}`)
-        const logged_in = auth.jwt != null;
+        const logged_in = auth !== undefined && auth.jwt != null;
         console.log(`logged_in    ${logged_in}`)
         let customer_prices: Array<CustomerPriceEntry> = [];
         if (logged_in) {
@@ -56,7 +56,7 @@ router.post('/api/v1/solr/article', async (ctx: Koa.Context, next: Koa.Next) => 
                     const customer_price = customer_prices.find(p => {
                         return (p.startYear as number) <= (m.year as number) && (m.year as number) <= (p.endYear as number);
                     });
-                    if (customer_price !== undefined && p.amount !== undefined)  {
+                    if (customer_price !== undefined && p.amount !== undefined) {
                         cp = (100.0 - (customer_price.discount as number)) * (p.amount as number) / 100;
                     }
                 }
