@@ -80,3 +80,6 @@ curl  -vv  http://localhost:58800/api/v1/price/tt5370708   | jq
 
 
 curl -vvv -X POST   http://localhost:58800/api/v2/prices    -H 'Content-Type: application/json' -d '{ "movieTconst" : [ "tt5370708"] }' | jq
+
+
+curl   -vvv   http://localhost:58980/api/v1/customer/bumzack@bumzack.at   | jq
